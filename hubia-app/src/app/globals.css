@@ -1,0 +1,436 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+/* ============================================
+   HUBIA DESIGN SYSTEM — Design Tokens
+   ============================================ */
+
+:root {
+  /* --- Background --- */
+  --hubia-bg-base-50: #FDFDFD;
+  --hubia-bg-base-500: #EEEFE9;
+  --hubia-bg-base-600: #D9D9D4;
+  --hubia-bg-base-700: #A9AAA5;
+
+  /* --- Surface --- */
+  --hubia-surface-default-500: #FFFFFF;
+
+  /* --- Primary (Limao) --- */
+  --hubia-limao-400: #DFFF33;
+  --hubia-limao-500: #D7FF00;
+
+  /* --- Secondary (Ink) --- */
+  --hubia-ink-400: #3E3F40;
+  --hubia-ink-500: #0E0F10;
+  --hubia-ink-600: #0D0E0F;
+
+  /* --- Accent Sand --- */
+  --hubia-sand-100: #F8F8F4;
+  --hubia-sand-300: #F1EFE8;
+  --hubia-sand-600: #D5D2C9;
+  --hubia-sand-700: #A6A49D;
+
+  /* --- Accent Green --- */
+  --hubia-green-400: #33FDC0;
+  --hubia-green-500: #00FCB0;
+
+  /* --- Accent Orange --- */
+  --hubia-orange-500: #FFAF64;
+
+  /* --- Accent Red --- */
+  --hubia-red-200: #FFB2BC;
+  --hubia-red-500: #FF576D;
+
+  /* --- Indigo (roxo suave — KPI card, badges) — Design System V5 --- */
+  --hubia-indigo-50: #eef0fb;
+  --hubia-indigo-bg: #e3e5f5;
+
+  /* --- State layers (MD3) --- */
+  --state-hover: rgba(215, 255, 0, 0.1);
+  --state-pressed: rgba(215, 255, 0, 0.18);
+  --state-focused: rgba(14, 15, 16, 0.1);
+
+  /* --- Motion: Easing (MD3) --- */
+  --ease-std: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-dec: cubic-bezier(0, 0, 0.2, 1);
+  --ease-emp: cubic-bezier(0.2, 0, 0, 1);
+
+  /* --- Motion: Duration --- */
+  --d0: 50ms;
+  --d1: 100ms;
+  --d2: 150ms;
+  --d3: 200ms;
+  --d4: 250ms;
+  --d5: 300ms;
+  --d6: 400ms;
+  --d7: 500ms;
+
+  /* --- Radii --- */
+  --hubia-radius-card: 30px;
+  --hubia-radius-button: 18px;
+  --hubia-radius-tag: 9999px;
+  --hubia-radius-input: 12px;
+  --hubia-radius-sidebar: 40px;
+
+  /* --- Semantic mappings (Shadcn compatibility) --- */
+  --background: var(--hubia-bg-base-50);
+  --foreground: var(--hubia-ink-500);
+  --card: var(--hubia-surface-default-500);
+  --card-foreground: var(--hubia-ink-500);
+  --popover: var(--hubia-surface-default-500);
+  --popover-foreground: var(--hubia-ink-500);
+  --primary: var(--hubia-limao-500);
+  --primary-foreground: var(--hubia-ink-500);
+  --secondary: var(--hubia-sand-100);
+  --secondary-foreground: var(--hubia-ink-500);
+  --muted: var(--hubia-bg-base-500);
+  --muted-foreground: var(--hubia-ink-400);
+  --accent: var(--hubia-sand-300);
+  --accent-foreground: var(--hubia-ink-500);
+  --destructive: var(--hubia-red-500);
+  --border: var(--hubia-bg-base-600);
+  --input: var(--hubia-bg-base-600);
+  --ring: var(--hubia-limao-500);
+
+  --sidebar: var(--hubia-ink-500);
+  --sidebar-foreground: var(--hubia-bg-base-50);
+  --sidebar-primary: var(--hubia-limao-500);
+  --sidebar-primary-foreground: var(--hubia-ink-500);
+  --sidebar-accent: var(--hubia-ink-400);
+  --sidebar-accent-foreground: var(--hubia-bg-base-50);
+  --sidebar-border: var(--hubia-ink-400);
+  --sidebar-ring: var(--hubia-limao-500);
+
+  --radius: 12px;
+}
+
+.dark {
+  --background: var(--hubia-ink-500);
+  --foreground: var(--hubia-bg-base-50);
+  --card: var(--hubia-ink-600);
+  --card-foreground: var(--hubia-bg-base-50);
+  --popover: var(--hubia-ink-600);
+  --popover-foreground: var(--hubia-bg-base-50);
+  --primary: var(--hubia-limao-500);
+  --primary-foreground: var(--hubia-ink-500);
+  --secondary: var(--hubia-ink-400);
+  --secondary-foreground: var(--hubia-bg-base-50);
+  --muted: var(--hubia-ink-400);
+  --muted-foreground: var(--hubia-bg-base-700);
+  --accent: var(--hubia-ink-400);
+  --accent-foreground: var(--hubia-bg-base-50);
+  --destructive: var(--hubia-red-500);
+  --border: var(--hubia-ink-400);
+  --input: var(--hubia-ink-400);
+  --ring: var(--hubia-limao-500);
+
+  --sidebar: var(--hubia-ink-600);
+  --sidebar-foreground: var(--hubia-bg-base-50);
+  --sidebar-primary: var(--hubia-limao-500);
+  --sidebar-primary-foreground: var(--hubia-ink-500);
+  --sidebar-accent: var(--hubia-ink-400);
+  --sidebar-accent-foreground: var(--hubia-bg-base-50);
+  --sidebar-border: var(--hubia-ink-400);
+  --sidebar-ring: var(--hubia-limao-500);
+}
+
+@theme inline {
+  /* --- Font --- */
+  --font-sans: var(--font-urbanist), "Urbanist", sans-serif;
+
+  /* --- Semantic colors (Shadcn bridge) --- */
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+
+  /* --- Hubia palette (direct Tailwind usage: bg-limao-500, text-ink-500, etc.) --- */
+  --color-limao-400: #DFFF33;
+  --color-limao-500: #D7FF00;
+  --color-ink-400: #3E3F40;
+  --color-ink-500: #0E0F10;
+  --color-ink-600: #0D0E0F;
+  --color-sand-100: #F8F8F4;
+  --color-sand-300: #F1EFE8;
+  --color-sand-600: #D5D2C9;
+  --color-sand-700: #A6A49D;
+  --color-green-400: #33FDC0;
+  --color-green-500: #00FCB0;
+  --color-orange-500: #FFAF64;
+  --color-red-200: #FFB2BC;
+  --color-red-500: #FF576D;
+  --color-indigo-50: #eef0fb;
+  --color-indigo-500: #3f51b5;
+  --color-indigo-bg: #e3e5f5;
+  --color-base-50: #FDFDFD;
+  --color-base-500: #EEEFE9;
+  --color-base-600: #D9D9D4;
+  --color-base-700: #A9AAA5;
+  --color-surface-500: #FFFFFF;
+
+  /* --- Radii --- */
+  --radius-sm: 8px;
+  --radius-md: var(--radius);
+  --radius-lg: var(--hubia-radius-button);
+  --radius-xl: var(--hubia-radius-card);
+  --radius-2xl: var(--hubia-radius-sidebar);
+  --radius-full: 9999px;
+  --radius-card: var(--hubia-radius-card);
+  --radius-button: var(--hubia-radius-button);
+  --radius-tag: 9999px;
+  --radius-input: var(--hubia-radius-input);
+  --radius-sidebar: var(--hubia-radius-sidebar);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+    box-shadow: none !important;
+  }
+  body {
+    @apply bg-background text-foreground font-sans;
+  }
+  html {
+    @apply font-sans;
+  }
+}
+
+/* ============================================
+   HUBIA Typography Utility Classes
+   ============================================ */
+
+@layer utilities {
+  .text-display-md {
+    font-family: "Urbanist", sans-serif;
+    font-weight: 700;
+    font-size: 52px;
+    line-height: 64px;
+    letter-spacing: -1px;
+  }
+  .text-display-xs {
+    font-family: "Urbanist", sans-serif;
+    font-weight: 700;
+    font-size: 36px;
+    line-height: 44px;
+  }
+  .text-heading-md {
+    font-family: "Urbanist", sans-serif;
+    font-weight: 700;
+    font-size: 28px;
+    line-height: 36px;
+  }
+  .text-heading-xs {
+    font-family: "Urbanist", sans-serif;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 28px;
+  }
+  .text-label-lg {
+    font-family: "Urbanist", sans-serif;
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 24px;
+    letter-spacing: 0.3px;
+  }
+  .text-label-md {
+    font-family: "Urbanist", sans-serif;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 20px;
+    letter-spacing: 0.3px;
+  }
+  .text-label-sm {
+    font-family: "Urbanist", sans-serif;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 16px;
+    letter-spacing: 0.3px;
+  }
+  .text-body-md {
+    font-family: "Urbanist", sans-serif;
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 24px;
+    letter-spacing: 0.3px;
+  }
+  .text-body-sm {
+    font-family: "Urbanist", sans-serif;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 19px;
+    letter-spacing: 0.3px;
+  }
+
+  .motion-soft {
+    transition:
+      background-color var(--d2) var(--ease-std),
+      color var(--d2) var(--ease-std),
+      border-color var(--d2) var(--ease-std),
+      transform var(--d2) var(--ease-std),
+      opacity var(--d2) var(--ease-std);
+  }
+  .hubia-pressable {
+    transition:
+      background-color var(--d2) var(--ease-std),
+      color var(--d2) var(--ease-std),
+      border-color var(--d2) var(--ease-std),
+      transform var(--d2) var(--ease-std),
+      opacity var(--d2) var(--ease-std);
+  }
+  .hubia-pressable:hover {
+    transform: scale(1.03);
+  }
+  .hubia-pressable:active {
+    transform: scale(0.96);
+  }
+  .hubia-modal-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 50;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(14, 15, 16, 0.7);
+    backdrop-filter: blur(12px);
+  }
+  .hubia-modal {
+    background: var(--hubia-surface-default-500);
+    border-radius: var(--hubia-radius-card);
+    padding: 24px;
+    max-width: min(90vw, 480px);
+    width: 100%;
+    animation: hubia-modal-in var(--d3) var(--ease-emp) forwards;
+  }
+  @keyframes hubia-modal-in {
+    from {
+      opacity: 0;
+      transform: translateY(8px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  .hubia-icon-button {
+    width: 40px;
+    height: 40px;
+    border-radius: 9999px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition:
+      background-color var(--d2) var(--ease-std),
+      color var(--d2) var(--ease-std),
+      transform var(--d2) var(--ease-std);
+  }
+  .hubia-icon-button:hover {
+    background: var(--state-hover);
+    transform: scale(1.08);
+  }
+  .hubia-icon-button:active {
+    background: var(--state-pressed);
+    transform: scale(0.94);
+  }
+  .hubia-progress-track {
+    width: 100%;
+    height: 6px;
+    background: var(--hubia-bg-base-600);
+    border-radius: 9999px;
+    overflow: hidden;
+  }
+  .hubia-progress-bar {
+    height: 100%;
+    border-radius: 9999px;
+    background: var(--hubia-limao-500);
+    transition:
+      width var(--d6) var(--ease-dec),
+      filter var(--d2) var(--ease-std);
+  }
+  .hubia-progress-row:hover .hubia-progress-bar {
+    filter: brightness(1.08);
+  }
+  .hubia-fade-in {
+    animation: hubia-fade-in var(--d3) var(--ease-emp) forwards;
+  }
+  @keyframes hubia-fade-in {
+    from {
+      opacity: 0;
+      transform: translateY(6px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  .card-kpi-label {
+    font-family: var(--font-urbanist), "Urbanist", sans-serif;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  .card-kpi-value {
+    font-family: var(--font-urbanist), "Urbanist", sans-serif;
+    font-size: 40px;
+    font-weight: 900;
+    letter-spacing: -1.5px;
+    line-height: 1;
+  }
+  .card-kpi-sub {
+    font-family: var(--font-urbanist), "Urbanist", sans-serif;
+    font-size: 12px;
+    margin-top: 6px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+  @keyframes hubia-view-out {
+    from { opacity: 1; }
+    to { opacity: 0; }
+  }
+  @keyframes hubia-view-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  ::view-transition-old(root) {
+    animation: hubia-view-out var(--d3) var(--ease-emp) forwards;
+  }
+  ::view-transition-new(root) {
+    animation: hubia-view-in var(--d3) var(--ease-emp) forwards;
+  }
+  .hubia-main-transition {
+    transition: opacity var(--d3) var(--ease-emp);
+  }
+  body.hubia-navigate-out .hubia-main-transition {
+    opacity: 0;
+  }
+  .rounded-card {
+    border-radius: var(--hubia-radius-card);
+  }
+}

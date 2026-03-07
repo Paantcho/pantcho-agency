@@ -1,0 +1,494 @@
+// ============================================================
+// HUBIA — Prisma Schema · Fase 1 (Fundação Multi-Tenant)
+// PRD v4.0 · Seções 4–8
+// ============================================================
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// ============================================================
+// ENUMS
+// ============================================================
+
+enum MemberRole {
+  owner
+  admin
+  editor
+  viewer
+}
+
+enum PedidoStatus {
+  rascunho
+  aguardando
+  em_andamento
+  revisao
+  aprovado
+  entregue
+  cancelado
+}
+
+enum PedidoUrgencia {
+  baixa
+  media
+  alta
+  critica
+}
+
+enum PedidoTipo {
+  imagem
+  video
+  landing_page
+  app
+  site
+  sistema
+  outro
+}
+
+enum PromptOutputStatus {
+  gerado
+  aprovado
+  rejeitado
+  revisao
+}
+
+enum ProjetoStatus {
+  ativo
+  pausado
+  concluido
+  cancelado
+}
+
+enum AiProviderType {
+  anthropic
+  openai
+  google
+  custom
+}
+
+enum AgentStatus {
+  ativo
+  inativo
+  rascunho
+}
+
+// ============================================================
+// GLOBAL (sem organization_id)
+// ============================================================
+
+model Plan {
+  id          String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name        String   @unique
+  slug        String   @unique
+  description String?
+  price       Decimal? @db.Decimal(10, 2)
+  interval    String?  @default("monthly") // monthly | yearly
+  limits      Json     @default("{}")
+  features    Json     @default("[]")
+  isActive    Boolean  @default(true) @map("is_active")
+  sortOrder   Int      @default(0) @map("sort_order")
+  createdAt   DateTime @default(now()) @map("created_at") @db.Timestamptz
+  updatedAt   DateTime @updatedAt @map("updated_at") @db.Timestamptz
+
+  organizations Organization[]
+
+  @@map("plans")
+}
+
+model FeatureFlag {
+  id           String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name         String   @unique
+  description  String?
+  isGlobal     Boolean  @default(false) @map("is_global")
+  planRequired String?  @map("plan_required")
+  createdAt    DateTime @default(now()) @map("created_at") @db.Timestamptz
+
+  overrides OrganizationFeatureOverride[]
+
+  @@map("feature_flags")
+}
+
+// ============================================================
+// MULTI-TENANT CORE
+// ============================================================
+
+model Organization {
+  id          String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name        String
+  slug        String    @unique
+  logoUrl     String?   @map("logo_url")
+  faviconUrl  String?   @map("favicon_url")
+  domain      String?   @unique
+  planId      String    @map("plan_id") @db.Uuid
+  isActive    Boolean   @default(true) @map("is_active")
+  trialEndsAt DateTime? @map("trial_ends_at") @db.Timestamptz
+  settings    Json      @default("{}")
+  createdAt   DateTime  @default(now()) @map("created_at") @db.Timestamptz
+  updatedAt   DateTime  @updatedAt @map("updated_at") @db.Timestamptz
+
+  plan Plan @relation(fields: [planId], references: [id])
+
+  members          OrganizationMember[]
+  branding         OrganizationBranding?
+  featureOverrides OrganizationFeatureOverride[]
+  aiProviders      AiProvider[]
+  creators         Creator[]
+  pedidos          Pedido[]
+  projetos         Projeto[]
+  agents           Agent[]
+  skills           Skill[]
+  entityVersions   EntityVersion[]
+  knowledgeEntries KnowledgeEntry[]
+  activityLogs     ActivityLog[]
+  promptOutputs    PromptOutput[]
+
+  @@map("organizations")
+}
+
+model OrganizationMember {
+  id             String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  organizationId String    @map("organization_id") @db.Uuid
+  userId         String    @map("user_id") @db.Uuid
+  role           MemberRole @default(viewer)
+  invitedBy      String?   @map("invited_by") @db.Uuid
+  invitedAt      DateTime? @map("invited_at") @db.Timestamptz
+  acceptedAt     DateTime? @map("accepted_at") @db.Timestamptz
+  isActive       Boolean   @default(true) @map("is_active")
+  createdAt      DateTime  @default(now()) @map("created_at") @db.Timestamptz
+  updatedAt      DateTime  @updatedAt @map("updated_at") @db.Timestamptz
+
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  @@unique([organizationId, userId])
+  @@index([userId])
+  @@map("organization_members")
+}
+
+model OrganizationBranding {
+  id             String  @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  organizationId String  @unique @map("organization_id") @db.Uuid
+  colorPrimary   String  @default("#D7FF00") @map("color_primary")
+  colorScale     Json    @default("{}") @map("color_scale")
+  logoUrl        String? @map("logo_url")
+  faviconUrl     String? @map("favicon_url")
+  updatedAt      DateTime @updatedAt @map("updated_at") @db.Timestamptz
+
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  @@map("organization_branding")
+}
+
+model OrganizationFeatureOverride {
+  id             String  @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  organizationId String  @map("organization_id") @db.Uuid
+  featureFlagId  String  @map("feature_flag_id") @db.Uuid
+  enabled        Boolean @default(true)
+  createdAt      DateTime @default(now()) @map("created_at") @db.Timestamptz
+
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  featureFlag  FeatureFlag  @relation(fields: [featureFlagId], references: [id], onDelete: Cascade)
+
+  @@unique([organizationId, featureFlagId])
+  @@map("organization_feature_overrides")
+}
+
+// ============================================================
+// AI PROVIDERS (PRD seção 8)
+// ============================================================
+
+model AiProvider {
+  id              String         @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  organizationId  String         @map("organization_id") @db.Uuid
+  name            String
+  type            AiProviderType
+  apiKeyEncrypted String         @map("api_key_encrypted")
+  baseUrl         String?        @map("base_url")
+  defaultModel    String?        @map("default_model")
+  isDefault       Boolean        @default(false) @map("is_default")
+  maxTokens       Int?           @map("max_tokens")
+  isActive        Boolean        @default(true) @map("is_active")
+  createdAt       DateTime       @default(now()) @map("created_at") @db.Timestamptz
+  updatedAt       DateTime       @updatedAt @map("updated_at") @db.Timestamptz
+
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  @@index([organizationId])
+  @@map("ai_providers")
+}
+
+// ============================================================
+// CREATORS (PRD seção 9 — entidades de creator digital)
+// ============================================================
+
+model Creator {
+  id             String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  organizationId String   @map("organization_id") @db.Uuid
+  name           String
+  slug           String
+  avatarUrl      String?  @map("avatar_url")
+  bio            String?
+  isActive       Boolean  @default(true) @map("is_active")
+  metadata       Json     @default("{}")
+  createdAt      DateTime @default(now()) @map("created_at") @db.Timestamptz
+  updatedAt      DateTime @updatedAt @map("updated_at") @db.Timestamptz
+
+  organization Organization      @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  appearance   CreatorAppearance?
+  environments CreatorEnvironment[]
+  looks        CreatorLook[]
+  voice        CreatorVoice?
+  pedidos      Pedido[]
+
+  @@unique([organizationId, slug])
+  @@index([organizationId])
+  @@map("creators")
+}
+
+model CreatorAppearance {
+  id        String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  creatorId String   @unique @map("creator_id") @db.Uuid
+  basePrompt String  @map("base_prompt") @db.Text
+  markers   Json     @default("[]")
+  protected Json     @default("[]")
+  updatedAt DateTime @updatedAt @map("updated_at") @db.Timestamptz
+
+  creator Creator @relation(fields: [creatorId], references: [id], onDelete: Cascade)
+
+  @@map("creator_appearances")
+}
+
+model CreatorEnvironment {
+  id          String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  creatorId   String   @map("creator_id") @db.Uuid
+  name        String
+  description String?  @db.Text
+  prompt      String   @db.Text
+  thumbnailUrl String? @map("thumbnail_url")
+  isActive    Boolean  @default(true) @map("is_active")
+  createdAt   DateTime @default(now()) @map("created_at") @db.Timestamptz
+  updatedAt   DateTime @updatedAt @map("updated_at") @db.Timestamptz
+
+  creator Creator @relation(fields: [creatorId], references: [id], onDelete: Cascade)
+
+  @@index([creatorId])
+  @@map("creator_environments")
+}
+
+model CreatorLook {
+  id          String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  creatorId   String   @map("creator_id") @db.Uuid
+  name        String
+  description String?  @db.Text
+  prompt      String   @db.Text
+  thumbnailUrl String? @map("thumbnail_url")
+  isActive    Boolean  @default(true) @map("is_active")
+  createdAt   DateTime @default(now()) @map("created_at") @db.Timestamptz
+  updatedAt   DateTime @updatedAt @map("updated_at") @db.Timestamptz
+
+  creator Creator @relation(fields: [creatorId], references: [id], onDelete: Cascade)
+
+  @@index([creatorId])
+  @@map("creator_looks")
+}
+
+model CreatorVoice {
+  id        String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  creatorId String   @unique @map("creator_id") @db.Uuid
+  tone      String?
+  style     String?
+  rules     Json     @default("[]")
+  examples  Json     @default("[]")
+  updatedAt DateTime @updatedAt @map("updated_at") @db.Timestamptz
+
+  creator Creator @relation(fields: [creatorId], references: [id], onDelete: Cascade)
+
+  @@map("creator_voices")
+}
+
+// ============================================================
+// PEDIDOS (Orders) & PROMPT OUTPUTS
+// ============================================================
+
+model Pedido {
+  id             String         @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  organizationId String         @map("organization_id") @db.Uuid
+  projetoId      String?        @map("projeto_id") @db.Uuid
+  creatorId      String?        @map("creator_id") @db.Uuid
+  titulo         String
+  descricao      String?        @db.Text
+  tipo           PedidoTipo     @default(imagem)
+  status         PedidoStatus   @default(rascunho)
+  urgencia       PedidoUrgencia @default(media)
+  briefing       Json           @default("{}")
+  dueAt          DateTime?      @map("due_at") @db.Timestamptz
+  completedAt    DateTime?      @map("completed_at") @db.Timestamptz
+  createdBy      String?        @map("created_by") @db.Uuid
+  createdAt      DateTime       @default(now()) @map("created_at") @db.Timestamptz
+  updatedAt      DateTime       @updatedAt @map("updated_at") @db.Timestamptz
+
+  organization Organization  @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  projeto      Projeto?      @relation(fields: [projetoId], references: [id])
+  creator      Creator?      @relation(fields: [creatorId], references: [id])
+  outputs      PromptOutput[]
+
+  @@index([organizationId])
+  @@index([organizationId, status])
+  @@map("pedidos")
+}
+
+model PromptOutput {
+  id             String             @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  organizationId String             @map("organization_id") @db.Uuid
+  pedidoId       String             @map("pedido_id") @db.Uuid
+  prompt         String             @db.Text
+  result         String?            @db.Text
+  mediaUrl       String?            @map("media_url")
+  status         PromptOutputStatus @default(gerado)
+  metadata       Json               @default("{}")
+  providerId     String?            @map("provider_id") @db.Uuid
+  createdAt      DateTime           @default(now()) @map("created_at") @db.Timestamptz
+
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  pedido       Pedido       @relation(fields: [pedidoId], references: [id], onDelete: Cascade)
+
+  @@index([organizationId])
+  @@index([pedidoId])
+  @@map("prompt_outputs")
+}
+
+// ============================================================
+// PROJETOS (Projects)
+// ============================================================
+
+model Projeto {
+  id             String        @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  organizationId String        @map("organization_id") @db.Uuid
+  nome           String
+  descricao      String?       @db.Text
+  status         ProjetoStatus @default(ativo)
+  metadata       Json          @default("{}")
+  createdBy      String?       @map("created_by") @db.Uuid
+  createdAt      DateTime      @default(now()) @map("created_at") @db.Timestamptz
+  updatedAt      DateTime      @updatedAt @map("updated_at") @db.Timestamptz
+
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  pedidos      Pedido[]
+
+  @@index([organizationId])
+  @@map("projetos")
+}
+
+// ============================================================
+// AGENTS & SKILLS
+// ============================================================
+
+model Agent {
+  id             String      @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  organizationId String      @map("organization_id") @db.Uuid
+  name           String
+  slug           String
+  description    String?     @db.Text
+  systemPrompt   String?     @map("system_prompt") @db.Text
+  status         AgentStatus @default(rascunho)
+  config         Json        @default("{}")
+  createdAt      DateTime    @default(now()) @map("created_at") @db.Timestamptz
+  updatedAt      DateTime    @updatedAt @map("updated_at") @db.Timestamptz
+
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  skills       AgentSkill[]
+
+  @@unique([organizationId, slug])
+  @@index([organizationId])
+  @@map("agents")
+}
+
+model Skill {
+  id             String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  organizationId String   @map("organization_id") @db.Uuid
+  name           String
+  slug           String
+  description    String?  @db.Text
+  config         Json     @default("{}")
+  isActive       Boolean  @default(true) @map("is_active")
+  createdAt      DateTime @default(now()) @map("created_at") @db.Timestamptz
+  updatedAt      DateTime @updatedAt @map("updated_at") @db.Timestamptz
+
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  agents       AgentSkill[]
+
+  @@unique([organizationId, slug])
+  @@index([organizationId])
+  @@map("skills")
+}
+
+model AgentSkill {
+  id       String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  agentId  String @map("agent_id") @db.Uuid
+  skillId  String @map("skill_id") @db.Uuid
+
+  agent Agent @relation(fields: [agentId], references: [id], onDelete: Cascade)
+  skill Skill @relation(fields: [skillId], references: [id], onDelete: Cascade)
+
+  @@unique([agentId, skillId])
+  @@map("agent_skills")
+}
+
+// ============================================================
+// SISTEMA — Versionamento, Knowledge e Activity Log
+// ============================================================
+
+model EntityVersion {
+  id             String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  organizationId String   @map("organization_id") @db.Uuid
+  entityType     String   @map("entity_type")
+  entityId       String   @map("entity_id") @db.Uuid
+  version        Int      @default(1)
+  data           Json
+  changedBy      String?  @map("changed_by") @db.Uuid
+  createdAt      DateTime @default(now()) @map("created_at") @db.Timestamptz
+
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  @@index([organizationId])
+  @@index([entityType, entityId])
+  @@map("entity_versions")
+}
+
+model KnowledgeEntry {
+  id             String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  organizationId String   @map("organization_id") @db.Uuid
+  title          String
+  content        String   @db.Text
+  category       String?
+  tags           Json     @default("[]")
+  createdBy      String?  @map("created_by") @db.Uuid
+  createdAt      DateTime @default(now()) @map("created_at") @db.Timestamptz
+  updatedAt      DateTime @updatedAt @map("updated_at") @db.Timestamptz
+
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  @@index([organizationId])
+  @@map("knowledge_entries")
+}
+
+model ActivityLog {
+  id             String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  organizationId String   @map("organization_id") @db.Uuid
+  userId         String?  @map("user_id") @db.Uuid
+  action         String
+  entityType     String?  @map("entity_type")
+  entityId       String?  @map("entity_id") @db.Uuid
+  metadata       Json     @default("{}")
+  createdAt      DateTime @default(now()) @map("created_at") @db.Timestamptz
+
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  @@index([organizationId])
+  @@index([organizationId, action])
+  @@index([entityType, entityId])
+  @@map("activity_logs")
+}

@@ -47,7 +47,9 @@ pantcho-agency/
 ├── AGENTS.md             ← Mapa de todos os squads e agentes
 ├── CONNECTORS.md         ← Conexões externas (Figma, GitHub, Vercel)
 ├── CHANGELOG.md          ← Histórico de versões
+├── VERSIONING.md         ← Versionamento e releases (ver abaixo)
 │
+├── hubia-app/            ← App SaaS Hubia (Next.js) — parte do monorepo
 ├── dev-squad/            ← Departamento de desenvolvimento
 ├── audiovisual-squad/    ← Departamento audiovisual
 │
@@ -59,6 +61,16 @@ pantcho-agency/
 └── directives/
     └── visao-estrategica.md
 ```
+
+## Versionamento
+
+Este repositório é um **monorepo**: o código do Hub (agentes, squads, memória) e o app **Hubia** (`hubia-app/`) vivem no mesmo histórico. Assim fica fácil:
+
+- **Um único clone** para trabalhar em tudo
+- **Tags por produto** para releases (ex.: `hubia-app/v1.0.0`)
+- **CHANGELOG.md** no root para decisões e entregas gerais; o `hubia-app` pode ter seu próprio changelog dentro da pasta se quiser
+
+Para marcar uma release do app Hubia: `git tag hubia-app/v1.0.0` (e opcionalmente `git push origin hubia-app/v1.0.0`). Ver detalhes em [VERSIONING.md](VERSIONING.md).
 
 ## Stack Padrão (Dev Squad)
 
