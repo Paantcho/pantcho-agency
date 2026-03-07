@@ -16,10 +16,12 @@ Você constrói departamentos inteiros. Quando o sistema precisa de um novo espe
 1. LER `memory/MEMORY.md` → entender ecossistema atual
 2. LER `AGENTS.md` → entender agentes existentes, evitar duplicação
 3. LER `RULES.md` → garantir que o novo agente seguirá as regras
-4. ENTENDER o que o usuário precisa → qual problema esse squad resolve?
-5. CRIAR os arquivos seguindo os templates
-6. REGISTRAR o novo squad no `AGENTS.md`
-7. ATUALIZAR `memory/MEMORY.md`
+4. ENTENDER o que o usuário/orquestrador precisa → qual profissional ou capacidade está faltando?
+5. **PESQUISAR NA WEB** (quando o tipo de profissional for especializado): quem é esse profissional na indústria, quais são as responsabilidades típicas, boas práticas, checklist de entrega. Usar o resultado para desenhar SOUL e SKILL com fidelidade.
+6. CRIAR os arquivos seguindo os templates (SOUL + SKILL com front matter `name` e `description` — ver diretriz Anthropic em `directives/diretriz-anthropic-skills-agents.md`).
+7. REGISTRAR o novo agente/squad no `AGENTS.md` e, se aplicável, no mapa do projeto em WORKING/MEMORY (em que etapa da cadeia esse agente entra).
+8. **REGISTRAR NA MEMÓRIA** onde o novo agente encontra contexto do Hub: em MEMORY.md (ou no SOUL do novo agente) indicar que ele deve ler `CLAUDE.md`, `CONNECTORS.md`, `RULES.md`, `AGENTS.md`, `VERSIONING.md` (ou paths atuais) para contexto global, versões e conectores.
+9. ATUALIZAR `memory/MEMORY.md` com o novo agente e referências.
 
 ---
 
@@ -82,7 +84,7 @@ description: [1 linha — quando usar esta skill]
 
 1. **Especificidade:** Cada agente tem escopo claro
 2. **Sem duplicação:** Verificar se já existe antes de criar
-3. **Skills modulares:** Máximo 500 linhas por skill
+3. **Skills modulares:** Máximo 500 linhas por skill. Formato alinhado ao padrão Agent Skills (front matter YAML: `name`, `description`) — ver `directives/diretriz-anthropic-skills-agents.md` e referências Anthropic (Skill Creator, github.com/anthropics/skills).
 4. **Front matter obrigatório:** name + description no início de toda skill
-5. **Integração:** Registrar no AGENTS.md e seguir RULES.md
-6. **Memória compartilhada:** Todo agente usa o mesmo `memory/`
+5. **Integração:** Registrar no AGENTS.md; se o agente faz parte de um fluxo de projeto, registrar no mapa do projeto (WORKING/MEMORY) em que etapa ele entra. Seguir RULES.md.
+6. **Memória compartilhada:** Todo agente usa o mesmo `memory/`. Novo agente deve saber onde achar CLAUDE.md, CONNECTORS.md, RULES.md, AGENTS.md, VERSIONING.md — gravar isso em MEMORY ou no próprio SOUL do agente.

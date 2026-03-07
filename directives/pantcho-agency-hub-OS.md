@@ -92,10 +92,14 @@ pantcho-agency/
 │   └── agency-hub-PRD.md  # (a ser gerado a partir do PRD de 700 linhas)
 │
 └── memory/
+    ├── README.md        # Protocolo de memória e ciclo de consolidação
     ├── WORKING.md       # Estado atual, tarefas, próximos passos
-    ├── MEMORY.md        # Memória de longo prazo e decisões
+    ├── MEMORY.md        # Memória de longo prazo e decisões (macro)
+    ├── STATUS.md        # Resumo consolidado — andamento de todos os projetos/squads
     └── LESSONS.md       # Aprendizados para prevenção de erros
 ```
+
+Diretrizes de construção e orquestração: `directives/hub-construcao-orquestracao.md`. Diretriz para criação de agentes/skills (Anthropic): `directives/diretriz-anthropic-skills-agents.md`.
 
 Essa estrutura reflete o repositório atual, com a adição sugerida de um `directives/agency-hub-PRD.md` explícito para guardar o PRD longo do sistema.[file:100]
 
@@ -107,7 +111,7 @@ Essa estrutura reflete o repositório atual, com a adição sugerida de um `dire
 
 `RULES.md` já define boa parte do comportamento global:[file:1]
 
-- **Protocolo de Memória**: ler `WORKING.md`, `MEMORY.md` e `LESSONS.md` antes de qualquer ação; atualizar depois de cada ação.  
+- **Protocolo de Memória**: ler `WORKING.md`, `MEMORY.md`, `LESSONS.md` e (recomendado) `STATUS.md` antes de qualquer ação; atualizar depois de cada ação. Ciclo de consolidação (memória macro): ver `memory/README.md` e RULES.md §1.1.  
 - **Plan–Execute–Reflect** obrigatório com plano em Markdown, execução com marcação de tarefas e reflexão crítica antes de entregar.  
 - **Contexto ≤ 40%**: carregar apenas skills necessárias, usar subagents para tarefas pesadas, soltar contexto ao finalizar.  
 - **Resolve Before Returning**: não devolver trabalho incompleto, a menos que dependa de decisão do usuário.

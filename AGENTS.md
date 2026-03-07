@@ -12,14 +12,20 @@ ORQUESTRADOR GLOBAL (CEO)
 │
 ├── DEV SQUAD (Engenharia & Sistemas)
 │   📍 Local: dev-squad/
-│   ├── Agente: Desenvolvimento (Full-stack, QA, Segurança)
-│   └── Agente: Criador de Agentes (Fábrica de novos squads)
+│   ├── Agente: Desenvolvimento (Full-stack, QA, Segurança) — qualquer tipo de app: web, mobile (Android/Apple), landing, sistema interno, etc.
+│   └── Agente: Criador de Agentes (Fábrica de novos squads/agentes quando não existir especialista)
 │
-└── AUDIOVISUAL SQUAD (Creators & Estúdio)
-    📍 Local: audiovisual-squad/
-    ├── Agente: Planner de Conteúdo
-    ├── Agente: Copywriter
-    ├── Agente: Diretor de Arte
-    ├── Agente: Diretor de Cena
-    ├── Agente: Especialista em Consistência (Validação Forense)
-    └── Agente: Engenheiro de Prompts
+├── AUDIOVISUAL SQUAD (Creators & Estúdio)
+│   📍 Local: audiovisual-squad/
+│   ├── Agente: Planner de Conteúdo
+│   ├── Agente: Copywriter
+│   ├── Agente: Diretor de Arte
+│   ├── Agente: Diretor de Cena
+│   ├── Agente: Especialista em Consistência (Validação Forense)
+│   └── Agente: Engenheiro de Prompts
+│
+└── SQUADS PREVISTOS (não implementados ainda — estrutura deve suportar)
+    Marketing · Audiovisual (expandido) · Finanças · CRM · Social media · Outros
+```
+
+Quando um pedido exige um tipo de profissional que **não existe** em nenhum squad (ex.: motion design system, CRM, analista financeiro), o Orquestrador delega ao **Criador de Agentes** (Dev Squad), que pesquisa, cria o agente e as skills e integra na cadeia.

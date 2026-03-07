@@ -9,11 +9,22 @@ Antes de QUALQUER ação:
 1. Leia `memory/WORKING.md` — Compreenda o estado atual, a tarefa ativa e onde paramos.
 2. Leia `memory/MEMORY.md` — Consulte decisões de longo prazo, stack padrão e preferências de arquitetura/design do Pantcho.
 3. Leia `memory/LESSONS.md` — Verifique erros cometidos no passado para não repeti-los.
+4. (Recomendado) Leia `memory/STATUS.md` — Resumo consolidado do andamento de todos os projetos e squads (evita buracos de comunicação).
 
 Depois de QUALQUER ação:
 1. Atualize o `memory/WORKING.md` com o status do que foi feito e os próximos passos.
 2. Se uma decisão arquitetural ou de design foi tomada, grave no `memory/MEMORY.md`.
 3. Nunca confie no "contexto da conversa". Se a informação é vital, ela deve residir em um arquivo Markdown.
+
+## 1.1 Ciclo de Consolidação (memória macro)
+
+A cada fim de ciclo (entrega de etapa, fim de sessão ou quando o Orquestrador determinar), executar **consolidação** para que todos os agentes tenham visão atualizada e não haja buracos de comunicação:
+1. Ler WORKING e contexto atual.
+2. Condensar decisões, estado dos projetos e próximos passos.
+3. Atualizar `memory/MEMORY.md` com decisões estáveis.
+4. Atualizar `memory/STATUS.md` com andamento de todos os projetos e squads.
+5. Deixar WORKING enxuto para a próxima tarefa.
+Detalhes: `memory/README.md`.
 
 ## 2. Padrão Enterprise e Fidelidade Forense
 - **Código e Sistemas:** Nível sênior. Zero gambiarras, zero "TODO: arrumar depois". Tipagem estrita, clean code, componentização inteligente e foco total no Design System (Anti-AI-Slop).
@@ -32,6 +43,13 @@ Depois de QUALQUER ação:
    - Passa no crivo de um Engenheiro/Diretor Sênior?
    - Fere alguma regra de identidade Forense ou de Segurança?
    - *Se houver qualquer falha, corrija silenciosamente antes de entregar.*
+
+## 4.1 Comunicação entre agentes (handoffs)
+
+- Todo agente profissional é **sênior+**: entende o projeto como um todo, lê o mapa de rotas/fluxos quando a tarefa for ligada a um projeto ativo (em WORKING ou MEMORY).
+- Ao terminar um bloco que outro agente vai usar: atualizar WORKING com "Entregue para [agente/tarefa]" e próximos passos claros.
+- Ao detectar lacuna (falta requisito, dependência, decisão): registrar em WORKING em "Preciso de decisão" ou "Falta:" para o Orquestrador ou próximo agente.
+- Manter previsibilidade: no mapa do projeto ou em WORKING, manter seção "Próximos passos" e ordem de entrega.
 
 ## 5. Regra de Contexto e Subagentes
 - Mantenha a janela de contexto limpa (alvo: 40%).

@@ -16,10 +16,11 @@ Atualizado quando há decisão importante, preferência nova, ou lição aprendi
 ## Arquitetura do Sistema
 - **Repositório:** `Paantcho/pantcho-agency` (GitHub, privado)
 - **Estrutura:** Squads independentes sob a mesma agência
-- **Squads ativos:** dev-squad, audiovisual-squad
-- **Memória:** compartilhada em `memory/` na raiz
+- **Squads ativos:** dev-squad, audiovisual-squad. **Squads previstos:** marketing, finanças, CRM, social media (estrutura suporta; criar via Criador de Agentes quando necessário)
+- **Memória:** compartilhada em `memory/` (WORKING, MEMORY, STATUS, LESSONS). Ciclo de consolidação: ver `memory/README.md`
+- **Mapa do projeto:** todo projeto ativo tem mapa de rotas/fluxos (template em `agents/orquestrador/MAPA-PROJETO-TEMPLATE.md`)
 - **Regra de contexto:** máximo 40% da janela ocupada
-- **Skills:** sob demanda, nunca todas de uma vez
+- **Skills:** sob demanda; formato alinhado a Agent Skills (Anthropic). Diretriz: `directives/diretriz-anthropic-skills-agents.md`
 
 ## Stack Padrão (Dev Squad)
 Next.js 15+ / TypeScript / Tailwind / Shadcn / Supabase / Prisma / Vercel / Figma MCP

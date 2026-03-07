@@ -9,7 +9,10 @@ Idioma: Português brasileiro em todos os outputs.
 ## Documentos Obrigatórios (ler SEMPRE antes de agir)
 - AGENTS.md — arquitetura de squads e agentes
 - RULES.md — regras invioláveis de execução
+- memory/WORKING.md — tarefa ativa e estado do projeto
 - memory/MEMORY.md — decisões e preferências do usuário
+- memory/README.md — protocolo de memória e ciclo de consolidação
+- directives/hub-construcao-orquestracao.md — processo de construção e orquestração
 - PRD-v4.md — requisitos completos do produto (se existir)
 - BACKLOG-delivery-v1.md — épicos e plano de entrega (se existir)
 
