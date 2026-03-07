@@ -7,6 +7,7 @@ Desenvolvimento de software web, mobile e desktop com qualidade enterprise.
 | Agente | Função |
 |--------|--------|
 | Desenvolvimento | Transforma designs em software funcional |
+| Motion & Interação | Motion, animações e interações (hover, modais, transições) — usa HUBIA-Motion-Guide.html |
 | Criador de Agentes | Cria novos squads e agentes |
 
 ## Skills Sob Demanda

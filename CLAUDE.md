@@ -28,7 +28,9 @@ Idioma: Português brasileiro em todos os outputs.
 - Cor primária: Limão-500 #D7FF00 / Ink-500 #0E0F10
 - Modais: dark blur overlay (rgba 70% + backdrop-filter blur 12px)
 - Sidebar: flat, sem submenus aninhados — navegação interna por tabs
-- Animações: sutis e fluidas, Material Design 3 motion principles
+- **Componentes e elementos visuais:** seguir o documento de Design System (ex.: Design System V5.html). O guia de motion NÃO substitui esse documento.
+- **Motion, animações e interações:** usar **apenas** `directives/HUBIA-Motion-Guide.html`. Esse documento é exclusivo para: animações, easings, durações, hover/focus, como modais abrem e fecham, transições, microinterações. **Todos** os agentes devem consultá-lo ao trabalhar com motion ou interação. O profissional responsável por deixar a interface fluida, gostosa e elegante nesse aspecto é o agente **Motion & Interação** (Dev Squad).
+- Animações: sutis e fluidas, Material Design 3 motion principles.
 
 ## Multi-Tenancy (OBRIGATÓRIO)
 - organization_id em todas as queries — sem exceção

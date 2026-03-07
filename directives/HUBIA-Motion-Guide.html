@@ -1,0 +1,2061 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hubia — Motion & Interaction Guide</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════════════════════════════════════════
+   TOKENS — Extraídos do Design System v3.5
+═══════════════════════════════════════════════════════════ */
+:root {
+  --l500: #d7ff00;
+  --l400: #dfff33;
+  --l600: #c4e800;
+  --l50:  #fbffe6;
+  --i500: #0e0f10;
+  --i400: #2a2b2c;
+  --i300: #5a5b5c;
+  --i200: #8a8b8c;
+  --i100: #d4d5d6;
+  --i50:  #f2f3f4;
+  --srf: #ffffff;
+  --bg:  #f7f8f9;
+  --bdr: #e8e9ea;
+  --txt: #0e0f10;
+  --txt2: #5a5b5c;
+  --primary: #d7ff00;
+  --red: #e53935;
+  --grn: #43a047;
+  --org: #fb8c00;
+
+  /* Motion Easings — Material Design 3 */
+  --ease-std: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-dec: cubic-bezier(0.0, 0, 0.2, 1);
+  --ease-acc: cubic-bezier(0.4, 0, 1.0, 1);
+  --ease-emp: cubic-bezier(0.2, 0, 0.0, 1);
+  --ease-exp: cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  /* Duration tokens */
+  --d1: 100ms;
+  --d2: 150ms;
+  --d3: 200ms;
+  --d4: 250ms;
+  --d5: 300ms;
+  --d6: 400ms;
+  --d7: 500ms;
+
+  --r-sm:  6px;
+  --r-md:  10px;
+  --r-lg:  16px;
+  --r-xl:  20px;
+  --r-pill: 999px;
+}
+
+/* ── BASE ── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Urbanist', sans-serif;
+  background: var(--bg);
+  color: var(--txt);
+  line-height: 1.6;
+}
+
+/* ── LAYOUT ── */
+.shell { display: flex; min-height: 100vh; }
+
+.sidebar {
+  width: 260px;
+  min-height: 100vh;
+  background: var(--i500);
+  padding: 28px 20px;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+  flex-shrink: 0;
+}
+
+.sidebar-logo {
+  font-size: 22px;
+  font-weight: 900;
+  color: var(--l500);
+  letter-spacing: -0.5px;
+  margin-bottom: 6px;
+}
+.sidebar-version {
+  font-size: 11px;
+  font-weight: 600;
+  color: rgba(255,255,255,0.3);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-bottom: 28px;
+}
+
+.nav-section {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.3);
+  padding: 0 8px;
+  margin: 20px 0 6px;
+}
+
+.nav-a {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 12px;
+  border-radius: var(--r-md);
+  font-size: 13px;
+  font-weight: 600;
+  color: rgba(255,255,255,0.6);
+  text-decoration: none;
+  transition: background var(--d2) var(--ease-std), color var(--d2) var(--ease-std);
+  position: relative;
+}
+.nav-a:hover {
+  background: rgba(255,255,255,0.06);
+  color: rgba(255,255,255,0.9);
+}
+.nav-a.active {
+  color: var(--l500);
+  background: rgba(215,255,0,0.08);
+}
+
+.main {
+  flex: 1;
+  padding: 60px 64px;
+  max-width: 960px;
+}
+
+/* ── SECTIONS ── */
+.section {
+  margin-bottom: 80px;
+  scroll-margin-top: 40px;
+}
+
+.section-tag {
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--l600);
+  margin-bottom: 8px;
+}
+
+.section-title {
+  font-size: 36px;
+  font-weight: 800;
+  letter-spacing: -1px;
+  margin-bottom: 12px;
+  color: var(--i500);
+}
+
+.section-desc {
+  font-size: 16px;
+  color: var(--txt2);
+  max-width: 640px;
+  margin-bottom: 36px;
+  line-height: 1.7;
+}
+
+/* ── RULE BLOCKS ── */
+.rule-block {
+  background: white;
+  border-radius: var(--r-lg);
+  border: 1px solid var(--bdr);
+  overflow: hidden;
+  margin-bottom: 20px;
+}
+
+.rule-header {
+  padding: 18px 24px;
+  border-bottom: 1px solid var(--bdr);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.rule-number {
+  width: 28px;
+  height: 28px;
+  background: var(--i500);
+  color: var(--l500);
+  border-radius: var(--r-sm);
+  font-size: 12px;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.rule-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--txt);
+}
+
+.rule-subtitle {
+  font-size: 12px;
+  color: var(--txt2);
+  margin-top: 2px;
+}
+
+.rule-body {
+  padding: 20px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.rule-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+/* ── DEMO BOXES ── */
+.demo-box {
+  background: var(--bg);
+  border-radius: var(--r-md);
+  padding: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 96px;
+  position: relative;
+}
+
+.demo-label {
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--i200);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  position: absolute;
+  top: 8px;
+  left: 12px;
+}
+
+/* ── CODE BLOCKS ── */
+.code-block {
+  background: var(--i500);
+  border-radius: var(--r-md);
+  padding: 18px 20px;
+  overflow-x: auto;
+}
+
+.code-block code {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  color: rgba(255,255,255,0.85);
+  line-height: 1.7;
+  white-space: pre;
+}
+
+.code-block .c-key   { color: #7dd3fc; }  /* CSS property / keyword */
+.code-block .c-val   { color: var(--l400); } /* Value */
+.code-block .c-com   { color: rgba(255,255,255,0.35); } /* Comment */
+.code-block .c-str   { color: #86efac; } /* String */
+.code-block .c-cls   { color: #f9a8d4; } /* Class / selector */
+
+/* ── TOKEN TABLE ── */
+.token-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+.token-table th {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--i200);
+  text-align: left;
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--bdr);
+}
+.token-table td {
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--bdr);
+  vertical-align: middle;
+}
+.token-table tr:last-child td { border-bottom: none; }
+.token-var {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--i400);
+  background: var(--i50);
+  padding: 2px 8px;
+  border-radius: 4px;
+}
+.token-use {
+  color: var(--txt2);
+  font-size: 12px;
+}
+
+/* ── DIVIDER ── */
+.divider {
+  height: 1px;
+  background: var(--bdr);
+  margin: 16px 0;
+}
+
+/* ── CALLOUT ── */
+.callout {
+  background: var(--l50);
+  border-left: 3px solid var(--l500);
+  border-radius: 0 var(--r-md) var(--r-md) 0;
+  padding: 14px 18px;
+  font-size: 13px;
+  color: var(--i400);
+}
+.callout strong { color: var(--i500); }
+
+.callout-red {
+  background: #fff5f5;
+  border-left-color: var(--red);
+}
+
+/* ════════════════════════════════════════════════════════
+   DEMOS — BUTTONS
+════════════════════════════════════════════════════════ */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: 44px;
+  padding: 0 20px;
+  border-radius: var(--r-md);
+  font-family: 'Urbanist', sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  border: none;
+  position: relative;
+  overflow: hidden;
+  transition:
+    background var(--d2) var(--ease-std),
+    color var(--d2) var(--ease-std),
+    transform var(--d2) var(--ease-exp),
+    box-shadow var(--d2) var(--ease-std);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Ripple */
+.btn::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: transparent;
+  border-radius: inherit;
+  transition: background var(--d3) var(--ease-std);
+  pointer-events: none;
+}
+
+.btn-primary {
+  background: var(--l500);
+  color: var(--i500);
+}
+.btn-primary:hover {
+  background: var(--l400);
+  transform: scale(1.03);
+}
+.btn-primary:active {
+  background: var(--l600);
+  transform: scale(0.96);
+}
+
+.btn-secondary {
+  background: var(--i50);
+  color: var(--i500);
+}
+.btn-secondary:hover {
+  background: var(--i100);
+  transform: scale(1.03);
+}
+.btn-secondary:active {
+  background: var(--bdr);
+  transform: scale(0.96);
+}
+
+.btn-ghost {
+  background: transparent;
+  color: var(--i400);
+}
+.btn-ghost:hover {
+  background: var(--i50);
+  color: var(--i500);
+  transform: scale(1.03);
+}
+.btn-ghost:active {
+  background: var(--i100);
+  transform: scale(0.96);
+}
+
+.btn-danger {
+  background: transparent;
+  color: var(--red);
+}
+.btn-danger:hover {
+  background: #fff0f0;
+  transform: scale(1.03);
+}
+.btn-danger:active {
+  transform: scale(0.96);
+}
+
+/* ─ Loading State ─ */
+.btn-loading {
+  pointer-events: none;
+  opacity: 0.7;
+}
+.btn-loading .btn-text { opacity: 0; }
+.btn-loading::before {
+  content: '';
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  border: 2px solid rgba(14,15,16,0.2);
+  border-top-color: var(--i500);
+  border-radius: 50%;
+  animation: spin 600ms linear infinite;
+}
+
+/* ════════════════════════════════════════════════════════
+   DEMOS — PAGE TRANSITION
+════════════════════════════════════════════════════════ */
+@keyframes page-enter {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+    filter: blur(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
+}
+
+@keyframes page-exit {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-8px);
+    filter: blur(3px);
+  }
+}
+
+.page-demo-container {
+  background: var(--bg);
+  border-radius: var(--r-md);
+  height: 140px;
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.page-demo-frame {
+  background: white;
+  border-radius: var(--r-md);
+  padding: 16px 24px;
+  width: 240px;
+  animation: page-enter var(--d5) var(--ease-dec) both;
+}
+
+.page-demo-title {
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+.page-demo-skel {
+  height: 8px;
+  background: var(--i50);
+  border-radius: 4px;
+  margin-bottom: 6px;
+}
+.page-demo-skel:last-child { width: 65%; }
+
+.page-demo-btn {
+  position: absolute;
+  bottom: 12px;
+  right: 12px;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 6px 12px;
+  border-radius: var(--r-md);
+  border: none;
+  cursor: pointer;
+  background: var(--i500);
+  color: var(--l500);
+  transition: opacity var(--d2) var(--ease-std), transform var(--d2) var(--ease-exp);
+}
+.page-demo-btn:hover { transform: scale(1.05); }
+
+/* ════════════════════════════════════════════════════════
+   DEMOS — SIDEBAR PILL
+════════════════════════════════════════════════════════ */
+.sidebar-demo {
+  background: var(--i500);
+  border-radius: var(--r-md);
+  padding: 16px 12px;
+  width: 200px;
+}
+
+.sidebar-demo-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 12px;
+  border-radius: var(--r-md);
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 600;
+  color: rgba(255,255,255,0.5);
+  position: relative;
+  transition:
+    color var(--d2) var(--ease-std);
+}
+
+.sidebar-demo-item:hover {
+  color: rgba(255,255,255,0.8);
+}
+
+.sidebar-demo-item.active {
+  color: var(--i500);
+}
+
+/* THE MAGIC PILL — position absolute, transitions smoothly */
+.sidebar-pill {
+  position: absolute;
+  left: 12px;
+  right: 12px;
+  height: 36px;
+  background: var(--l500);
+  border-radius: var(--r-md);
+  transition:
+    top var(--d5) var(--ease-emp),
+    height var(--d3) var(--ease-std);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.sidebar-demo-item > * { position: relative; z-index: 1; }
+
+.sidebar-demo-icon {
+  width: 18px;
+  height: 18px;
+  opacity: 0.5;
+  transition: opacity var(--d2) var(--ease-std), transform var(--d2) var(--ease-exp);
+  flex-shrink: 0;
+}
+
+.sidebar-demo-item:hover .sidebar-demo-icon {
+  opacity: 0.9;
+  transform: scale(1.15);
+}
+
+.sidebar-demo-item.active .sidebar-demo-icon {
+  opacity: 1;
+}
+
+/* ════════════════════════════════════════════════════════
+   DEMOS — TABS
+════════════════════════════════════════════════════════ */
+.tabs-demo-wrap {
+  background: var(--bg);
+  border-radius: var(--r-md);
+  padding: 20px;
+}
+
+.tabs-demo {
+  display: inline-flex;
+  background: var(--i50);
+  border-radius: var(--r-md);
+  padding: 4px;
+  position: relative;
+  gap: 0;
+}
+
+.tab-pill {
+  position: absolute;
+  top: 4px;
+  height: calc(100% - 8px);
+  background: white;
+  border-radius: calc(var(--r-md) - 2px);
+  transition:
+    left var(--d5) var(--ease-emp),
+    width var(--d5) var(--ease-emp);
+  pointer-events: none;
+  /* Subtle shadow */
+  box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+}
+
+.tab-item {
+  position: relative;
+  z-index: 1;
+  padding: 8px 18px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--i300);
+  cursor: pointer;
+  border-radius: calc(var(--r-md) - 2px);
+  transition: color var(--d2) var(--ease-std);
+  border: none;
+  background: transparent;
+  font-family: inherit;
+  white-space: nowrap;
+}
+
+.tab-item.active {
+  color: var(--i500);
+}
+
+.tab-item:hover:not(.active) {
+  color: var(--i400);
+}
+
+/* ════════════════════════════════════════════════════════
+   DEMOS — MODAL
+════════════════════════════════════════════════════════ */
+.modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(14,15,16,0.0);
+  backdrop-filter: blur(0px);
+  z-index: 1000;
+  align-items: center;
+  justify-content: center;
+  transition:
+    background var(--d4) var(--ease-dec),
+    backdrop-filter var(--d4) var(--ease-dec);
+}
+
+.modal-overlay.visible {
+  display: flex;
+  background: rgba(14,15,16,0.7);
+  backdrop-filter: blur(12px);
+}
+
+.modal-overlay.entering {
+  background: rgba(14,15,16,0.0);
+  backdrop-filter: blur(0px);
+  animation: overlay-in var(--d4) var(--ease-dec) forwards;
+}
+
+.modal-overlay.exiting {
+  animation: overlay-out var(--d3) var(--ease-acc) forwards;
+}
+
+@keyframes overlay-in {
+  to {
+    background: rgba(14,15,16,0.7);
+    backdrop-filter: blur(12px);
+  }
+}
+
+@keyframes overlay-out {
+  to {
+    background: rgba(14,15,16,0.0);
+    backdrop-filter: blur(0px);
+  }
+}
+
+.modal {
+  background: white;
+  border-radius: var(--r-xl);
+  padding: 28px;
+  width: 420px;
+  max-width: calc(100vw - 40px);
+  position: relative;
+  transform: scale(0.88) translateY(20px);
+  opacity: 0;
+  transition:
+    transform var(--d5) var(--ease-dec),
+    opacity var(--d4) var(--ease-dec);
+}
+
+.modal.entering {
+  animation: modal-in var(--d5) var(--ease-dec) forwards;
+}
+
+.modal.exiting {
+  animation: modal-out var(--d3) var(--ease-acc) forwards;
+}
+
+.modal.open {
+  transform: scale(1) translateY(0);
+  opacity: 1;
+}
+
+@keyframes modal-in {
+  from {
+    transform: scale(0.88) translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1) translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes modal-out {
+  from {
+    transform: scale(1) translateY(0);
+    opacity: 1;
+  }
+  to {
+    transform: scale(0.92) translateY(10px);
+    opacity: 0;
+  }
+}
+
+.modal-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.modal-title {
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: -0.3px;
+}
+
+.modal-close {
+  width: 32px;
+  height: 32px;
+  border-radius: var(--r-md);
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--i300);
+  transition:
+    background var(--d2) var(--ease-std),
+    color var(--d2) var(--ease-std),
+    transform var(--d2) var(--ease-exp);
+}
+
+.modal-close:hover {
+  background: var(--i50);
+  color: var(--i500);
+  transform: rotate(90deg) scale(1.1);
+}
+
+.modal-close:active {
+  background: var(--i100);
+  transform: rotate(90deg) scale(0.9);
+}
+
+.modal-desc {
+  font-size: 14px;
+  color: var(--txt2);
+  margin-bottom: 24px;
+  line-height: 1.6;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+/* ════════════════════════════════════════════════════════
+   DEMOS — ICON BUTTONS
+════════════════════════════════════════════════════════ */
+.btn-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--r-pill);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  transition:
+    background var(--d2) var(--ease-std),
+    color var(--d2) var(--ease-std),
+    transform var(--d2) var(--ease-exp);
+  color: var(--i400);
+}
+.btn-icon:hover {
+  background: var(--i50);
+  color: var(--i500);
+  transform: scale(1.12);
+}
+.btn-icon:active {
+  background: var(--i100);
+  transform: scale(0.90);
+}
+.btn-icon:hover svg {
+  animation: icon-pop 300ms var(--ease-exp) forwards;
+}
+.btn-icon.ic-del:hover svg { animation: icon-wiggle 400ms var(--ease-exp) forwards; }
+.btn-icon.ic-send:hover svg { animation: icon-spark 350ms var(--ease-exp) forwards; }
+.btn-icon.ic-sync:hover svg { animation: icon-spin-once 500ms linear forwards; }
+.btn-icon.ic-like:hover svg { animation: icon-bounce 350ms var(--ease-exp) forwards; }
+
+@keyframes icon-pop {
+  0%   { transform: scale(1); }
+  30%  { transform: scale(1.4); }
+  65%  { transform: scale(0.90); }
+  100% { transform: scale(1); }
+}
+@keyframes icon-wiggle {
+  0%,100% { transform: rotate(0); }
+  20%     { transform: rotate(-16deg); }
+  50%     { transform: rotate(12deg); }
+  80%     { transform: rotate(-8deg); }
+}
+@keyframes icon-spark {
+  0%   { transform: scale(1) rotate(0); }
+  25%  { transform: scale(1.5) rotate(-22deg); }
+  60%  { transform: scale(0.88) rotate(12deg); }
+  100% { transform: scale(1) rotate(0); }
+}
+@keyframes icon-spin-once {
+  0%   { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+@keyframes icon-bounce {
+  0%,100% { transform: translateY(0) scale(1); }
+  40%     { transform: translateY(-6px) scale(1.15); }
+  70%     { transform: translateY(1px) scale(0.95); }
+}
+
+/* ════════════════════════════════════════════════════════
+   DEMOS — FORM FIELDS
+════════════════════════════════════════════════════════ */
+.field-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.field-label {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--i400);
+  letter-spacing: 0.3px;
+}
+.field-input {
+  height: 44px;
+  padding: 0 14px;
+  border-radius: var(--r-md);
+  border: 1.5px solid var(--bdr);
+  background: white;
+  font-family: 'Urbanist', sans-serif;
+  font-size: 15px;
+  color: var(--txt);
+  outline: none;
+  transition:
+    border-color var(--d2) var(--ease-std),
+    box-shadow var(--d3) var(--ease-dec);
+}
+.field-input:hover {
+  border-color: var(--i200);
+}
+.field-input:focus {
+  border-color: var(--i500);
+  box-shadow: 0 0 0 3px rgba(14,15,16,0.08);
+}
+.field-input.error {
+  border-color: var(--red);
+  box-shadow: 0 0 0 3px rgba(229,57,53,0.1);
+  animation: shake 300ms var(--ease-std);
+}
+
+@keyframes shake {
+  0%,100% { transform: translateX(0); }
+  20%     { transform: translateX(-6px); }
+  40%     { transform: translateX(5px); }
+  60%     { transform: translateX(-3px); }
+  80%     { transform: translateX(2px); }
+}
+
+.field-hint {
+  font-size: 11px;
+  color: var(--i200);
+  transition: color var(--d2) var(--ease-std);
+}
+.field-wrap:focus-within .field-hint {
+  color: var(--i400);
+}
+.field-hint.error-hint {
+  color: var(--red);
+  animation: fadeIn 200ms var(--ease-dec);
+}
+
+/* ════════════════════════════════════════════════════════
+   DEMOS — TOAST
+════════════════════════════════════════════════════════ */
+.toast-container {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 2000;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  pointer-events: none;
+}
+
+.toast {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 16px;
+  background: var(--i500);
+  border-radius: var(--r-lg);
+  color: white;
+  font-size: 14px;
+  font-weight: 600;
+  max-width: 340px;
+  pointer-events: all;
+  animation: toast-in var(--d5) var(--ease-dec) forwards;
+  transform-origin: bottom right;
+}
+
+.toast.exiting {
+  animation: toast-out var(--d4) var(--ease-acc) forwards;
+}
+
+@keyframes toast-in {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.88);
+    filter: blur(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+  }
+}
+
+@keyframes toast-out {
+  from {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: translateX(30px) scale(0.92);
+  }
+}
+
+.toast-icon {
+  font-size: 18px;
+  flex-shrink: 0;
+}
+
+.toast.toast-success { border-left: 3px solid var(--l500); }
+.toast.toast-error   { border-left: 3px solid var(--red); }
+.toast.toast-info    { border-left: 3px solid #60a5fa; }
+
+/* ── SPIN ── */
+@keyframes spin { 100% { transform: rotate(360deg); } }
+
+/* ── FADE IN ── */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── GRID HELPERS ── */
+.g2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.g3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.flex { display: flex; gap: 12px; flex-wrap: wrap; }
+.flex-center { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+
+/* ── BADGE ── */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 9px;
+  border-radius: var(--r-pill);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+}
+.badge-new { background: var(--l50); color: var(--l600); }
+.badge-must { background: #fff0f0; color: var(--red); }
+
+/* ── SPACER ── */
+.sp { height: 12px; }
+.sp2 { height: 24px; }
+
+/* ── SCROLLBAR ── */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--bdr); border-radius: 3px; }
+</style>
+</head>
+<body>
+
+<div class="shell">
+
+<!-- ════════ SIDEBAR ════════ -->
+<nav class="sidebar">
+  <div class="sidebar-logo">hubia.</div>
+  <div class="sidebar-version">Motion Guide v1.0</div>
+
+  <div class="nav-section">Fundação</div>
+  <a href="#tokens" class="nav-a">Tokens de Motion</a>
+  <a href="#easing-guide" class="nav-a">Guia de Easings</a>
+
+  <div class="nav-section">Componentes</div>
+  <a href="#buttons" class="nav-a">Botões</a>
+  <a href="#icon-buttons" class="nav-a">Icon Buttons</a>
+  <a href="#sidebar-nav" class="nav-a">Sidebar & Pill</a>
+  <a href="#tabs" class="nav-a">Tabs</a>
+  <a href="#modals" class="nav-a">Modais</a>
+  <a href="#forms" class="nav-a">Formulários</a>
+  <a href="#toasts" class="nav-a">Toasts</a>
+
+  <div class="nav-section">Páginas</div>
+  <a href="#page-transitions" class="nav-a">Transições de Página</a>
+  <a href="#stagger" class="nav-a">Stagger de Conteúdo</a>
+
+  <div class="nav-section">Regras</div>
+  <a href="#never" class="nav-a">Proibições</a>
+</nav>
+
+<!-- ════════ MAIN ════════ -->
+<main class="main">
+
+<!-- HERO -->
+<div style="margin-bottom:64px">
+  <div style="display:inline-flex;align-items:center;gap:8px;background:var(--l50);border-radius:var(--r-pill);padding:6px 14px;margin-bottom:16px">
+    <span style="font-size:14px">⚡</span>
+    <span style="font-size:11px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:var(--l600)">Dev Squad · Motion Guide</span>
+  </div>
+  <h1 style="font-size:52px;font-weight:900;letter-spacing:-2px;line-height:1;margin-bottom:16px">Motion &<br>Interaction<br>System</h1>
+  <p style="font-size:17px;color:var(--txt2);max-width:540px;line-height:1.7">
+    Guia técnico completo para implementar animações e microinterações no Hubia. 
+    Cada regra tem demo ao vivo + código. Use como fonte única da verdade.
+  </p>
+  <div class="sp2"></div>
+  <div class="callout">
+    <strong>Instrução para o Cursor:</strong> Este documento define o comportamento de TODOS os elementos interativos do Hubia. Antes de implementar qualquer componente, consulte a seção correspondente aqui. Desvios precisam de aprovação explícita de Pantcho.
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════════
+     SEÇÃO 1 — TOKENS DE MOTION
+════════════════════════════════════════════════════ -->
+<section class="section" id="tokens">
+  <div class="section-tag">Fundação · 01</div>
+  <h2 class="section-title">Tokens de Motion</h2>
+  <p class="section-desc">Nunca use valores mágicos de duração ou curva. Sempre use os tokens CSS. Se não existe token para o caso, use o mais próximo e documente o desvio.</p>
+
+  <div class="rule-block">
+    <div class="rule-header">
+      <div class="rule-number">D</div>
+      <div>
+        <div class="rule-title">Duration Tokens</div>
+        <div class="rule-subtitle">Velocidades disponíveis para transições</div>
+      </div>
+    </div>
+    <div class="rule-body">
+      <table class="token-table">
+        <tr>
+          <th>Token</th>
+          <th>Valor</th>
+          <th>Usar quando</th>
+        </tr>
+        <tr>
+          <td><span class="token-var">--d1</span></td>
+          <td>100ms</td>
+          <td class="token-use">Micro-feedback: hover de cor, bordas. Ultra-rápido.</td>
+        </tr>
+        <tr>
+          <td><span class="token-var">--d2</span></td>
+          <td>150ms</td>
+          <td class="token-use">Hover de botões, ícones, estados de foco.</td>
+        </tr>
+        <tr>
+          <td><span class="token-var">--d3</span></td>
+          <td>200ms</td>
+          <td class="token-use">Dropdowns pequenos, tooltips, chips.</td>
+        </tr>
+        <tr>
+          <td><span class="token-var">--d4</span></td>
+          <td>250ms</td>
+          <td class="token-use">Fade de elementos médios, overlay.</td>
+        </tr>
+        <tr>
+          <td><span class="token-var">--d5</span></td>
+          <td>300ms</td>
+          <td class="token-use"><strong>Padrão principal.</strong> Modais, sidebar pill, tabs.</td>
+        </tr>
+        <tr>
+          <td><span class="token-var">--d6</span></td>
+          <td>400ms</td>
+          <td class="token-use">Transições de página, elementos grandes.</td>
+        </tr>
+        <tr>
+          <td><span class="token-var">--d7</span></td>
+          <td>500ms</td>
+          <td class="token-use">Animações elaboradas, ícones expressivos.</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="rule-block">
+    <div class="rule-header">
+      <div class="rule-number">E</div>
+      <div>
+        <div class="rule-title">Easing Tokens</div>
+        <div class="rule-subtitle">Material Design 3 — sem spring físico, sem bounce exagerado</div>
+      </div>
+    </div>
+    <div class="rule-body">
+      <table class="token-table">
+        <tr>
+          <th>Token</th>
+          <th>Curva</th>
+          <th>Usar quando</th>
+        </tr>
+        <tr>
+          <td><span class="token-var">--ease-std</span></td>
+          <td style="font-family:monospace;font-size:11px">cubic-bezier(0.4, 0, 0.2, 1)</td>
+          <td class="token-use">Movimento dentro da tela. Hover de botões e cards.</td>
+        </tr>
+        <tr>
+          <td><span class="token-var">--ease-dec</span></td>
+          <td style="font-family:monospace;font-size:11px">cubic-bezier(0.0, 0, 0.2, 1)</td>
+          <td class="token-use"><strong>Entrar na tela.</strong> Modais abrindo, dropdowns, toasts.</td>
+        </tr>
+        <tr>
+          <td><span class="token-var">--ease-acc</span></td>
+          <td style="font-family:monospace;font-size:11px">cubic-bezier(0.4, 0, 1.0, 1)</td>
+          <td class="token-use"><strong>Sair da tela.</strong> Modais fechando, toasts sumindo.</td>
+        </tr>
+        <tr>
+          <td><span class="token-var">--ease-emp</span></td>
+          <td style="font-family:monospace;font-size:11px">cubic-bezier(0.2, 0, 0.0, 1)</td>
+          <td class="token-use"><strong>Ações primárias.</strong> Pill da sidebar e das tabs.</td>
+        </tr>
+        <tr>
+          <td><span class="token-var">--ease-exp</span></td>
+          <td style="font-family:monospace;font-size:11px">cubic-bezier(0.34, 1.56, 0.64, 1)</td>
+          <td class="token-use">Ícones animados, badges, elementos lúdicos. Tem leve overshoot.</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════
+     SEÇÃO 2 — BOTÕES
+════════════════════════════════════════════════════ -->
+<section class="section" id="buttons">
+  <div class="section-tag">Componentes · 01</div>
+  <h2 class="section-title">Botões</h2>
+  <p class="section-desc">Todo botão tem 3 estados animados: normal → hover → pressed. A sensação deve ser de pressão física — sobe um pouco, depois afunda.</p>
+
+  <div class="rule-block">
+    <div class="rule-header">
+      <div class="rule-number">1</div>
+      <div>
+        <div class="rule-title">Scale + Cor — Demo ao Vivo</div>
+        <div class="rule-subtitle">Passe o mouse e clique em cada botão</div>
+      </div>
+    </div>
+    <div class="rule-body">
+      <div class="demo-box" style="gap:12px;flex-wrap:wrap">
+        <span class="demo-label">DEMO</span>
+        <button class="btn btn-primary"><span class="btn-text">Publicar</span></button>
+        <button class="btn btn-secondary"><span class="btn-text">Cancelar</span></button>
+        <button class="btn btn-ghost"><span class="btn-text">Ver mais</span></button>
+        <button class="btn btn-danger"><span class="btn-text">Excluir</span></button>
+      </div>
+      <div class="code-block"><code><span class="c-com">/* Todos os botões compartilham estas transições */</span>
+<span class="c-cls">.btn</span> {
+  <span class="c-key">transition</span>:
+    <span class="c-val">background var(--d2) var(--ease-std),
+    color var(--d2) var(--ease-std),
+    transform var(--d2) var(--ease-exp)</span>;  <span class="c-com">/* ease-exp = leve overshoot */</span>
+}
+
+<span class="c-cls">.btn:hover</span>  { <span class="c-key">transform</span>: <span class="c-val">scale(1.03)</span>; }  <span class="c-com">/* sobe levemente */</span>
+<span class="c-cls">.btn:active</span> { <span class="c-key">transform</span>: <span class="c-val">scale(0.96)</span>; }  <span class="c-com">/* afunda no clique */</span></code></div>
+    </div>
+  </div>
+
+  <div class="rule-block">
+    <div class="rule-header">
+      <div class="rule-number">2</div>
+      <div>
+        <div class="rule-title">Loading State</div>
+        <div class="rule-subtitle">Ao disparar uma ação assíncrona</div>
+      </div>
+    </div>
+    <div class="rule-body">
+      <div class="demo-box">
+        <span class="demo-label">DEMO — clique para simular</span>
+        <button class="btn btn-primary" id="btn-loading-demo" onclick="simulateLoading(this)">
+          <span class="btn-text">Salvar projeto</span>
+        </button>
+      </div>
+      <div class="code-block"><code><span class="c-com">/* 1. Ao iniciar request: adiciona classe + desabilita */</span>
+<span class="c-key">button</span>.classList.add(<span class="c-str">'btn-loading'</span>);
+<span class="c-key">button</span>.disabled = <span class="c-val">true</span>;
+
+<span class="c-com">/* 2. CSS: esconde texto, mostra spinner */</span>
+<span class="c-cls">.btn-loading .btn-text</span> { <span class="c-key">opacity</span>: <span class="c-val">0</span>; }
+<span class="c-cls">.btn-loading::before</span> {
+  <span class="c-key">content</span>: <span class="c-str">''</span>;
+  <span class="c-key">position</span>: <span class="c-val">absolute</span>;
+  <span class="c-key">width</span>: <span class="c-val">18px</span>; <span class="c-key">height</span>: <span class="c-val">18px</span>;
+  <span class="c-key">border</span>: <span class="c-val">2px solid rgba(0,0,0,0.15)</span>;
+  <span class="c-key">border-top-color</span>: <span class="c-val">var(--i500)</span>;
+  <span class="c-key">border-radius</span>: <span class="c-val">50%</span>;
+  <span class="c-key">animation</span>: <span class="c-val">spin 600ms linear infinite</span>;
+}</code></div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════
+     SEÇÃO 3 — ICON BUTTONS
+════════════════════════════════════════════════════ -->
+<section class="section" id="icon-buttons">
+  <div class="section-tag">Componentes · 02</div>
+  <h2 class="section-title">Icon Buttons</h2>
+  <p class="section-desc">Cada ícone tem uma animação semântica. Deletar chacoalha (nervoso). Enviar espoleta. Sincronizar gira. Curtir pula. Cada animação reforça o significado da ação.</p>
+
+  <div class="rule-block">
+    <div class="rule-header">
+      <div class="rule-number">3</div>
+      <div>
+        <div class="rule-title">Animações por Semântica — Demo ao Vivo</div>
+        <div class="rule-subtitle">Passe o mouse em cada ícone</div>
+      </div>
+    </div>
+    <div class="rule-body">
+      <div class="demo-box" style="gap:16px">
+        <span class="demo-label">DEMO</span>
+        <!-- Default: pop -->
+        <div style="display:flex;flex-direction:column;align-items:center;gap:6px">
+          <button class="btn-icon" title="Editar">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+          </button>
+          <span style="font-size:10px;color:var(--i200);font-weight:700">pop</span>
+        </div>
+        <!-- Delete: wiggle -->
+        <div style="display:flex;flex-direction:column;align-items:center;gap:6px">
+          <button class="btn-icon ic-del" title="Deletar">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4h6v2"/></svg>
+          </button>
+          <span style="font-size:10px;color:var(--i200);font-weight:700">wiggle</span>
+        </div>
+        <!-- Send: spark -->
+        <div style="display:flex;flex-direction:column;align-items:center;gap:6px">
+          <button class="btn-icon ic-send" title="Enviar">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+          </button>
+          <span style="font-size:10px;color:var(--i200);font-weight:700">spark</span>
+        </div>
+        <!-- Sync: spin -->
+        <div style="display:flex;flex-direction:column;align-items:center;gap:6px">
+          <button class="btn-icon ic-sync" title="Sincronizar">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+          </button>
+          <span style="font-size:10px;color:var(--i200);font-weight:700">spin</span>
+        </div>
+        <!-- Like: bounce -->
+        <div style="display:flex;flex-direction:column;align-items:center;gap:6px">
+          <button class="btn-icon ic-like" title="Curtir">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+          </button>
+          <span style="font-size:10px;color:var(--i200);font-weight:700">bounce</span>
+        </div>
+      </div>
+      <div class="code-block"><code><span class="c-com">/* Regra base: todos os icon buttons fazem "pop" por padrão */</span>
+<span class="c-cls">.btn-icon:hover svg</span>         { <span class="c-key">animation</span>: <span class="c-val">icon-pop 300ms var(--ease-exp) forwards</span>; }
+
+<span class="c-com">/* Semânticas específicas: sobrescrevem o padrão */</span>
+<span class="c-cls">.btn-icon.ic-del:hover svg</span>  { <span class="c-key">animation</span>: <span class="c-val">icon-wiggle 400ms var(--ease-exp) forwards</span>; }
+<span class="c-cls">.btn-icon.ic-send:hover svg</span> { <span class="c-key">animation</span>: <span class="c-val">icon-spark 350ms var(--ease-exp) forwards</span>; }
+<span class="c-cls">.btn-icon.ic-sync:hover svg</span> { <span class="c-key">animation</span>: <span class="c-val">icon-spin-once 500ms linear forwards</span>; }
+<span class="c-cls">.btn-icon.ic-like:hover svg</span> { <span class="c-key">animation</span>: <span class="c-val">icon-bounce 350ms var(--ease-exp) forwards</span>; }
+
+<span class="c-com">/* O container sempre escala no hover/active */</span>
+<span class="c-cls">.btn-icon:hover</span>  { <span class="c-key">transform</span>: <span class="c-val">scale(1.12)</span>; }
+<span class="c-cls">.btn-icon:active</span> { <span class="c-key">transform</span>: <span class="c-val">scale(0.90)</span>; }</code></div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════
+     SEÇÃO 4 — SIDEBAR PILL
+════════════════════════════════════════════════════ -->
+<section class="section" id="sidebar-nav">
+  <div class="section-tag">Componentes · 03</div>
+  <h2 class="section-title">Sidebar & Pill Animada</h2>
+  <p class="section-desc">A pill (destaque do item ativo) não aparece e desaparece — ela <strong>escorrega</strong> de um item para outro. Uma única div se move com CSS transition, dando a sensação de continuidade.</p>
+
+  <div class="rule-block">
+    <div class="rule-header">
+      <div class="rule-number">4</div>
+      <div>
+        <div class="rule-title">Pill Fluida — Demo ao Vivo</div>
+        <div class="rule-subtitle">Clique nos itens para ver a pill escorregar</div>
+      </div>
+    </div>
+    <div class="rule-body">
+      <div class="demo-box">
+        <span class="demo-label">DEMO</span>
+        <div class="sidebar-demo" style="position:relative">
+          <!-- A pill: posição absoluta que vai ser movida via JS/CSS -->
+          <div class="sidebar-pill" id="sidebar-pill" style="top: 8px;"></div>
+          <div class="sidebar-demo-item active" data-index="0" onclick="selectSidebarItem(this, 0)">
+            <svg class="sidebar-demo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+            Dashboard
+          </div>
+          <div class="sidebar-demo-item" data-index="1" onclick="selectSidebarItem(this, 1)">
+            <svg class="sidebar-demo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+            Projetos
+          </div>
+          <div class="sidebar-demo-item" data-index="2" onclick="selectSidebarItem(this, 2)">
+            <svg class="sidebar-demo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            Equipe
+          </div>
+          <div class="sidebar-demo-item" data-index="3" onclick="selectSidebarItem(this, 3)">
+            <svg class="sidebar-demo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M4.93 4.93a10 10 0 0 0 0 14.14"/></svg>
+            Agentes
+          </div>
+        </div>
+      </div>
+
+      <div class="code-block"><code><span class="c-com">/* HTML: pill é um elemento separado dentro do nav */</span>
+&lt;<span class="c-key">nav</span> class=<span class="c-str">"sidebar"</span> style=<span class="c-str">"position:relative"</span>&gt;
+  &lt;<span class="c-key">div</span> class=<span class="c-str">"nav-pill"</span> id=<span class="c-str">"pill"</span>&gt;&lt;/<span class="c-key">div</span>&gt;  <span class="c-com">&lt;!-- só esta div move --&gt;</span>
+  &lt;<span class="c-key">a</span> class=<span class="c-str">"nav-item"</span> data-index=<span class="c-str">"0"</span>&gt;Dashboard&lt;/<span class="c-key">a</span>&gt;
+  &lt;<span class="c-key">a</span> class=<span class="c-str">"nav-item"</span> data-index=<span class="c-str">"1"</span>&gt;Projetos&lt;/<span class="c-key">a</span>&gt;
+&lt;/<span class="c-key">nav</span>&gt;
+
+<span class="c-com">/* CSS: pill tem transition no top */</span>
+<span class="c-cls">.nav-pill</span> {
+  <span class="c-key">position</span>: <span class="c-val">absolute</span>;
+  <span class="c-key">left</span>: <span class="c-val">12px</span>; <span class="c-key">right</span>: <span class="c-val">12px</span>; <span class="c-key">height</span>: <span class="c-val">36px</span>;
+  <span class="c-key">background</span>: <span class="c-val">var(--l500)</span>;
+  <span class="c-key">border-radius</span>: <span class="c-val">var(--r-md)</span>;
+  <span class="c-key">transition</span>: <span class="c-val">top var(--d5) var(--ease-emp)</span>;  <span class="c-com">/* ease-emp é a chave! */</span>
+  <span class="c-key">pointer-events</span>: <span class="c-val">none</span>;  <span class="c-com">/* não bloqueia cliques */</span>
+  <span class="c-key">z-index</span>: <span class="c-val">0</span>;
+}
+
+<span class="c-com">/* JS: ao clicar, mover o top da pill */</span>
+<span class="c-key">function</span> <span class="c-str">selectItem</span>(item) {
+  <span class="c-key">const</span> pill = document.getElementById(<span class="c-str">'pill'</span>);
+  <span class="c-key">const</span> { offsetTop, offsetHeight } = item;
+  pill.style.top = <span class="c-val">`${offsetTop}px`</span>;
+  pill.style.height = <span class="c-val">`${offsetHeight}px`</span>;
+}</code></div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════
+     SEÇÃO 5 — TABS
+════════════════════════════════════════════════════ -->
+<section class="section" id="tabs">
+  <div class="section-tag">Componentes · 04</div>
+  <h2 class="section-title">Tabs com Pill Deslizante</h2>
+  <p class="section-desc">Mesmo princípio da sidebar: uma pill se move horizontalmente. A sensação é de um seletor físico que corre entre as opções.</p>
+
+  <div class="rule-block">
+    <div class="rule-header">
+      <div class="rule-number">5</div>
+      <div>
+        <div class="rule-title">Tabs — Demo ao Vivo</div>
+        <div class="rule-subtitle">Clique nas abas</div>
+      </div>
+    </div>
+    <div class="rule-body">
+      <div class="demo-box" style="flex-direction:column;gap:16px">
+        <span class="demo-label">DEMO</span>
+        <div class="tabs-demo" id="tabs-demo">
+          <div class="tab-pill" id="tab-pill"></div>
+          <button class="tab-item active" onclick="selectTab(this)">Todos</button>
+          <button class="tab-item" onclick="selectTab(this)">Em andamento</button>
+          <button class="tab-item" onclick="selectTab(this)">Concluídos</button>
+          <button class="tab-item" onclick="selectTab(this)">Arquivados</button>
+        </div>
+      </div>
+
+      <div class="code-block"><code><span class="c-com">/* CSS — pill horizontal */</span>
+<span class="c-cls">.tab-pill</span> {
+  <span class="c-key">position</span>: <span class="c-val">absolute</span>;
+  <span class="c-key">top</span>: <span class="c-val">4px</span>;
+  <span class="c-key">height</span>: <span class="c-val">calc(100% - 8px)</span>;
+  <span class="c-key">background</span>: <span class="c-val">white</span>;
+  <span class="c-key">border-radius</span>: <span class="c-val">calc(var(--r-md) - 2px)</span>;
+  <span class="c-key">box-shadow</span>: <span class="c-val">0 1px 4px rgba(0,0,0,0.08)</span>;
+  <span class="c-key">transition</span>:
+    <span class="c-val">left var(--d5) var(--ease-emp),
+    width var(--d5) var(--ease-emp)</span>;
+}
+
+<span class="c-com">/* JS — mover pill para o tab clicado */</span>
+<span class="c-key">function</span> <span class="c-str">selectTab</span>(tab) {
+  <span class="c-key">const</span> pill = document.getElementById(<span class="c-str">'tab-pill'</span>);
+  pill.style.left  = <span class="c-val">`${tab.offsetLeft}px`</span>;
+  pill.style.width = <span class="c-val">`${tab.offsetWidth}px`</span>;
+}</code></div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════
+     SEÇÃO 6 — MODAIS
+════════════════════════════════════════════════════ -->
+<section class="section" id="modals">
+  <div class="section-tag">Componentes · 05</div>
+  <h2 class="section-title">Modais</h2>
+  <p class="section-desc">O modal nunca simplesmente aparece. Ele <strong>cresce de dentro para fora</strong> ao abrir, e <strong>encolhe e sobe</strong> ao fechar. O overlay de fundo também anima: escurece e foca gradualmente.</p>
+
+  <div class="rule-block">
+    <div class="rule-header">
+      <div class="rule-number">6</div>
+      <div>
+        <div class="rule-title">Modal Completo — Demo ao Vivo</div>
+        <div class="rule-subtitle">Clique para abrir. Note o X ao passar o mouse.</div>
+      </div>
+    </div>
+    <div class="rule-body">
+      <div class="demo-box">
+        <span class="demo-label">DEMO</span>
+        <button class="btn btn-primary" onclick="openModal()">Abrir Modal</button>
+      </div>
+
+      <div class="code-block"><code><span class="c-com">/* ── OVERLAY: escurece + blur ao abrir ── */</span>
+<span class="c-cls">.modal-overlay</span> {
+  <span class="c-key">background</span>: <span class="c-val">rgba(14,15,16, 0)</span>;
+  <span class="c-key">backdrop-filter</span>: <span class="c-val">blur(0px)</span>;
+  <span class="c-key">transition</span>:
+    <span class="c-val">background var(--d4) var(--ease-dec),
+    backdrop-filter var(--d4) var(--ease-dec)</span>;
+}
+<span class="c-cls">.modal-overlay.open</span> {
+  <span class="c-key">background</span>: <span class="c-val">rgba(14,15,16, 0.70)</span>;
+  <span class="c-key">backdrop-filter</span>: <span class="c-val">blur(12px)</span>;
+}
+
+<span class="c-com">/* ── MODAL CONTAINER: escala + sobe ao entrar ── */</span>
+<span class="c-cls">.modal</span> {
+  <span class="c-key">transform</span>: <span class="c-val">scale(0.88) translateY(20px)</span>;
+  <span class="c-key">opacity</span>: <span class="c-val">0</span>;
+  <span class="c-key">transition</span>:
+    <span class="c-val">transform var(--d5) var(--ease-dec),
+    opacity var(--d4) var(--ease-dec)</span>;
+}
+<span class="c-cls">.modal.open</span> {
+  <span class="c-key">transform</span>: <span class="c-val">scale(1) translateY(0)</span>;
+  <span class="c-key">opacity</span>: <span class="c-val">1</span>;
+}
+
+<span class="c-com">/* ── BOTÃO FECHAR: gira 90° ao hover ── */</span>
+<span class="c-cls">.modal-close</span> {
+  <span class="c-key">transition</span>:
+    <span class="c-val">background var(--d2) var(--ease-std),
+    transform var(--d2) var(--ease-exp)</span>;
+}
+<span class="c-cls">.modal-close:hover</span> {
+  <span class="c-key">background</span>: <span class="c-val">var(--i50)</span>;
+  <span class="c-key">transform</span>: <span class="c-val">rotate(90deg) scale(1.1)</span>;
+}
+<span class="c-cls">.modal-close:active</span> {
+  <span class="c-key">transform</span>: <span class="c-val">rotate(90deg) scale(0.9)</span>;
+}
+
+<span class="c-com">/* ── FECHAR: encolhe para baixo ao sair ── */</span>
+<span class="c-cls">.modal.closing</span> {
+  <span class="c-key">transform</span>: <span class="c-val">scale(0.92) translateY(10px)</span>;
+  <span class="c-key">opacity</span>: <span class="c-val">0</span>;
+  <span class="c-key">transition</span>:
+    <span class="c-val">transform var(--d3) var(--ease-acc),
+    opacity var(--d3) var(--ease-acc)</span>;  <span class="c-com">/* acc = sai acelerando */</span>
+}
+
+<span class="c-com">/* JS — lógica de abrir/fechar */</span>
+<span class="c-key">async function</span> <span class="c-str">closeModal</span>() {
+  modal.classList.add(<span class="c-str">'closing'</span>);   <span class="c-com">// inicia animação saída</span>
+  overlay.classList.remove(<span class="c-str">'open'</span>);  <span class="c-com">// fundo some junto</span>
+  <span class="c-key">await</span> sleep(<span class="c-val">300</span>);              <span class="c-com">// espera animação terminar</span>
+  overlay.style.display = <span class="c-str">'none'</span>;
+}</code></div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════
+     SEÇÃO 7 — FORMULÁRIOS
+════════════════════════════════════════════════════ -->
+<section class="section" id="forms">
+  <div class="section-tag">Componentes · 06</div>
+  <h2 class="section-title">Formulários & Inputs</h2>
+  <p class="section-desc">Campos de formulário comunicam estado via borda e glow. Foco expande com um halo sutil. Erro chacoalha para chamar atenção.</p>
+
+  <div class="rule-block">
+    <div class="rule-header">
+      <div class="rule-number">7</div>
+      <div>
+        <div class="rule-title">Estados de Input — Demo ao Vivo</div>
+        <div class="rule-subtitle">Clique nos campos. No último, clique "Testar erro".</div>
+      </div>
+    </div>
+    <div class="rule-body">
+      <div class="demo-box" style="flex-direction:column;gap:16px;align-items:stretch;padding:24px">
+        <span class="demo-label">DEMO</span>
+        <div class="field-wrap">
+          <label class="field-label">Nome do projeto</label>
+          <input class="field-input" type="text" placeholder="Ex: Campanha Q4">
+          <span class="field-hint">Máximo 60 caracteres</span>
+        </div>
+        <div class="field-wrap">
+          <label class="field-label">Código do cliente <span style="color:var(--red)">*</span></label>
+          <input class="field-input" type="text" id="error-input" placeholder="Ex: CLT-0042">
+          <span class="field-hint" id="error-hint">Apenas letras e números</span>
+        </div>
+        <button class="btn btn-danger" style="align-self:flex-start" onclick="triggerFieldError()">Testar erro</button>
+      </div>
+
+      <div class="code-block"><code><span class="c-com">/* Hover: borda mais visível */</span>
+<span class="c-cls">.field-input:hover</span>  { <span class="c-key">border-color</span>: <span class="c-val">var(--i200)</span>; }
+
+<span class="c-com">/* Focus: borda preta + glow sutil */</span>
+<span class="c-cls">.field-input:focus</span> {
+  <span class="c-key">border-color</span>: <span class="c-val">var(--i500)</span>;
+  <span class="c-key">box-shadow</span>: <span class="c-val">0 0 0 3px rgba(14,15,16, 0.08)</span>;
+  <span class="c-key">transition</span>:
+    <span class="c-val">border-color var(--d2) var(--ease-std),
+    box-shadow var(--d3) var(--ease-dec)</span>;
+}
+
+<span class="c-com">/* Erro: borda vermelha + glow vermelho + shake */</span>
+<span class="c-cls">.field-input.error</span> {
+  <span class="c-key">border-color</span>: <span class="c-val">var(--red)</span>;
+  <span class="c-key">box-shadow</span>: <span class="c-val">0 0 0 3px rgba(229,57,53, 0.10)</span>;
+  <span class="c-key">animation</span>: <span class="c-val">shake 300ms var(--ease-std)</span>;
+}
+
+<span class="c-com">/* Shake animation */</span>
+@keyframes shake {
+  0%,100% { <span class="c-key">transform</span>: <span class="c-val">translateX(0)</span>; }
+  20%     { <span class="c-key">transform</span>: <span class="c-val">translateX(-6px)</span>; }
+  40%     { <span class="c-key">transform</span>: <span class="c-val">translateX(5px)</span>; }
+  60%     { <span class="c-key">transform</span>: <span class="c-val">translateX(-3px)</span>; }
+  80%     { <span class="c-key">transform</span>: <span class="c-val">translateX(2px)</span>; }
+}</code></div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════
+     SEÇÃO 8 — TOASTS
+════════════════════════════════════════════════════ -->
+<section class="section" id="toasts">
+  <div class="section-tag">Componentes · 07</div>
+  <h2 class="section-title">Toasts & Notificações</h2>
+  <p class="section-desc">Toasts entram de baixo com scale + blur, e saem deslizando para a direita. Nunca aparecem instantaneamente. Auto-dismiss após 3.5s.</p>
+
+  <div class="rule-block">
+    <div class="rule-header">
+      <div class="rule-number">8</div>
+      <div>
+        <div class="rule-title">Toasts — Demo ao Vivo</div>
+        <div class="rule-subtitle">Dispare cada tipo</div>
+      </div>
+    </div>
+    <div class="rule-body">
+      <div class="demo-box" style="gap:10px;flex-wrap:wrap">
+        <span class="demo-label">DEMO</span>
+        <button class="btn btn-secondary" onclick="showToast('success', '✅', 'Projeto salvo com sucesso!')">Sucesso</button>
+        <button class="btn btn-secondary" onclick="showToast('error', '⚠️', 'Erro ao conectar com a API')">Erro</button>
+        <button class="btn btn-secondary" onclick="showToast('info', '💡', 'Nova versão disponível')">Info</button>
+      </div>
+
+      <div class="code-block"><code><span class="c-com">/* Entrar: sobe + aparece + desblura */</span>
+@<span class="c-key">keyframes</span> toast-in {
+  from {
+    <span class="c-key">opacity</span>: <span class="c-val">0</span>;
+    <span class="c-key">transform</span>: <span class="c-val">translateY(20px) scale(0.88)</span>;
+    <span class="c-key">filter</span>: <span class="c-val">blur(4px)</span>;
+  }
+  to {
+    <span class="c-key">opacity</span>: <span class="c-val">1</span>;
+    <span class="c-key">transform</span>: <span class="c-val">translateY(0) scale(1)</span>;
+    <span class="c-key">filter</span>: <span class="c-val">blur(0)</span>;
+  }
+}
+
+<span class="c-com">/* Sair: desliza para a direita */</span>
+@<span class="c-key">keyframes</span> toast-out {
+  to {
+    <span class="c-key">opacity</span>: <span class="c-val">0</span>;
+    <span class="c-key">transform</span>: <span class="c-val">translateX(30px) scale(0.92)</span>;
+  }
+}
+
+<span class="c-cls">.toast</span>        { <span class="c-key">animation</span>: <span class="c-val">toast-in var(--d5) var(--ease-dec) forwards</span>; }
+<span class="c-cls">.toast.exiting</span> { <span class="c-key">animation</span>: <span class="c-val">toast-out var(--d4) var(--ease-acc) forwards</span>; }
+
+<span class="c-com">/* JS — auto-dismiss com animação */</span>
+<span class="c-key">function</span> <span class="c-str">dismiss</span>(toast) {
+  toast.classList.add(<span class="c-str">'exiting'</span>);  <span class="c-com">// inicia saída</span>
+  setTimeout(() => toast.remove(), <span class="c-val">400</span>);  <span class="c-com">// remove após anim</span>
+}
+setTimeout(() => dismiss(toast), <span class="c-val">3500</span>);  <span class="c-com">// auto-dismiss</span></code></div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════
+     SEÇÃO 9 — TRANSIÇÕES DE PÁGINA
+════════════════════════════════════════════════════ -->
+<section class="section" id="page-transitions">
+  <div class="section-tag">Páginas · 01</div>
+  <h2 class="section-title">Transições de Página</h2>
+  <p class="section-desc">A troca de página nunca é abrupta. O conteúdo da página anterior sobe e desblura ao sair. O novo conteúdo desce e desblura ao entrar. A duração total deve ser de <strong>300ms ou menos</strong> — rápido o suficiente para não atrasar, lento o suficiente para se perceber.</p>
+
+  <div class="rule-block">
+    <div class="rule-header">
+      <div class="rule-number">9</div>
+      <div>
+        <div class="rule-title">Page Transition — Demo ao Vivo</div>
+        <div class="rule-subtitle">Clique para simular troca de rota</div>
+      </div>
+    </div>
+    <div class="rule-body">
+      <div class="page-demo-container">
+        <div class="page-demo-frame" id="page-demo">
+          <div class="page-demo-title" id="page-demo-title">Dashboard</div>
+          <div class="page-demo-skel"></div>
+          <div class="page-demo-skel"></div>
+          <div class="page-demo-skel"></div>
+        </div>
+        <button class="page-demo-btn" onclick="simulatePageTransition()">Trocar página →</button>
+      </div>
+
+      <div class="code-block"><code><span class="c-com">/* Layout wrapper — envolve todo o conteúdo da página */</span>
+<span class="c-com">/* Em Next.js: coloque no layout.tsx ou use Framer Motion */</span>
+
+<span class="c-com">/* Entrar: vem de baixo com blur */</span>
+@<span class="c-key">keyframes</span> page-enter {
+  from {
+    <span class="c-key">opacity</span>: <span class="c-val">0</span>;
+    <span class="c-key">transform</span>: <span class="c-val">translateY(12px)</span>;
+    <span class="c-key">filter</span>: <span class="c-val">blur(4px)</span>;
+  }
+  to {
+    <span class="c-key">opacity</span>: <span class="c-val">1</span>;
+    <span class="c-key">transform</span>: <span class="c-val">translateY(0)</span>;
+    <span class="c-key">filter</span>: <span class="c-val">blur(0)</span>;
+  }
+}
+
+<span class="c-com">/* Sair: vai para cima com blur */</span>
+@<span class="c-key">keyframes</span> page-exit {
+  to {
+    <span class="c-key">opacity</span>: <span class="c-val">0</span>;
+    <span class="c-key">transform</span>: <span class="c-val">translateY(-8px)</span>;
+    <span class="c-key">filter</span>: <span class="c-val">blur(3px)</span>;
+  }
+}
+
+<span class="c-cls">.page-wrapper</span> {
+  <span class="c-key">animation</span>: <span class="c-val">page-enter var(--d5) var(--ease-dec) both</span>;
+}
+
+<span class="c-com">/* Next.js — implementação com Framer Motion */</span>
+<span class="c-com">// app/layout.tsx</span>
+&lt;<span class="c-key">AnimatePresence</span> mode=<span class="c-str">"wait"</span>&gt;
+  &lt;<span class="c-key">motion.div</span>
+    key={pathname}
+    initial={{ opacity: <span class="c-val">0</span>, y: <span class="c-val">12</span>, filter: <span class="c-str">'blur(4px)'</span> }}
+    animate={{ opacity: <span class="c-val">1</span>, y: <span class="c-val">0</span>,  filter: <span class="c-str">'blur(0px)'</span> }}
+    exit={{    opacity: <span class="c-val">0</span>, y: <span class="c-val">-8</span>, filter: <span class="c-str">'blur(3px)'</span> }}
+    transition={{ duration: <span class="c-val">0.3</span>, ease: [<span class="c-val">0, 0, 0.2, 1</span>] }}
+  &gt;
+    {children}
+  &lt;/<span class="c-key">motion.div</span>&gt;
+&lt;/<span class="c-key">AnimatePresence</span>&gt;</code></div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════
+     SEÇÃO 10 — STAGGER
+════════════════════════════════════════════════════ -->
+<section class="section" id="stagger">
+  <div class="section-tag">Páginas · 02</div>
+  <h2 class="section-title">Stagger de Conteúdo</h2>
+  <p class="section-desc">Quando uma lista de cards ou itens aparece, cada um entra com um pequeno atraso progressivo. Dá a sensação de conteúdo sendo "distribuído" na tela, não apenas aparecendo tudo de uma vez.</p>
+
+  <div class="rule-block">
+    <div class="rule-header">
+      <div class="rule-number">10</div>
+      <div>
+        <div class="rule-title">Stagger de Cards — Demo ao Vivo</div>
+        <div class="rule-subtitle">Clique para reanimar</div>
+      </div>
+    </div>
+    <div class="rule-body">
+      <div class="demo-box" style="flex-direction:column;gap:8px;align-items:stretch;padding:20px">
+        <span class="demo-label">DEMO — clique para replay</span>
+        <div id="stagger-demo" style="display:flex;flex-direction:column;gap:8px" onclick="replayStagger()">
+          <div class="stagger-item" style="background:white;border-radius:10px;padding:14px;display:flex;align-items:center;gap:12px;cursor:pointer">
+            <div style="width:36px;height:36px;background:var(--l50);border-radius:8px;flex-shrink:0"></div>
+            <div><div style="font-weight:700;font-size:14px">Projeto Alpha</div><div style="font-size:12px;color:var(--i200)">Em andamento · 3 agentes</div></div>
+          </div>
+          <div class="stagger-item" style="background:white;border-radius:10px;padding:14px;display:flex;align-items:center;gap:12px;cursor:pointer">
+            <div style="width:36px;height:36px;background:var(--l50);border-radius:8px;flex-shrink:0"></div>
+            <div><div style="font-weight:700;font-size:14px">Campanha Q4</div><div style="font-size:12px;color:var(--i200)">Review · 1 agente</div></div>
+          </div>
+          <div class="stagger-item" style="background:white;border-radius:10px;padding:14px;display:flex;align-items:center;gap:12px;cursor:pointer">
+            <div style="width:36px;height:36px;background:var(--l50);border-radius:8px;flex-shrink:0"></div>
+            <div><div style="font-weight:700;font-size:14px">Ninaah — Posts</div><div style="font-size:12px;color:var(--i200)">Concluído · 5 imagens</div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="code-block"><code><span class="c-com">/* CSS — animação base para cada item */</span>
+@<span class="c-key">keyframes</span> item-enter {
+  from {
+    <span class="c-key">opacity</span>: <span class="c-val">0</span>;
+    <span class="c-key">transform</span>: <span class="c-val">translateY(16px)</span>;
+  }
+  to {
+    <span class="c-key">opacity</span>: <span class="c-val">1</span>;
+    <span class="c-key">transform</span>: <span class="c-val">translateY(0)</span>;
+  }
+}
+
+<span class="c-cls">.list-item</span> {
+  <span class="c-key">opacity</span>: <span class="c-val">0</span>;
+  <span class="c-key">animation</span>: <span class="c-val">item-enter var(--d5) var(--ease-dec) forwards</span>;
+}
+
+<span class="c-com">/* Delay progressivo via CSS ou inline style */</span>
+<span class="c-cls">.list-item:nth-child(1)</span> { <span class="c-key">animation-delay</span>: <span class="c-val">0ms</span>; }
+<span class="c-cls">.list-item:nth-child(2)</span> { <span class="c-key">animation-delay</span>: <span class="c-val">60ms</span>; }
+<span class="c-cls">.list-item:nth-child(3)</span> { <span class="c-key">animation-delay</span>: <span class="c-val">120ms</span>; }
+<span class="c-com">/* Incremento: 60ms por item. Máx: 300ms (5+ itens). */</span>
+
+<span class="c-com">/* React/Next.js — aplicar via inline style */</span>
+{items.map((item, i) =&gt; (
+  &lt;<span class="c-key">div</span>
+    className=<span class="c-str">"list-item"</span>
+    style={{ animationDelay: <span class="c-val">`${i * 60}ms`</span> }}
+  &gt;
+    {item.name}
+  &lt;/<span class="c-key">div</span>&gt;
+))}</code></div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════
+     SEÇÃO 11 — PROIBIÇÕES
+════════════════════════════════════════════════════ -->
+<section class="section" id="never">
+  <div class="section-tag">Regras · 01</div>
+  <h2 class="section-title">Nunca Fazer</h2>
+  <p class="section-desc">Esta lista de proibições é tão importante quanto as regras positivas. Cada item foi escolhido para manter o sistema elegante e consistente.</p>
+
+  <div class="rule-block">
+    <div class="rule-header">
+      <div class="rule-number" style="background:#fff0f0;color:var(--red)">✕</div>
+      <div>
+        <div class="rule-title">Proibições Absolutas</div>
+        <div class="rule-subtitle">Violações precisam de aprovação explícita de Pantcho</div>
+      </div>
+    </div>
+    <div class="rule-body">
+      <div style="display:flex;flex-direction:column;gap:10px">
+
+        <div class="callout callout-red">
+          <strong>Nunca use <code>animation-timing-function: ease</code> ou <code>linear</code> para elementos de UI.</strong>
+          Sempre use os tokens definidos: <code>var(--ease-std)</code>, <code>var(--ease-dec)</code>, etc.
+        </div>
+
+        <div class="callout callout-red">
+          <strong>Nunca use <code>transition: all</code>.</strong>
+          Especifique exatamente o que deve animar: <code>transition: transform 300ms, opacity 250ms</code>. 
+          "All" anima propriedades que não devem animar e causa performance ruim.
+        </div>
+
+        <div class="callout callout-red">
+          <strong>Nunca use <code>box-shadow</code> para simular profundidade de card.</strong>
+          O Hubia é flat. Separação visual é feita com cor de fundo e borda de 1px.
+        </div>
+
+        <div class="callout callout-red">
+          <strong>Nunca abra um modal sem overlay animado.</strong>
+          O overlay de blur + escurecimento é obrigatório. Modais sem overlay parecem quebrados.
+        </div>
+
+        <div class="callout callout-red">
+          <strong>Nunca use <code>visibility: hidden</code> para esconder modais/toasts.</strong>
+          Use <code>opacity + transform</code> para poder animar a entrada e saída.
+        </div>
+
+        <div class="callout callout-red">
+          <strong>Nunca use <code>bounce</code> ou <code>spring</code> em elementos de UI funcionais.</strong>
+          O <code>--ease-exp</code> tem um leve overshoot controlado — isso é permitido apenas em ícones e badges.
+          Navbars, modais e formulários usam <code>--ease-emp</code> ou <code>--ease-dec</code>.
+        </div>
+
+        <div class="callout callout-red">
+          <strong>Nunca deixe transições de página acima de 400ms no total.</strong>
+          Exit: 200ms. Enter: 300ms. O usuário não pode sentir que está esperando.
+        </div>
+
+        <div class="callout callout-red">
+          <strong>Nunca anime <code>width</code> ou <code>height</code> diretamente.</strong>
+          Para expandir/recolher, use <code>max-height</code> ou <code>scale</code>. Animações de width/height causam reflow e são lentas.
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<div style="border-top:1px solid var(--bdr);padding-top:32px;margin-top:32px;display:flex;align-items:center;justify-content:space-between">
+  <div>
+    <div style="font-size:13px;font-weight:700;color:var(--i500)">Hubia Motion Guide v1.0</div>
+    <div style="font-size:12px;color:var(--i200);margin-top:2px">Pantcho Agency · Dev Squad</div>
+  </div>
+  <div style="font-size:11px;color:var(--i200);font-family:'JetBrains Mono',monospace">
+    Design System v3.5 · Material Design 3
+  </div>
+</div>
+
+</main>
+</div>
+
+<!-- ════════ MODAL (fixed) ════════ -->
+<div class="modal-overlay" id="modal-overlay" style="display:none" onclick="handleOverlayClick(event)">
+  <div class="modal" id="modal">
+    <div class="modal-header">
+      <div class="modal-title">Confirmar publicação</div>
+      <button class="modal-close" onclick="closeModal()">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <p class="modal-desc">O projeto será publicado e ficará visível para todos os membros da equipe. Esta ação não pode ser desfeita diretamente.</p>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" onclick="closeModal()">Cancelar</button>
+      <button class="btn btn-primary" onclick="closeModal()">Publicar agora</button>
+    </div>
+  </div>
+</div>
+
+<!-- ════════ TOAST CONTAINER (fixed) ════════ -->
+<div class="toast-container" id="toast-container"></div>
+
+<!-- ════════ STAGGER STYLES ════════ -->
+<style>
+@keyframes item-enter {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.stagger-item {
+  opacity: 0;
+  animation: item-enter var(--d5) var(--ease-dec) forwards;
+}
+.stagger-item:nth-child(1) { animation-delay: 0ms; }
+.stagger-item:nth-child(2) { animation-delay: 60ms; }
+.stagger-item:nth-child(3) { animation-delay: 120ms; }
+</style>
+
+<script>
+/* ════ MODAL ════ */
+const overlay = document.getElementById('modal-overlay');
+const modal   = document.getElementById('modal');
+
+function openModal() {
+  overlay.style.display = 'flex';
+  overlay.style.background = 'rgba(14,15,16,0)';
+  overlay.style.backdropFilter = 'blur(0px)';
+  modal.style.transform = 'scale(0.88) translateY(20px)';
+  modal.style.opacity = '0';
+
+  requestAnimationFrame(() => {
+    overlay.style.transition = 'background 250ms cubic-bezier(0,0,0.2,1), backdrop-filter 250ms cubic-bezier(0,0,0.2,1)';
+    overlay.style.background = 'rgba(14,15,16,0.70)';
+    overlay.style.backdropFilter = 'blur(12px)';
+    modal.style.transition = 'transform 300ms cubic-bezier(0,0,0.2,1), opacity 250ms cubic-bezier(0,0,0.2,1)';
+    modal.style.transform = 'scale(1) translateY(0)';
+    modal.style.opacity = '1';
+  });
+}
+
+function closeModal() {
+  overlay.style.transition = 'background 200ms cubic-bezier(0.4,0,1,1), backdrop-filter 200ms cubic-bezier(0.4,0,1,1)';
+  modal.style.transition = 'transform 200ms cubic-bezier(0.4,0,1,1), opacity 200ms cubic-bezier(0.4,0,1,1)';
+  overlay.style.background = 'rgba(14,15,16,0)';
+  overlay.style.backdropFilter = 'blur(0px)';
+  modal.style.transform = 'scale(0.92) translateY(10px)';
+  modal.style.opacity = '0';
+  setTimeout(() => { overlay.style.display = 'none'; }, 220);
+}
+
+function handleOverlayClick(e) {
+  if (e.target === overlay) closeModal();
+}
+
+/* ════ LOADING BUTTON ════ */
+function simulateLoading(btn) {
+  btn.classList.add('btn-loading');
+  btn.disabled = true;
+  setTimeout(() => {
+    btn.classList.remove('btn-loading');
+    btn.disabled = false;
+    showToast('success', '✅', 'Projeto salvo com sucesso!');
+  }, 2200);
+}
+
+/* ════ SIDEBAR PILL ════ */
+function selectSidebarItem(el, index) {
+  document.querySelectorAll('.sidebar-demo-item').forEach(i => i.classList.remove('active'));
+  el.classList.add('active');
+  const pill = document.getElementById('sidebar-pill');
+  pill.style.top = el.offsetTop + 'px';
+  pill.style.height = el.offsetHeight + 'px';
+}
+// Init pill position
+window.addEventListener('DOMContentLoaded', () => {
+  const first = document.querySelector('.sidebar-demo-item.active');
+  if (first) {
+    const pill = document.getElementById('sidebar-pill');
+    pill.style.top = first.offsetTop + 'px';
+    pill.style.height = first.offsetHeight + 'px';
+  }
+  // Init tabs pill
+  initTabs();
+});
+
+/* ════ TABS ════ */
+function initTabs() {
+  const activeTab = document.querySelector('.tab-item.active');
+  const pill = document.getElementById('tab-pill');
+  if (activeTab && pill) {
+    pill.style.left = activeTab.offsetLeft + 'px';
+    pill.style.width = activeTab.offsetWidth + 'px';
+  }
+}
+
+function selectTab(el) {
+  document.querySelectorAll('.tab-item').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+  const pill = document.getElementById('tab-pill');
+  pill.style.left = el.offsetLeft + 'px';
+  pill.style.width = el.offsetWidth + 'px';
+}
+
+/* ════ PAGE TRANSITION DEMO ════ */
+const pages = ['Dashboard', 'Projetos', 'Agentes', 'Gerador', 'Calendário'];
+let currentPage = 0;
+
+function simulatePageTransition() {
+  const frame = document.getElementById('page-demo');
+  const title = document.getElementById('page-demo-title');
+  
+  // Exit
+  frame.style.transition = 'opacity 180ms cubic-bezier(0.4,0,1,1), transform 180ms cubic-bezier(0.4,0,1,1), filter 180ms cubic-bezier(0.4,0,1,1)';
+  frame.style.opacity = '0';
+  frame.style.transform = 'translateY(-8px)';
+  frame.style.filter = 'blur(3px)';
+  
+  setTimeout(() => {
+    currentPage = (currentPage + 1) % pages.length;
+    title.textContent = pages[currentPage];
+    frame.style.transition = 'none';
+    frame.style.transform = 'translateY(12px)';
+    frame.style.filter = 'blur(4px)';
+    frame.style.opacity = '0';
+    
+    requestAnimationFrame(() => {
+      frame.style.transition = 'opacity 300ms cubic-bezier(0,0,0.2,1), transform 300ms cubic-bezier(0,0,0.2,1), filter 300ms cubic-bezier(0,0,0.2,1)';
+      frame.style.opacity = '1';
+      frame.style.transform = 'translateY(0)';
+      frame.style.filter = 'blur(0)';
+    });
+  }, 200);
+}
+
+/* ════ STAGGER REPLAY ════ */
+function replayStagger() {
+  const items = document.querySelectorAll('.stagger-item');
+  items.forEach(item => {
+    item.style.animation = 'none';
+    item.offsetHeight; // force reflow
+    item.style.animation = '';
+  });
+}
+
+/* ════ FIELD ERROR ════ */
+function triggerFieldError() {
+  const input = document.getElementById('error-input');
+  const hint  = document.getElementById('error-hint');
+  input.classList.remove('error');
+  hint.classList.remove('error-hint');
+  void input.offsetWidth; // force reflow para reanimar
+  input.classList.add('error');
+  hint.textContent = 'Formato inválido. Use apenas letras e números.';
+  hint.classList.add('error-hint');
+  input.style.animation = 'none';
+  void input.offsetWidth;
+  input.style.animation = '';
+  setTimeout(() => {
+    input.classList.remove('error');
+    hint.classList.remove('error-hint');
+    hint.textContent = 'Apenas letras e números';
+  }, 3000);
+}
+
+/* ════ TOASTS ════ */
+function showToast(type, icon, message) {
+  const container = document.getElementById('toast-container');
+  const toast = document.createElement('div');
+  toast.className = `toast toast-${type}`;
+  toast.innerHTML = `<span class="toast-icon">${icon}</span><span>${message}</span>`;
+  container.appendChild(toast);
+  
+  setTimeout(() => {
+    toast.classList.add('exiting');
+    setTimeout(() => toast.remove(), 400);
+  }, 3500);
+}
+</script>
+</body>
+</html>

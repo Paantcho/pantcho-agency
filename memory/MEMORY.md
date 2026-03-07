@@ -25,6 +25,10 @@ Atualizado quando há decisão importante, preferência nova, ou lição aprendi
 ## Stack Padrão (Dev Squad)
 Next.js 15+ / TypeScript / Tailwind / Shadcn / Supabase / Prisma / Vercel / Figma MCP
 
+## Motion e Interação (Hubia)
+- **Documento único para motion:** `directives/HUBIA-Motion-Guide.html` — apenas animações, easings, durações, hover/focus, modais, transições. Componentes e elementos visuais vêm do Design System (outro documento). Todos os agentes devem consultar o Motion Guide ao trabalhar com motion ou interação.
+- **Agente responsável:** Motion & Interação (dev-squad) — especialista que deixa a interface fluida, gostosa e elegante nesse aspecto.
+
 ## Creators Ativas (Audiovisual Squad)
 - **Ninaah Dornfeld** — `audiovisual-squad/memory/creators/ninaah/`
 

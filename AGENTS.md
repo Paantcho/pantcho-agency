@@ -13,6 +13,7 @@ ORQUESTRADOR GLOBAL (CEO)
 ├── DEV SQUAD (Engenharia & Sistemas)
 │   📍 Local: dev-squad/
 │   ├── Agente: Desenvolvimento (Full-stack, QA, Segurança) — qualquer tipo de app: web, mobile (Android/Apple), landing, sistema interno, etc.
+│   ├── Agente: Motion & Interação — apenas motion, animações e interações (hover, focus, modais, transições); consulta directives/HUBIA-Motion-Guide.html; deixa a interface fluida e elegante
 │   └── Agente: Criador de Agentes (Fábrica de novos squads/agentes quando não existir especialista)
 │
 ├── AUDIOVISUAL SQUAD (Creators & Estúdio)
