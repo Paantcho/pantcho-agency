@@ -1,0 +1,43 @@
+# CLAUDE.md — Briefing Permanente do Dev Squad
+
+## Sobre o Projeto
+Hubia é uma plataforma SaaS multi-tenant da Pantcho Agency.
+Stack: Next.js 15, TypeScript, Tailwind, Shadcn/UI, Supabase, Prisma, Vercel.
+App em: hubia-app/ nesta pasta.
+Idioma: Português brasileiro em todos os outputs.
+
+## Documentos Obrigatórios (ler SEMPRE antes de agir)
+- AGENTS.md — arquitetura de squads e agentes
+- RULES.md — regras invioláveis de execução
+- memory/MEMORY.md — decisões e preferências do usuário
+- PRD-v4.md — requisitos completos do produto (se existir)
+- BACKLOG-delivery-v1.md — épicos e plano de entrega (se existir)
+
+## Figma
+- Chave do arquivo: LuXTz9U7A7dNgdOO5Vt50S
+- MCP disponível: figma-developer-mcp (claude.ai Figma)
+- Sempre usar get_design_context com clientLanguages: html,css e clientFrameworks: react,next.js
+- Nodes principais: 11:5848 (color system), 11:4292 (Limão palette), 7:422, 7:758, 7:1156, 8:1721, 9:79
+
+## Regras de Design (INVIOLÁVEIS)
+- 100% flat — zero  elementos UI
+- Tipografia exclusiva: Urbanist (Bold, SemiBold, Regular)
+- Cor primária: Limão-500 #D7FF00 / Ink-500 #0E0F10
+- Modais: dark blur overlay (rgba 70% + backdrop-filter blur 12px)
+- Sidebar: flat, sem submenus aninhados — navegação interna por tabs
+- Animações: sutis e fluidas, Material Design 3 motion principles
+
+## Multi-Tenancy (OBRIGATÓRIO)
+- organization_id em todas as queries — sem exceção
+- RLS no Supabase em todas as tabelas
+- API keys sempre criptografadas, nunca plaintext
+- Três camadas: agência interna / usuários individuais / enterprise white-label
+
+## Segurança
+- NUNCA expor chaves de API em código
+- .env.local SEMPRE no .gitignore
+- Validação server-side com Zod em toda API route
+
+## Ciclo de Trabalho
+PLAN → EXECUTE → REFLECT
+Nunca entregar sem revisar. Pergunta antes de agir se houver dúvida.
