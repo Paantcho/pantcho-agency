@@ -1,0 +1,3959 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hubia — Design System v3.5</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Urbanist:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════════════════════════════════════════════
+   TOKENS — Hubia Design System v3.2
+═══════════════════════════════════════════════════════════════ */
+:root {
+  /* Limão tonal — valores exatos do Figma */
+  --l50:#fbffe6; --l100:#f3ffb0; --l200:#edff8a; --l300:#e4ff54;
+  --l400:#dfff33; --l500:#d7ff00; --l600:#c4e800; --l700:#99b500;
+  --l800:#768c00; --l900:#5a6b00;
+
+  /* ── EXTENDED PALETTE — Material 3 Pastéis (opcional, requer aprovação) ── */
+  /* Rose — categorias criativas, creator cards femininos */
+  --rose50:#fff0f3; --rose100:#ffd6df; --rose200:#ffb3c1; --rose300:#ff8fa3;
+  --rose400:#ff6b85; --rose500:#f04060; --rose600:#d42d4d; --rose700:#a81c3a;
+  --rose800:#7c1028; --rose900:#520819;
+  --rose-bg:#ffe4ec; --rose-on:#7c1028;
+
+  /* Sky — links alt, info suave, integration cards */
+  --sky50:#eaf4fb; --sky100:#cce9f5; --sky200:#9dd4ed; --sky300:#66bae3;
+  --sky400:#33a0d9; --sky500:#0288d1; --sky600:#016fad; --sky700:#015689;
+  --sky800:#013d65; --sky900:#002541;
+  --sky-bg:#e0f2fe; --sky-on:#015689;
+
+  /* Teal — success alternativo, approval status */
+  --teal50:#e0f7f4; --teal100:#b2ebe7; --teal200:#80d9d3; --teal300:#4dc9bf;
+  --teal400:#26bab5; --teal500:#00897b; --teal600:#007066; --teal700:#005a52;
+  --teal800:#00433d; --teal900:#002d29;
+  --teal-bg:#d5f5f2; --teal-on:#005a52;
+
+  /* Amber — warning quente, soft alert, KPI cards */
+  --amb50:#fff8e7; --amb100:#ffecb5; --amb200:#ffde7a; --amb300:#ffcf40;
+  --amb400:#ffc11a; --amb500:#ffb300; --amb600:#e09000; --amb700:#b36e00;
+  --amb800:#7a4a00; --amb900:#4d2e00;
+  --amb-bg:#fff3cd; --amb-on:#7a4a00;
+
+  /* Indigo — alt ao violet p/ AV Squad, future squads */
+  --ind50:#eef0fb; --ind100:#d5d9f5; --ind200:#adbaee; --ind300:#849ae7;
+  --ind400:#617de0; --ind500:#3f51b5; --ind600:#3344a0; --ind700:#263589;
+  --ind800:#1a2772; --ind900:#0e1a5c;
+  --ind-bg:#e3e5f5; --ind-on:#263589;
+
+  /* Ink tonal */
+  --i50:#F5F5F6; --i100:#E8E8E9; --i200:#CDCDCE;
+  --i300:#5E5E5F; --i400:#3E3F40; --i500:#0E0F10;
+
+  /* Status colours */
+  --red:#FF4444;    --red-bg:#FFECEC;
+  --grn:#00CC88;    --grn-bg:#E6FFF5; --grn-dk:#00995F;
+  --org:#FF8800;    --org-bg:#FFF5E6;
+  --cyn:#00CCFF;    --cyn-bg:#E6FAFF;
+  --pur:#7C3AED;    --pur-bg:#EDE9FE;
+
+  /* Semantic */
+  --bg:#F5F5F0; --srf:#FFFFFF; --srf2:#F8F8F4;
+  --txt:var(--i500); --txt2:var(--i300); --txt3:var(--i200);
+  --bdr:#E2E2E2; --bdr2:var(--i100);
+  --primary:var(--l500); --primary-hover:var(--l400); --primary-press:var(--l600);
+
+  /* MD3 State layers */
+  --state-hover:rgba(215,255,0,0.1);
+  --state-pressed:rgba(215,255,0,0.18);
+  --state-focused:rgba(14,15,16,.10);
+
+  /* MD3 Easing — from spec */
+  --ease-std:  cubic-bezier(0.4,0,0.2,1);
+  --ease-dec:  cubic-bezier(0.0,0,0.2,1);
+  --ease-acc:  cubic-bezier(0.4,0,1.0,1);
+  --ease-emp:  cubic-bezier(0.2,0,0.0,1);
+  --ease-exp:  cubic-bezier(0.34,1.56,0.64,1);
+
+  /* MD3 Duration tokens */
+  --d0:50ms; --d1:100ms; --d2:150ms;
+  --d3:200ms; --d4:250ms; --d5:300ms;
+  --d6:400ms; --d7:500ms;
+
+  /* Radius */
+  --r-xs:4px; --r-sm:8px; --r-md:12px;
+  --r-lg:16px; --r-xl:24px; --r-pill:9999px;
+
+  /* Spacing */
+  --sp-xs:4px; --sp-sm:8px; --sp-md:16px;
+  --sp-lg:24px; --sp-xl:32px; --sp-2xl:48px;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   DARK MODE — cobertura COMPLETA de todos os componentes
+═══════════════════════════════════════════════════════════════ */
+[data-theme="dark"] {
+  --bg:#0a0b0c;
+  --srf:#111213;
+  --srf2:#181a1b;
+  --txt:#FFFFFF;
+  --txt2:rgba(255,255,255,0.55);
+  --txt3:rgba(255,255,255,0.25);
+  --bdr:rgba(255,255,255,0.1);
+  --bdr2:rgba(255,255,255,0.06);
+  --input-bg:#1c1d1e;
+  --input-bg-focus:#222324;
+  --red-bg:rgba(255,68,68,0.14);
+  --grn-bg:rgba(0,204,136,0.14);
+  --org-bg:rgba(255,136,0,0.14);
+  --cyn-bg:rgba(0,204,255,0.14);
+  --pur-bg:rgba(124,58,237,0.14);
+  --state-hover:rgba(255,255,255,0.07);
+  --state-pressed:rgba(255,255,255,0.12);
+  --state-focused:rgba(215,255,0,0.12);
+}
+/* ── BASE ── */
+[data-theme="dark"] body{background:var(--bg);color:var(--txt)}
+[data-theme="dark"] .shell{background:var(--bg)}
+[data-theme="dark"] .code{background:#1e1f20;color:rgba(255,255,255,0.65)}
+
+/* ── NAV ── */
+[data-theme="dark"] .left-nav{background:#0d0e0f;border-color:var(--bdr)}
+[data-theme="dark"] .nav-logo{color:#fff}
+[data-theme="dark"] .nav-version{background:rgba(215,255,0,0.15);color:var(--l400)}
+[data-theme="dark"] .nav-sec{color:rgba(255,255,255,0.3)}
+[data-theme="dark"] .nav-a{color:rgba(255,255,255,0.5)}
+[data-theme="dark"] .nav-a:hover{color:#fff;background:rgba(255,255,255,0.06)}
+[data-theme="dark"] .nav-a.on{color:var(--l400);background:rgba(215,255,0,0.08);border-left-color:var(--l500)}
+
+/* ── HERO ── */
+[data-theme="dark"] .hero{background:#0d0e0f}
+[data-theme="dark"] .hero h1{color:#fff}
+[data-theme="dark"] .hero p{color:rgba(255,255,255,0.4)}
+[data-theme="dark"] .hero-badge{background:rgba(215,255,0,0.12);color:var(--l500);border-color:rgba(215,255,0,0.2)}
+
+/* ── SECTIONS ── */
+[data-theme="dark"] .sec{border-color:var(--bdr)}
+[data-theme="dark"] .sec-tag{color:var(--l400)}
+[data-theme="dark"] .sec-h{color:#fff}
+[data-theme="dark"] .sec-p{color:rgba(255,255,255,0.5)}
+[data-theme="dark"] .sub-h{color:rgba(255,255,255,0.85)}
+[data-theme="dark"] .sub-p{color:rgba(255,255,255,0.45)}
+[data-theme="dark"] .lbl{color:rgba(255,255,255,0.3)}
+
+/* ── CONTAINERS ── */
+[data-theme="dark"] .box{background:#151617;border-color:var(--bdr)}
+[data-theme="dark"] .box.bg{background:#0d0e0f}
+[data-theme="dark"] .rule{background:#1a1b1c}
+
+/* ── TYPOGRAPHY ── */
+[data-theme="dark"] .type-specimen{border-left-color:var(--l500)}
+[data-theme="dark"] .type-specimen p:first-child{color:rgba(255,255,255,0.35)}
+
+/* ── COLOR TOKENS ── */
+[data-theme="dark"] .tonal-chip{border-color:var(--bdr)}
+[data-theme="dark"] .tonal-info{background:var(--srf)}
+[data-theme="dark"] .tonal-info b{color:rgba(255,255,255,0.85)}
+[data-theme="dark"] .tonal-info code{color:rgba(255,255,255,0.35)}
+[data-theme="dark"] .state-item{background:var(--srf);border-color:var(--bdr);color:rgba(255,255,255,0.7)}
+[data-theme="dark"] .state-item code{color:rgba(255,255,255,0.3)}
+[data-theme="dark"] .token-name{color:rgba(255,255,255,0.65)}
+[data-theme="dark"] .token-val{color:rgba(255,255,255,0.3)}
+[data-theme="dark"] .token-row{border-color:var(--bdr)}
+
+/* ── BUTTONS — dark mode overrides ── */
+/* Filled: Limão bg → preto text. OK em dark também */
+/* Tonal: era l100/l700 → em dark: fundo escuro limão, texto limão */
+[data-theme="dark"] .btn-t{background:rgba(215,255,0,0.12);color:var(--l300)}
+[data-theme="dark"] .btn-t:hover{background:rgba(215,255,0,0.2);color:var(--l200)}
+[data-theme="dark"] .btn-t:active{background:rgba(215,255,0,0.28);color:var(--l100)}
+/* Outlined: borda e texto visíveis */
+[data-theme="dark"] .btn-o{color:rgba(255,255,255,0.85);border-color:rgba(255,255,255,0.2)}
+[data-theme="dark"] .btn-o:hover{border-color:rgba(255,255,255,0.45);background:rgba(255,255,255,0.07);color:#fff}
+[data-theme="dark"] .btn-o:active{background:rgba(255,255,255,0.1)}
+/* Ghost: texto visível */
+[data-theme="dark"] .btn-g{color:rgba(255,255,255,0.55)}
+[data-theme="dark"] .btn-g:hover{color:#fff;background:rgba(255,255,255,0.07)}
+[data-theme="dark"] .btn-g:active{background:rgba(255,255,255,0.12)}
+/* Ink button fica igual — já é escuro */
+
+/* ── CARDS ── */
+[data-theme="dark"] .card-w{background:var(--srf);border-color:var(--bdr)}
+[data-theme="dark"] .card-b{background:var(--l500)}
+[data-theme="dark"] .card-header{border-color:var(--bdr)}
+[data-theme="dark"] .card-b .kpi-label,[data-theme="dark"] .card-b .kpi-val,[data-theme="dark"] .card-b *{color:#0E0F10}
+[data-theme="dark"] .kpi-label{color:rgba(255,255,255,0.4)}
+[data-theme="dark"] .kpi-val{color:#fff}
+
+/* ── TAGS DE STATUS ── */
+[data-theme="dark"] .tag{border-color:transparent}
+
+/* ── TABELAS ── */
+[data-theme="dark"] .table-wrap{border-color:var(--bdr)}
+[data-theme="dark"] .data-table thead{background:#1c1d1e}
+[data-theme="dark"] .data-table th{color:rgba(255,255,255,0.45);border-bottom-color:var(--bdr)}
+[data-theme="dark"] .data-table th:hover{background:rgba(215,255,0,0.07);color:var(--l400)}
+[data-theme="dark"] .data-table th.sorted{color:var(--l400)}
+[data-theme="dark"] .data-table td{color:rgba(255,255,255,0.85);border-bottom-color:rgba(255,255,255,0.05)}
+[data-theme="dark"] .data-table tbody tr:nth-child(even){background:rgba(255,255,255,0.025)}
+[data-theme="dark"] .data-table tbody tr:hover{background:rgba(215,255,0,0.06)}
+[data-theme="dark"] .data-table tbody tr:active{background:rgba(215,255,0,0.1)}
+[data-theme="dark"] .sort-arrow{opacity:0.25}
+/* Forensic table — header já é escuro, manter */
+[data-theme="dark"] .table-forensic tbody tr:nth-child(even){background:rgba(255,255,255,0.03)}
+
+/* ── FORMULÁRIOS ── */
+[data-theme="dark"] .form-label{color:rgba(255,255,255,0.65)}
+[data-theme="dark"] .form-hint{color:rgba(255,255,255,0.3)}
+[data-theme="dark"] .form-error{color:#ff6b6b}
+[data-theme="dark"] .input{background:var(--input-bg);border-color:transparent;color:#fff}
+[data-theme="dark"] .input::placeholder{color:rgba(255,255,255,0.2)}
+[data-theme="dark"] .input:hover{border-color:rgba(255,255,255,0.18)}
+[data-theme="dark"] .input:focus{border-color:var(--l500);background:var(--input-bg-focus);box-shadow:0 0 0 2.5px rgba(215,255,0,0.18)}
+[data-theme="dark"] .input.error{background:rgba(255,68,68,0.08);border-color:var(--red)}
+[data-theme="dark"] .input.success{background:rgba(0,204,136,0.08);border-color:var(--grn)}
+[data-theme="dark"] .input-icon{color:rgba(255,255,255,0.3)}
+
+/* Checkbox: OFF = escuro + borda sutil. ON = Limão + check preto */
+[data-theme="dark"] .checkbox-box{background:var(--input-bg);border-color:rgba(255,255,255,0.2)}
+[data-theme="dark"] .checkbox-wrap input:checked~.checkbox-box{background:var(--l500);border-color:var(--l500)}
+[data-theme="dark"] .checkbox-wrap input:checked~.checkbox-box svg{stroke:#0E0F10}
+[data-theme="dark"] .checkbox-label{color:rgba(255,255,255,0.85)}
+
+/* Radio: OFF = escuro. ON = Limão inner dot */
+[data-theme="dark"] .radio-dot{background:var(--input-bg);border-color:rgba(255,255,255,0.2)}
+[data-theme="dark"] .radio-wrap input:checked~.radio-dot{border-color:var(--l500)}
+[data-theme="dark"] .radio-wrap input:checked~.radio-dot::after{background:var(--l500)}
+
+/* Toggle: OFF = cinza escuro + thumb branco. ON = Limão + thumb preto */
+[data-theme="dark"] .toggle-track{background:rgba(255,255,255,0.15)}
+[data-theme="dark"] .toggle-thumb{background:#fff}
+[data-theme="dark"] .toggle-wrap input:checked~.toggle-track{background:var(--l500)}
+[data-theme="dark"] .toggle-wrap input:checked~.toggle-track .toggle-thumb{background:#0E0F10}
+
+/* ── SEARCH ── */
+[data-theme="dark"] .search-wrap input{background:var(--input-bg);border-color:transparent;color:#fff}
+[data-theme="dark"] .search-wrap input::placeholder{color:rgba(255,255,255,0.2)}
+[data-theme="dark"] .search-wrap input:focus{border-color:var(--l500);box-shadow:0 0 0 2.5px rgba(215,255,0,0.18)}
+[data-theme="dark"] .search-icon{color:rgba(255,255,255,0.3)}
+[data-theme="dark"] .search-clear{color:rgba(255,255,255,0.35)}
+[data-theme="dark"] .search-clear:hover{color:#fff;background:rgba(255,255,255,0.08)}
+
+/* ── SELECT/DROPDOWN ── */
+[data-theme="dark"] .select-label{color:rgba(255,255,255,0.4)}
+[data-theme="dark"] .select-trigger{background:var(--input-bg);border-color:transparent;color:#fff}
+[data-theme="dark"] .select-trigger:hover{border-color:rgba(255,255,255,0.18)}
+[data-theme="dark"] .select-chevron{color:rgba(255,255,255,0.4)}
+[data-theme="dark"] .select-dropdown{background:#1e1f20;border-color:var(--bdr)}
+[data-theme="dark"] .select-opt{color:rgba(255,255,255,0.75)}
+[data-theme="dark"] .select-opt:hover{background:rgba(255,255,255,0.07);color:#fff}
+[data-theme="dark"] .select-opt.active{background:rgba(215,255,0,0.1);color:var(--l400)}
+
+/* ── CHIPS/FILTROS ── */
+[data-theme="dark"] .chip{background:rgba(255,255,255,0.07);border-color:transparent;color:rgba(255,255,255,0.55)}
+[data-theme="dark"] .chip:hover{background:rgba(255,255,255,0.12);color:rgba(255,255,255,0.85)}
+/* Fundo Limão → conteúdo PRETO obrigatório */
+[data-theme="dark"] .chip.active{background:var(--l500);color:#0E0F10!important;border-color:var(--l500)}
+
+/* ── SIDEBAR ── */
+[data-theme="dark"] .sidebar-demo{background:#0d0e0f;border-color:var(--bdr)}
+[data-theme="dark"] .sidebar-logo{color:#fff}
+[data-theme="dark"] .sb-section{color:rgba(255,255,255,0.25)}
+[data-theme="dark"] .sb-group{color:rgba(255,255,255,0.25)}
+[data-theme="dark"] .sb-div{background:rgba(255,255,255,0.07)}
+[data-theme="dark"] .sb-item{color:rgba(255,255,255,0.45)}
+[data-theme="dark"] .sb-item svg{color:rgba(255,255,255,0.3)}
+/* Hover: sobretom branco muito sutil — NÃO preto */
+[data-theme="dark"] .sb-item:hover{background:rgba(255,255,255,0.06);color:rgba(255,255,255,0.85)}
+[data-theme="dark"] .sb-item:hover svg{color:rgba(255,255,255,0.65)}
+/* Active: pill Limão → tudo dentro PRETO obrigatório */
+[data-theme="dark"] .sb-pill{background:var(--l500)}
+[data-theme="dark"] .sb-item.active,
+[data-theme="dark"] .sb-item.active:hover{color:#0E0F10!important;font-weight:700}
+[data-theme="dark"] .sb-item.active svg,
+[data-theme="dark"] .sb-item.active:hover svg{color:#0E0F10!important;stroke:#0E0F10}
+[data-theme="dark"] .sb-item.active .sb-label{color:#0E0F10!important}
+[data-theme="dark"] .sb-badge{background:var(--l500);color:#0E0F10}
+[data-theme="dark"] .sb-item.active .sb-badge{background:rgba(14,15,16,0.18);color:#0E0F10}
+[data-theme="dark"] .sb-ava{background:var(--l500);color:#0E0F10}
+[data-theme="dark"] .sb-user p:first-child{color:#fff}
+[data-theme="dark"] .sb-user p:last-child{color:rgba(255,255,255,0.35)}
+[data-theme="dark"] .sb-footer:hover{background:rgba(255,255,255,0.05)}
+
+/* ── TABS ── */
+[data-theme="dark"] .tabs-bar{border-color:var(--bdr)}
+[data-theme="dark"] .tab{color:rgba(255,255,255,0.35)}
+[data-theme="dark"] .tab:hover{color:rgba(255,255,255,0.75);background:rgba(255,255,255,0.05)}
+[data-theme="dark"] .tab.active{color:#fff}
+
+/* ── BREADCRUMB ── */
+[data-theme="dark"] .bc-item{color:rgba(255,255,255,0.4)}
+[data-theme="dark"] .bc-sep{color:rgba(255,255,255,0.2)}
+[data-theme="dark"] .bc-item.active{color:#fff}
+[data-theme="dark"] .bc-item:hover{color:rgba(255,255,255,0.8)}
+
+/* ── PAGINATION ── */
+/* Hover = sobretom branco. Ativo = Limão → texto preto */
+[data-theme="dark"] .pag-btn{background:transparent;border-color:rgba(255,255,255,0.1);color:rgba(255,255,255,0.5)}
+[data-theme="dark"] .pag-btn:hover{background:rgba(255,255,255,0.08);color:rgba(255,255,255,0.9);border-color:rgba(255,255,255,0.2)}
+[data-theme="dark"] .pag-btn.active{background:var(--l500);color:#0E0F10;border-color:var(--l500)}
+
+/* ── MODAIS ── */
+[data-theme="dark"] .modal-wrap{background:rgba(0,0,0,0.82)}
+[data-theme="dark"] .modal-box{background:#141516}
+[data-theme="dark"] .modal-header{border-color:var(--bdr)}
+[data-theme="dark"] .modal-footer{border-color:var(--bdr)}
+[data-theme="dark"] .modal-h{color:#fff}
+[data-theme="dark"] .modal-p{color:rgba(255,255,255,0.5)}
+[data-theme="dark"] .modal-close{color:rgba(255,255,255,0.35)}
+[data-theme="dark"] .modal-close:hover{background:rgba(255,255,255,0.07);color:#fff}
+
+/* ── TOASTS ── */
+[data-theme="dark"] .toast{background:#1e1f20;border-color:var(--bdr);color:#fff}
+[data-theme="dark"] .toast-title{color:#fff}
+[data-theme="dark"] .toast-msg{color:rgba(255,255,255,0.55)}
+[data-theme="dark"] .toast-close{color:rgba(255,255,255,0.3)}
+[data-theme="dark"] .toast-close:hover{color:#fff}
+
+/* ── BANNERS ── */
+[data-theme="dark"] .banner{background:rgba(255,255,255,0.04);border-color:var(--bdr)}
+[data-theme="dark"] .banner-title{color:#fff}
+[data-theme="dark"] .banner-msg{color:rgba(255,255,255,0.55)}
+
+/* ── TOOLTIPS ── */
+[data-theme="dark"] .tooltip-content{background:#d8d8d8;color:#0E0F10}
+[data-theme="dark"] .tooltip-content::after{border-top-color:#d8d8d8}
+
+/* ── ACCORDION ── */
+[data-theme="dark"] .acc-item{border-color:var(--bdr)}
+[data-theme="dark"] .acc-head{color:rgba(255,255,255,0.85)}
+[data-theme="dark"] .acc-icon{color:rgba(255,255,255,0.4)}
+[data-theme="dark"] .acc-body{color:rgba(255,255,255,0.5)}
+[data-theme="dark"] .acc-item:hover .acc-head{color:#fff}
+
+/* ── SKELETON ── */
+[data-theme="dark"] .skel{background:linear-gradient(90deg,#1c1d1e 25%,#242526 50%,#1c1d1e 75%);background-size:200% 100%}
+
+/* ── PROGRESS ── */
+[data-theme="dark"] .progress-track{background:rgba(255,255,255,0.08)}
+[data-theme="dark"] .progress-label{color:rgba(255,255,255,0.55)}
+[data-theme="dark"] .progress-pct{color:rgba(255,255,255,0.4)}
+
+/* ── AVATARS ── */
+[data-theme="dark"] .avatar-ring{border-color:var(--l500)}
+
+/* ── EMPTY STATES ── */
+[data-theme="dark"] .empty-icon{color:rgba(255,255,255,0.2)}
+[data-theme="dark"] .empty-title{color:rgba(255,255,255,0.65)}
+[data-theme="dark"] .empty-desc{color:rgba(255,255,255,0.35)}
+
+/* ── SPINNERS ── */
+[data-theme="dark"] .spinner-track{border-color:rgba(255,255,255,0.1)}
+
+/* ── GLASS ── */
+[data-theme="dark"] .glass-demo-bg{background:linear-gradient(135deg,#0d1a0d 0%,#0a0e1a 50%,#1a0d1a 100%)}
+[data-theme="dark"] .glass-rule{background:rgba(255,255,255,0.04);border-color:var(--bdr);color:rgba(255,255,255,0.7)}
+[data-theme="dark"] .glass-when{color:rgba(255,255,255,0.85)}
+[data-theme="dark"] .glass-when-sub{color:rgba(255,255,255,0.4)}
+
+/* ── MISC ── */
+[data-theme="dark"] .divider-label{color:rgba(255,255,255,0.3);background:var(--bg)}
+[data-theme="dark"] .divider{border-color:var(--bdr)}
+
+/* ── COLOR PICKER ── */
+[data-theme="dark"] .cp-wrap .input{background:var(--input-bg);color:#fff}
+
+/* ── Theme Toggle ── */
+.theme-toggle{position:fixed;top:18px;right:24px;z-index:9999;display:flex;align-items:center;gap:0;background:var(--srf);border:1.5px solid var(--bdr);border-radius:var(--r-pill);padding:3px;transition:background var(--d3) var(--ease-std),border-color var(--d3) var(--ease-std)}
+.theme-toggle-btn{padding:5px 14px;border-radius:var(--r-pill);border:none;background:transparent;font-family:'Urbanist',sans-serif;font-size:12px;font-weight:700;color:var(--txt2);cursor:pointer;letter-spacing:0.04em;text-transform:uppercase;transition:all var(--d2) var(--ease-std)}
+.theme-toggle-btn.active{background:var(--i500);color:#fff}
+[data-theme="dark"] .theme-toggle{background:#1a1b1c;border-color:rgba(255,255,255,0.1)}
+[data-theme="dark"] .theme-toggle-btn{color:rgba(255,255,255,0.3)}
+[data-theme="dark"] .theme-toggle-btn.active{background:var(--l500);color:var(--i500)}
+
+/* ═══════════════════════════════════════════════════════════════
+   RESET & BASE
+═══════════════════════════════════════════════════════════════ */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Urbanist',sans-serif;
+  background:var(--bg);color:var(--txt);
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+}
+button,input,select,textarea{font-family:inherit}
+a{color:inherit;text-decoration:none}
+img{display:block;max-width:100%}
+
+/* ═══════════════════════════════════════════════════════════════
+   SHELL LAYOUT
+═══════════════════════════════════════════════════════════════ */
+.shell{display:flex;min-height:100vh}
+
+/* LEFT NAV */
+.left-nav{
+  width:220px;flex-shrink:0;
+  background:var(--srf);
+  border-right:1px solid var(--bdr);
+  position:sticky;top:0;height:100vh;
+  overflow-y:auto;padding:24px 0 16px;
+  scrollbar-width:none;
+}
+.left-nav::-webkit-scrollbar{display:none}
+.nav-logo{
+  padding:0 18px 22px;
+  font-size:20px;font-weight:900;letter-spacing:-0.6px;
+}
+.nav-logo em{color:var(--primary);font-style:normal}
+.nav-version{
+  display:inline-block;font-size:9px;font-weight:700;
+  letter-spacing:1px;text-transform:uppercase;
+  background:var(--l100);color:var(--l700);
+  padding:2px 7px;border-radius:var(--r-pill);margin-left:4px;
+  vertical-align:middle;
+}
+.nav-sec{
+  padding:12px 18px 3px;
+  font-size:9px;font-weight:700;letter-spacing:1.5px;
+  text-transform:uppercase;color:var(--i300);
+}
+.nav-a{
+  display:block;padding:6px 18px;
+  font-size:13px;font-weight:500;color:var(--i400);
+  transition:color var(--d2) var(--ease-std),background var(--d2) var(--ease-std);
+  border-radius:0;
+}
+.nav-a:hover{color:var(--txt);background:var(--l50)}
+.nav-a.on{color:var(--txt);font-weight:700;background:var(--l100);border-left:2px solid var(--primary)}
+
+/* MAIN */
+main{flex:1;overflow-x:hidden;padding-bottom:100px}
+
+/* ═══════════════════════════════════════════════════════════════
+   SECTION STRUCTURE
+═══════════════════════════════════════════════════════════════ */
+.sec{padding:52px 56px 0}
+.sec+.sec{border-top:1px solid var(--bdr);margin-top:56px}
+.sec-tag{
+  font-size:9px;font-weight:700;letter-spacing:2px;
+  text-transform:uppercase;color:var(--i300);margin-bottom:6px;
+}
+.sec-h{font-size:32px;font-weight:900;letter-spacing:-0.6px;margin-bottom:6px}
+.sec-p{font-size:15px;color:var(--txt2);max-width:580px;line-height:1.65;margin-bottom:32px}
+.sub{margin-top:40px}
+.sub-h{font-size:17px;font-weight:700;margin-bottom:4px}
+.sub-p{font-size:13px;color:var(--txt2);margin-bottom:16px;line-height:1.6}
+
+/* Rule callout */
+.rule{
+  background:var(--i500);border-radius:var(--r-lg);
+  padding:14px 18px;display:flex;gap:10px;margin-bottom:24px;align-items:flex-start;
+}
+.rule-icon{font-size:16px;flex-shrink:0;margin-top:1px}
+.rule p{font-size:13px;color:rgba(255,255,255,.65);line-height:1.65}
+.rule em{color:var(--primary);font-style:normal}
+
+/* Demo containers */
+.box{background:var(--srf);border-radius:var(--r-lg);padding:24px;border:1px solid var(--bdr)}
+.box.dark{background:var(--i500);border-color:transparent}
+.box.bg{background:var(--bg);border-color:transparent}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-bottom:12px}
+.row:last-child{margin-bottom:0}
+.lbl{font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--i300);margin-bottom:10px}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px}
+.g4{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:12px}
+.code{font-family:monospace;font-size:11px;background:var(--i50);padding:2px 7px;border-radius:4px;color:var(--i400)}
+.mt8{margin-top:8px}.mt16{margin-top:16px}.mt24{margin-top:24px}
+.mb8{margin-bottom:8px}.mb16{margin-bottom:16px}.mb24{margin-bottom:24px}
+
+/* ═══════════════════════════════════════════════════════════════
+   HERO
+═══════════════════════════════════════════════════════════════ */
+.hero{
+  background:var(--i500);padding:52px 56px 48px;
+  position:relative;overflow:hidden;
+}
+.hero::before{
+  content:'';position:absolute;
+  width:500px;height:500px;border-radius:50%;
+  background:var(--primary);opacity:.04;
+  top:-200px;right:-100px;
+}
+.hero::after{
+  content:'';position:absolute;
+  width:200px;height:200px;border-radius:50%;
+  background:var(--primary);opacity:.06;
+  bottom:-60px;left:200px;
+}
+.hero-badge{
+  display:inline-flex;align-items:center;gap:6px;
+  background:rgba(215,255,0,.1);border:1px solid rgba(215,255,0,.2);
+  color:var(--primary);font-size:9px;font-weight:700;
+  letter-spacing:1.5px;text-transform:uppercase;
+  padding:4px 12px;border-radius:var(--r-pill);margin-bottom:20px;
+}
+.hero h1{
+  font-size:52px;font-weight:900;color:#fff;
+  letter-spacing:-2px;line-height:1.0;margin-bottom:14px;
+}
+.hero h1 em{color:var(--primary);font-style:normal}
+.hero p{font-size:15px;color:rgba(255,255,255,.38);max-width:500px;line-height:1.7}
+
+/* ═══════════════════════════════════════════════════════════════
+   COLOR SCALES
+═══════════════════════════════════════════════════════════════ */
+.scale{display:flex;height:56px;border-radius:var(--r-lg);overflow:hidden}
+.sw{
+  flex:1;position:relative;cursor:default;
+  transition:flex var(--d4) var(--ease-std);
+  display:flex;align-items:flex-end;justify-content:center;padding-bottom:6px;
+}
+.sw:hover{flex:3}
+.sw span{
+  font-size:9px;font-weight:700;opacity:0;white-space:nowrap;
+  transition:opacity var(--d2) var(--ease-std);
+}
+.sw:hover span{opacity:1}
+.sw.base{outline:3px solid rgba(14,15,16,.5);outline-offset:-3px;border-radius:2px}
+
+.tonal-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px;margin-top:16px}
+.tonal-chip{border-radius:var(--r-md);overflow:hidden;border:1px solid var(--bdr)}
+.tonal-sw{height:60px}
+.tonal-info{background:var(--srf);padding:8px 10px}
+.tonal-info b{font-size:11px;display:block;margin-bottom:2px}
+.tonal-info code{font-size:9px;color:var(--i300);font-family:monospace}
+
+.state-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-top:16px}
+.state-item{
+  border-radius:var(--r-lg);padding:16px 8px;
+  display:flex;flex-direction:column;align-items:center;gap:6px;
+  text-align:center;font-size:11px;font-weight:600;color:var(--i400);border:1px solid var(--bdr);
+}
+.state-item code{font-size:9px;color:var(--i300);font-family:monospace}
+
+/* ═══════════════════════════════════════════════════════════════
+   TYPOGRAPHY
+═══════════════════════════════════════════════════════════════ */
+.type-specimen{border-left:2px solid var(--primary);padding-left:16px;margin-bottom:20px}
+.type-specimen p:first-child{font-size:11px;font-weight:600;color:var(--i300);letter-spacing:1px;text-transform:uppercase;margin-bottom:4px}
+
+/* ═══════════════════════════════════════════════════════════════
+   BUTTONS v3.2 — Scale + color simultaneously
+═══════════════════════════════════════════════════════════════ */
+.btn{
+  font-family:'Urbanist',sans-serif;
+  font-weight:700;cursor:pointer;border:none;
+  display:inline-flex;align-items:center;justify-content:center;
+  gap:7px;position:relative;overflow:hidden;
+  white-space:nowrap;-webkit-user-select:none;user-select:none;
+  /* Simultaneous scale + color on hover/press */
+  transition:
+    background var(--d2) var(--ease-std),
+    color var(--d2) var(--ease-std),
+    border-color var(--d2) var(--ease-std),
+    transform var(--d2) var(--ease-exp);
+}
+.btn:disabled{opacity:.38;cursor:not-allowed;transform:none!important}
+
+/* ── Ripple from exact click point */
+.btn-ripple{position:absolute;inset:0;border-radius:inherit;overflow:hidden;pointer-events:none}
+@keyframes ripple-out{
+  0%{transform:scale(0);opacity:.4}
+  100%{transform:scale(5);opacity:0}
+}
+.ripple-dot{
+  position:absolute;border-radius:50%;
+  width:70px;height:70px;margin:-35px 0 0 -35px;
+  transform:scale(0);opacity:.4;
+  animation:ripple-out 600ms var(--ease-std) forwards;
+  pointer-events:none;
+}
+
+/* FILLED */
+.btn-f{
+  background:var(--l500);color:var(--i500);
+  border-radius:var(--r-pill);padding:11px 24px;font-size:15px;
+}
+.btn-f:hover{background:var(--l400);transform:scale(1.03)}
+.btn-f:active{background:var(--l600);transform:scale(0.96)}
+.btn-f .ripple-dot{background:rgba(14,15,16,.18)}
+
+/* TONAL — pastel container */
+.btn-t{
+  background:var(--l100);color:var(--l700);
+  border-radius:var(--r-pill);padding:11px 24px;font-size:15px;
+}
+.btn-t:hover{background:var(--l200);transform:scale(1.03)}
+.btn-t:active{background:var(--l300);transform:scale(0.96)}
+.btn-t .ripple-dot{background:rgba(143,173,0,.2)}
+
+/* OUTLINED */
+.btn-o{
+  background:transparent;color:var(--i500);
+  border:1.5px solid var(--bdr);
+  border-radius:var(--r-pill);padding:10px 24px;font-size:15px;
+}
+.btn-o:hover{background:var(--l50);border-color:var(--l400);color:var(--i500);transform:scale(1.03)}
+.btn-o:active{background:var(--l100);border-color:var(--l500);transform:scale(0.96)}
+.btn-o .ripple-dot{background:rgba(143,173,0,.15)}
+
+/* GHOST / TEXT */
+.btn-g{
+  background:transparent;color:var(--i400);
+  border-radius:var(--r-md);padding:9px 14px;font-size:14px;
+}
+.btn-g:hover{background:var(--l50);color:var(--i500);transform:scale(1.03)}
+.btn-g:active{background:var(--l100);transform:scale(0.96)}
+.btn-g .ripple-dot{background:rgba(143,173,0,.15)}
+
+/* DANGER */
+.btn-d{
+  background:var(--red);color:#fff;
+  border-radius:var(--r-pill);padding:11px 24px;font-size:15px;
+}
+.btn-d:hover{background:#e03030;transform:scale(1.03)}
+.btn-d:active{background:#b82020;transform:scale(0.96)}
+.btn-d .ripple-dot{background:rgba(255,255,255,.2)}
+
+/* DARK / INK */
+.btn-ink{
+  background:var(--i500);color:#fff;
+  border-radius:var(--r-pill);padding:11px 24px;font-size:15px;
+}
+.btn-ink:hover{background:var(--i400);transform:scale(1.03)}
+.btn-ink:active{background:var(--i500);transform:scale(0.96)}
+.btn-ink .ripple-dot{background:rgba(255,255,255,.12)}
+
+/* Sizes */
+.btn-sm{padding:7px 16px!important;font-size:13px!important}
+.btn-lg{padding:14px 32px!important;font-size:17px!important}
+.btn-xs{padding:5px 12px!important;font-size:12px!important}
+
+/* Loading state */
+.btn-loading{position:relative;pointer-events:none}
+.btn-loading .btn-label{opacity:0}
+.btn-loading::after{
+  content:'';position:absolute;
+  width:16px;height:16px;border-radius:50%;
+  border:2px solid currentColor;
+  border-top-color:transparent;
+  animation:spin 600ms linear infinite;
+}
+
+/* FAB */
+.fab{
+  width:56px;height:56px;border-radius:var(--r-xl);
+  background:var(--primary);color:var(--i500);
+  border:none;cursor:pointer;font-family:inherit;
+  display:inline-flex;align-items:center;justify-content:center;
+  transition:transform var(--d2) var(--ease-exp),background var(--d2) var(--ease-std);
+  /* FAB is the ONE element with shadow */
+  box-shadow:0 2px 12px rgba(215,255,0,.45),0 0 0 0 rgba(215,255,0,.3);
+}
+.fab:hover{background:var(--l400);transform:scale(1.08)}
+.fab:active{background:var(--l600);transform:scale(0.95)}
+.fab svg{width:24px;height:24px}
+
+/* ── GLASS BUTTON v3.2 — liquid & refined */
+.btn-glass{
+  position:relative;overflow:hidden;
+  /* Multi-layer translucent background */
+  background:rgba(255,255,255,.22);
+  backdrop-filter:blur(20px) saturate(1.6) brightness(1.05);
+  -webkit-backdrop-filter:blur(20px) saturate(1.6) brightness(1.05);
+  /* Thin glassy border */
+  border:1px solid rgba(255,255,255,.4);
+  /* 4 inset rim shadows for depth */
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.55),
+    inset 0 -1px 0 rgba(0,0,0,.08),
+    inset 1px 0 0 rgba(255,255,255,.2),
+    inset -1px 0 0 rgba(0,0,0,.04);
+  color:var(--i500);font-weight:700;
+  border-radius:var(--r-pill);padding:11px 24px;font-size:15px;
+  transition:
+    background var(--d3) var(--ease-std),
+    border-color var(--d3) var(--ease-std),
+    transform var(--d2) var(--ease-exp),
+    box-shadow var(--d3) var(--ease-std);
+}
+/* Specular highlight — top 30% */
+.btn-glass::before{
+  content:'';position:absolute;
+  top:0;left:0;right:0;height:32%;
+  background:linear-gradient(to bottom,rgba(255,255,255,.38) 0%,rgba(255,255,255,0) 100%);
+  border-radius:var(--r-pill) var(--r-pill) 0 0;
+  pointer-events:none;z-index:1;
+}
+/* Shimmer sweep on hover */
+.btn-glass::after{
+  content:'';position:absolute;
+  top:0;left:-120%;width:60%;height:100%;
+  background:linear-gradient(105deg,transparent 30%,rgba(255,255,255,.35) 50%,transparent 70%);
+  pointer-events:none;z-index:2;
+  transform:skewX(-15deg);
+  transition:none;
+}
+.btn-glass:hover::after{
+  animation:glass-shimmer 450ms var(--ease-std) forwards;
+}
+@keyframes glass-shimmer{
+  0%{left:-120%}
+  100%{left:140%}
+}
+.btn-glass:hover{
+  background:rgba(255,255,255,.32);
+  border-color:rgba(255,255,255,.6);
+  transform:scale(1.03);
+  box-shadow:
+    inset 0 1.5px 0 rgba(255,255,255,.7),
+    inset 0 -1px 0 rgba(0,0,0,.06),
+    inset 1px 0 0 rgba(255,255,255,.3),
+    inset -1px 0 0 rgba(0,0,0,.03);
+}
+.btn-glass:active{
+  background:rgba(255,255,255,.12);
+  transform:scale(0.95);
+  box-shadow:
+    inset 0 2px 8px rgba(0,0,0,.12),
+    inset 0 1px 0 rgba(255,255,255,.25);
+}
+.btn-glass .ripple-dot{background:rgba(255,255,255,.35);z-index:3}
+
+/* Glass dark variant */
+.btn-glass-dark{
+  background:rgba(14,15,16,.24);
+  border-color:rgba(255,255,255,.14);
+  color:#fff;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.15),
+    inset 0 -1px 0 rgba(0,0,0,.25),
+    inset 1px 0 0 rgba(255,255,255,.06),
+    inset -1px 0 0 rgba(0,0,0,.12);
+}
+.btn-glass-dark::before{background:linear-gradient(to bottom,rgba(255,255,255,.12) 0%,transparent 100%)}
+.btn-glass-dark:hover{background:rgba(14,15,16,.36);border-color:rgba(255,255,255,.24)}
+.btn-glass-dark .ripple-dot{background:rgba(255,255,255,.18)}
+
+/* ── ICON BUTTONS */
+.btn-icon{
+  width:40px;height:40px;border-radius:var(--r-pill);padding:0;
+  background:transparent;color:var(--i400);
+  display:inline-flex;align-items:center;justify-content:center;
+  cursor:pointer;border:none;position:relative;overflow:hidden;
+  transition:background var(--d2) var(--ease-std),color var(--d2) var(--ease-std),transform var(--d2) var(--ease-exp);
+}
+.btn-icon:hover{background:var(--state-hover);color:var(--txt);transform:scale(1.1)}
+.btn-icon:active{background:var(--state-pressed);transform:scale(0.92)}
+.btn-icon.filled{background:var(--primary);color:var(--i500)}
+.btn-icon.filled:hover{background:var(--l400)}
+.btn-icon.outlined{border:1.5px solid var(--bdr)}
+.btn-icon.outlined:hover{border-color:var(--i300)}
+.btn-icon .ripple-dot{background:rgba(14,15,16,.12)}
+
+/* Icon animations */
+@keyframes icon-pop{
+  0%{transform:scale(1)}30%{transform:scale(1.35)}65%{transform:scale(.92)}100%{transform:scale(1)}
+}
+@keyframes icon-wiggle{
+  0%,100%{transform:rotate(0)}20%{transform:rotate(-14deg)}50%{transform:rotate(10deg)}80%{transform:rotate(-6deg)}
+}
+@keyframes icon-float{
+  0%,100%{transform:translateY(0)}40%{transform:translateY(-5px)}
+}
+@keyframes icon-spin{
+  0%{transform:rotate(0)}100%{transform:rotate(360deg)}
+}
+@keyframes icon-bounce{
+  0%,100%{transform:translateY(0) scale(1)}40%{transform:translateY(-5px) scale(1.1)}70%{transform:translateY(1px) scale(.96)}
+}
+@keyframes icon-spark{
+  0%{transform:scale(1) rotate(0)}25%{transform:scale(1.4) rotate(-20deg)}60%{transform:scale(.9) rotate(10deg)}100%{transform:scale(1) rotate(0)}
+}
+.btn-icon:hover svg{animation:icon-pop var(--d5) var(--ease-exp) forwards}
+.btn-icon.ic-del:hover svg{animation:icon-wiggle var(--d6) var(--ease-exp) forwards}
+.btn-icon.ic-send:hover svg{animation:icon-spark 400ms var(--ease-exp) forwards}
+.btn-icon.ic-sync:hover svg{animation:icon-spin var(--d7) linear forwards}
+
+/* ═══════════════════════════════════════════════════════════════
+   SIDEBAR — Fluid Pill
+═══════════════════════════════════════════════════════════════ */
+.sidebar-demo{
+  width:240px;background:var(--srf);
+  border-radius:var(--r-xl);padding:20px 0 14px;
+  overflow:hidden;border:1px solid var(--bdr);
+}
+.sidebar-logo{padding:0 16px 22px;font-size:19px;font-weight:900;letter-spacing:-0.5px}
+.sidebar-logo em{color:var(--primary);font-style:normal}
+
+.sb-items{position:relative;padding:0 8px}
+.sb-pill{
+  position:absolute;left:8px;right:8px;border-radius:var(--r-pill);
+  background:var(--primary);pointer-events:none;z-index:0;
+  transition:top var(--d4) var(--ease-emp),height var(--d4) var(--ease-emp);
+}
+.sb-group{
+  padding:8px 8px 3px;
+  font-size:9px;font-weight:700;letter-spacing:1.5px;
+  text-transform:uppercase;color:var(--i300);position:relative;z-index:1;
+}
+.sb-div{height:1px;background:var(--bdr);margin:6px 8px}
+
+.sb-item{
+  display:flex;align-items:center;gap:9px;
+  padding:9px 10px;border-radius:var(--r-pill);cursor:pointer;
+  position:relative;z-index:1;
+  color:var(--i400);text-decoration:none;
+  transition:color var(--d2) var(--ease-std);
+  -webkit-user-select:none;user-select:none;
+}
+.sb-item:hover{color:var(--txt)}
+.sb-item.active{color:var(--txt);font-weight:700}
+.sb-item svg{width:16px;height:16px;flex-shrink:0;transition:transform var(--d4) var(--ease-exp)}
+.sb-item:hover svg{animation:icon-pop var(--d5) var(--ease-exp) forwards}
+.sb-label{font-size:13px;flex:1}
+.sb-badge{
+  background:var(--i500);color:var(--primary);
+  font-size:10px;font-weight:700;padding:2px 7px;
+  border-radius:var(--r-pill);line-height:1.4;
+}
+.sb-item.active .sb-badge{background:rgba(14,15,16,.14);color:var(--i500)}
+
+.sb-footer{
+  margin:10px 8px 0;padding:10px 10px;
+  border-top:1px solid var(--bdr);
+  display:flex;align-items:center;gap:8px;cursor:pointer;
+  border-radius:var(--r-md);
+  transition:background var(--d2) var(--ease-std);
+  margin-top:8px;
+}
+.sb-footer:hover{background:var(--state-hover)}
+.sb-ava{
+  width:28px;height:28px;background:var(--primary);
+  border-radius:50%;display:flex;align-items:center;justify-content:center;
+  font-size:11px;font-weight:800;color:var(--i500);flex-shrink:0;
+}
+.sb-user p:first-child{font-size:12px;font-weight:700}
+.sb-user p:last-child{font-size:10px;color:var(--i300)}
+
+/* ═══════════════════════════════════════════════════════════════
+   TABS — Fluid Pill + Directional Slide
+═══════════════════════════════════════════════════════════════ */
+.tab-bar{
+  display:inline-flex;background:var(--srf);
+  border-radius:var(--r-pill);padding:5px;position:relative;gap:2px;
+  border:1px solid var(--bdr);
+}
+.tab-pill{
+  position:absolute;top:5px;height:calc(100% - 10px);
+  background:var(--primary);border-radius:var(--r-pill);
+  pointer-events:none;z-index:0;
+  transition:left var(--d4) var(--ease-emp),width var(--d4) var(--ease-emp);
+}
+.tab-item{
+  position:relative;z-index:1;
+  display:inline-flex;align-items:center;gap:5px;
+  padding:8px 18px;border-radius:var(--r-pill);
+  font-size:14px;font-weight:600;cursor:pointer;
+  border:none;background:transparent;font-family:inherit;
+  color:var(--i400);
+  transition:color var(--d2) var(--ease-std);
+  -webkit-user-select:none;user-select:none;
+}
+.tab-item:hover{color:var(--txt)}
+.tab-item.active{color:var(--txt);font-weight:700}
+
+/* Tab content panels */
+.tab-content-wrap{position:relative;margin-top:16px}
+.tab-panel{display:none}
+.tab-panel.active{display:block;animation:tab-enter var(--d5) var(--ease-emp) both}
+@keyframes tab-enter{from{opacity:0;transform:translateX(20px)}to{opacity:1;transform:none}}
+@keyframes tab-exit{from{opacity:1;transform:none}to{opacity:0;transform:translateX(-20px)}}
+
+/* ═══════════════════════════════════════════════════════════════
+   SEARCH — Expansion with result overlay
+═══════════════════════════════════════════════════════════════ */
+.search-wrap{position:relative;display:inline-block}
+.search-field{
+  font-family:'Urbanist',sans-serif;font-size:14px;font-weight:500;
+  background:var(--srf);border:1.5px solid var(--bdr);outline:none;
+  border-radius:var(--r-pill);
+  padding:10px 16px 10px 40px;
+  width:220px;color:var(--txt);
+  transition:
+    width var(--d5) var(--ease-exp),
+    border-color var(--d3) var(--ease-std),
+    background var(--d2) var(--ease-std);
+}
+.search-field::placeholder{color:var(--i300)}
+.search-icon{
+  position:absolute;left:13px;top:50%;transform:translateY(-50%);
+  pointer-events:none;width:15px;height:15px;color:var(--i300);
+  transition:color var(--d2) var(--ease-std),transform var(--d4) var(--ease-exp);
+}
+.search-field:focus{
+  width:360px;
+  border-color:var(--l500);
+  background:var(--l50);
+}
+.search-wrap:focus-within .search-icon{
+  color:var(--l700);
+  transform:translateY(-50%) scale(1.15) rotate(-10deg);
+}
+.search-drop{
+  position:absolute;top:calc(100% + 8px);left:0;
+  background:var(--srf);border-radius:var(--r-lg);
+  padding:8px;min-width:360px;border:1px solid var(--bdr);
+  opacity:0;transform:translateY(-6px) scale(.97);
+  pointer-events:none;z-index:200;
+  transition:opacity var(--d4) var(--ease-dec),transform var(--d4) var(--ease-dec);
+}
+.search-wrap:focus-within .search-drop{opacity:1;transform:none;pointer-events:all}
+.search-item{
+  display:flex;align-items:center;gap:10px;
+  padding:9px 10px;border-radius:var(--r-md);cursor:pointer;
+  transition:background var(--d1) var(--ease-std);
+}
+.search-item:hover{background:var(--l50)}
+.si-icon{
+  width:32px;height:32px;border-radius:var(--r-sm);
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;font-size:14px;
+}
+.si-text p:first-child{font-size:14px;font-weight:600}
+.si-text p:last-child{font-size:11px;color:var(--i300)}
+.search-divider{
+  font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;
+  color:var(--i300);padding:10px 10px 4px;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   CUSTOM SELECT
+═══════════════════════════════════════════════════════════════ */
+.select-wrap{position:relative;display:inline-block;width:100%}
+.select-trigger{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:11px 14px;background:var(--srf);
+  border:1.5px solid var(--bdr);border-radius:var(--r-md);cursor:pointer;
+  transition:border-color var(--d2) var(--ease-std),background var(--d2) var(--ease-std);
+  -webkit-user-select:none;user-select:none;
+}
+.select-trigger:hover{border-color:var(--i300)}
+.select-trigger.open{border-color:var(--l500);background:var(--l50);border-radius:var(--r-md) var(--r-md) 0 0}
+.select-value{font-size:14px;font-weight:500;color:var(--txt)}
+.select-value.placeholder{color:var(--i300);font-weight:400}
+.select-chevron{
+  width:15px;height:15px;color:var(--i300);flex-shrink:0;
+  transition:transform var(--d3) var(--ease-emp);
+}
+.select-trigger.open .select-chevron{transform:rotate(180deg)}
+.select-panel{
+  position:absolute;top:100%;left:0;right:0;
+  background:var(--srf);
+  border:1.5px solid var(--l500);border-top:none;
+  border-radius:0 0 var(--r-md) var(--r-md);
+  overflow:hidden;z-index:100;
+  max-height:0;opacity:0;
+  transition:max-height var(--d5) var(--ease-emp),opacity var(--d3) var(--ease-dec);
+}
+.select-panel.open{max-height:240px;opacity:1}
+.select-inner{padding:6px;overflow-y:auto;max-height:228px}
+.select-opt{
+  display:flex;align-items:center;gap:8px;
+  padding:10px 12px;border-radius:var(--r-sm);
+  cursor:pointer;font-size:14px;font-weight:500;
+  transition:background var(--d1) var(--ease-std);
+}
+.select-opt:hover{background:var(--l50)}
+.select-opt.selected{background:var(--l100);color:var(--l700);font-weight:700}
+
+/* ═══════════════════════════════════════════════════════════════
+   FORMS
+═══════════════════════════════════════════════════════════════ */
+.form-group{margin-bottom:20px}
+.form-label{
+  display:block;font-size:13px;font-weight:700;
+  margin-bottom:6px;color:var(--txt);
+}
+.form-hint{font-size:12px;color:var(--i300);margin-top:4px}
+.form-error{font-size:12px;color:var(--red);margin-top:4px;display:flex;align-items:center;gap:4px}
+
+/* Color Picker */
+.cp-wrap{display:flex;align-items:center;gap:10px;margin-top:6px}
+.cp-swatch:hover{transform:scale(1.15);border-color:var(--bdr)!important}
+
+.input{
+  font-family:'Urbanist',sans-serif;
+  width:100%;padding:11px 14px;
+  font-size:14px;font-weight:500;color:var(--txt);
+  background:var(--srf2);border:1.5px solid transparent;
+  border-radius:var(--r-md);outline:none;
+  transition:border-color var(--d2) var(--ease-std),background var(--d2) var(--ease-std),box-shadow var(--d2) var(--ease-std);
+}
+.input::placeholder{color:var(--i200);font-weight:400}
+.input:hover{border-color:var(--bdr)}
+.input:focus{border-color:var(--l500);background:var(--srf);box-shadow:0 0 0 2.5px rgba(215,255,0,0.18)}
+.input.error{border-color:var(--red);background:var(--red-bg)}
+.input.success{border-color:var(--grn);background:var(--grn-bg)}
+
+.input-with-icon{position:relative}
+.input-with-icon .input{padding-left:38px}
+.input-with-icon .input-icon{
+  position:absolute;left:12px;top:50%;transform:translateY(-50%);
+  width:16px;height:16px;color:var(--i300);pointer-events:none;
+}
+
+textarea.input{resize:vertical;min-height:96px}
+
+/* Checkbox */
+.checkbox-wrap{display:flex;align-items:center;gap:10px;cursor:pointer;-webkit-user-select:none;user-select:none}
+.checkbox-wrap input[type=checkbox]{display:none}
+.checkbox-box{
+  width:20px;height:20px;border-radius:5px;flex-shrink:0;
+  border:2px solid var(--bdr);background:var(--srf);
+  display:flex;align-items:center;justify-content:center;
+  transition:border-color var(--d2) var(--ease-std),background var(--d2) var(--ease-std);
+}
+.checkbox-box svg{width:12px;height:12px;stroke:#0E0F10;stroke-width:3;opacity:0;transform:scale(0);transition:opacity var(--d2) var(--ease-exp),transform var(--d2) var(--ease-exp)}
+.checkbox-wrap input:checked ~ .checkbox-box{background:var(--l500);border-color:var(--l500)}
+.checkbox-wrap input:checked ~ .checkbox-box svg{opacity:1;transform:scale(1)}
+.checkbox-label{font-size:14px;font-weight:500}
+.radio-wrap{display:flex;align-items:center;gap:10px;cursor:pointer;-webkit-user-select:none;user-select:none}
+.radio-wrap input[type=radio]{display:none}
+.radio-dot{
+  width:20px;height:20px;border-radius:50%;flex-shrink:0;
+  border:2px solid var(--bdr);background:var(--srf);
+  display:flex;align-items:center;justify-content:center;
+  transition:border-color var(--d2) var(--ease-std);
+}
+.radio-dot::after{
+  content:'';width:10px;height:10px;border-radius:50%;
+  background:var(--l500);opacity:0;transform:scale(0);
+  transition:opacity var(--d2) var(--ease-exp),transform var(--d2) var(--ease-exp);
+}
+.radio-wrap input:checked ~ .radio-dot{border-color:var(--l500)}
+.radio-wrap input:checked ~ .radio-dot::after{opacity:1;transform:scale(1)}
+
+/* Toggle */
+.toggle-wrap{display:flex;align-items:center;gap:10px;cursor:pointer;-webkit-user-select:none;user-select:none}
+.toggle-wrap input[type=checkbox]{display:none}
+.toggle-track{
+  width:44px;height:24px;border-radius:var(--r-pill);
+  background:var(--i200);position:relative;flex-shrink:0;
+  transition:background var(--d3) var(--ease-std);
+}
+.toggle-thumb{
+  position:absolute;width:20px;height:20px;border-radius:50%;
+  background:#fff;top:2px;left:2px;
+  transition:transform var(--d3) var(--ease-exp),background var(--d2) var(--ease-std);
+}
+.toggle-wrap input:checked ~ .toggle-track{background:var(--l500)}
+.toggle-wrap input:checked ~ .toggle-track .toggle-thumb{transform:translateX(20px);background:#0E0F10}
+
+/* ═══════════════════════════════════════════════════════════════
+   CARDS
+═══════════════════════════════════════════════════════════════ */
+.card-w{
+  background:var(--srf);border:1px solid var(--bdr);
+  border-radius:var(--r-lg);padding:24px;
+}
+.card-b{
+  background:var(--i500);border-radius:var(--r-lg);padding:24px;
+}
+.card-interactive{
+  background:var(--srf);border:1px solid var(--bdr);
+  border-radius:var(--r-lg);padding:24px;cursor:pointer;
+  transition:background var(--d2) var(--ease-std),border-color var(--d2) var(--ease-std),transform var(--d3) var(--ease-std);
+}
+.card-interactive:hover{background:var(--l50);border-color:var(--l400);transform:translateY(-2px)}
+.card-interactive:active{transform:translateY(0) scale(0.99)}
+
+.card-photo{
+  border-radius:var(--r-lg);overflow:hidden;
+  position:relative;cursor:pointer;
+  aspect-ratio:2/3;background:var(--i200);
+}
+.card-photo-img{
+  width:100%;height:100%;object-fit:cover;
+  transition:transform var(--d6) var(--ease-std);
+}
+.card-photo:hover .card-photo-img{transform:scale(1.04)}
+.card-photo-overlay{
+  position:absolute;inset:0;
+  background:linear-gradient(to top,rgba(14,15,16,.85) 0%,rgba(14,15,16,.1) 60%,transparent 100%);
+  transition:background var(--d3) var(--ease-std);
+}
+.card-photo:hover .card-photo-overlay{background:linear-gradient(to top,rgba(14,15,16,.9) 0%,rgba(14,15,16,.25) 60%,transparent 100%)}
+.card-photo-content{position:absolute;inset:0;padding:16px;display:flex;flex-direction:column;justify-content:flex-end}
+.card-photo-name{font-size:20px;font-weight:800;color:var(--primary);letter-spacing:-0.3px}
+.card-photo-meta{font-size:12px;color:rgba(255,255,255,.5);margin-top:2px}
+
+.card-kpi{
+  background:var(--i500);border-radius:var(--r-lg);padding:20px;
+}
+.card-kpi-label{font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:6px}
+.card-kpi-value{font-size:40px;font-weight:900;color:#fff;letter-spacing:-1.5px;line-height:1}
+.card-kpi-sub{font-size:12px;color:rgba(255,255,255,.35);margin-top:6px;display:flex;align-items:center;gap:4px}
+
+.card-agent{
+  background:var(--i500);border-radius:var(--r-lg);padding:20px;cursor:pointer;
+  transition:transform var(--d3) var(--ease-std),background var(--d2) var(--ease-std);
+}
+.card-agent:hover{transform:translateY(-2px);background:var(--i400)}
+.card-agent-head{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.card-agent-ava{
+  width:38px;height:38px;border-radius:var(--r-md);
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;
+}
+.card-agent-name{font-size:15px;font-weight:800;color:var(--primary);letter-spacing:-0.2px}
+.card-agent-role{font-size:11px;color:rgba(255,255,255,.4);margin-top:1px}
+.card-agent-desc{font-size:13px;color:rgba(255,255,255,.6);line-height:1.55;margin-bottom:12px}
+.card-agent-skills{display:flex;flex-wrap:wrap;gap:5px}
+.card-agent-skill{
+  font-size:10px;font-weight:700;padding:3px 9px;border-radius:var(--r-pill);
+  background:rgba(255,255,255,.08);color:rgba(255,255,255,.6);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   STATUS TAGS
+═══════════════════════════════════════════════════════════════ */
+.tag{
+  display:inline-flex;align-items:center;gap:5px;
+  font-size:11px;font-weight:700;letter-spacing:0.3px;
+  padding:3px 10px;border-radius:var(--r-pill);
+  white-space:nowrap;
+}
+.tag-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
+/* Status variants */
+.tag-active{background:var(--grn-bg);color:var(--grn-dk)}
+.tag-active .tag-dot{background:var(--grn)}
+.tag-task{background:var(--l200);color:var(--l800)}
+.tag-task .tag-dot{background:var(--l600)}
+.tag-review{background:var(--cyn-bg);color:#0088bb}
+.tag-review .tag-dot{background:var(--cyn)}
+.tag-standby{background:var(--i100);color:var(--i400)}
+.tag-standby .tag-dot{background:var(--i300)}
+.tag-soon{background:var(--cyn-bg);color:#0088bb}
+.tag-planned{background:var(--l50);color:var(--l700)}
+.tag-urgent{background:var(--red-bg);color:#cc2222}
+.tag-urgent .tag-dot{background:var(--red)}
+.tag-progress{background:var(--org-bg);color:#cc6600}
+.tag-progress .tag-dot{background:var(--org)}
+.tag-backlog{background:var(--i50);color:var(--i400)}
+.tag-done{background:var(--grn-bg);color:var(--grn-dk)}
+.tag-cancelled{background:var(--i100);color:var(--i300)}
+.tag-rejected{background:var(--red-bg);color:#cc2222}
+.tag-construction{background:var(--org-bg);color:#cc6600}
+
+/* ═══════════════════════════════════════════════════════════════
+   BANNERS
+═══════════════════════════════════════════════════════════════ */
+.banner{
+  border-radius:var(--r-lg);padding:14px 18px;
+  display:flex;align-items:flex-start;gap:12px;
+}
+.banner-dark{background:var(--i500);color:#fff}
+.banner-dark p{color:rgba(255,255,255,.65);font-size:13px;line-height:1.6}
+.banner-dark strong{color:var(--primary)}
+.banner-warn{background:var(--red-bg);border:1px solid rgba(255,68,68,.2)}
+.banner-warn p{color:#cc2222;font-size:13px;line-height:1.6}
+.banner-info{background:var(--cyn-bg);border:1px solid rgba(0,204,255,.2)}
+.banner-info p{color:#0088aa;font-size:13px;line-height:1.6}
+.banner-success{background:var(--grn-bg);border:1px solid rgba(0,204,136,.2)}
+.banner-success p{color:var(--grn-dk);font-size:13px;line-height:1.6}
+.banner-icon{font-size:18px;flex-shrink:0;margin-top:1px}
+
+/* ═══════════════════════════════════════════════════════════════
+   MODALS — Blur overlay (MANDATORY)
+═══════════════════════════════════════════════════════════════ */
+.modal-backdrop{
+  position:fixed;inset:0;
+  background:rgba(14,15,16,.72);
+  backdrop-filter:blur(12px);
+  -webkit-backdrop-filter:blur(12px);
+  z-index:500;
+  display:flex;align-items:center;justify-content:center;padding:20px;
+  opacity:0;pointer-events:none;
+  transition:opacity var(--d4) var(--ease-dec);
+}
+.modal-backdrop.open{opacity:1;pointer-events:all}
+.modal{
+  background:var(--srf);border-radius:var(--r-xl);
+  width:100%;padding:28px;
+  transform:scale(.95) translateY(8px);
+  transition:transform var(--d4) var(--ease-dec),opacity var(--d4) var(--ease-dec);
+  position:relative;
+}
+.modal-sm{max-width:480px}
+.modal-md{max-width:600px}
+.modal-lg{max-width:760px}
+.modal-backdrop.open .modal{transform:none}
+.modal-head{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:20px}
+.modal-title{font-size:20px;font-weight:800;letter-spacing:-0.3px}
+.modal-close{
+  width:32px;height:32px;border-radius:var(--r-pill);
+  background:transparent;border:none;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  color:var(--i400);
+  transition:background var(--d2) var(--ease-std),color var(--d2) var(--ease-std),transform var(--d2) var(--ease-exp);
+  flex-shrink:0;
+}
+.modal-close:hover{background:var(--state-hover);color:var(--txt);transform:rotate(90deg) scale(1.1)}
+.modal-body{font-size:14px;color:var(--txt2);line-height:1.65}
+.modal-footer{margin-top:24px;display:flex;justify-content:flex-end;gap:8px}
+
+/* ═══════════════════════════════════════════════════════════════
+   TOASTS
+═══════════════════════════════════════════════════════════════ */
+.toast-host{
+  position:fixed;bottom:24px;right:24px;
+  display:flex;flex-direction:column-reverse;gap:8px;z-index:1000;
+}
+.toast{
+  display:flex;align-items:center;gap:12px;
+  background:var(--i500);color:#fff;
+  border-radius:var(--r-lg);padding:12px 16px;
+  font-size:13px;font-weight:500;min-width:280px;
+  animation:toast-in var(--d5) var(--ease-dec) both;
+  pointer-events:all;
+}
+.toast.removing{animation:toast-out var(--d4) var(--ease-acc) both}
+@keyframes toast-in{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+@keyframes toast-out{from{opacity:1;transform:none}to{opacity:0;transform:translateY(8px)}}
+.toast-icon{font-size:16px;flex-shrink:0}
+.toast-text{flex:1}
+.toast-action{
+  background:transparent;border:none;cursor:pointer;font-family:inherit;
+  color:var(--primary);font-size:12px;font-weight:700;letter-spacing:0.5px;
+  text-transform:uppercase;padding:2px 4px;
+}
+.toast-success .toast-icon::before{content:'✓'}
+.toast-error .toast-icon::before{content:'✕'}
+.toast-info .toast-icon::before{content:'ℹ'}
+
+/* ═══════════════════════════════════════════════════════════════
+   PROGRESS
+═══════════════════════════════════════════════════════════════ */
+.progress{
+  width:100%;height:6px;background:var(--i100);
+  border-radius:var(--r-pill);overflow:hidden;
+}
+.progress-bar{
+  height:100%;background:var(--primary);border-radius:var(--r-pill);
+  transition:width var(--d6) var(--ease-dec);
+}
+.progress-bar.grn{background:var(--grn)}
+.progress-bar.red{background:var(--red)}
+.progress-bar.org{background:var(--org)}
+.progress-sm{height:4px}
+.progress-lg{height:8px}
+
+/* Indeterminate */
+.progress.indeterminate .progress-bar{
+  width:40%!important;
+  animation:progress-slide 1.5s ease-in-out infinite;
+}
+@keyframes progress-slide{
+  0%{transform:translateX(-200%)}
+  100%{transform:translateX(450%)}
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   SKELETON
+═══════════════════════════════════════════════════════════════ */
+.skel{
+  background:linear-gradient(90deg,var(--i100) 25%,var(--i50) 50%,var(--i100) 75%);
+  background-size:200% 100%;
+  animation:shimmer 1.5s linear infinite;
+  border-radius:var(--r-sm);
+}
+@keyframes shimmer{
+  0%{background-position:200% 0}
+  100%{background-position:-200% 0}
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   PAGINATION
+═══════════════════════════════════════════════════════════════ */
+.pagination{display:flex;align-items:center;gap:4px}
+.page-btn{
+  min-width:36px;height:36px;border-radius:var(--r-md);
+  display:inline-flex;align-items:center;justify-content:center;
+  font-size:13px;font-weight:600;cursor:pointer;border:none;background:transparent;
+  color:var(--i400);transition:background var(--d1) var(--ease-std),color var(--d1) var(--ease-std);
+  font-family:inherit;
+}
+.page-btn:hover{background:var(--state-hover);color:var(--txt)}
+.page-btn.active{background:var(--primary);color:var(--i500);font-weight:700}
+.page-btn:disabled{opacity:.3;cursor:not-allowed}
+
+/* ═══════════════════════════════════════════════════════════════
+   SPINNER — SM / MD / LG + dark variant
+═══════════════════════════════════════════════════════════════ */
+@keyframes spin{100%{transform:rotate(360deg)}}
+.spinner{
+  border-radius:50%;
+  border:2.5px solid var(--i100);
+  border-top-color:var(--i500);
+  animation:spin 700ms linear infinite;
+  flex-shrink:0;
+}
+.spinner-sm{width:16px;height:16px}
+.spinner-md{width:24px;height:24px}
+.spinner-lg{width:36px;height:36px;border-width:3px}
+.spinner-primary{border-color:var(--l200);border-top-color:var(--l500)}
+.spinner-white{border-color:rgba(255,255,255,.2);border-top-color:#fff}
+.spinner-wrap{display:inline-flex;align-items:center;justify-content:center}
+
+/* ═══════════════════════════════════════════════════════════════
+   TOOLTIPS — 3 variants, animated
+═══════════════════════════════════════════════════════════════ */
+.tooltip-wrap{position:relative;display:inline-flex}
+.tooltip{
+  position:absolute;z-index:300;
+  font-size:12px;font-weight:600;line-height:1.4;
+  padding:7px 11px;border-radius:var(--r-sm);white-space:nowrap;
+  pointer-events:none;
+  opacity:0;transform:scale(0.88) translateY(4px);
+  transition:
+    opacity var(--d2) var(--ease-dec),
+    transform var(--d2) var(--ease-dec);
+}
+.tooltip-wrap:hover .tooltip{opacity:1;transform:scale(1) translateY(0)}
+
+/* Position: top */
+.tooltip-top{bottom:calc(100% + 8px);left:50%;transform-origin:bottom center;transform:translateX(-50%) scale(0.88)}
+.tooltip-wrap:hover .tooltip-top{transform:translateX(-50%) scale(1)}
+
+/* Position: right */
+.tooltip-right{left:calc(100% + 8px);top:50%;transform-origin:left center;transform:translateY(-50%) scale(0.88)}
+.tooltip-wrap:hover .tooltip-right{transform:translateY(-50%) scale(1)}
+
+/* Position: bottom */
+.tooltip-bottom{top:calc(100% + 8px);left:50%;transform-origin:top center;transform:translateX(-50%) scale(0.88)}
+.tooltip-wrap:hover .tooltip-bottom{transform:translateX(-50%) scale(1)}
+
+/* Variants */
+.tooltip-dark{background:var(--i500);color:#fff}
+.tooltip-dark::after{
+  content:'';position:absolute;
+  border:5px solid transparent;
+}
+.tooltip-dark.tooltip-top::after{
+  top:100%;left:50%;transform:translateX(-50%);
+  border-top-color:var(--i500);
+}
+.tooltip-dark.tooltip-right::after{
+  right:100%;top:50%;transform:translateY(-50%);
+  border-right-color:var(--i500);
+}
+.tooltip-dark.tooltip-bottom::after{
+  bottom:100%;left:50%;transform:translateX(-50%);
+  border-bottom-color:var(--i500);
+}
+
+.tooltip-lemon{background:var(--l500);color:var(--i500)}
+.tooltip-lemon.tooltip-top::after{
+  content:'';position:absolute;
+  top:100%;left:50%;transform:translateX(-50%);
+  border:5px solid transparent;border-top-color:var(--l500);
+}
+.tooltip-lemon.tooltip-right::after{
+  content:'';position:absolute;
+  right:100%;top:50%;transform:translateY(-50%);
+  border:5px solid transparent;border-right-color:var(--l500);
+}
+
+.tooltip-error{background:var(--red);color:#fff}
+.tooltip-error.tooltip-top::after{
+  content:'';position:absolute;
+  top:100%;left:50%;transform:translateX(-50%);
+  border:5px solid transparent;border-top-color:var(--red);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   ACCORDION
+═══════════════════════════════════════════════════════════════ */
+.accordion{border:1px solid var(--bdr);border-radius:var(--r-lg);overflow:hidden}
+.acc-item{border-bottom:1px solid var(--bdr)}
+.acc-item:last-child{border-bottom:none}
+.acc-trigger{
+  width:100%;display:flex;align-items:center;justify-content:space-between;
+  padding:16px 20px;background:transparent;border:none;cursor:pointer;
+  font-family:inherit;font-size:15px;font-weight:600;text-align:left;
+  transition:background var(--d2) var(--ease-std),color var(--d2) var(--ease-std);
+}
+.acc-trigger:hover{background:var(--l50)}
+.acc-trigger.open{color:var(--l700)}
+.acc-chevron{
+  width:18px;height:18px;color:var(--i300);flex-shrink:0;
+  transition:transform var(--d3) var(--ease-emp),color var(--d3) var(--ease-std);
+}
+.acc-trigger.open .acc-chevron{transform:rotate(180deg);color:var(--l700)}
+.acc-body{
+  max-height:0;overflow:hidden;
+  transition:max-height var(--d5) var(--ease-emp);
+}
+.acc-body.open{max-height:400px}
+.acc-content{
+  padding:0 20px 18px;
+  font-size:14px;color:var(--txt2);line-height:1.65;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   AVATARS
+═══════════════════════════════════════════════════════════════ */
+.avatar{
+  border-radius:50%;display:inline-flex;align-items:center;justify-content:center;
+  font-weight:800;flex-shrink:0;position:relative;
+  background:var(--l200);color:var(--l700);
+}
+.avatar-xs{width:24px;height:24px;font-size:9px}
+.avatar-sm{width:32px;height:32px;font-size:12px}
+.avatar-md{width:40px;height:40px;font-size:15px}
+.avatar-lg{width:52px;height:52px;font-size:19px}
+.avatar-xl{width:72px;height:72px;font-size:26px}
+
+/* Avatar status badge */
+.avatar-wrap{position:relative;display:inline-flex}
+.ava-status{
+  position:absolute;bottom:0;right:0;
+  width:10px;height:10px;border-radius:50%;
+  border:2px solid var(--srf);
+}
+.avatar-sm ~ .ava-status,.avatar-wrap.sm .ava-status{width:10px;height:10px}
+.avatar-md ~ .ava-status,.avatar-wrap.md .ava-status{width:12px;height:12px}
+.ava-online{background:var(--grn)}
+.ava-busy{background:var(--red)}
+.ava-away{background:var(--org)}
+
+/* Avatar group */
+.avatar-group{display:flex}
+.avatar-group .avatar-wrap{margin-left:-10px}
+.avatar-group .avatar-wrap:first-child{margin-left:0}
+.avatar-group .avatar{border:2.5px solid var(--srf)}
+
+/* ═══════════════════════════════════════════════════════════════
+   BREADCRUMB
+═══════════════════════════════════════════════════════════════ */
+.breadcrumb{display:flex;align-items:center;gap:4px;flex-wrap:wrap}
+.bc-item{
+  font-size:13px;font-weight:500;color:var(--i400);
+  transition:color var(--d1) var(--ease-std);
+}
+.bc-item:hover{color:var(--txt)}
+.bc-item.current{color:var(--txt);font-weight:700}
+.bc-sep{color:var(--i300);font-size:12px;margin:0 2px}
+
+/* ═══════════════════════════════════════════════════════════════
+   DIVIDER
+═══════════════════════════════════════════════════════════════ */
+.divider{display:flex;align-items:center;gap:12px;margin:8px 0}
+.divider::before,.divider::after{content:'';flex:1;height:1px;background:var(--bdr)}
+.divider-label{font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--i300);white-space:nowrap}
+
+/* ═══════════════════════════════════════════════════════════════
+   NOTIFICATION BADGES
+═══════════════════════════════════════════════════════════════ */
+.notif-wrap{position:relative;display:inline-flex}
+.notif-badge{
+  position:absolute;top:-4px;right:-6px;
+  min-width:16px;height:16px;padding:0 4px;
+  border-radius:var(--r-pill);
+  font-size:9px;font-weight:800;
+  display:flex;align-items:center;justify-content:center;
+  border:2px solid var(--srf);
+  animation:notif-pop var(--d4) var(--ease-exp) both;
+}
+.notif-badge.red{background:var(--red);color:#fff}
+.notif-badge.lemon{background:var(--l500);color:var(--i500)}
+.notif-badge.dot{min-width:10px;width:10px;height:10px;padding:0;top:-2px;right:-2px}
+@keyframes notif-pop{
+  0%{transform:scale(0)}60%{transform:scale(1.25)}100%{transform:scale(1)}
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   FILTER CHIPS
+═══════════════════════════════════════════════════════════════ */
+.chip{
+  display:inline-flex;align-items:center;gap:5px;
+  padding:6px 14px;border-radius:var(--r-pill);
+  font-size:13px;font-weight:600;cursor:pointer;
+  border:1.5px solid var(--bdr);background:var(--srf);
+  color:var(--i400);
+  transition:
+    background var(--d2) var(--ease-std),
+    border-color var(--d2) var(--ease-std),
+    color var(--d2) var(--ease-std),
+    transform var(--d1) var(--ease-std);
+  -webkit-user-select:none;user-select:none;
+}
+.chip:hover{border-color:var(--i300);color:var(--txt);transform:scale(1.03)}
+.chip.active{
+  background:var(--l100);border-color:var(--l500);
+  color:var(--l700);font-weight:700;
+}
+.chip-icon{width:14px;height:14px}
+.chip.active .chip-icon{color:var(--l700)}
+
+/* ═══════════════════════════════════════════════════════════════
+   KBD SHORTCUTS
+═══════════════════════════════════════════════════════════════ */
+.kbd{
+  display:inline-flex;align-items:center;
+  font-family:'Urbanist',monospace;font-size:11px;font-weight:700;
+  padding:3px 7px;border-radius:5px;
+  background:var(--i50);color:var(--i400);
+  border:1.5px solid var(--bdr);
+  border-bottom-width:3px;
+}
+.kbd-group{display:inline-flex;align-items:center;gap:4px}
+.kbd-plus{font-size:10px;color:var(--i300);font-weight:400}
+
+/* ═══════════════════════════════════════════════════════════════
+   EMPTY STATES
+═══════════════════════════════════════════════════════════════ */
+.empty-state{
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  text-align:center;padding:48px 24px;
+}
+.empty-icon{
+  width:64px;height:64px;border-radius:var(--r-xl);
+  background:var(--l100);display:flex;align-items:center;justify-content:center;
+  font-size:28px;margin-bottom:20px;
+}
+.empty-title{font-size:18px;font-weight:800;letter-spacing:-0.3px;margin-bottom:8px}
+.empty-desc{font-size:14px;color:var(--txt2);line-height:1.65;max-width:320px;margin-bottom:24px}
+
+/* ═══════════════════════════════════════════════════════════════
+   DATA TABLE
+═══════════════════════════════════════════════════════════════ */
+.table-wrap{border:1px solid var(--bdr);border-radius:var(--r-lg);overflow:hidden}
+.data-table{width:100%;border-collapse:collapse;font-size:14px}
+.data-table thead{background:var(--i50)}
+.data-table th{
+  padding:12px 16px;text-align:left;font-size:11px;font-weight:700;
+  letter-spacing:0.5px;text-transform:uppercase;color:var(--i300);
+  border-bottom:1px solid var(--bdr);white-space:nowrap;
+  cursor:pointer;user-select:none;
+  transition:background var(--d1) var(--ease-std),color var(--d1) var(--ease-std);
+}
+.data-table th:hover{background:var(--l50);color:var(--l700)}
+.data-table th.sorted{color:var(--l700)}
+.sort-icon{
+  display:inline-flex;flex-direction:column;
+  width:10px;margin-left:6px;vertical-align:middle;gap:2px;
+}
+.sort-arrow{width:0;height:0;border-left:4px solid transparent;border-right:4px solid transparent}
+.sort-arrow.up{border-bottom:5px solid currentColor;opacity:.3}
+.sort-arrow.down{border-top:5px solid currentColor;opacity:.3}
+.data-table th.sorted .sort-arrow.up{opacity:.3}
+.data-table th.sorted.asc .sort-arrow.up{opacity:1}
+.data-table th.sorted.desc .sort-arrow.down{opacity:1}
+
+.data-table td{
+  padding:13px 16px;border-bottom:1px solid var(--bdr2);
+  vertical-align:middle;color:var(--txt);
+}
+.data-table tr:last-child td{border-bottom:none}
+.data-table tbody tr{
+  transition:background var(--d1) var(--ease-std);
+}
+.data-table tbody tr:nth-child(even){background:var(--srf2)}
+.data-table tbody tr:hover{background:var(--l50)}
+.data-table tbody tr:active{background:var(--l100)}
+
+/* ═══════════════════════════════════════════════════════════════
+   FORENSIC TABLE — dark header, lemon col, violations red
+═══════════════════════════════════════════════════════════════ */
+.table-forensic thead{background:var(--i500)}
+.table-forensic th{
+  color:rgba(255,255,255,.6);border-bottom:none;cursor:default;
+}
+.table-forensic th:hover{background:rgba(255,255,255,.06);color:#fff}
+.table-forensic th.lemon-col{color:var(--primary)}
+.table-forensic td.lemon-col{color:var(--l700);font-weight:700}
+.table-forensic td.violation{color:var(--red);font-weight:700;display:flex;align-items:center;gap:5px}
+.table-forensic td.violation::before{
+  content:'';width:6px;height:6px;border-radius:50%;
+  background:var(--red);flex-shrink:0;
+}
+.table-forensic tbody tr:nth-child(even){background:var(--srf2)}
+.table-forensic tbody tr:hover{background:rgba(215,255,0,.05)}
+
+/* ═══════════════════════════════════════════════════════════════
+   CALENDAR
+═══════════════════════════════════════════════════════════════ */
+.cal-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+.cal-title{font-size:16px;font-weight:700}
+.cal-nav{display:flex;align-items:center;gap:4px}
+.cal-nav-btn{
+  width:32px;height:32px;border-radius:var(--r-md);background:transparent;
+  border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;
+  color:var(--i400);transition:background var(--d1) var(--ease-std),color var(--d1) var(--ease-std),transform var(--d2) var(--ease-exp);
+}
+.cal-nav-btn:hover{background:var(--state-hover);color:var(--txt);transform:scale(1.1)}
+
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:1px;background:var(--bdr);border-radius:var(--r-lg);overflow:hidden}
+.cal-day-header{
+  background:var(--srf);padding:8px 4px;
+  font-size:10px;font-weight:700;letter-spacing:1px;
+  text-transform:uppercase;color:var(--i300);text-align:center;
+}
+.cal-day{
+  background:var(--srf);padding:8px;min-height:80px;cursor:pointer;
+  transition:background var(--d1) var(--ease-std);
+  position:relative;
+}
+.cal-day:hover{background:var(--l50)}
+.cal-day.other-month{background:var(--i50)}
+.cal-day.other-month .cal-day-num{color:var(--i200)}
+.cal-day.today{background:var(--srf)}
+.cal-day-num{
+  font-size:13px;font-weight:600;color:var(--txt);margin-bottom:4px;
+  display:inline-flex;
+}
+.cal-day.today .cal-day-num{
+  background:var(--l500);color:var(--i500);
+  width:24px;height:24px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-weight:800;
+}
+.cal-events{display:flex;flex-direction:column;gap:2px}
+.cal-event{
+  font-size:10px;font-weight:600;padding:2px 6px;
+  border-radius:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  cursor:pointer;transition:opacity var(--d1) var(--ease-std);
+}
+.cal-event:hover{opacity:.8}
+.cal-event.urgent{background:var(--red-bg);color:#cc2222}
+.cal-event.progress{background:var(--org-bg);color:#cc6600}
+.cal-event.review{background:var(--cyn-bg);color:#0088aa}
+.cal-event.done{background:var(--grn-bg);color:var(--grn-dk)}
+
+/* ═══════════════════════════════════════════════════════════════
+   MOTION SHOWCASE
+═══════════════════════════════════════════════════════════════ */
+.motion-card{
+  background:var(--srf);border:1px solid var(--bdr);border-radius:var(--r-lg);
+  padding:20px;display:flex;flex-direction:column;gap:12px;align-items:flex-start;
+}
+.motion-dot{
+  width:40px;height:40px;background:var(--primary);border-radius:var(--r-md);
+  cursor:pointer;transition:transform var(--d5) var(--ease-std);
+  display:flex;align-items:center;justify-content:center;font-size:18px;
+}
+.motion-card:hover .motion-dot-std{transform:translateX(80px);transition-timing-function:var(--ease-std)}
+.motion-card:hover .motion-dot-dec{transform:translateX(80px);transition-timing-function:var(--ease-dec);transition-duration:var(--d6)}
+.motion-card:hover .motion-dot-acc{transform:translateX(80px);transition-timing-function:var(--ease-acc);transition-duration:var(--d4)}
+.motion-card:hover .motion-dot-emp{transform:translateX(80px) scale(.9);transition-timing-function:var(--ease-emp);transition-duration:var(--d5)}
+.motion-card:hover .motion-dot-exp{transform:translateX(80px) scale(1.15);transition-timing-function:var(--ease-exp);transition-duration:var(--d5)}
+.motion-label{font-size:11px;font-weight:700;color:var(--i300);letter-spacing:0.5px}
+.motion-curve{font-size:9px;font-family:monospace;color:var(--i300);margin-top:-8px}
+
+/* ═══════════════════════════════════════════════════════════════
+   SVG ICON HELPER
+═══════════════════════════════════════════════════════════════ */
+svg{display:block}
+</style>
+</head>
+<body>
+<!-- ── THEME TOGGLE ── -->
+<div class="theme-toggle">
+  <button class="theme-toggle-btn active" id="btn-light" onclick="setTheme('light')">Light</button>
+  <button class="theme-toggle-btn" id="btn-dark" onclick="setTheme('dark')">Dark</button>
+</div>
+<div class="shell">
+
+<!-- ════════════════════════════════════
+     LEFT NAV
+════════════════════════════════════ -->
+<nav class="left-nav">
+  <div class="nav-logo">hubia <span class="nav-version">v3.5</span></div>
+
+  <div class="nav-sec">Fundação</div>
+  <a href="#colors" class="nav-a">Cores &amp; Tonal</a>
+  <a href="#typography" class="nav-a">Tipografia</a>
+  <a href="#motion" class="nav-a">Motion System</a>
+  <a href="#layout" class="nav-a">Grid &amp; Layout</a>
+
+  <div class="nav-sec">Ações</div>
+  <a href="#buttons" class="nav-a">Botões</a>
+  <a href="#glass" class="nav-a">Liquid Glass</a>
+  <a href="#fab" class="nav-a">FAB &amp; Icon Btns</a>
+  <a href="#forms" class="nav-a">Formulários</a>
+  <a href="#search" class="nav-a">Search</a>
+  <a href="#select" class="nav-a">Select</a>
+  <a href="#chips" class="nav-a">Filter Chips</a>
+
+  <div class="nav-sec">Navegação</div>
+  <a href="#sidebar" class="nav-a">Sidebar</a>
+  <a href="#tabs" class="nav-a">Tabs</a>
+  <a href="#breadcrumb" class="nav-a">Breadcrumb</a>
+  <a href="#pagination" class="nav-a">Paginação</a>
+
+  <div class="nav-sec">Dados</div>
+  <a href="#cards" class="nav-a">Cards</a>
+  <a href="#tags" class="nav-a">Tags de Status</a>
+  <a href="#table" class="nav-a">Tabela de Dados</a>
+  <a href="#forensic" class="nav-a">Tabela Forense</a>
+  <a href="#calendar" class="nav-a">Calendário</a>
+  <a href="#progress" class="nav-a">Progress</a>
+
+  <div class="nav-sec">Feedback</div>
+  <a href="#modals" class="nav-a">Modais</a>
+  <a href="#toasts" class="nav-a">Toasts</a>
+  <a href="#banners" class="nav-a">Banners</a>
+  <a href="#tooltips" class="nav-a">Tooltips</a>
+
+  <div class="nav-sec">Misc</div>
+  <a href="#avatars" class="nav-a">Avatars</a>
+  <a href="#accordion" class="nav-a">Accordion</a>
+  <a href="#skeleton" class="nav-a">Skeleton</a>
+  <a href="#empty" class="nav-a">Empty States</a>
+  <a href="#spinners" class="nav-a">Spinners</a>
+  <a href="#colorpicker" class="nav-a">Color Picker</a>
+  <a href="#brandkit" class="nav-a">Brand Kit</a>
+  <a href="#misc" class="nav-a">Misc</a>
+</nav>
+
+<!-- ════════════════════════════════════
+     MAIN
+════════════════════════════════════ -->
+<main>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-badge">⚡ Design System</div>
+  <h1>hubia<em>.</em><br>v3.5</h1>
+  <p>Guia definitivo de componentes para o sistema operacional da Pantcho Agency. Flat design. Limão. Dark &amp; Light. 100% interativo.</p>
+</div>
+
+<!-- ────────────────────────────────────
+     CORES & TONAL
+──────────────────────────────────── -->
+<section class="sec" id="colors">
+  <div class="sec-tag">Fundação · 01</div>
+  <h2 class="sec-h">Cores &amp; Sistema Tonal</h2>
+  <p class="sec-p">Todas as cores via CSS custom properties. Escala 0→900 por família. Saturação média — nunca néon puro, nunca pastel lavado.</p>
+
+  <div class="rule">
+    <span class="rule-icon">⚠</span>
+    <p><em>Regra inviolável:</em> Zero box-shadow em elementos de UI. O sistema é 100% flat. FAB é a única exceção.</p>
+  </div>
+
+  <div class="sub">
+    <div class="lbl">Limão — Primary</div>
+    <div class="scale mb8">
+      <div class="sw" style="background:#fbffe6"><span style="color:#555">50</span></div>
+      <div class="sw" style="background:#f3ffb0"><span style="color:#555">100</span></div>
+      <div class="sw" style="background:#edff8a"><span style="color:#555">200</span></div>
+      <div class="sw" style="background:#e4ff54"><span style="color:#555">300</span></div>
+      <div class="sw" style="background:#dfff33"><span style="color:#555">400</span></div>
+      <div class="sw base" style="background:#D7FF00"><span style="color:#555">500 ★</span></div>
+      <div class="sw" style="background:#c4e800"><span style="color:#555">600</span></div>
+      <div class="sw" style="background:#99b500"><span style="color:#fff">700</span></div>
+      <div class="sw" style="background:#768c00"><span style="color:#fff">800</span></div>
+      <div class="sw" style="background:#5a6b00"><span style="color:#fff">900</span></div>
+    </div>
+    <div class="lbl" style="margin-top:16px">Ink — Neutrals</div>
+    <div class="scale mb8">
+      <div class="sw" style="background:#F5F5F6"><span style="color:#555">50</span></div>
+      <div class="sw" style="background:#E8E8E9"><span style="color:#555">100</span></div>
+      <div class="sw" style="background:#CDCDCE"><span style="color:#555">200</span></div>
+      <div class="sw" style="background:#5E5E5F"><span style="color:#fff">300</span></div>
+      <div class="sw" style="background:#3E3F40"><span style="color:#fff">400</span></div>
+      <div class="sw base" style="background:#0E0F10"><span style="color:#fff">500 ★</span></div>
+    </div>
+  </div>
+
+  <div class="sub">
+    <div class="lbl">Status Colors</div>
+    <div class="tonal-grid">
+      <div class="tonal-chip">
+        <div class="tonal-sw" style="background:#FF4444"></div>
+        <div class="tonal-info"><b>Red · Error</b><code>#FF4444</code></div>
+      </div>
+      <div class="tonal-chip">
+        <div class="tonal-sw" style="background:#00CC88"></div>
+        <div class="tonal-info"><b>Green · Success</b><code>#00CC88</code></div>
+      </div>
+      <div class="tonal-chip">
+        <div class="tonal-sw" style="background:#FF8800"></div>
+        <div class="tonal-info"><b>Orange · Warning</b><code>#FF8800</code></div>
+      </div>
+      <div class="tonal-chip">
+        <div class="tonal-sw" style="background:#00CCFF"></div>
+        <div class="tonal-info"><b>Cyan · Info</b><code>#00CCFF</code></div>
+      </div>
+      <div class="tonal-chip">
+        <div class="tonal-sw" style="background:#7C3AED"></div>
+        <div class="tonal-info"><b>Purple · AV</b><code>#7C3AED</code></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PASTÉIS M3 -->
+  <div class="sub" style="margin-top:32px">
+    <div class="lbl" style="display:flex;align-items:center;gap:8px">
+      Extended Palette — Pastéis Material 3
+      <span style="font-size:11px;background:var(--amb-bg);color:var(--amb-on);padding:2px 8px;border-radius:99px;font-weight:600;letter-spacing:.5px">OPCIONAL · REQUER APROVAÇÃO</span>
+    </div>
+    <p style="font-size:13px;color:var(--txt2);margin:8px 0 20px">Famílias adicionais para uso contextual — não substituem o limão como cor de ação primária. Cada família tem tokens de background e texto compatíveis.</p>
+
+    <!-- Rose -->
+    <div style="margin-bottom:24px">
+      <div style="font-size:12px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--txt2);margin-bottom:8px">Rose — creator cards, categorias femininas</div>
+      <div class="scale mb8">
+        <div class="sw" style="background:#fff0f3"><span style="color:#7c1028">50</span></div>
+        <div class="sw" style="background:#ffd6df"><span style="color:#7c1028">100</span></div>
+        <div class="sw" style="background:#ffb3c1"><span style="color:#7c1028">200</span></div>
+        <div class="sw" style="background:#ff8fa3"><span style="color:#7c1028">300</span></div>
+        <div class="sw" style="background:#ff6b85"><span style="color:#7c1028">400</span></div>
+        <div class="sw base" style="background:#f04060"><span style="color:#fff">500 ★</span></div>
+        <div class="sw" style="background:#d42d4d"><span style="color:#fff">600</span></div>
+        <div class="sw" style="background:#a81c3a"><span style="color:#fff">700</span></div>
+        <div class="sw" style="background:#7c1028"><span style="color:#fff">800</span></div>
+        <div class="sw" style="background:#520819"><span style="color:#fff">900</span></div>
+      </div>
+      <div style="display:flex;gap:8px;margin-top:6px">
+        <div style="background:#ffe4ec;color:#7c1028;padding:6px 14px;border-radius:99px;font-size:12px;font-weight:600">BG #ffe4ec</div>
+        <div style="background:#f04060;color:#fff;padding:6px 14px;border-radius:99px;font-size:12px;font-weight:600">500 #f04060</div>
+      </div>
+    </div>
+
+    <!-- Sky -->
+    <div style="margin-bottom:24px">
+      <div style="font-size:12px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--txt2);margin-bottom:8px">Sky — info suave, integration cards, links alt</div>
+      <div class="scale mb8">
+        <div class="sw" style="background:#eaf4fb"><span style="color:#015689">50</span></div>
+        <div class="sw" style="background:#cce9f5"><span style="color:#015689">100</span></div>
+        <div class="sw" style="background:#9dd4ed"><span style="color:#015689">200</span></div>
+        <div class="sw" style="background:#66bae3"><span style="color:#015689">300</span></div>
+        <div class="sw" style="background:#33a0d9"><span style="color:#fff">400</span></div>
+        <div class="sw base" style="background:#0288d1"><span style="color:#fff">500 ★</span></div>
+        <div class="sw" style="background:#016fad"><span style="color:#fff">600</span></div>
+        <div class="sw" style="background:#015689"><span style="color:#fff">700</span></div>
+        <div class="sw" style="background:#013d65"><span style="color:#fff">800</span></div>
+        <div class="sw" style="background:#002541"><span style="color:#fff">900</span></div>
+      </div>
+      <div style="display:flex;gap:8px;margin-top:6px">
+        <div style="background:#e0f2fe;color:#015689;padding:6px 14px;border-radius:99px;font-size:12px;font-weight:600">BG #e0f2fe</div>
+        <div style="background:#0288d1;color:#fff;padding:6px 14px;border-radius:99px;font-size:12px;font-weight:600">500 #0288d1</div>
+      </div>
+    </div>
+
+    <!-- Teal -->
+    <div style="margin-bottom:24px">
+      <div style="font-size:12px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--txt2);margin-bottom:8px">Teal — success alternativo, approval status</div>
+      <div class="scale mb8">
+        <div class="sw" style="background:#e0f7f4"><span style="color:#005a52">50</span></div>
+        <div class="sw" style="background:#b2ebe7"><span style="color:#005a52">100</span></div>
+        <div class="sw" style="background:#80d9d3"><span style="color:#005a52">200</span></div>
+        <div class="sw" style="background:#4dc9bf"><span style="color:#005a52">300</span></div>
+        <div class="sw" style="background:#26bab5"><span style="color:#005a52">400</span></div>
+        <div class="sw base" style="background:#00897b"><span style="color:#fff">500 ★</span></div>
+        <div class="sw" style="background:#007066"><span style="color:#fff">600</span></div>
+        <div class="sw" style="background:#005a52"><span style="color:#fff">700</span></div>
+        <div class="sw" style="background:#00433d"><span style="color:#fff">800</span></div>
+        <div class="sw" style="background:#002d29"><span style="color:#fff">900</span></div>
+      </div>
+      <div style="display:flex;gap:8px;margin-top:6px">
+        <div style="background:#d5f5f2;color:#005a52;padding:6px 14px;border-radius:99px;font-size:12px;font-weight:600">BG #d5f5f2</div>
+        <div style="background:#00897b;color:#fff;padding:6px 14px;border-radius:99px;font-size:12px;font-weight:600">500 #00897b</div>
+      </div>
+    </div>
+
+    <!-- Amber -->
+    <div style="margin-bottom:24px">
+      <div style="font-size:12px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--txt2);margin-bottom:8px">Amber — warning quente, KPI cards, alertas suaves</div>
+      <div class="scale mb8">
+        <div class="sw" style="background:#fff8e7"><span style="color:#7a4a00">50</span></div>
+        <div class="sw" style="background:#ffecb5"><span style="color:#7a4a00">100</span></div>
+        <div class="sw" style="background:#ffde7a"><span style="color:#7a4a00">200</span></div>
+        <div class="sw" style="background:#ffcf40"><span style="color:#7a4a00">300</span></div>
+        <div class="sw" style="background:#ffc11a"><span style="color:#7a4a00">400</span></div>
+        <div class="sw base" style="background:#ffb300"><span style="color:#7a4a00">500 ★</span></div>
+        <div class="sw" style="background:#e09000"><span style="color:#fff">600</span></div>
+        <div class="sw" style="background:#b36e00"><span style="color:#fff">700</span></div>
+        <div class="sw" style="background:#7a4a00"><span style="color:#fff">800</span></div>
+        <div class="sw" style="background:#4d2e00"><span style="color:#fff">900</span></div>
+      </div>
+      <div style="display:flex;gap:8px;margin-top:6px">
+        <div style="background:#fff3cd;color:#7a4a00;padding:6px 14px;border-radius:99px;font-size:12px;font-weight:600">BG #fff3cd</div>
+        <div style="background:#ffb300;color:#7a4a00;padding:6px 14px;border-radius:99px;font-size:12px;font-weight:600">500 #ffb300</div>
+      </div>
+    </div>
+
+    <!-- Indigo -->
+    <div style="margin-bottom:8px">
+      <div style="font-size:12px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--txt2);margin-bottom:8px">Indigo — AV Squad alt, future squads, diagramas</div>
+      <div class="scale mb8">
+        <div class="sw" style="background:#eef0fb"><span style="color:#263589">50</span></div>
+        <div class="sw" style="background:#d5d9f5"><span style="color:#263589">100</span></div>
+        <div class="sw" style="background:#adbaee"><span style="color:#263589">200</span></div>
+        <div class="sw" style="background:#849ae7"><span style="color:#263589">300</span></div>
+        <div class="sw" style="background:#617de0"><span style="color:#fff">400</span></div>
+        <div class="sw base" style="background:#3f51b5"><span style="color:#fff">500 ★</span></div>
+        <div class="sw" style="background:#3344a0"><span style="color:#fff">600</span></div>
+        <div class="sw" style="background:#263589"><span style="color:#fff">700</span></div>
+        <div class="sw" style="background:#1a2772"><span style="color:#fff">800</span></div>
+        <div class="sw" style="background:#0e1a5c"><span style="color:#fff">900</span></div>
+      </div>
+      <div style="display:flex;gap:8px;margin-top:6px">
+        <div style="background:#e3e5f5;color:#263589;padding:6px 14px;border-radius:99px;font-size:12px;font-weight:600">BG #e3e5f5</div>
+        <div style="background:#3f51b5;color:#fff;padding:6px 14px;border-radius:99px;font-size:12px;font-weight:600">500 #3f51b5</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sub">
+    <div class="lbl">MD3 State Layers</div>
+    <div class="state-grid">
+      <div class="state-item" style="background:rgba(14,15,16,0.08)">Hover<code>8%</code></div>
+      <div class="state-item" style="background:rgba(14,15,16,0.12)">Pressed<code>12%</code></div>
+      <div class="state-item" style="background:rgba(14,15,16,0.10)">Focused<code>10%</code></div>
+      <div class="state-item" style="background:rgba(14,15,16,0.04)">Drag<code>4%</code></div>
+      <div class="state-item" style="background:var(--l100)">Primary<br>Container<code>#f3ffb0</code></div>
+    </div>
+  </div>
+</section>
+
+<!-- ────────────────────────────────────
+     TIPOGRAFIA
+──────────────────────────────────── -->
+<section class="sec" id="typography">
+  <div class="sec-tag">Fundação · 02</div>
+  <h2 class="sec-h">Tipografia — Urbanist</h2>
+  <p class="sec-p">Fonte exclusiva. Carregada via Google Fonts. Nenhuma outra fonte é permitida em qualquer parte da interface.</p>
+
+  <div class="type-specimen"><p>display-xl · 96px · 900</p><p style="font-size:clamp(36px,5vw,72px);font-weight:900;letter-spacing:-3px;line-height:1">Hubia Agency</p></div>
+  <div class="type-specimen"><p>heading-2xl · 44px · 700</p><p style="font-size:44px;font-weight:700;letter-spacing:-1.5px;line-height:1.1">32,136 Prompts</p></div>
+  <div class="type-specimen"><p>heading-xl · 36px · 700</p><p style="font-size:36px;font-weight:700;letter-spacing:-1px;line-height:1.15">Ninaah Dornfeld</p></div>
+  <div class="type-specimen"><p>heading-lg · 28px · 600</p><p style="font-size:28px;font-weight:600;letter-spacing:-0.5px;line-height:1.2">Dev Squad</p></div>
+  <div class="type-specimen"><p>heading-md · 24px · 600</p><p style="font-size:24px;font-weight:600;letter-spacing:-0.3px">Título de Card</p></div>
+  <div class="type-specimen"><p>heading-sm · 20px · 600</p><p style="font-size:20px;font-weight:600">Label de Campo</p></div>
+  <div class="type-specimen"><p>body-lg · 18px · 600</p><p style="font-size:18px;font-weight:600">Item ativo da sidebar, botões</p></div>
+  <div class="type-specimen"><p>body-md · 16px · 400</p><p style="font-size:16px;font-weight:400;line-height:1.6">Descrições e parágrafos de corpo do sistema. Leitura fluida e confortável.</p></div>
+  <div class="type-specimen"><p>body-sm · 14px · 400</p><p style="font-size:14px;color:var(--txt2);line-height:1.6">Metadata, timestamps, subtextos e legendas do sistema.</p></div>
+  <div class="type-specimen"><p>caption · 12px · 400</p><p style="font-size:12px;color:var(--i300)">Notas forenses, tolerâncias, versão de documento · v3.2</p></div>
+</section>
+
+<!-- ────────────────────────────────────
+     MOTION SYSTEM
+──────────────────────────────────── -->
+<section class="sec" id="motion">
+  <div class="sec-tag">Fundação · 03</div>
+  <h2 class="sec-h">Motion System — MD3</h2>
+  <p class="sec-p">Easings do Material Design 3. Passe o mouse em cada card para ver a curva em ação. Sem bounce. Sem spring físico.</p>
+
+  <div class="g3">
+    <div class="motion-card">
+      <div class="motion-dot motion-dot-std">→</div>
+      <div class="motion-label">Standard</div>
+      <div class="motion-curve">cubic-bezier(0.4, 0, 0.2, 1)</div>
+      <p style="font-size:12px;color:var(--txt2)">Movimento dentro da tela. Hover de botões e cards.</p>
+    </div>
+    <div class="motion-card">
+      <div class="motion-dot motion-dot-dec">↓</div>
+      <div class="motion-label">Decelerate</div>
+      <div class="motion-curve">cubic-bezier(0.0, 0, 0.2, 1)</div>
+      <p style="font-size:12px;color:var(--txt2)">Entrar na tela. Modais abrindo, dropdowns.</p>
+    </div>
+    <div class="motion-card">
+      <div class="motion-dot motion-dot-acc">↑</div>
+      <div class="motion-label">Accelerate</div>
+      <div class="motion-curve">cubic-bezier(0.4, 0, 1.0, 1)</div>
+      <p style="font-size:12px;color:var(--txt2)">Sair da tela. Modais fechando, toasts saindo.</p>
+    </div>
+    <div class="motion-card">
+      <div class="motion-dot motion-dot-emp">★</div>
+      <div class="motion-label">Emphasized</div>
+      <div class="motion-curve">cubic-bezier(0.2, 0, 0.0, 1)</div>
+      <p style="font-size:12px;color:var(--txt2)">Ações primárias. Pill da sidebar e das tabs.</p>
+    </div>
+    <div class="motion-card">
+      <div class="motion-dot motion-dot-exp">⚡</div>
+      <div class="motion-label">Expressive</div>
+      <div class="motion-curve">cubic-bezier(0.34, 1.56, 0.64, 1)</div>
+      <p style="font-size:12px;color:var(--txt2)">Ícones animados, badges, elementos lúdicos.</p>
+    </div>
+    <div class="motion-card" style="background:var(--i500)">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;width:100%">
+        <div style="background:rgba(255,255,255,.06);border-radius:var(--r-md);padding:8px">
+          <div style="font-size:9px;font-weight:700;color:rgba(255,255,255,.3);margin-bottom:3px">--d1</div>
+          <div style="font-size:16px;font-weight:800;color:var(--primary)">100ms</div>
+        </div>
+        <div style="background:rgba(255,255,255,.06);border-radius:var(--r-md);padding:8px">
+          <div style="font-size:9px;font-weight:700;color:rgba(255,255,255,.3);margin-bottom:3px">--d2</div>
+          <div style="font-size:16px;font-weight:800;color:var(--primary)">150ms</div>
+        </div>
+        <div style="background:rgba(255,255,255,.06);border-radius:var(--r-md);padding:8px">
+          <div style="font-size:9px;font-weight:700;color:rgba(255,255,255,.3);margin-bottom:3px">--d4</div>
+          <div style="font-size:16px;font-weight:800;color:var(--primary)">250ms</div>
+        </div>
+        <div style="background:rgba(255,255,255,.06);border-radius:var(--r-md);padding:8px">
+          <div style="font-size:9px;font-weight:700;color:rgba(255,255,255,.3);margin-bottom:3px">--d5</div>
+          <div style="font-size:16px;font-weight:800;color:var(--primary)">300ms</div>
+        </div>
+      </div>
+      <div class="motion-label" style="color:rgba(255,255,255,.4)">Duration Tokens</div>
+    </div>
+  </div>
+</section>
+
+<!-- ────────────────────────────────────
+     BOTÕES
+──────────────────────────────────── -->
+<section class="sec" id="buttons">
+  <div class="sec-tag">Ações · 01</div>
+  <h2 class="sec-h">Botões</h2>
+  <p class="sec-p">Scale + mudança de cor simultaneamente. Hover: scale(1.03) + cor mais clara. Press: scale(0.96) + cor mais escura. Ripple do ponto exato do clique.</p>
+
+  <div class="sub">
+    <div class="lbl">Filled — Ação primária</div>
+    <div class="box">
+      <div class="row">
+        <button class="btn btn-f" onclick="ripple(event)">
+          <span class="btn-ripple"></span><span class="btn-label">Gerar prompt</span>
+        </button>
+        <button class="btn btn-f" onclick="ripple(event)">
+          <span class="btn-ripple"></span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg>
+          <span class="btn-label">Novo pedido</span>
+        </button>
+        <button class="btn btn-f" onclick="ripple(event)">
+          <span class="btn-ripple"></span><span class="btn-label">Salvar</span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+        </button>
+        <button class="btn btn-f btn-sm" onclick="ripple(event)"><span class="btn-ripple"></span><span class="btn-label">Small</span></button>
+        <button class="btn btn-f btn-lg" onclick="ripple(event)"><span class="btn-ripple"></span><span class="btn-label">Large</span></button>
+        <button class="btn btn-f" disabled><span class="btn-label">Disabled</span></button>
+      </div>
+      <div class="row">
+        <button class="btn btn-f btn-loading" onclick="ripple(event)" style="min-width:120px">
+          <span class="btn-ripple"></span><span class="btn-label">Gerando...</span>
+          <div class="spinner spinner-sm" style="position:absolute;border-color:rgba(14,15,16,.2);border-top-color:var(--i500)"></div>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="sub">
+    <div class="lbl">Tonal — Secundário com container</div>
+    <div class="box">
+      <div class="row">
+        <button class="btn btn-t" onclick="ripple(event)"><span class="btn-ripple"></span><span class="btn-label">Ver histórico</span></button>
+        <button class="btn btn-t" onclick="ripple(event)">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+          <span class="btn-label">Editar aparência</span>
+        </button>
+        <button class="btn btn-t btn-sm" onclick="ripple(event)"><span class="btn-ripple"></span><span class="btn-label">Filtrar</span></button>
+      </div>
+    </div>
+  </div>
+
+  <div class="sub">
+    <div class="lbl">Outlined — Ação neutra</div>
+    <div class="box">
+      <div class="row">
+        <button class="btn btn-o" onclick="ripple(event)"><span class="btn-ripple"></span><span class="btn-label">Cancelar</span></button>
+        <button class="btn btn-o" onclick="ripple(event)">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          <span class="btn-label">Exportar</span>
+        </button>
+        <button class="btn btn-o btn-sm" onclick="ripple(event)"><span class="btn-ripple"></span><span class="btn-label">Abrir</span></button>
+        <button class="btn btn-o" disabled><span class="btn-label">Disabled</span></button>
+      </div>
+    </div>
+  </div>
+
+  <div class="sub">
+    <div class="lbl">Ghost / Text — Ação mínima</div>
+    <div class="box">
+      <div class="row">
+        <button class="btn btn-g" onclick="ripple(event)"><span class="btn-ripple"></span><span class="btn-label">Ver mais</span></button>
+        <button class="btn btn-g" onclick="ripple(event)">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+          <span class="btn-label">Saiba mais</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="sub">
+    <div class="lbl">Danger — Ação destrutiva</div>
+    <div class="box">
+      <div class="row">
+        <button class="btn btn-d" onclick="ripple(event)">
+          <span class="btn-ripple"></span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+          <span class="btn-label">Deletar creator</span>
+        </button>
+        <button class="btn btn-d" onclick="ripple(event)"><span class="btn-ripple"></span><span class="btn-label">Rejeitar</span></button>
+        <button class="btn btn-d btn-sm" onclick="ripple(event)"><span class="btn-ripple"></span><span class="btn-label">Cancelar pedido</span></button>
+      </div>
+    </div>
+  </div>
+
+  <div class="sub">
+    <div class="lbl">Ink — Dark action</div>
+    <div class="box">
+      <div class="row">
+        <button class="btn btn-ink" onclick="ripple(event)"><span class="btn-ripple"></span><span class="btn-label">Aprovar</span></button>
+        <button class="btn btn-ink" onclick="ripple(event)">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+          <span class="btn-label">Confirmar</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ────────────────────────────────────
+     GLASS BUTTONS
+──────────────────────────────────── -->
+<section class="sec" id="glass">
+  <div class="sec-tag">Ações · 02</div>
+  <h2 class="sec-h">Liquid Glass</h2>
+  <p class="sec-p">Material translúcido inspirado na especificação Apple Liquid Glass (WWDC25). Refrata o conteúdo abaixo, tem specular highlights e responde ao ambiente visual. Usado apenas em elementos flutuantes.</p>
+
+  <!-- Referência Apple -->
+  <div class="rule" style="margin-bottom:24px">
+    <div class="rule-icon">🍎</div>
+    <div>
+      <p><em>Apple Liquid Glass</em> — Referência oficial: developer.apple.com/documentation/technologyoverviews/liquid-glass</p>
+      <p style="margin-top:4px">Princípios: material translúcido que refrata o conteúdo atrás (lensing), especular highlight no topo, opacidade adaptativa (mais opaco quando há conteúdo rolando por baixo).</p>
+    </div>
+  </div>
+
+  <!-- Quando usar / não usar -->
+  <div class="g2" style="margin-bottom:32px">
+    <div class="card-w" style="border-left:3px solid var(--grn)">
+      <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:var(--grn);margin-bottom:12px">✓ Usar glass em:</div>
+      <ul style="list-style:none;display:flex;flex-direction:column;gap:8px;font-size:13px;color:var(--txt2)">
+        <li>→ Botões flutuantes (FAB, pill de ação)</li>
+        <li>→ Navigation pill / dock flutuante</li>
+        <li>→ Badges sobre fotos ou conteúdo visual</li>
+        <li>→ Tooltips sobre áreas ricas em cor</li>
+        <li>→ Overlays de controle de player</li>
+        <li>→ Elementos que "flutuam" acima do layout</li>
+      </ul>
+    </div>
+    <div class="card-w" style="border-left:3px solid var(--red)">
+      <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:var(--red);margin-bottom:12px">✗ Nunca usar glass em:</div>
+      <ul style="list-style:none;display:flex;flex-direction:column;gap:8px;font-size:13px;color:var(--txt2)">
+        <li>→ Cards de dados ou KPI</li>
+        <li>→ Tabelas e listas de conteúdo</li>
+        <li>→ Formulários e campos de input</li>
+        <li>→ Modais completos</li>
+        <li>→ Sidebar ou navegação lateral</li>
+        <li>→ Qualquer elemento sem fundo visual atrás</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Implementação Web -->
+  <div class="sub">
+    <div class="sub-h">Tradução para Web</div>
+    <div class="sub-p">O efeito real de lensing da Apple usa Metal/CoreImage. Na web, traduzimos com backdrop-filter como melhor aproximação.</div>
+    <div class="card-w" style="font-family:monospace;font-size:12px;line-height:1.8;background:var(--srf2)">
+      <div style="color:var(--txt2);margin-bottom:8px">/* glass-light — sobre fundo claro/colorido */</div>
+      <div style="color:var(--txt)">backdrop-filter: blur(20px) saturate(1.8) brightness(1.1);</div>
+      <div style="color:var(--txt)">background: rgba(255,255,255,0.55);</div>
+      <div style="color:var(--txt)">border: 1px solid rgba(255,255,255,0.7);</div>
+      <div style="color:var(--txt)">/* specular highlight: */</div>
+      <div style="color:var(--txt)">inset 0 1px 0 rgba(255,255,255,0.9)</div>
+      <br>
+      <div style="color:var(--txt2)">/* glass-dark — sobre fundo escuro/foto */</div>
+      <div style="color:var(--txt)">backdrop-filter: blur(20px) saturate(1.5) brightness(0.9);</div>
+      <div style="color:var(--txt)">background: rgba(14,15,16,0.28);</div>
+      <div style="color:var(--txt)">border: 1px solid rgba(255,255,255,0.14);</div>
+      <br>
+      <div style="color:var(--txt2)">/* glass-limao — tint primário */</div>
+      <div style="color:var(--txt)">backdrop-filter: blur(20px) saturate(2.0) brightness(1.05);</div>
+      <div style="color:var(--txt)">background: rgba(215,255,0,0.22);</div>
+      <div style="color:var(--txt)">border: 1px solid rgba(215,255,0,0.35);</div>
+    </div>
+  </div>
+
+  <!-- Demo Glass Light -->
+  <div class="sub">
+    <div class="lbl">Glass Light — sobre fundos com textura</div>
+    <div class="box" style="background:linear-gradient(135deg,#e0f0ff 0%,#d7efcc 50%,#ffeedd 100%);padding:32px">
+      <div class="row">
+        <button class="btn btn-glass" onclick="ripple(event)"><span class="btn-ripple"></span><span class="btn-label" style="position:relative;z-index:3">Gerar prompt</span></button>
+        <button class="btn btn-glass" onclick="ripple(event)">
+          <span class="btn-ripple"></span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="position:relative;z-index:3"><path d="M12 5v14M5 12h14"/></svg>
+          <span class="btn-label" style="position:relative;z-index:3">Nova creator</span>
+        </button>
+        <button class="btn btn-glass btn-sm" onclick="ripple(event)"><span class="btn-ripple"></span><span class="btn-label" style="position:relative;z-index:3">Filtrar</span></button>
+        <button class="btn btn-glass btn-lg" onclick="ripple(event)"><span class="btn-ripple"></span><span class="btn-label" style="position:relative;z-index:3">Abrir</span></button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Demo Glass Dark -->
+  <div class="sub">
+    <div class="lbl">Glass Dark — sobre fundo escuro ou foto</div>
+    <div class="box dark" style="padding:32px">
+      <div class="row">
+        <button class="btn btn-glass btn-glass-dark" onclick="ripple(event)"><span class="btn-ripple"></span><span class="btn-label" style="position:relative;z-index:3;color:#fff">Aprovar output</span></button>
+        <button class="btn btn-glass btn-glass-dark" onclick="ripple(event)">
+          <span class="btn-ripple"></span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.85)" stroke-width="2.5" style="position:relative;z-index:3"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          <span class="btn-label" style="position:relative;z-index:3;color:#fff">Exportar</span>
+        </button>
+        <button class="btn btn-glass btn-glass-dark btn-sm" onclick="ripple(event)"><span class="btn-ripple"></span><span class="btn-label" style="position:relative;z-index:3;color:#fff">Small</span></button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Demo Glass Limão -->
+  <div class="sub">
+    <div class="lbl">Glass Limão — tint primário sobre foto/gradiente</div>
+    <div class="box" style="background:linear-gradient(135deg,#1a2a0a 0%,#0a1a0a 50%,#1a1a00 100%);padding:32px">
+      <div class="row">
+        <button class="btn" style="backdrop-filter:blur(20px) saturate(2.0) brightness(1.05);background:rgba(215,255,0,0.22);border:1px solid rgba(215,255,0,0.4);border-radius:var(--r-pill);padding:11px 24px;color:#D7FF00;font-size:15px;font-weight:700" onclick="ripple(event)">
+          <span class="btn-ripple"></span>Gerar ⚡
+        </button>
+        <button class="btn" style="backdrop-filter:blur(20px) saturate(2.0) brightness(1.05);background:rgba(215,255,0,0.15);border:1px solid rgba(215,255,0,0.3);border-radius:var(--r-pill);padding:7px 16px;color:#D7FF00;font-size:13px;font-weight:700" onclick="ripple(event)">
+          <span class="btn-ripple"></span>Filtrar
+        </button>
+      </div>
+      <div style="font-size:11px;color:rgba(215,255,0,0.5);margin-top:8px">Classe: btn-glass-limao (usar sobre fundos escuros com Limão como tint)</div>
+    </div>
+  </div>
+
+  <!-- Pill de navegação flutuante -->
+  <div class="sub">
+    <div class="lbl">Navigation Pill — uso recomendado de glass</div>
+    <div class="box dark" style="padding:40px;display:flex;justify-content:center">
+      <div style="backdrop-filter:blur(24px) saturate(1.6) brightness(0.85);background:rgba(14,15,16,0.55);border:1px solid rgba(255,255,255,0.12);border-radius:var(--r-pill);padding:8px 20px;display:flex;gap:4px;align-items:center">
+        <button style="border:none;background:rgba(215,255,0,0.18);border-radius:var(--r-pill);padding:7px 16px;color:var(--l400);font-family:'Urbanist',sans-serif;font-size:13px;font-weight:700;cursor:pointer">Dashboard</button>
+        <button style="border:none;background:transparent;border-radius:var(--r-pill);padding:7px 16px;color:rgba(255,255,255,0.5);font-family:'Urbanist',sans-serif;font-size:13px;font-weight:500;cursor:pointer">Pedidos</button>
+        <button style="border:none;background:transparent;border-radius:var(--r-pill);padding:7px 16px;color:rgba(255,255,255,0.5);font-family:'Urbanist',sans-serif;font-size:13px;font-weight:500;cursor:pointer">Creators</button>
+        <button style="border:none;background:transparent;border-radius:var(--r-pill);padding:7px 16px;color:rgba(255,255,255,0.5);font-family:'Urbanist',sans-serif;font-size:13px;font-weight:500;cursor:pointer">Projetos</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ────────────────────────────────────
+     FAB & ICON BUTTONS
+──────────────────────────────────── -->
+<section class="sec" id="fab">
+  <div class="sec-tag">Ações · 03</div>
+  <h2 class="sec-h">FAB &amp; Icon Buttons</h2>
+  <p class="sec-p">FAB é o único elemento com box-shadow (em limão). Icon buttons com animações únicas no hover.</p>
+
+  <div class="sub">
+    <div class="lbl">FAB — Floating Action Button</div>
+    <div class="box">
+      <div class="row" style="align-items:flex-end;gap:16px">
+        <button class="fab">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg>
+        </button>
+        <button class="fab" style="width:40px;height:40px;border-radius:var(--r-lg)">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg>
+        </button>
+        <button class="fab" style="width:72px;height:72px;border-radius:var(--r-xl)">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="sub">
+    <div class="lbl">Icon Buttons — Com animações únicas</div>
+    <div class="box">
+      <div class="row">
+        <!-- Default pop -->
+        <button class="btn-icon" onclick="ripple(event)">
+          <span class="btn-ripple"></span>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+        </button>
+        <!-- Delete wiggle -->
+        <button class="btn-icon ic-del" onclick="ripple(event)">
+          <span class="btn-ripple"></span>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+        </button>
+        <!-- Send spark -->
+        <button class="btn-icon ic-send" onclick="ripple(event)">
+          <span class="btn-ripple"></span>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+        </button>
+        <!-- Sync spin -->
+        <button class="btn-icon ic-sync" onclick="ripple(event)">
+          <span class="btn-ripple"></span>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+        </button>
+        <!-- Filled -->
+        <button class="btn-icon filled" onclick="ripple(event)">
+          <span class="btn-ripple"></span>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--i500)" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg>
+        </button>
+        <!-- Outlined -->
+        <button class="btn-icon outlined" onclick="ripple(event)">
+          <span class="btn-ripple"></span>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        </button>
+        <!-- With notif badge -->
+        <div class="notif-wrap">
+          <button class="btn-icon" onclick="ripple(event)">
+            <span class="btn-ripple"></span>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+          </button>
+          <span class="notif-badge red">7</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ────────────────────────────────────
+     FORMULÁRIOS
+──────────────────────────────────── -->
+<section class="sec" id="forms">
+  <div class="sec-tag">Ações · 04</div>
+  <h2 class="sec-h">Formulários</h2>
+  <p class="sec-p">Focus ring em limão. Border vermelho para erro, verde para válido. Transições suaves em todos os estados.</p>
+
+  <div class="g2">
+    <div>
+      <div class="form-group">
+        <label class="form-label">Nome da creator</label>
+        <input class="input" type="text" placeholder="Ex: Ninaah Dornfeld">
+        <div class="form-hint">Use sempre o nome completo com a grafia correta.</div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Descrição da cena</label>
+        <textarea class="input" rows="4" placeholder="Ex: Ninaah está na beira da piscina..."></textarea>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Campo com ícone</label>
+        <div class="input-with-icon">
+          <svg class="input-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          <input class="input" type="text" placeholder="Ninaah Dornfeld">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Campo com erro</label>
+        <input class="input error" type="text" value="ninaahdornfeld.com">
+        <div class="form-error">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+          URL inválida — verifique o formato
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="form-group">
+        <label class="form-label">Seleções</label>
+        <div style="display:flex;flex-direction:column;gap:10px">
+          <label class="checkbox-wrap">
+            <input type="checkbox" checked>
+            <div class="checkbox-box">
+              <svg viewBox="0 0 12 12" fill="none"><polyline points="2,6 5,9 10,3" stroke="#0E0F10" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <span class="checkbox-label">Creator ativa</span>
+          </label>
+          <label class="checkbox-wrap">
+            <input type="checkbox">
+            <div class="checkbox-box">
+              <svg viewBox="0 0 12 12" fill="none"><polyline points="2,6 5,9 10,3" stroke="#0E0F10" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <span class="checkbox-label">Prioridade urgente</span>
+          </label>
+          <label class="radio-wrap">
+            <input type="radio" name="tipo" checked>
+            <div class="radio-dot"></div>
+            <span class="checkbox-label">Prompt de imagem</span>
+          </label>
+          <label class="radio-wrap">
+            <input type="radio" name="tipo">
+            <div class="radio-dot"></div>
+            <span class="checkbox-label">Prompt de vídeo</span>
+          </label>
+          <label class="toggle-wrap">
+            <input type="checkbox" checked>
+            <div class="toggle-track"><div class="toggle-thumb"></div></div>
+            <span class="checkbox-label">Geração habilitada</span>
+          </label>
+          <label class="toggle-wrap">
+            <input type="checkbox">
+            <div class="toggle-track"><div class="toggle-thumb"></div></div>
+            <span class="checkbox-label">Checklist automático</span>
+          </label>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ────────────────────────────────────
+     SEARCH
+──────────────────────────────────── -->
+<section class="sec" id="search">
+  <div class="sec-tag">Ações · 05</div>
+  <h2 class="sec-h">Search — Expansão animada</h2>
+  <p class="sec-p">Clique no campo para expandir com ease-exp. Ícone gira e muda de cor. Dropdown de resultados aparece com fade + scale.</p>
+
+  <div class="box" style="display:flex;justify-content:center;padding:40px">
+    <div class="search-wrap">
+      <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input class="search-field" type="text" placeholder="Buscar creators, pedidos...">
+      <div class="search-drop">
+        <div class="search-divider">Creators</div>
+        <div class="search-item">
+          <div class="si-icon" style="background:var(--l100)">🧑</div>
+          <div class="si-text">
+            <p>Ninaah Dornfeld</p><p>Ativa · 32 prompts este mês</p>
+          </div>
+        </div>
+        <div class="search-item">
+          <div class="si-icon" style="background:var(--l100)">👤</div>
+          <div class="si-text">
+            <p>Nova Creator</p><p>Em construção</p>
+          </div>
+        </div>
+        <div class="search-divider">Pedidos</div>
+        <div class="search-item">
+          <div class="si-icon" style="background:var(--cyn-bg)">📋</div>
+          <div class="si-text">
+            <p>#67 — Ninaah Piscina Golden</p><p>Em revisão · Audiovisual Squad</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ────────────────────────────────────
+     SELECT
+──────────────────────────────────── -->
+<section class="sec" id="select">
+  <div class="sec-tag">Ações · 06</div>
+  <h2 class="sec-h">Custom Select</h2>
+  <p class="sec-p">Dropdown animado com height 0→auto + opacity. Chevron rotaciona 180°. Opção selecionada com background limão-100.</p>
+
+  <div style="max-width:360px">
+    <div class="form-group">
+      <label class="form-label">Creator</label>
+      <div class="select-wrap" id="sel1">
+        <div class="select-trigger" onclick="toggleSelect('sel1')">
+          <span class="select-value placeholder" id="sel1-val">Selecionar creator</span>
+          <svg class="select-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+        <div class="select-panel" id="sel1-panel">
+          <div class="select-inner">
+            <div class="select-opt" onclick="selectOpt('sel1','Ninaah Dornfeld',this)">Ninaah Dornfeld</div>
+            <div class="select-opt" onclick="selectOpt('sel1','Emma Santos',this)">Emma Santos</div>
+            <div class="select-opt" onclick="selectOpt('sel1','Luna Vidal',this)">Luna Vidal</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Ambiente</label>
+      <div class="select-wrap" id="sel2">
+        <div class="select-trigger" onclick="toggleSelect('sel2')">
+          <span class="select-value placeholder" id="sel2-val">Selecionar ambiente</span>
+          <svg class="select-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+        <div class="select-panel" id="sel2-panel">
+          <div class="select-inner">
+            <div class="select-opt" onclick="selectOpt('sel2','Sala Principal',this)">Sala Principal</div>
+            <div class="select-opt" onclick="selectOpt('sel2','Piscina / Lazer',this)">Piscina / Lazer</div>
+            <div class="select-opt" onclick="selectOpt('sel2','Quarto da Ninaah',this)">Quarto da Ninaah</div>
+            <div class="select-opt" onclick="selectOpt('sel2','Cozinha Gourmet',this)">Cozinha Gourmet</div>
+            <div class="select-opt" onclick="selectOpt('sel2','Garagem',this)">Garagem</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ────────────────────────────────────
+     FILTER CHIPS
+──────────────────────────────────── -->
+<section class="sec" id="chips">
+  <div class="sec-tag">Ações · 07</div>
+  <h2 class="sec-h">Filter Chips</h2>
+  <p class="sec-p">Ativo: background limão-100, borda limão. Hover: scale(1.03). Clique para alternar estado.</p>
+
+  <div class="box">
+    <div class="lbl">Status</div>
+    <div class="row mb16">
+      <button class="chip active" onclick="this.classList.toggle('active')">Todos</button>
+      <button class="chip" onclick="this.classList.toggle('active')">Urgente</button>
+      <button class="chip" onclick="this.classList.toggle('active')">Em progresso</button>
+      <button class="chip" onclick="this.classList.toggle('active')">Em revisão</button>
+      <button class="chip" onclick="this.classList.toggle('active')">Concluído</button>
+    </div>
+    <div class="lbl">Squad</div>
+    <div class="row">
+      <button class="chip active" onclick="this.classList.toggle('active')">
+        <span class="chip-icon">⚡</span>Dev Squad
+      </button>
+      <button class="chip" onclick="this.classList.toggle('active')">
+        <span class="chip-icon">🎬</span>Audiovisual
+      </button>
+      <button class="chip" onclick="this.classList.toggle('active')">
+        <span class="chip-icon">📅</span>Marketing
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- ────────────────────────────────────
+     SIDEBAR
+──────────────────────────────────── -->
+<section class="sec" id="sidebar">
+  <div class="sec-tag">Navegação · 01</div>
+  <h2 class="sec-h">Sidebar — Pill fluido</h2>
+  <p class="sec-p">Pill desliza via JS puro (offsetTop/offsetHeight). Ícone animado no hover. Badge contador em preto+limão.</p>
+
+  <div style="display:flex;gap:24px;flex-wrap:wrap">
+    <div class="sidebar-demo" id="sb">
+      <div class="sidebar-logo">hubia<em>.</em></div>
+      <div class="sb-items" id="sb-items">
+        <div class="sb-pill" id="sb-pill"></div>
+        <div class="sb-group">Operacional</div>
+        <a class="sb-item active" data-idx="0" onclick="sbClick(this)">
+          <svg class="ic-home" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          <span class="sb-label">Dashboard</span>
+        </a>
+        <a class="sb-item" data-idx="1" onclick="sbClick(this)">
+          <svg class="ic-orders" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+          <span class="sb-label">Pedidos</span>
+          <span class="sb-badge">12</span>
+        </a>
+        <a class="sb-item" data-idx="2" onclick="sbClick(this)">
+          <svg class="ic-cal" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          <span class="sb-label">Calendário</span>
+        </a>
+        <div class="sb-div"></div>
+        <div class="sb-group">Ferramentas</div>
+        <a class="sb-item" data-idx="3" onclick="sbClick(this)">
+          <svg class="ic-gen" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+          <span class="sb-label">Gerador</span>
+        </a>
+        <a class="sb-item" data-idx="4" onclick="sbClick(this)">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          <span class="sb-label">Creators</span>
+        </a>
+        <a class="sb-item" data-idx="5" onclick="sbClick(this)">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+          <span class="sb-label">Projetos</span>
+        </a>
+        <div class="sb-div"></div>
+        <div class="sb-group">Sistema</div>
+        <a class="sb-item" data-idx="6" onclick="sbClick(this)">
+          <svg class="ic-agents" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M4.93 4.93a10 10 0 0 0 0 14.14"/></svg>
+          <span class="sb-label">Agentes</span>
+        </a>
+        <a class="sb-item" data-idx="7" onclick="sbClick(this)">
+          <svg class="ic-mem" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          <span class="sb-label">Memória</span>
+        </a>
+        <a class="sb-item" data-idx="8" onclick="sbClick(this)">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 1v4m0 14v4M4.22 4.22l2.83 2.83m9.9 9.9 2.83 2.83M1 12h4m14 0h4M4.22 19.78l2.83-2.83m9.9-9.9 2.83-2.83"/></svg>
+          <span class="sb-label">Config</span>
+        </a>
+      </div>
+      <div class="sb-footer">
+        <div class="sb-ava">P</div>
+        <div class="sb-user">
+          <p>Pantcho</p>
+          <p>Diretor de Arte</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ────────────────────────────────────
+     TABS
+──────────────────────────────────── -->
+<section class="sec" id="tabs">
+  <div class="sec-tag">Navegação · 02</div>
+  <h2 class="sec-h">Tabs — Pill fluido + slide direcional</h2>
+  <p class="sec-p">Pill desliza para a aba clicada. Conteúdo entra da direção correta. MD3 emphasized easing.</p>
+
+  <div class="box">
+    <div class="tab-bar" id="tb1">
+      <div class="tab-pill" id="tb1-pill"></div>
+      <button class="tab-item active" onclick="tabClick('tb1',this,0)">Visão Geral</button>
+      <button class="tab-item" onclick="tabClick('tb1',this,1)">Aparência</button>
+      <button class="tab-item" onclick="tabClick('tb1',this,2)">Ambientes</button>
+      <button class="tab-item" onclick="tabClick('tb1',this,3)">Look Library</button>
+      <button class="tab-item" onclick="tabClick('tb1',this,4)">Tom de Voz</button>
+    </div>
+    <div class="tab-content-wrap">
+      <div class="tab-panel active" id="tb1-p0">
+        <div class="card-w mt16">
+          <p style="font-size:13px;color:var(--txt2)">Conteúdo da aba <strong>Visão Geral</strong> — métricas, marcadores de identidade, veículo.</p>
+        </div>
+      </div>
+      <div class="tab-panel" id="tb1-p1">
+        <div class="card-w mt16" style="background:var(--red-bg);border-color:rgba(255,68,68,.2)">
+          <p style="font-size:13px;color:#cc2222">⚠ <strong>Documento forense.</strong> Qualquer edição cria nova versão — sem sobrescrever.</p>
+        </div>
+      </div>
+      <div class="tab-panel" id="tb1-p2">
+        <div class="card-w mt16">
+          <p style="font-size:13px;color:var(--txt2)">Conteúdo da aba <strong>Ambientes</strong> — locais aprovados para geração.</p>
+        </div>
+      </div>
+      <div class="tab-panel" id="tb1-p3">
+        <div class="card-w mt16">
+          <p style="font-size:13px;color:var(--txt2)">Conteúdo da aba <strong>Look Library</strong> — galeria de looks gerados.</p>
+        </div>
+      </div>
+      <div class="tab-panel" id="tb1-p4">
+        <div class="card-w mt16">
+          <p style="font-size:13px;color:var(--txt2)">Conteúdo da aba <strong>Tom de Voz</strong> — voz e estilo por plataforma.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sub">
+    <div class="lbl">Tabs Secundárias — com ícones</div>
+    <div class="box" style="background:var(--bg)">
+      <div class="tab-bar" id="tb2">
+        <div class="tab-pill" id="tb2-pill"></div>
+        <button class="tab-item active" onclick="tabClick('tb2',this,0)">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+          Gerador
+        </button>
+        <button class="tab-item" onclick="tabClick('tb2',this,1)">Histórico</button>
+        <button class="tab-item" onclick="tabClick('tb2',this,2)">Photo Cloner</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ────────────────────────────────────
+     BREADCRUMB
+──────────────────────────────────── -->
+<section class="sec" id="breadcrumb">
+  <div class="sec-tag">Navegação · 03</div>
+  <h2 class="sec-h">Breadcrumb</h2>
+
+  <div class="box">
+    <div class="breadcrumb mb16">
+      <a class="bc-item" href="#">Creators</a>
+      <span class="bc-sep">/</span>
+      <a class="bc-item" href="#">Ninaah Dornfeld</a>
+      <span class="bc-sep">/</span>
+      <span class="bc-item current">Aparência</span>
+    </div>
+    <div class="breadcrumb">
+      <a class="bc-item" href="#">Dashboard</a>
+      <span class="bc-sep">/</span>
+      <a class="bc-item" href="#">Pedidos</a>
+      <span class="bc-sep">/</span>
+      <span class="bc-item current">#67 — Ninaah Piscina Golden</span>
+    </div>
+  </div>
+</section>
+
+<!-- ────────────────────────────────────
+     PAGINATION
+──────────────────────────────────── -->
+<section class="sec" id="pagination">
+  <div class="sec-tag">Navegação · 04</div>
+  <h2 class="sec-h">Paginação</h2>
+
+  <div class="box">
+    <div class="pagination">
+      <button class="page-btn" disabled>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+      </button>
+      <button class="page-btn active">1</button>
+      <button class="page-btn">2</button>
+      <button class="page-btn">3</button>
+      <span style="padding:0 4px;color:var(--i300);font-size:13px">…</span>
+      <button class="page-btn">10</button>
+      <button class="page-btn">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- ────────────────────────────────────
+     CARDS
+──────────────────────────────────── -->
+<section class="sec" id="cards">
+  <div class="sec-tag">Dados · 01</div>
+  <h2 class="sec-h">Cards</h2>
+  <p class="sec-p">Branco (padrão), Preto (dados críticos/output), Fotográfico (creator), KPI, Agente. Zero box-shadow.</p>
+
+  <div class="g3">
+    <div class="card-w">
+      <div class="lbl mb8">Card Branco</div>
+      <p style="font-size:14px;color:var(--txt2)">Status de squads, marcadores, configurações.</p>
+    </div>
+    <div class="card-b">
+      <div class="lbl mb8" style="color:rgba(255,255,255,.4)">Card Preto</div>
+      <p style="font-size:14px;color:rgba(255,255,255,.55)">Outputs do sistema, dados forenses, agentes IA.</p>
+    </div>
+    <div class="card-interactive">
+      <div class="lbl mb8">Card Interativo ↗</div>
+      <p style="font-size:14px;color:var(--txt2)">Hover levanta 2px. Press recua. Background limão-50.</p>
+    </div>
+  </div>
+
+  <div class="g3 mt16">
+    <div class="card-photo">
+      <div style="width:100%;height:100%;background:linear-gradient(135deg,#1a1a2e,#16213e,#0f3460)"></div>
+      <div class="card-photo-overlay"></div>
+      <div class="card-photo-content">
+        <span class="tag tag-active mb8" style="align-self:flex-start">Ativa</span>
+        <div class="card-photo-name">Ninaah Dornfeld</div>
+        <div class="card-photo-meta">23 · Pomerode, SC · Privacy · Instagram</div>
+      </div>
+    </div>
+    <div class="card-kpi">
+      <div class="card-kpi-label">Prompts este mês</div>
+      <div class="card-kpi-value">136</div>
+      <div class="card-kpi-sub">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--grn)" stroke-width="2.5"><polyline points="18 15 12 9 6 15"/></svg>
+        <span style="color:var(--grn)">+24%</span> vs mês anterior
+      </div>
+    </div>
+    <div class="card-agent">
+      <div class="card-agent-head">
+        <div class="card-agent-ava" style="background:rgba(215,255,0,.12)">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M4.93 4.93a10 10 0 0 0 0 14.14"/></svg>
+        </div>
+        <div>
+          <div class="card-agent-name">Orquestrador</div>
+          <div class="card-agent-role">CEO · Ponto de entrada</div>
+        </div>
+        <span class="tag tag-active" style="margin-left:auto">Ativo</span>
+      </div>
+      <div class="card-agent-desc">Recebe pedidos, classifica intenção e roteia para o squad correto. Ponto único de entrada do sistema.</div>
+      <div class="card-agent-skills">
+        <span class="card-agent-skill">AGENTS.md</span>
+        <span class="card-agent-skill">MEMORY.md</span>
+        <span class="card-agent-skill">RULES.md</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ────────────────────────────────────
+     TAGS
+──────────────────────────────────── -->
+<section class="sec" id="tags">
+  <div class="sec-tag">Dados · 02</div>
+  <h2 class="sec-h">Tags de Status</h2>
+  <p class="sec-p">Sistema de cores unificado em todo o produto. Nunca inventar cor nova sem aprovação.</p>
+
+  <div class="box">
+    <div class="lbl">Agentes</div>
+    <div class="row mb16">
+      <span class="tag tag-active"><span class="tag-dot"></span>Ativo / SEMPRE</span>
+      <span class="tag tag-task"><span class="tag-dot"></span>Em Tarefa</span>
+      <span class="tag tag-review"><span class="tag-dot"></span>Revisão Ativa</span>
+      <span class="tag tag-standby"><span class="tag-dot"></span>Standby</span>
+      <span class="tag tag-soon">Em Breve</span>
+      <span class="tag tag-planned">Planejado</span>
+    </div>
+    <div class="lbl">Pedidos</div>
+    <div class="row">
+      <span class="tag tag-urgent"><span class="tag-dot"></span>Urgente</span>
+      <span class="tag tag-progress"><span class="tag-dot"></span>Em Progresso</span>
+      <span class="tag tag-review"><span class="tag-dot"></span>Em Aprovação</span>
+      <span class="tag tag-backlog"><span class="tag-dot"></span>Backlog</span>
+      <span class="tag tag-done"><span class="tag-dot"></span>Concluído</span>
+      <span class="tag tag-cancelled"><span class="tag-dot"></span>Cancelado</span>
+      <span class="tag tag-rejected"><span class="tag-dot"></span>Rejeitado</span>
+      <span class="tag tag-construction"><span class="tag-dot"></span>Em Construção</span>
+    </div>
+  </div>
+</section>
+
+<!-- ────────────────────────────────────
+     TABELA DE DADOS
+──────────────────────────────────── -->
+<section class="sec" id="table">
+  <div class="sec-tag">Dados · 03</div>
+  <h2 class="sec-h">Tabela de Dados</h2>
+  <p class="sec-p">Cabeçalho clicável para ordenar. Linhas alternadas. Hover com limão-50. Células com padding confortável.</p>
+
+  <div class="table-wrap">
+    <table class="data-table" id="tbl1">
+      <thead>
+        <tr>
+          <th onclick="sortTable('tbl1',0,this)">
+            # Pedido<span class="sort-icon"><span class="sort-arrow up"></span><span class="sort-arrow down"></span></span>
+          </th>
+          <th onclick="sortTable('tbl1',1,this)">
+            Título<span class="sort-icon"><span class="sort-arrow up"></span><span class="sort-arrow down"></span></span>
+          </th>
+          <th onclick="sortTable('tbl1',2,this)">
+            Squad<span class="sort-icon"><span class="sort-arrow up"></span><span class="sort-arrow down"></span></span>
+          </th>
+          <th onclick="sortTable('tbl1',3,this)">
+            Status<span class="sort-icon"><span class="sort-arrow up"></span><span class="sort-arrow down"></span></span>
+          </th>
+          <th onclick="sortTable('tbl1',4,this)">
+            Criado em<span class="sort-icon"><span class="sort-arrow up"></span><span class="sort-arrow down"></span></span>
+          </th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span style="font-weight:700">#68</span></td>
+          <td>Landing Page Privacy</td>
+          <td><span class="tag tag-standby">Dev Squad</span></td>
+          <td><span class="tag tag-progress"><span class="tag-dot"></span>Em Progresso</span></td>
+          <td><span style="color:var(--txt2);font-size:13px">01 Mar 2026</span></td>
+          <td><button class="btn btn-g btn-sm" onclick="ripple(event)"><span class="btn-ripple"></span>Abrir</button></td>
+        </tr>
+        <tr>
+          <td><span style="font-weight:700">#67</span></td>
+          <td>Ninaah — Piscina Golden Hour</td>
+          <td><span class="tag tag-soon">Audiovisual</span></td>
+          <td><span class="tag tag-review"><span class="tag-dot"></span>Em Aprovação</span></td>
+          <td><span style="color:var(--txt2);font-size:13px">28 Fev 2026</span></td>
+          <td><button class="btn btn-g btn-sm" onclick="ripple(event)"><span class="btn-ripple"></span>Abrir</button></td>
+        </tr>
+        <tr>
+          <td><span style="font-weight:700">#66</span></td>
+          <td>Ninaah — Sala Elegante Manhã</td>
+          <td><span class="tag tag-soon">Audiovisual</span></td>
+          <td><span class="tag tag-done"><span class="tag-dot"></span>Concluído</span></td>
+          <td><span style="color:var(--txt2);font-size:13px">25 Fev 2026</span></td>
+          <td><button class="btn btn-g btn-sm" onclick="ripple(event)"><span class="btn-ripple"></span>Abrir</button></td>
+        </tr>
+        <tr>
+          <td><span style="font-weight:700">#65</span></td>
+          <td>App Mobile Agência v2</td>
+          <td><span class="tag tag-standby">Dev Squad</span></td>
+          <td><span class="tag tag-urgent"><span class="tag-dot"></span>Urgente</span></td>
+          <td><span style="color:var(--txt2);font-size:13px">22 Fev 2026</span></td>
+          <td><button class="btn btn-g btn-sm" onclick="ripple(event)"><span class="btn-ripple"></span>Abrir</button></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div style="display:flex;justify-content:center;margin-top:16px">
+    <div class="pagination">
+      <button class="page-btn" disabled>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+      </button>
+      <button class="page-btn active">1</button>
+      <button class="page-btn">2</button>
+      <button class="page-btn">3</button>
+      <button class="page-btn">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- ────────────────────────────────────
+     TABELA FORENSE
+──────────────────────────────────── -->
+<section class="sec" id="forensic">
+  <div class="sec-tag">Dados · 04</div>
+  <h2 class="sec-h">Tabela Forense</h2>
+  <p class="sec-p">Cabeçalho preto com texto branco/limão. Primeira coluna em limão. Violações destacadas em vermelho com dot.</p>
+
+  <div class="banner banner-warn mb16">
+    <span class="banner-icon">⚠</span>
+    <div><p><strong>Documento forense</strong> — Fonte da verdade absoluta. Nenhum detalhe pode ser alterado sem aprovação explícita de Pantcho.</p></div>
+  </div>
+
+  <div class="table-wrap">
+    <table class="data-table table-forensic">
+      <thead>
+        <tr>
+          <th class="lemon-col">Elemento</th>
+          <th>Definição Fixa</th>
+          <th>Tolerância</th>
+          <th>Como prevenir alucinação</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="lemon-col">Olhos</td>
+          <td>Amendoado suave, castanho claro a mel</td>
+          <td>Variação de brilho/reflexo</td>
+          <td>Fixar 'castanho claro a mel' no prompt</td>
+        </tr>
+        <tr>
+          <td class="lemon-col">Cor dos olhos</td>
+          <td style="color:var(--red);font-weight:700">NUNCA verde/azul</td>
+          <td class="violation">Violação — regenerar</td>
+          <td>Reforçar cor explicitamente em todo prompt</td>
+        </tr>
+        <tr>
+          <td class="lemon-col">Cabelo</td>
+          <td>Longo, castanho claro a médio, liso</td>
+          <td>Mechas sutis, ondas pontas</td>
+          <td>Fixar comprimento e cor base</td>
+        </tr>
+        <tr>
+          <td class="lemon-col">Pintinha</td>
+          <td>Ombro direito — clavícula/deltoide</td>
+          <td>Discreta, nunca ausente</td>
+          <td>Mencionar explicitamente quando ombro visível</td>
+        </tr>
+        <tr>
+          <td class="lemon-col">Pintinha desapareceu</td>
+          <td style="color:var(--red);font-weight:700">Marcador crítico ausente</td>
+          <td class="violation">Violação — regenerar</td>
+          <td>Validar sempre antes de aprovar</td>
+        </tr>
+        <tr>
+          <td class="lemon-col">Silhueta</td>
+          <td>Cintura definida, proporções constantes</td>
+          <td>Postura e ângulo</td>
+          <td>Fixar altura (1,63m) como âncora de escala</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ────────────────────────────────────
+     CALENDÁRIO
+──────────────────────────────────── -->
+<section class="sec" id="calendar">
+  <div class="sec-tag">Dados · 05</div>
+  <h2 class="sec-h">Calendário</h2>
+  <p class="sec-p">Grid 7×5. Dia atual com pill limão. Eventos coloridos por status. Navegação prev/next. Hover por dia.</p>
+
+  <div class="box" id="cal-root">
+    <!-- Renderizado por JS -->
+  </div>
+</section>
+
+<!-- ────────────────────────────────────
+     PROGRESS
+──────────────────────────────────── -->
+<section class="sec" id="progress">
+  <div class="sec-tag">Dados · 06</div>
+  <h2 class="sec-h">Progress Bars</h2>
+
+  <div class="box">
+    <div class="lbl">Determinado</div>
+    <div style="display:flex;flex-direction:column;gap:12px;margin-bottom:20px">
+      <div>
+        <div style="display:flex;justify-content:space-between;margin-bottom:4px">
+          <span style="font-size:12px;font-weight:600">Pedidos concluídos</span>
+          <span style="font-size:12px;color:var(--txt2)">75%</span>
+        </div>
+        <div class="progress"><div class="progress-bar" style="width:75%"></div></div>
+      </div>
+      <div>
+        <div class="progress progress-sm"><div class="progress-bar grn" style="width:92%"></div></div>
+      </div>
+      <div>
+        <div class="progress progress-lg"><div class="progress-bar org" style="width:40%"></div></div>
+      </div>
+      <div>
+        <div class="progress"><div class="progress-bar red" style="width:18%"></div></div>
+      </div>
+    </div>
+    <div class="lbl">Indeterminado — carregando</div>
+    <div class="progress indeterminate"><div class="progress-bar"></div></div>
+  </div>
+</section>
+
+<!-- ────────────────────────────────────
+     MODAIS
+──────────────────────────────────── -->
+<section class="sec" id="modals">
+  <div class="sec-tag">Feedback · 01</div>
+  <h2 class="sec-h">Modais</h2>
+  <p class="sec-p">Overlay obrigatório: rgba(14,15,16,.72) + backdrop-filter blur(12px). Entrada com scale 0.95 → 1 + opacity. X fecha, click fora fecha (exceto destrutivos).</p>
+
+  <div class="rule">
+    <span class="rule-icon">⚠</span>
+    <p><em>Regra inviolável:</em> Nunca fundo sólido. Nunca overlay branco. Nunca sem blur. Esta regra se aplica a todos os modais sem exceção.</p>
+  </div>
+
+  <div class="row">
+    <button class="btn btn-f" onclick="openModal('modal-form')">
+      <span class="btn-ripple"></span>
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg>
+      <span class="btn-label">Formulário</span>
+    </button>
+    <button class="btn btn-d" onclick="openModal('modal-destruct')">
+      <span class="btn-ripple"></span>
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+      <span class="btn-label">Destrutivo</span>
+    </button>
+    <button class="btn btn-ink" onclick="openModal('modal-output')">
+      <span class="btn-ripple"></span>
+      <span class="btn-label">Output / Prompt</span>
+    </button>
+  </div>
+
+  <!-- Modal Formulário -->
+  <div class="modal-backdrop" id="modal-form" onclick="backdropClose(event,'modal-form')">
+    <div class="modal modal-md">
+      <div class="modal-head">
+        <div class="modal-title">Nova Creator</div>
+        <button class="modal-close" onclick="closeModal('modal-form')">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label class="form-label">Nome completo</label>
+          <input class="input" type="text" placeholder="Ex: Ninaah Dornfeld">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Plataformas</label>
+          <div class="row">
+            <label class="checkbox-wrap">
+              <input type="checkbox" checked>
+              <div class="checkbox-box"><svg viewBox="0 0 12 12" fill="none"><polyline points="2,6 5,9 10,3" stroke="#0E0F10" stroke-width="2" stroke-linecap="round"/></svg></div>
+              <span class="checkbox-label">Instagram</span>
+            </label>
+            <label class="checkbox-wrap">
+              <input type="checkbox" checked>
+              <div class="checkbox-box"><svg viewBox="0 0 12 12" fill="none"><polyline points="2,6 5,9 10,3" stroke="#0E0F10" stroke-width="2" stroke-linecap="round"/></svg></div>
+              <span class="checkbox-label">Privacy</span>
+            </label>
+            <label class="checkbox-wrap">
+              <input type="checkbox">
+              <div class="checkbox-box"><svg viewBox="0 0 12 12" fill="none"><polyline points="2,6 5,9 10,3" stroke="#0E0F10" stroke-width="2" stroke-linecap="round"/></svg></div>
+              <span class="checkbox-label">OnlyFans</span>
+            </label>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-o" onclick="closeModal('modal-form')"><span class="btn-ripple"></span><span class="btn-label">Cancelar</span></button>
+        <button class="btn btn-f" onclick="ripple(event)"><span class="btn-ripple"></span><span class="btn-label">Criar creator</span></button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Destrutivo -->
+  <div class="modal-backdrop" id="modal-destruct">
+    <div class="modal modal-sm">
+      <div class="modal-head">
+        <div class="modal-title" style="color:var(--red)">⚠ Confirmar exclusão</div>
+        <button class="modal-close" onclick="closeModal('modal-destruct')">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Esta ação é <strong>irreversível</strong>. Todos os dados da creator, prompts e histórico serão permanentemente removidos do sistema.</p>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-o" onclick="closeModal('modal-destruct')"><span class="btn-ripple"></span><span class="btn-label">Cancelar</span></button>
+        <button class="btn btn-d" onclick="ripple(event)"><span class="btn-ripple"></span><span class="btn-label">Confirmar exclusão</span></button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Output -->
+  <div class="modal-backdrop" id="modal-output" onclick="backdropClose(event,'modal-output')">
+    <div class="modal modal-lg">
+      <div class="modal-head">
+        <div>
+          <div class="modal-title" style="color:var(--primary)">Output — Prompt Final</div>
+          <div style="font-size:12px;color:var(--txt2);margin-top:2px">Ninaah Dornfeld · Piscina · Golden Hour · Sony A7R V</div>
+        </div>
+        <button class="modal-close" onclick="closeModal('modal-output')">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+      <div style="background:var(--i500);border-radius:var(--r-lg);padding:20px">
+        <p style="font-size:13px;color:rgba(255,255,255,.55);line-height:1.8">Sony A7R V + 85mm f/1.4 portrait lens, golden hour afternoon light. Subject: Ninaah Dornfeld, 1.63m, oval face, light brown eyes, long straight hair, subtle mole right shoulder. Scene: Reclining on minimalist sun lounger by rectangular pool, natural SC vegetation, warm late afternoon light. Technical: f/1.8, 1/400s, ISO 200, shallow DOF. Style: High-end editorial lifestyle, warm color grade, natural skin texture.</p>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-o" onclick="ripple(event)"><span class="btn-ripple"></span><span class="btn-label">Copiar JSON</span></button>
+        <button class="btn btn-f" onclick="ripple(event)">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+          <span class="btn-label">Copiar prompt</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ────────────────────────────────────
+     TOASTS
+──────────────────────────────────── -->
+<section class="sec" id="toasts">
+  <div class="sec-tag">Feedback · 02</div>
+  <h2 class="sec-h">Toasts</h2>
+  <p class="sec-p">Slide-up + fade-in na entrada. Auto-dismiss em 3s. Saída com fade. Sempre canto inferior direito.</p>
+
+  <div class="row">
+    <button class="btn btn-f" onclick="showToast('success')"><span class="btn-ripple"></span><span class="btn-label">✓ Sucesso</span></button>
+    <button class="btn btn-d" onclick="showToast('error')"><span class="btn-ripple"></span><span class="btn-label">✕ Erro</span></button>
+    <button class="btn btn-t" onclick="showToast('info')"><span class="btn-ripple"></span><span class="btn-label">ℹ Info</span></button>
+    <button class="btn btn-ink" onclick="showToast('action')"><span class="btn-ripple"></span><span class="btn-label">Com ação</span></button>
+  </div>
+</section>
+
+<!-- Toast host -->
+<div class="toast-host" id="toast-host"></div>
+
+<!-- ────────────────────────────────────
+     BANNERS
+──────────────────────────────────── -->
+<section class="sec" id="banners">
+  <div class="sec-tag">Feedback · 03</div>
+  <h2 class="sec-h">Banners</h2>
+
+  <div style="display:flex;flex-direction:column;gap:10px">
+    <div class="banner banner-dark">
+      <span class="banner-icon">⚡</span>
+      <div><strong style="color:var(--primary);font-size:11px;letter-spacing:1px;text-transform:uppercase">DEV SQUAD EM EXECUÇÃO</strong>
+      <p>O Agente de Desenvolvimento está processando o pedido #68. Stack: Next.js 15 + TypeScript + Tailwind.</p></div>
+    </div>
+    <div class="banner banner-warn">
+      <span class="banner-icon">⚠</span>
+      <div><p><strong>Documento forense</strong> — Fonte da verdade absoluta. Qualquer edição cria nova versão — nunca sobrescreve.</p></div>
+    </div>
+    <div class="banner banner-info">
+      <span class="banner-icon">ℹ</span>
+      <div><p><strong>Tom de voz</strong> — Use este guia para todos os textos gerados para Ninaah. Tom varia por plataforma.</p></div>
+    </div>
+    <div class="banner banner-success">
+      <span class="banner-icon">✓</span>
+      <div><p><strong>Checklist forense aprovado</strong> — Todos os 12 marcadores validados com sucesso. Pedido movido para revisão.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ────────────────────────────────────
+     TOOLTIPS
+──────────────────────────────────── -->
+<section class="sec" id="tooltips">
+  <div class="sec-tag">Feedback · 04</div>
+  <h2 class="sec-h">Tooltips</h2>
+  <p class="sec-p">3 variantes (dark, limão, erro). 3 posições (top, right, bottom). Animação scale + opacity. Passe o mouse.</p>
+
+  <div class="box">
+    <div class="row" style="gap:32px;justify-content:center;padding:32px 0">
+      <!-- Dark top -->
+      <div class="tooltip-wrap">
+        <button class="btn btn-o" onclick="ripple(event)"><span class="btn-ripple"></span><span class="btn-label">Dark · Top</span></button>
+        <div class="tooltip tooltip-dark tooltip-top">Informação adicional sobre esta ação</div>
+      </div>
+      <!-- Lemon top -->
+      <div class="tooltip-wrap">
+        <button class="btn btn-f" onclick="ripple(event)"><span class="btn-ripple"></span><span class="btn-label">Limão · Top</span></button>
+        <div class="tooltip tooltip-lemon tooltip-top">Ação primária do sistema</div>
+      </div>
+      <!-- Error top -->
+      <div class="tooltip-wrap">
+        <button class="btn btn-d" onclick="ripple(event)"><span class="btn-ripple"></span><span class="btn-label">Erro · Top</span></button>
+        <div class="tooltip tooltip-error tooltip-top">Ação irreversível — confirme</div>
+      </div>
+    </div>
+    <div class="row" style="gap:48px;justify-content:center;padding:0 0 24px">
+      <!-- Dark right -->
+      <div class="tooltip-wrap">
+        <button class="btn-icon filled" onclick="ripple(event)">
+          <span class="btn-ripple"></span>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--i500)" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg>
+          <div class="tooltip tooltip-dark tooltip-right">Novo pedido (⌘K)</div>
+        </button>
+      </div>
+      <!-- Lemon right -->
+      <div class="tooltip-wrap">
+        <button class="btn-icon" onclick="ripple(event)">
+          <span class="btn-ripple"></span>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+          <div class="tooltip tooltip-lemon tooltip-right">Gerar prompt agora</div>
+        </button>
+      </div>
+      <!-- Bottom -->
+      <div class="tooltip-wrap">
+        <button class="btn-icon outlined" onclick="ripple(event)">
+          <span class="btn-ripple"></span>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+          <div class="tooltip tooltip-dark tooltip-bottom">Mais informações</div>
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ────────────────────────────────────
+     AVATARS
+──────────────────────────────────── -->
+<section class="sec" id="avatars">
+  <div class="sec-tag">Misc · 01</div>
+  <h2 class="sec-h">Avatars</h2>
+  <p class="sec-p">5 tamanhos. Badge de status (online/busy/away). Avatar group com overlap de 10px.</p>
+
+  <div class="box">
+    <div class="lbl">Tamanhos</div>
+    <div class="row mb24" style="align-items:flex-end;gap:16px">
+      <div class="avatar-wrap xs"><div class="avatar avatar-xs">P</div><div class="ava-status ava-online"></div></div>
+      <div class="avatar-wrap sm"><div class="avatar avatar-sm">P</div><div class="ava-status ava-online"></div></div>
+      <div class="avatar-wrap md"><div class="avatar avatar-md">P</div><div class="ava-status ava-busy"></div></div>
+      <div class="avatar-wrap lg"><div class="avatar avatar-lg">P</div><div class="ava-status ava-away"></div></div>
+      <div class="avatar-wrap xl"><div class="avatar avatar-xl" style="background:var(--i500);color:var(--primary)">P</div></div>
+    </div>
+
+    <div class="lbl">Avatar Group</div>
+    <div class="avatar-group">
+      <div class="avatar-wrap"><div class="avatar avatar-md" style="background:var(--l200);color:var(--l700)">N</div></div>
+      <div class="avatar-wrap"><div class="avatar avatar-md" style="background:var(--cyn-bg);color:#0088aa">E</div></div>
+      <div class="avatar-wrap"><div class="avatar avatar-md" style="background:var(--pur-bg);color:var(--pur)">L</div></div>
+      <div class="avatar-wrap"><div class="avatar avatar-md" style="background:var(--i500);color:#fff;font-size:12px">+3</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ────────────────────────────────────
+     ACCORDION
+──────────────────────────────────── -->
+<section class="sec" id="accordion">
+  <div class="sec-tag">Misc · 02</div>
+  <h2 class="sec-h">Accordion</h2>
+  <p class="sec-p">Chevron rotaciona 180°. max-height com ease-emp. Múltiplos podem estar abertos simultaneamente.</p>
+
+  <div class="accordion" id="faq">
+    <div class="acc-item">
+      <button class="acc-trigger open" onclick="toggleAcc(this)">
+        O que é o sistema de memória compartilhada?
+        <svg class="acc-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+      </button>
+      <div class="acc-body open">
+        <div class="acc-content">Todos os agentes leem <code class="code">WORKING.md</code>, <code class="code">MEMORY.md</code> e <code class="code">LESSONS.md</code> antes de qualquer ação. Isso garante continuidade entre sessões e aprendizado incremental do sistema.</div>
+      </div>
+    </div>
+    <div class="acc-item">
+      <button class="acc-trigger" onclick="toggleAcc(this)">
+        Qual a regra dos 40% de contexto?
+        <svg class="acc-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+      </button>
+      <div class="acc-body">
+        <div class="acc-content">A janela de contexto nunca deve ultrapassar 40% de ocupação. Skills são carregadas sob demanda — nunca todas de uma vez. Subagentes são usados para trabalho pesado e retornam apenas o resumo.</div>
+      </div>
+    </div>
+    <div class="acc-item">
+      <button class="acc-trigger" onclick="toggleAcc(this)">
+        Como funciona o versionamento de aparência?
+        <svg class="acc-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+      </button>
+      <div class="acc-body">
+        <div class="acc-content">Qualquer edição na aba Aparência cria uma nova versão automática (<code class="code">v1 → v2 → v3</code>). Nenhuma versão é sobrescrita. Qualquer versão anterior pode ser restaurada criando uma nova versão com o conteúdo histórico.</div>
+      </div>
+    </div>
+    <div class="acc-item">
+      <button class="acc-trigger" onclick="toggleAcc(this)">
+        O que é o ciclo Plan-Execute-Reflect?
+        <svg class="acc-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+      </button>
+      <div class="acc-body">
+        <div class="acc-content">Todo trabalho dos agentes segue 3 fases obrigatórias: <strong>PLAN</strong> — lista de tarefas antes de executar. <strong>EXECUTE</strong> — marcar conclusão, atualizar estado. <strong>REFLECT</strong> — validar qualidade enterprise antes de entregar. Sem REFLECT, sem entrega.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ────────────────────────────────────
+     SKELETON
+──────────────────────────────────── -->
+<section class="sec" id="skeleton">
+  <div class="sec-tag">Misc · 03</div>
+  <h2 class="sec-h">Skeleton Screens</h2>
+  <p class="sec-p">Shimmer gradient animado da esquerda para direita. Mesmo formato do conteúdo real.</p>
+
+  <div class="g3">
+    <div class="card-w">
+      <div class="skel" style="height:12px;width:60%;margin-bottom:12px"></div>
+      <div class="skel" style="height:40px;width:80%;margin-bottom:8px"></div>
+      <div class="skel" style="height:10px;width:50%"></div>
+    </div>
+    <div class="card-w">
+      <div style="display:flex;gap:10px;align-items:center;margin-bottom:12px">
+        <div class="skel" style="width:36px;height:36px;border-radius:50%"></div>
+        <div style="flex:1">
+          <div class="skel" style="height:12px;width:70%;margin-bottom:6px"></div>
+          <div class="skel" style="height:10px;width:50%"></div>
+        </div>
+      </div>
+      <div class="skel" style="height:10px;width:100%;margin-bottom:6px"></div>
+      <div class="skel" style="height:10px;width:85%"></div>
+    </div>
+    <div class="card-w">
+      <div class="skel" style="height:120px;border-radius:var(--r-md);margin-bottom:12px"></div>
+      <div class="skel" style="height:12px;width:80%;margin-bottom:6px"></div>
+      <div class="skel" style="height:10px;width:60%"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ────────────────────────────────────
+     EMPTY STATES
+──────────────────────────────────── -->
+<section class="sec" id="empty">
+  <div class="sec-tag">Misc · 04</div>
+  <h2 class="sec-h">Empty States</h2>
+  <p class="sec-p">Ícone em container limão-100. Título bold. Descrição explicativa. Botão de ação primária.</p>
+
+  <div class="g3">
+    <div class="card-w">
+      <div class="empty-state">
+        <div class="empty-icon">⚡</div>
+        <div class="empty-title">Nenhum pedido ativo</div>
+        <div class="empty-desc">Crie um novo pedido para o Dev Squad ou Audiovisual Squad começar a trabalhar.</div>
+        <button class="btn btn-f" onclick="ripple(event)">
+          <span class="btn-ripple"></span>
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg>
+          <span class="btn-label">Novo pedido</span>
+        </button>
+      </div>
+    </div>
+    <div class="card-w">
+      <div class="empty-state">
+        <div class="empty-icon">🎬</div>
+        <div class="empty-title">Look Library vazia</div>
+        <div class="empty-desc">Nenhum look aprovado ainda. Gere prompts e aprove outputs para popular a biblioteca.</div>
+        <button class="btn btn-t" onclick="ripple(event)"><span class="btn-ripple"></span><span class="btn-label">Gerar primeiro prompt</span></button>
+      </div>
+    </div>
+    <div class="card-w">
+      <div class="empty-state">
+        <div class="empty-icon" style="background:var(--i100)">🔍</div>
+        <div class="empty-title">Nenhum resultado</div>
+        <div class="empty-desc">Nenhum creator ou pedido corresponde à busca atual. Tente termos diferentes.</div>
+        <button class="btn btn-o" onclick="ripple(event)"><span class="btn-ripple"></span><span class="btn-label">Limpar filtros</span></button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ────────────────────────────────────
+     SPINNERS
+──────────────────────────────────── -->
+<section class="sec" id="spinners">
+  <div class="sec-tag">Misc · 05</div>
+  <h2 class="sec-h">Spinners</h2>
+
+  <div class="box">
+    <div class="row" style="align-items:center;gap:24px">
+      <div style="text-align:center">
+        <div class="spinner spinner-sm" style="margin:0 auto 8px"></div>
+        <div style="font-size:10px;color:var(--i300)">sm · 16px</div>
+      </div>
+      <div style="text-align:center">
+        <div class="spinner spinner-md" style="margin:0 auto 8px"></div>
+        <div style="font-size:10px;color:var(--i300)">md · 24px</div>
+      </div>
+      <div style="text-align:center">
+        <div class="spinner spinner-lg" style="margin:0 auto 8px"></div>
+        <div style="font-size:10px;color:var(--i300)">lg · 36px</div>
+      </div>
+      <div style="text-align:center">
+        <div class="spinner spinner-md spinner-primary" style="margin:0 auto 8px"></div>
+        <div style="font-size:10px;color:var(--i300)">primary</div>
+      </div>
+      <div style="background:var(--i500);padding:16px;border-radius:var(--r-md);text-align:center">
+        <div class="spinner spinner-md spinner-white" style="margin:0 auto 8px"></div>
+        <div style="font-size:10px;color:rgba(255,255,255,.4)">white</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ────────────────────────────────────
+     MISC
+──────────────────────────────────── -->
+<section class="sec" id="misc">
+  <div class="sec-tag">Misc · 06</div>
+  <h2 class="sec-h">Elementos Diversos</h2>
+
+  <div class="g2">
+    <div>
+      <div class="sub-h">Notification Badges</div>
+      <div class="row mt16">
+        <div class="notif-wrap">
+          <button class="btn-icon outlined" onclick="ripple(event)">
+            <span class="btn-ripple"></span>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+          </button>
+          <span class="notif-badge red">7</span>
+        </div>
+        <div class="notif-wrap">
+          <button class="btn btn-o btn-sm" onclick="ripple(event)"><span class="btn-ripple"></span><span class="btn-label">Pedidos</span></button>
+          <span class="notif-badge lemon">12</span>
+        </div>
+        <div class="notif-wrap">
+          <button class="btn-icon" onclick="ripple(event)">
+            <span class="btn-ripple"></span>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/></svg>
+          </button>
+          <span class="notif-badge red dot"></span>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="sub-h">Keyboard Shortcuts</div>
+      <div style="display:flex;flex-direction:column;gap:10px;margin-top:16px">
+        <div style="display:flex;align-items:center;justify-content:space-between">
+          <span style="font-size:13px;color:var(--txt2)">Novo pedido</span>
+          <div class="kbd-group"><span class="kbd">⌘</span><span class="kbd-plus">+</span><span class="kbd">K</span></div>
+        </div>
+        <div style="display:flex;align-items:center;justify-content:space-between">
+          <span style="font-size:13px;color:var(--txt2)">Gerar prompt</span>
+          <div class="kbd-group"><span class="kbd">⌘</span><span class="kbd-plus">+</span><span class="kbd">Enter</span></div>
+        </div>
+        <div style="display:flex;align-items:center;justify-content:space-between">
+          <span style="font-size:13px;color:var(--txt2)">Buscar</span>
+          <div class="kbd-group"><span class="kbd">⌘</span><span class="kbd-plus">+</span><span class="kbd">F</span></div>
+        </div>
+        <div style="display:flex;align-items:center;justify-content:space-between">
+          <span style="font-size:13px;color:var(--txt2)">Fechar modal</span>
+          <div class="kbd-group"><span class="kbd">Esc</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sub">
+    <div class="sub-h">Dividers</div>
+    <div class="card-w">
+      <div class="divider"><span class="divider-label">Operacional</span></div>
+      <div style="height:1px;background:var(--bdr);margin:16px 0"></div>
+      <div class="divider"><span class="divider-label">ou</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ────────────────────────────────────
+     COLOR PICKER
+──────────────────────────────────── -->
+<section class="sec" id="colorpicker">
+  <div class="sec-tag">Misc · futuro</div>
+  <h2 class="sec-h">Color Picker</h2>
+  <p class="sec-p">Usado nas telas de Branding e configuração de tenant. Permite ao owner escolher a cor primária da organização com preview em tempo real.</p>
+
+  <div class="g2">
+    <div>
+      <div class="sub-h">Picker Compacto</div>
+      <div class="card-w" style="padding:20px">
+        <div class="form-group">
+          <label class="form-label" style="text-transform:uppercase;font-size:11px;letter-spacing:0.06em;color:var(--txt2)">Cor Primária</label>
+          <div class="cp-wrap">
+            <div class="cp-preview" id="cpPreview" style="width:40px;height:40px;border-radius:var(--r-sm);background:#D7FF00;flex-shrink:0;cursor:pointer;position:relative;overflow:hidden;">
+              <input type="color" id="cpInput" value="#D7FF00" style="opacity:0;position:absolute;inset:0;width:100%;height:100%;cursor:pointer;border:none;padding:0;">
+            </div>
+            <input class="input" id="cpHex" type="text" value="#D7FF00" placeholder="#000000" style="font-family:monospace;font-size:13px;letter-spacing:0.05em;">
+          </div>
+        </div>
+        <div style="margin-top:12px">
+          <div class="form-hint">Escala gerada automaticamente (50–900)</div>
+          <div id="cpScale" style="display:flex;gap:4px;margin-top:8px;border-radius:var(--r-sm);overflow:hidden;height:28px;"></div>
+        </div>
+        <div style="margin-top:12px;display:flex;gap:8px;align-items:center">
+          <span style="font-size:12px;color:var(--txt2)">Contrast check:</span>
+          <span id="cpContrast" style="font-size:12px;font-weight:700;color:var(--grn)">✓ 4.5:1 WCAG AA</span>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <div class="sub-h">Swatches Rápidos</div>
+      <div class="card-w" style="padding:20px">
+        <div class="form-hint" style="margin-bottom:12px">Paletas pré-aprovadas para novos tenants</div>
+        <div style="display:flex;flex-wrap:wrap;gap:8px">
+          <div class="cp-swatch" onclick="applyPreset('#D7FF00')" title="Limão (default)" style="width:32px;height:32px;border-radius:50%;background:#D7FF00;cursor:pointer;border:2px solid transparent;transition:all 0.15s"></div>
+          <div class="cp-swatch" onclick="applyPreset('#00CCFF')" title="Cyan" style="width:32px;height:32px;border-radius:50%;background:#00CCFF;cursor:pointer;border:2px solid transparent;transition:all 0.15s"></div>
+          <div class="cp-swatch" onclick="applyPreset('#FF4444')" title="Red" style="width:32px;height:32px;border-radius:50%;background:#FF4444;cursor:pointer;border:2px solid transparent;transition:all 0.15s"></div>
+          <div class="cp-swatch" onclick="applyPreset('#7C3AED')" title="Violet" style="width:32px;height:32px;border-radius:50%;background:#7C3AED;cursor:pointer;border:2px solid transparent;transition:all 0.15s"></div>
+          <div class="cp-swatch" onclick="applyPreset('#FF8800')" title="Orange" style="width:32px;height:32px;border-radius:50%;background:#FF8800;cursor:pointer;border:2px solid transparent;transition:all 0.15s"></div>
+          <div class="cp-swatch" onclick="applyPreset('#00CC88')" title="Teal" style="width:32px;height:32px;border-radius:50%;background:#00CC88;cursor:pointer;border:2px solid transparent;transition:all 0.15s"></div>
+          <div class="cp-swatch" onclick="applyPreset('#3f51b5')" title="Indigo" style="width:32px;height:32px;border-radius:50%;background:#3f51b5;cursor:pointer;border:2px solid transparent;transition:all 0.15s"></div>
+          <div class="cp-swatch" onclick="applyPreset('#f04060')" title="Rose" style="width:32px;height:32px;border-radius:50%;background:#f04060;cursor:pointer;border:2px solid transparent;transition:all 0.15s"></div>
+        </div>
+        <div class="form-hint" style="margin-top:16px">Qualquer cor personalizada pode ser usada. O sistema valida automaticamente o contraste WCAG antes de salvar.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ────────────────────────────────────
+     BRAND KIT
+──────────────────────────────────── -->
+<section class="sec" id="brandkit">
+  <div class="sec-tag">Misc · futuro</div>
+  <h2 class="sec-h">Brand Kit — Preview de Tenant</h2>
+  <p class="sec-p">Visualização de como o theming afeta a interface quando o owner configura a cor primária e logo da organização. O layout e tipografia permanecem inalterados.</p>
+
+  <div class="sub-h">Comparativo de Temas</div>
+  <div class="g2">
+    <div>
+      <div class="form-hint" style="margin-bottom:8px;font-weight:700;color:var(--txt)">Pantcho Agency (default)</div>
+      <div class="card-w" style="padding:0;overflow:hidden">
+        <div style="background:#0E0F10;padding:14px 18px;display:flex;align-items:center;gap:10px">
+          <div style="width:24px;height:24px;background:#D7FF00;border-radius:4px;display:flex;align-items:center;justify-content:center">
+            <span style="font-size:10px;font-weight:900;color:#0E0F10">H</span>
+          </div>
+          <span style="color:#fff;font-size:13px;font-weight:700">Hubia</span>
+          <div style="margin-left:auto;width:8px;height:8px;border-radius:50%;background:#D7FF00"></div>
+        </div>
+        <div style="padding:16px 18px;display:flex;flex-direction:column;gap:8px">
+          <button class="btn-p" style="--btn-primary:#D7FF00;background:#D7FF00;color:#0E0F10;width:100%;justify-content:center;font-size:13px;padding:9px 16px">Nova Creator</button>
+          <div style="display:flex;gap:6px">
+            <div style="height:6px;border-radius:3px;background:#D7FF00;flex:0.6"></div>
+            <div style="height:6px;border-radius:3px;background:#E8E8E9;flex:0.4"></div>
+          </div>
+          <div style="font-size:11px;color:var(--txt2)">Cor primária: #D7FF00 · Limão-500</div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="form-hint" style="margin-bottom:8px;font-weight:700;color:var(--txt)">White-label (exemplo: tenant externo)</div>
+      <div class="card-w" style="padding:0;overflow:hidden">
+        <div style="background:#0E0F10;padding:14px 18px;display:flex;align-items:center;gap:10px">
+          <div style="width:24px;height:24px;background:#00CCFF;border-radius:4px;display:flex;align-items:center;justify-content:center">
+            <span style="font-size:10px;font-weight:900;color:#0E0F10">A</span>
+          </div>
+          <span style="color:#fff;font-size:13px;font-weight:700">Agência X</span>
+          <div style="margin-left:auto;width:8px;height:8px;border-radius:50%;background:#00CCFF"></div>
+        </div>
+        <div style="padding:16px 18px;display:flex;flex-direction:column;gap:8px">
+          <button style="background:#00CCFF;color:#0E0F10;border:none;border-radius:var(--r-md);width:100%;font-family:'Urbanist',sans-serif;font-size:13px;font-weight:700;padding:9px 16px;cursor:pointer">Nova Creator</button>
+          <div style="display:flex;gap:6px">
+            <div style="height:6px;border-radius:3px;background:#00CCFF;flex:0.6"></div>
+            <div style="height:6px;border-radius:3px;background:#E8E8E9;flex:0.4"></div>
+          </div>
+          <div style="font-size:11px;color:var(--txt2)">Cor primária: #00CCFF · custom</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sub-h" style="margin-top:24px">Regras de Theming</div>
+  <div class="card-w" style="display:grid;grid-template-columns:1fr 1fr;gap:0">
+    <div style="padding:16px;border-right:1px solid var(--bdr)">
+      <div style="font-size:12px;font-weight:700;color:var(--grn);margin-bottom:10px;text-transform:uppercase;letter-spacing:0.05em">✓ Variável por tenant</div>
+      <ul style="list-style:none;display:flex;flex-direction:column;gap:6px;font-size:13px;color:var(--txt2)">
+        <li>→ Cor primária (500 + escala)</li>
+        <li>→ Logo e favicon</li>
+        <li>→ Nome da organização</li>
+        <li>→ Domínio customizado (Fase 3)</li>
+      </ul>
+    </div>
+    <div style="padding:16px">
+      <div style="font-size:12px;font-weight:700;color:var(--red);margin-bottom:10px;text-transform:uppercase;letter-spacing:0.05em">✗ Global (nunca muda)</div>
+      <ul style="list-style:none;display:flex;flex-direction:column;gap:6px;font-size:13px;color:var(--txt2)">
+        <li>→ Tipografia (Urbanist)</li>
+        <li>→ Grid e espaçamentos</li>
+        <li>→ Flat design (zero shadows)</li>
+        <li>→ Ink tonal (secundário)</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+</main>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     JAVASCRIPT
+═══════════════════════════════════════════════════════════════ -->
+<script>
+/* ─── Ripple from exact click point ─── */
+function ripple(e) {
+  const btn = e.currentTarget;
+  const container = btn.querySelector('.btn-ripple');
+  if (!container) return;
+  const rect = btn.getBoundingClientRect();
+  const x = e.clientX - rect.left;
+  const y = e.clientY - rect.top;
+  const dot = document.createElement('span');
+  dot.className = 'ripple-dot';
+  dot.style.left = x + 'px';
+  dot.style.top = y + 'px';
+  container.appendChild(dot);
+  setTimeout(() => dot.remove(), 700);
+}
+
+/* ─── Left nav active link ─── */
+(function() {
+  const links = document.querySelectorAll('.nav-a');
+  links.forEach(a => {
+    a.addEventListener('click', () => {
+      links.forEach(l => l.classList.remove('on'));
+      a.classList.add('on');
+    });
+  });
+
+  // Highlight on scroll
+  const sections = document.querySelectorAll('section[id]');
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(s => {
+      if (window.scrollY >= s.offsetTop - 120) current = s.id;
+    });
+    links.forEach(a => {
+      a.classList.toggle('on', a.getAttribute('href') === '#' + current);
+    });
+  }, { passive: true });
+})();
+
+/* ─── Sidebar fluid pill ─── */
+(function() {
+  const items = document.querySelectorAll('.sb-item');
+  const pill = document.getElementById('sb-pill');
+  const container = document.getElementById('sb-items');
+
+  function movePill(el) {
+    const top = el.offsetTop;
+    const h = el.offsetHeight;
+    pill.style.top = top + 'px';
+    pill.style.height = h + 'px';
+  }
+
+  items.forEach(item => {
+    if (item.classList.contains('active')) movePill(item);
+  });
+
+  setTimeout(() => {
+    items.forEach(item => {
+      if (item.classList.contains('active')) movePill(item);
+    });
+  }, 100);
+})();
+
+function sbClick(el) {
+  const items = document.querySelectorAll('.sb-item');
+  const pill = document.getElementById('sb-pill');
+  items.forEach(i => i.classList.remove('active'));
+  el.classList.add('active');
+  pill.style.top = el.offsetTop + 'px';
+  pill.style.height = el.offsetHeight + 'px';
+}
+
+/* ─── Tabs fluid pill + directional slide ─── */
+const tabState = {};
+
+function initTab(id) {
+  const bar = document.getElementById(id);
+  if (!bar) return;
+  const pill = document.getElementById(id + '-pill');
+  const activeItem = bar.querySelector('.tab-item.active');
+  if (!activeItem || !pill) return;
+  pill.style.left = activeItem.offsetLeft + 'px';
+  pill.style.width = activeItem.offsetWidth + 'px';
+  tabState[id] = Array.from(bar.querySelectorAll('.tab-item')).indexOf(activeItem);
+}
+
+function tabClick(id, el, idx) {
+  const bar = document.getElementById(id);
+  const pill = document.getElementById(id + '-pill');
+  const items = bar.querySelectorAll('.tab-item');
+  const prev = tabState[id] || 0;
+
+  items.forEach(i => i.classList.remove('active'));
+  el.classList.add('active');
+  pill.style.left = el.offsetLeft + 'px';
+  pill.style.width = el.offsetWidth + 'px';
+
+  // Panel transition
+  const panels = document.querySelectorAll('[id^="' + id + '-p"]');
+  if (panels.length > 0) {
+    panels.forEach((p, i) => {
+      if (i === idx) {
+        p.classList.add('active');
+        p.style.animation = 'none';
+        p.offsetHeight;
+        const dir = idx > prev ? 'tab-enter' : 'tab-enter-rev';
+        p.style.animation = '';
+      } else {
+        p.classList.remove('active');
+      }
+    });
+  }
+  tabState[id] = idx;
+}
+
+// Init all tabs
+setTimeout(() => {
+  ['tb1','tb2'].forEach(initTab);
+}, 50);
+
+/* ─── Custom select ─── */
+function toggleSelect(id) {
+  const wrap = document.getElementById(id);
+  const trigger = wrap.querySelector('.select-trigger');
+  const panel = document.getElementById(id + '-panel');
+  const isOpen = trigger.classList.contains('open');
+
+  // Close all
+  document.querySelectorAll('.select-trigger.open').forEach(t => {
+    t.classList.remove('open');
+    t.parentElement.querySelector('.select-panel')?.classList.remove('open');
+  });
+
+  if (!isOpen) {
+    trigger.classList.add('open');
+    panel.classList.add('open');
+  }
+}
+
+function selectOpt(id, value, el) {
+  const valEl = document.getElementById(id + '-val');
+  valEl.textContent = value;
+  valEl.classList.remove('placeholder');
+  const opts = document.querySelectorAll('#' + id + '-panel .select-opt');
+  opts.forEach(o => o.classList.remove('selected'));
+  el.classList.add('selected');
+  // close
+  const wrap = document.getElementById(id);
+  wrap.querySelector('.select-trigger').classList.remove('open');
+  document.getElementById(id + '-panel').classList.remove('open');
+}
+
+document.addEventListener('click', (e) => {
+  if (!e.target.closest('.select-wrap')) {
+    document.querySelectorAll('.select-trigger.open').forEach(t => {
+      t.classList.remove('open');
+      t.parentElement.querySelector('.select-panel')?.classList.remove('open');
+    });
+  }
+});
+
+/* ─── Accordion ─── */
+function toggleAcc(trigger) {
+  const body = trigger.nextElementSibling;
+  const isOpen = trigger.classList.contains('open');
+  trigger.classList.toggle('open', !isOpen);
+  body.classList.toggle('open', !isOpen);
+}
+
+/* ─── Modals ─── */
+function openModal(id) {
+  document.getElementById(id).classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeModal(id) {
+  document.getElementById(id).classList.remove('open');
+  document.body.style.overflow = '';
+}
+function backdropClose(e, id) {
+  if (e.target === document.getElementById(id)) closeModal(id);
+}
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') {
+    document.querySelectorAll('.modal-backdrop.open').forEach(m => {
+      m.classList.remove('open');
+    });
+    document.body.style.overflow = '';
+  }
+});
+
+/* ─── Toasts ─── */
+const toastMsgs = {
+  success: { icon: '✓', text: 'Prompt gerado com sucesso!', color: 'var(--grn)' },
+  error: { icon: '✕', text: 'Erro ao processar pedido #68.', color: 'var(--red)' },
+  info: { icon: 'ℹ', text: 'Agente de Consistência em revisão.', color: 'var(--cyn)' },
+  action: { icon: '⚡', text: 'Pedido aprovado pelo sistema.', action: 'Ver pedido' }
+};
+
+function showToast(type) {
+  const host = document.getElementById('toast-host');
+  const cfg = toastMsgs[type];
+  const t = document.createElement('div');
+  t.className = 'toast';
+  t.innerHTML = `
+    <span class="toast-icon" style="color:${cfg.color || 'var(--primary)'}">${cfg.icon}</span>
+    <span class="toast-text">${cfg.text}</span>
+    ${cfg.action ? `<button class="toast-action">${cfg.action}</button>` : ''}
+  `;
+  host.appendChild(t);
+  setTimeout(() => {
+    t.classList.add('removing');
+    setTimeout(() => t.remove(), 300);
+  }, 3000);
+}
+
+/* ─── Table sort ─── */
+function sortTable(id, col, th) {
+  const table = document.getElementById(id);
+  const tbody = table.querySelector('tbody');
+  const rows = Array.from(tbody.querySelectorAll('tr'));
+  const ths = table.querySelectorAll('th');
+  const isAsc = th.classList.contains('sorted') && th.classList.contains('asc');
+
+  ths.forEach(h => h.classList.remove('sorted','asc','desc'));
+  th.classList.add('sorted', isAsc ? 'desc' : 'asc');
+
+  rows.sort((a, b) => {
+    const aText = a.cells[col]?.textContent.trim() || '';
+    const bText = b.cells[col]?.textContent.trim() || '';
+    return isAsc
+      ? bText.localeCompare(aText, 'pt', { numeric: true })
+      : aText.localeCompare(bText, 'pt', { numeric: true });
+  });
+  rows.forEach(r => tbody.appendChild(r));
+}
+
+/* ─── Calendar ─── */
+(function buildCalendar() {
+  const root = document.getElementById('cal-root');
+  if (!root) return;
+
+  const now = new Date();
+  let year = now.getFullYear();
+  let month = now.getMonth();
+
+  const eventData = [
+    { day: now.getDate(), title: '#67 Ninaah Piscina', type: 'review' },
+    { day: now.getDate() + 1, title: '#68 Landing Page', type: 'progress' },
+    { day: now.getDate() + 2, title: '#65 App Mobile', type: 'urgent' },
+    { day: now.getDate() - 2, title: '#66 Sala Elegante', type: 'done' },
+    { day: now.getDate() + 4, title: 'Planejar semana', type: 'review' },
+  ];
+
+  function render() {
+    const monthNames = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
+    const dayNames = ['Dom','Seg','Ter','Qua','Qui','Sex','Sáb'];
+    const firstDay = new Date(year, month, 1).getDay();
+    const daysInMonth = new Date(year, month + 1, 0).getDate();
+    const daysInPrev = new Date(year, month, 0).getDate();
+    const today = new Date();
+
+    let html = `
+      <div class="cal-header">
+        <div class="cal-title">${monthNames[month]} ${year}</div>
+        <div class="cal-nav">
+          <button class="cal-nav-btn" onclick="calPrev()">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+          </button>
+          <button class="cal-nav-btn" onclick="calToday()">Hoje</button>
+          <button class="cal-nav-btn" onclick="calNext()">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+          </button>
+        </div>
+      </div>
+      <div class="cal-grid">
+        ${dayNames.map(d => `<div class="cal-day-header">${d}</div>`).join('')}
+    `;
+
+    // Prev month days
+    for (let i = firstDay - 1; i >= 0; i--) {
+      html += `<div class="cal-day other-month"><div class="cal-day-num">${daysInPrev - i}</div></div>`;
+    }
+
+    // Current month days
+    for (let d = 1; d <= daysInMonth; d++) {
+      const isToday = today.getFullYear() === year && today.getMonth() === month && today.getDate() === d;
+      const dayEvents = eventData.filter(e => e.day === d);
+      html += `
+        <div class="cal-day${isToday ? ' today' : ''}">
+          <div class="cal-day-num">${d}</div>
+          <div class="cal-events">
+            ${dayEvents.map(e => `<div class="cal-event ${e.type}">${e.title}</div>`).join('')}
+          </div>
+        </div>
+      `;
+    }
+
+    // Next month days
+    const remaining = 42 - firstDay - daysInMonth;
+    for (let d = 1; d <= Math.min(remaining, 14); d++) {
+      html += `<div class="cal-day other-month"><div class="cal-day-num">${d}</div></div>`;
+    }
+
+    html += '</div>';
+    root.innerHTML = html;
+  }
+
+  window.calPrev = () => { if (month === 0) { month = 11; year--; } else month--; render(); };
+  window.calNext = () => { if (month === 11) { month = 0; year++; } else month++; render(); };
+  window.calToday = () => { year = now.getFullYear(); month = now.getMonth(); render(); };
+
+  render();
+})();
+
+/* ── Color Picker ── */
+(function() {
+  const ci = document.getElementById('cpInput');
+  const hex = document.getElementById('cpHex');
+  const prev = document.getElementById('cpPreview');
+  const scale = document.getElementById('cpScale');
+  const contrast = document.getElementById('cpContrast');
+  if (!ci) return;
+
+  function hexToRgb(h) {
+    const r = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(h);
+    return r ? { r: parseInt(r[1],16), g: parseInt(r[2],16), b: parseInt(r[3],16) } : null;
+  }
+  function luminance(r,g,b) {
+    const a = [r,g,b].map(v => { v/=255; return v<=0.03928?v/12.92:Math.pow((v+0.055)/1.055,2.4); });
+    return a[0]*0.2126+a[1]*0.7152+a[2]*0.0722;
+  }
+  function contrastRatio(hex1, hex2) {
+    const c1 = hexToRgb(hex1), c2 = hexToRgb(hex2);
+    if (!c1||!c2) return 1;
+    const l1 = luminance(c1.r,c1.g,c1.b), l2 = luminance(c2.r,c2.g,c2.b);
+    const lighter = Math.max(l1,l2), darker = Math.min(l1,l2);
+    return (lighter+0.05)/(darker+0.05);
+  }
+  function genScale(h) {
+    const c = hexToRgb(h); if (!c) return [];
+    const steps = [0.92,0.80,0.65,0.50,0.35,0,0.15,0.35,0.55,0.70];
+    return steps.map((t,i) => {
+      if (i===5) return h;
+      const m = i<5?1:-1;
+      const r = Math.round(c.r+(255-c.r)*t*(i<5?1:0)+c.r*(i>=5?1:0)-(i>=5?c.r*t:0));
+      const g = Math.round(c.g+(255-c.g)*t*(i<5?1:0)+c.g*(i>=5?1:0)-(i>=5?c.g*t:0));
+      const b = Math.round(c.b+(255-c.b)*t*(i<5?1:0)+c.b*(i>=5?1:0)-(i>=5?c.b*t:0));
+      const clamp = v => Math.max(0,Math.min(255,v));
+      return '#'+[clamp(r),clamp(g),clamp(b)].map(v=>v.toString(16).padStart(2,'0')).join('');
+    });
+  }
+  function updatePicker(val) {
+    prev.style.background = val;
+    hex.value = val.toUpperCase();
+    ci.value = val;
+    const sc = genScale(val);
+    if (scale) scale.innerHTML = sc.map((c,i)=>`<div title="${['50','100','200','300','400','500','600','700','800','900'][i]}: ${c}" style="flex:1;background:${c};height:100%;cursor:default" />`).join('');
+    const r1 = contrastRatio(val,'#ffffff'), r2 = contrastRatio(val,'#0E0F10');
+    const best = Math.max(r1,r2);
+    if (contrast) {
+      if (best >= 4.5) { contrast.style.color='var(--grn)'; contrast.textContent=`✓ ${best.toFixed(1)}:1 WCAG AA`; }
+      else if (best >= 3) { contrast.style.color='var(--org)'; contrast.textContent=`⚠ ${best.toFixed(1)}:1 — AA Large only`; }
+      else { contrast.style.color='var(--red)'; contrast.textContent=`✗ ${best.toFixed(1)}:1 — contraste baixo`; }
+    }
+  }
+  ci.addEventListener('input', e => updatePicker(e.target.value));
+  hex.addEventListener('input', e => { if(/^#[0-9a-f]{6}$/i.test(e.target.value)) updatePicker(e.target.value); });
+  window.applyPreset = function(val) { updatePicker(val); };
+  updatePicker('#D7FF00');
+})();
+
+/* ── Theme toggle ── */
+function setTheme(t) {
+  document.documentElement.setAttribute('data-theme', t);
+  document.getElementById('btn-light').classList.toggle('active', t === 'light');
+  document.getElementById('btn-dark').classList.toggle('active', t === 'dark');
+  localStorage.setItem('hubia-theme', t);
+}
+(function() {
+  const saved = localStorage.getItem('hubia-theme') || 'light';
+  setTheme(saved);
+})();
+</script>
+</body>
+</html>
