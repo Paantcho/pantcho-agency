@@ -273,12 +273,26 @@
   }
   .text-body-md {
     font-family: "Urbanist", sans-serif;
-    font-weight: 400;
+    font-weight: 500;
     font-size: 15px;
     line-height: 24px;
     letter-spacing: 0.3px;
   }
   .text-body-sm {
+    font-family: "Urbanist", sans-serif;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 19px;
+    letter-spacing: 0.3px;
+  }
+  .text-body-md-regular {
+    font-family: "Urbanist", sans-serif;
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 24px;
+    letter-spacing: 0.3px;
+  }
+  .text-body-sm-regular {
     font-family: "Urbanist", sans-serif;
     font-weight: 400;
     font-size: 14px;
@@ -311,7 +325,7 @@
   .hubia-modal-overlay {
     position: fixed;
     inset: 0;
-    z-index: 50;
+    z-index: 9999;
     display: flex;
     align-items: center;
     justify-content: center;

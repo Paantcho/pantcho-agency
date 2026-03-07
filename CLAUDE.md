@@ -15,12 +15,14 @@ Idioma: Português brasileiro em todos os outputs.
 - directives/hub-construcao-orquestracao.md — processo de construção e orquestração
 - PRD-v4.md — requisitos completos do produto (se existir)
 - BACKLOG-delivery-v1.md — épicos e plano de entrega (se existir)
+- directives/hubia-plano-creators-proximas-paginas.md — plano Creators e próximas páginas (rotas, ações, onde API/agentes entram; autoalimentado)
 
 ## Figma
 - Chave do arquivo: LuXTz9U7A7dNgdOO5Vt50S
 - MCP disponível: figma-developer-mcp (claude.ai Figma)
 - Sempre usar get_design_context com clientLanguages: html,css e clientFrameworks: react,next.js
-- Nodes principais: 11:5848 (color system), 11:4292 (Limão palette), 7:422, 7:758, 7:1156, 8:1721, 9:79
+- **Nodes gerais:** 11:5848 (color system), 11:4292 (Limão palette), 9:79
+- **Creators (6 telas):** 7:422, 7:758, 7:1156, 8:1721, 8:2143, 8:2544 — ver URLs em directives/hubia-plano-creators-proximas-paginas.md
 
 ## Regras de Design (INVIOLÁVEIS)
 - 100% flat — zero  elementos UI

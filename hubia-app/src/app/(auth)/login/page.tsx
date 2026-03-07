@@ -11,12 +11,14 @@ export default function LoginPage() {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [success, setSuccess] = useState<string | null>(null);
   const [mode, setMode] = useState<"login" | "magic">("login");
 
   async function handleEmailLogin(e: React.FormEvent) {
     e.preventDefault();
     setLoading(true);
     setError(null);
+    setSuccess(null);
 
     const supabase = createClient();
 
@@ -31,7 +33,7 @@ export default function LoginPage() {
       } else {
         setError(null);
         setMode("login");
-        alert("Link mágico enviado! Verifique seu email.");
+        setSuccess("Link mágico enviado! Verifique seu email.");
       }
       return;
     }
@@ -76,8 +78,13 @@ export default function LoginPage() {
       </p>
 
       {error && (
-        <div className="mt-[16px] rounded-input bg-red-200 px-[16px] py-[12px] text-body-sm text-ink-500">
+        <div className="mt-[16px] rounded-card border border-red-500/30 bg-red-500/10 px-[16px] py-[12px] text-body-sm font-medium text-red-600">
           {error}
+        </div>
+      )}
+      {success && (
+        <div className="mt-[16px] rounded-card border border-green-500/30 bg-green-500/10 px-[16px] py-[12px] text-body-sm font-medium text-green-700">
+          {success}
         </div>
       )}
 

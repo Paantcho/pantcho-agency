@@ -1,4 +1,30 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Hubia App
+
+App SaaS da Pantcho Agency (Next.js 15, Supabase, Prisma). Parte do monorepo [pantcho-agency](../).
+
+## Autenticação (Supabase Auth)
+
+- Login: email/senha, magic link e **Google OAuth**.
+- Callback: `/auth/callback` troca o `code` por sessão e redireciona para `/` (ou `?next=...`).
+- Middleware: em produção protege rotas e faz refresh da sessão; rotas públicas: `/login`, `/signup`, `/auth/*`.
+
+### Configurar Google OAuth no Supabase
+
+1. No [Dashboard Supabase](https://supabase.com/dashboard) do projeto: **Authentication → Providers → Google**.
+2. Ative o provider e preencha **Client ID** e **Client Secret** (crie em [Google Cloud Console](https://console.cloud.google.com/apis/credentials) um OAuth 2.0 Client ID do tipo “Web application”).
+3. Em **Redirect URLs** do Google, adicione:  
+   `https://<seu-projeto>.supabase.co/auth/v1/callback`  
+   e, para desenvolvimento:  
+   `http://localhost:3000/auth/callback`.
+4. No Supabase, em **URL Configuration**, defina **Site URL** (ex.: `http://localhost:3000` em dev e a URL de produção depois).
+
+Sem isso, “Entrar com Google” pode falhar com erro de redirect.
+
+### Chave de criptografia (Config → Provedores de IA)
+
+Para adicionar ou editar provedores de IA, as API keys são criptografadas no banco. Defina em `.env.local`:
+
+- `ENCRYPTION_KEY` — string com pelo menos 16 caracteres (ex.: uma chave aleatória de 32 chars). Use apenas em servidor; nunca exponha no client.
 
 ## Getting Started
 

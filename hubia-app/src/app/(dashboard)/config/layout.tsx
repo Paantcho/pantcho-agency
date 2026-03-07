@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import { AnimatedLink } from "@/components/ui/animated-link";
 import { usePathname } from "next/navigation";
 
 const configTabs = [
@@ -17,7 +17,7 @@ export default function ConfigLayout({
   const pathname = usePathname();
 
   return (
-    <div className="flex flex-col gap-[24px]">
+    <div className="hubia-fade-in flex flex-col gap-[24px]">
       {/* Page header */}
       <div className="flex items-center justify-between">
         <h1 className="text-heading-md text-ink-500">Config</h1>
@@ -30,23 +30,23 @@ export default function ConfigLayout({
             pathname === tab.href || pathname.startsWith(tab.href + "/");
 
           return (
-            <Link
+            <AnimatedLink
               key={tab.href}
               href={tab.href}
-              className={`rounded-button px-[20px] py-[10px] transition-colors duration-200 ${
+              className={`motion-soft rounded-button px-[20px] py-[10px] text-label-md ${
                 isActive
-                  ? "bg-limao-500 text-ink-500 text-label-md font-bold"
-                  : "bg-surface-500 text-base-700 text-label-md hover:bg-base-500 hover:text-ink-500"
+                  ? "bg-limao-500 font-bold text-ink-500"
+                  : "bg-surface-500 text-base-700 hover:bg-base-500 hover:text-ink-500"
               }`}
             >
               {tab.label}
-            </Link>
+            </AnimatedLink>
           );
         })}
       </div>
 
       {/* Tab content */}
-      {children}
+      <div className="motion-soft">{children}</div>
     </div>
   );
 }

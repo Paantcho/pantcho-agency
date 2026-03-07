@@ -157,10 +157,75 @@ async function main() {
     });
   }
 
+  // 6. Creator seed — Ninaah Dornfeld (dados da audiovisual-squad/memory/creators/ninaah/)
+  const ninaah = await prisma.creator.upsert({
+    where: {
+      organizationId_slug: {
+        organizationId: pantchoAgency.id,
+        slug: "ninaah-dornfeld",
+      },
+    },
+    update: {},
+    create: {
+      organizationId: pantchoAgency.id,
+      name: "Ninaah Dornfeld",
+      slug: "ninaah-dornfeld",
+      bio: "Creator digital. Identidade forense documentada em APPEARANCE e AMBIENTES. Santa Catarina, Brasil.",
+      isActive: true,
+    },
+  });
+
+  await prisma.creatorAppearance.upsert({
+    where: { creatorId: ninaah.id },
+    update: {},
+    create: {
+      creatorId: ninaah.id,
+      basePrompt: `Mulher, 1,63m, rosto oval, olhos amendoados castanho claro a mel, cabelo longo castanho claro a médio (liso a levemente ondulado nas pontas). Silhueta: cintura definida, proporções naturais. Pele bem cuidada, natural. Consistência forense: traços fixos, pintinha no ombro direito. Dois moods: (A) feminina elegante (B) jovem descolada toque esportivo. Localização: Pomerode, SC. Riqueza implícita, bom gosto.`,
+      markers: [],
+      protected: [],
+    },
+  });
+
+  const envs = [
+    { name: "Sala Principal", description: "Sofá contemporâneo off-white, mesa de centro, TV, tapete neutro.", prompt: "Sala de estar contemporânea, sofá grande off-white/bege, mesa de centro madeira clara, TV em painel, iluminação quente indireta, janelas amplas com cortina de linho." },
+    { name: "Cozinha Gourmet", description: "Ilha grande, bancada clara, eletros embutidos.", prompt: "Cozinha gourmet integrada, ilha com banquetas, bancada quartzo/mármore claro, eletros embutidos inox, pendentes lineares, vista para jardim/piscina." },
+    { name: "Quarto da Ninaah", description: "Andar superior, cama king, ripado madeira.", prompt: "Quarto andar superior, cama king roupa de cama neutra, cabeceira estofada ou ripado madeira, parede ripado com luz indireta quente, vista área arborizada SC." },
+    { name: "Área da Piscina", description: "Piscina retangular, deck claro, espreguiçadeiras.", prompt: "Área da piscina, piscina retangular contemporânea, deck claro, espreguiçadeiras minimalistas, árvore âncora visível, paisagismo SC (sem palmeiral nordeste)." },
+    { name: "Garagem", description: "2 vagas, BMW X2 Cape York Green.", prompt: "Garagem 2 vagas, teto luz embutida, paredes cinza claro, chão concreto polido. BMW X2 2025 Cape York Green metallic." },
+  ];
+  const existingEnvs = await prisma.creatorEnvironment.findMany({
+    where: { creatorId: ninaah.id },
+  });
+  if (existingEnvs.length === 0) {
+    for (const env of envs) {
+      await prisma.creatorEnvironment.create({
+        data: {
+          creatorId: ninaah.id,
+          name: env.name,
+          description: env.description,
+          prompt: env.prompt,
+        },
+      });
+    }
+  }
+
+  await prisma.creatorVoice.upsert({
+    where: { creatorId: ninaah.id },
+    update: {},
+    create: {
+      creatorId: ninaah.id,
+      tone: "Elegante e acessível; alterna entre polida e descolada conforme o contexto.",
+      style: "Natural chic. Textos curtos e objetivos. Evitar jargões. Tom varia por plataforma (Instagram mais solto, site mais refinado).",
+      rules: [],
+      examples: [],
+    },
+  });
+
   console.log("Seed completo:");
   console.log(`  - Planos: ${planInterno.name}, ${planFree.name}, ${planPro.name}, ${planBusiness.name}`);
   console.log(`  - Organização: ${pantchoAgency.name} (${pantchoAgency.slug})`);
   console.log(`  - Feature flags: ${flags.length}`);
+  console.log(`  - Creator: ${ninaah.name} (${ninaah.slug})`);
 }
 
 main()

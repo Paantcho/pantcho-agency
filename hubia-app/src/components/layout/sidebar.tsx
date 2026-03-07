@@ -1,6 +1,7 @@
 "use client";
 
-import { usePathname } from "next/navigation";
+import { useState, useRef, useEffect } from "react";
+import { usePathname, useRouter } from "next/navigation";
 import { AnimatedLink } from "@/components/ui/animated-link";
 import {
   LayoutDashboard,
@@ -15,8 +16,11 @@ import {
   Brain,
   Network,
   Settings,
+  ChevronDown,
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
+import { setCurrentOrganization } from "@/app/(dashboard)/actions";
+import type { OrgOption } from "./app-shell";
 
 interface MenuItem {
   label: string;
@@ -48,8 +52,38 @@ const menuSections: (MenuItem[] | "separator")[] = [
   ],
 ];
 
-export function Sidebar() {
+export function Sidebar({
+  organizations,
+  currentOrganizationId,
+}: {
+  organizations: OrgOption[];
+  currentOrganizationId: string | null;
+}) {
   const pathname = usePathname();
+  const router = useRouter();
+  const [orgOpen, setOrgOpen] = useState(false);
+  const orgRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    function handleClickOutside(e: MouseEvent) {
+      if (orgRef.current && !orgRef.current.contains(e.target as Node))
+        setOrgOpen(false);
+    }
+    document.addEventListener("click", handleClickOutside);
+    return () => document.removeEventListener("click", handleClickOutside);
+  }, []);
+
+  const currentOrg =
+    organizations.find((o) => o.id === currentOrganizationId) ??
+    organizations[0];
+
+  async function handleSwitchOrg(orgId: string) {
+    const res = await setCurrentOrganization(orgId);
+    if (res.ok) {
+      setOrgOpen(false);
+      router.refresh();
+    }
+  }
 
   function isActive(href: string) {
     if (href === "/") return pathname === "/";
@@ -108,20 +142,46 @@ export function Sidebar() {
         })}
       </nav>
 
-      {/* User info */}
-      <div className="px-[20px] py-[24px]">
-        <div className="flex items-center gap-[12px]">
-          <div className="flex h-[40px] w-[40px] items-center justify-center rounded-full bg-base-500 text-label-sm text-ink-500">
-            P
-          </div>
-          <div className="flex flex-col">
-            <span className="text-label-sm text-ink-500">
-              Pantcho
-            </span>
-            <span className="text-body-sm text-base-700">
-              Diretor de arte
-            </span>
-          </div>
+      {/* Seletor de organização */}
+      <div className="px-[20px] py-[24px]" ref={orgRef}>
+        <div className="rounded-card bg-base-500/60 px-3 py-2">
+          <p className="text-[10px] font-semibold uppercase tracking-wider text-base-700">
+            Organização
+          </p>
+          {organizations.length === 0 ? (
+            <p className="mt-1 text-label-sm text-ink-500">—</p>
+          ) : organizations.length === 1 ? (
+            <p className="mt-1 truncate text-label-sm text-ink-500">
+              {currentOrg?.name ?? "—"}
+            </p>
+          ) : (
+            <button
+              type="button"
+              onClick={() => setOrgOpen((v) => !v)}
+              className="motion-soft mt-1 flex w-full items-center justify-between gap-2 rounded-button text-left text-label-sm text-ink-500 hover:bg-base-600/50"
+            >
+              <span className="min-w-0 truncate">{currentOrg?.name ?? "—"}</span>
+              <ChevronDown size={14} className="shrink-0" />
+            </button>
+          )}
+          {orgOpen && organizations.length > 1 && (
+            <div className="motion-soft mt-1 rounded-card border border-base-600 bg-surface-500 py-1">
+              {organizations.map((org) => (
+                <button
+                  key={org.id}
+                  type="button"
+                  onClick={() => handleSwitchOrg(org.id)}
+                  className={`motion-soft w-full px-3 py-2 text-left text-body-sm hover:bg-base-500 ${
+                    org.id === currentOrganizationId
+                      ? "font-semibold text-ink-500"
+                      : "text-base-700"
+                  }`}
+                >
+                  {org.name}
+                </button>
+              ))}
+            </div>
+          )}
         </div>
       </div>
     </aside>
