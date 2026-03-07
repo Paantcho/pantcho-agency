@@ -165,13 +165,28 @@ async function main() {
         slug: "ninaah-dornfeld",
       },
     },
-    update: {},
+    update: {
+      metadata: {
+        city: "Pomerode",
+        state: "SC",
+        age: 22,
+        birthdate: "16/05/2004",
+        platforms: ["instagram", "privacy", "tiktok"],
+      },
+    },
     create: {
       organizationId: pantchoAgency.id,
       name: "Ninaah Dornfeld",
       slug: "ninaah-dornfeld",
       bio: "Creator digital. Identidade forense documentada em APPEARANCE e AMBIENTES. Santa Catarina, Brasil.",
       isActive: true,
+      metadata: {
+        city: "Pomerode",
+        state: "SC",
+        age: 22,
+        birthdate: "16/05/2004",
+        platforms: ["instagram", "privacy", "tiktok"],
+      },
     },
   });
 

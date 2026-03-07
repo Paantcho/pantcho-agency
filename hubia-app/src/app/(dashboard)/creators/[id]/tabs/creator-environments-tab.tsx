@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { Home } from "lucide-react";
 import { HubiaModal } from "@/components/ui/hubia-modal";
 import { HubiaConfirmModal } from "@/components/ui/hubia-confirm-modal";
 import type { CreatorDetail } from "../../actions";
@@ -9,6 +10,36 @@ import {
   updateEnvironment,
   deleteEnvironment,
 } from "../../actions";
+
+// Texto placeholder do banner de localização (usado quando não há dados)
+const BANNER_TEXT =
+  "CASA DE CONDOMÍNIO FECHADO. 2 PAVIMENTOS, SC. RIQUEZA IMPLÍCITA. CONTEMPORÂNEA, BOM GOSTO. CÉU DO SUL DO BRASIL. VEGETAÇÃO COMPATÍVEL SC. ÁRVORE ÂNCORA PRÓXIMA À PISCINA.";
+const BANNER_SUB =
+  "Ambientes ultra-travados — novos ambientes precisam ser aprovados e documentados antes de gerar qualquer imagem...";
+
+// Tags de categoria dos ambientes
+function CategoryTag({
+  label,
+  color,
+}: {
+  label: string;
+  color: { bg: string; text: string };
+}) {
+  return (
+    <span
+      className="inline-flex items-center rounded-full px-3 py-0.5 text-[10px] font-bold uppercase tracking-widest"
+      style={{ background: color.bg, color: color.text }}
+    >
+      {label}
+    </span>
+  );
+}
+
+const CATEGORY_COLORS = {
+  fixos: { bg: "#DCFFF6", text: "#00A87A" },
+  flexiveis: { bg: "#FFF4E5", text: "#D97706" },
+  proibido: { bg: "#FFE8EB", text: "#FF576D" },
+};
 
 export default function CreatorEnvironmentsTab({
   creator,
@@ -89,97 +120,109 @@ export default function CreatorEnvironmentsTab({
   const environments = creator.environments;
 
   return (
-    <div className="flex flex-col gap-6">
-      {/* Banner escuro — casa, descrição geral */}
-      <div className="flex gap-4 rounded-card bg-ink-500 p-6">
-        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-ink-400 text-white">
-          <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden>
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
-          </svg>
+    <div className="flex flex-col gap-5">
+      {/* Banner de localização — fundo ink escuro */}
+      <div
+        className="flex items-start gap-4 rounded-2xl px-6 py-5"
+        style={{ background: "#0E0F10" }}
+      >
+        <div
+          className="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-xl"
+          style={{ background: "rgba(255,255,255,0.08)" }}
+        >
+          <Home size={18} style={{ color: "rgba(255,255,255,0.7)" }} />
         </div>
         <div>
-          <p className="text-body-md font-bold text-white">
-            CASA DE CONDOMÍNIO FECHADO. 2 PAVIMENTOS, SC. RIQUEZA IMPLÍCITA, CONTEMPORÂNEA, BOM GOSTO. CÉU DO SUL DO BRASIL, VEGETAÇÃO COMPATÍVEL SC. ÁRVORE ANCORA PRÓXIMA À PISCINA.
+          <p className="font-bold leading-snug" style={{ fontSize: "12px", color: "#FFFFFF" }}>
+            {BANNER_TEXT}
           </p>
-          <p className="mt-2 text-body-sm text-white/70">
-            Ambientes ultra-travados — novos ambientes precisam ser aprovados e documentados antes de gerar qualquer imagem.
+          <p className="mt-1.5 font-medium" style={{ fontSize: "11px", color: "rgba(255,255,255,0.45)" }}>
+            {BANNER_SUB}
           </p>
         </div>
       </div>
 
-      <h2 className="text-heading-sm text-ink-500">
-        {environments.length} {environments.length === 1 ? "Ambiente Aprovado" : "Ambientes Aprovados"}
+      {/* Título com contagem */}
+      <h2 className="font-bold" style={{ fontSize: "17px", color: "#0E0F10" }}>
+        {environments.length}{" "}
+        {environments.length === 1 ? "Ambiente Aprovado" : "Ambientes Aprovados"}
       </h2>
 
+      {/* Estado vazio */}
       {environments.length === 0 && !showForm && (
-        <div className="rounded-card border border-dashed border-base-600 bg-base-500/30 py-12 text-center">
-          <p className="text-body-md font-medium text-base-700">
+        <div
+          className="flex flex-col items-center justify-center gap-4 rounded-[24px] border-2 border-dashed py-16"
+          style={{ borderColor: "#D9D9D4" }}
+        >
+          <p className="font-semibold" style={{ fontSize: "14px", color: "#A9AAA5" }}>
             Nenhum ambiente cadastrado.
           </p>
           <button
             type="button"
-            onClick={() => {
-              setEditingId(null);
-              setName("");
-              setDescription("");
-              setPrompt("");
-              setThumbnailUrl("");
-              setFormError(null);
-              setShowForm(true);
-            }}
-            className="mt-4 rounded-button bg-limao-500 px-4 py-2 text-label-sm font-semibold text-ink-500 hover:bg-limao-400"
+            onClick={() => { resetForm(); setShowForm(true); }}
+            className="rounded-full font-bold transition-opacity hover:opacity-90"
+            style={{ background: "#D7FF00", color: "#0E0F10", fontSize: "13px", padding: "9px 22px" }}
           >
             Adicionar ambiente
           </button>
         </div>
       )}
 
+      {/* Grid de cards de ambientes */}
       {environments.length > 0 && (
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {environments.map((env) => (
             <div
               key={env.id}
-              className="rounded-card bg-surface-500 p-4 transition-shadow hover:shadow-md"
+              className="flex flex-col gap-4 rounded-[24px] p-5 transition-shadow hover:shadow-md"
+              style={{ background: "#FFFFFF" }}
             >
-              <p className="text-label-md font-semibold text-ink-500">{env.name}</p>
-              <div className="mt-4 space-y-3">
-                <div>
-                  <span className="inline-block rounded-tag bg-green-600 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-white">
-                    FIXOS
-                  </span>
-                  <p className="mt-1.5 text-body-sm font-medium text-base-700">
-                    {env.prompt || "Cinza contemporâneo, volumes retos, detalhes madeira/pedra clara. Jardim impecável. Porta grande madeira nobre. Espaço SUV."}
-                  </p>
-                </div>
-                <div>
-                  <span className="inline-block rounded-tag bg-orange-500 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-white">
-                    FLEXÍVEIS
-                  </span>
-                  <p className="mt-1.5 text-body-sm font-medium text-base-700">
-                    {env.description || "Detalhar aqui o que pode ser variável sem que descaracterize algo mais complexo de ser mudado. Ex.: se houver uma fonte a mesma não pode ser retirada... mas pode estar desligada."}
-                  </p>
-                </div>
-                <div>
-                  <span className="inline-block rounded-tag bg-red-500 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-white">
-                    PROIBIDO
-                  </span>
-                  <p className="mt-1.5 text-body-sm font-medium text-base-700">
-                    Cor da casa ou arquitetura. Qualquer vegetação que não seja compatível com a localização. Tipo do piso / acabamento.
-                  </p>
-                </div>
+              {/* Nome */}
+              <p className="font-bold" style={{ fontSize: "15px", color: "#0E0F10" }}>
+                {env.name}
+              </p>
+
+              {/* Seção FIXOS */}
+              <div className="flex flex-col gap-1.5">
+                <CategoryTag label="FIXOS" color={CATEGORY_COLORS.fixos} />
+                <p className="font-medium leading-snug" style={{ fontSize: "12px", color: "#A9AAA5" }}>
+                  {env.prompt ||
+                    "Cinza contemporâneo, volumes retos, detalhes madeira/pedra clara. Jardim impecável. Porta grande madeira nobre. Espaço SUV."}
+                </p>
               </div>
-              <div className="mt-4 flex gap-2">
+
+              {/* Seção FLEXÍVEIS */}
+              <div className="flex flex-col gap-1.5">
+                <CategoryTag label="FLEXÍVEIS" color={CATEGORY_COLORS.flexiveis} />
+                <p className="font-medium leading-snug" style={{ fontSize: "12px", color: "#A9AAA5" }}>
+                  {env.description ||
+                    "Detalhar aqui o que pode ser variável sem que descaracterize algo mais complexo de ser mudado. Ex.: se houver uma fonte a mesma não pode ser retirada... mas pode estar desligada."}
+                </p>
+              </div>
+
+              {/* Seção PROIBIDO */}
+              <div className="flex flex-col gap-1.5">
+                <CategoryTag label="PROIBIDO" color={CATEGORY_COLORS.proibido} />
+                <p className="font-medium leading-snug" style={{ fontSize: "12px", color: "#A9AAA5" }}>
+                  Cor da casa ou arquitetura. Qualquer vegetação que não seja compatível com a localização. Tipo do piso / acabamento.
+                </p>
+              </div>
+
+              {/* Ações */}
+              <div className="mt-auto flex gap-2 border-t pt-3" style={{ borderColor: "#EEEFE9" }}>
                 <button
                   type="button"
                   onClick={() => startEdit(env)}
-                  className="rounded-button border border-base-600 px-3 py-1.5 text-label-sm text-ink-500 hover:bg-base-500"
+                  className="rounded-full border px-3 py-1.5 text-[11px] font-semibold transition-colors hover:bg-[#EEEFE9]"
+                  style={{ borderColor: "#D9D9D4", color: "#0E0F10" }}
                 >
                   Editar
                 </button>
                 <button
                   type="button"
                   onClick={() => setDeleteModalEnvId(env.id)}
-                  className="rounded-button border border-red-500/50 px-3 py-1.5 text-label-sm text-red-600 hover:bg-red-500/10"
+                  className="rounded-full border px-3 py-1.5 text-[11px] font-semibold transition-colors hover:bg-[#FFF0F2]"
+                  style={{ borderColor: "#FFB2BC", color: "#FF576D" }}
                 >
                   Excluir
                 </button>
@@ -189,24 +232,7 @@ export default function CreatorEnvironmentsTab({
         </div>
       )}
 
-      {environments.length > 0 && (
-        <button
-          type="button"
-          onClick={() => {
-            setEditingId(null);
-            setName("");
-            setDescription("");
-            setPrompt("");
-            setThumbnailUrl("");
-            setFormError(null);
-            setShowForm(true);
-          }}
-          className="rounded-button border border-base-600 px-4 py-2 text-label-sm font-medium text-ink-500 hover:bg-base-500"
-        >
-          + Adicionar ambiente
-        </button>
-      )}
-
+      {/* Modal de formulário */}
       <HubiaModal
         open={showForm}
         onClose={resetForm}
@@ -215,59 +241,72 @@ export default function CreatorEnvironmentsTab({
       >
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
           {formError && (
-            <div className="rounded-card border border-red-500/30 bg-red-500/10 px-4 py-3 text-body-sm font-medium text-red-600">
+            <div
+              className="rounded-xl px-4 py-3 text-[12px] font-medium"
+              style={{ background: "#FFE8EB", color: "#FF576D" }}
+            >
               {formError}
             </div>
           )}
+          {[
+            { id: "env-name", label: "Nome *", value: name, onChange: setName, required: true, type: "text", rows: undefined },
+            { id: "env-desc", label: "Flexíveis (descrição)", value: description, onChange: setDescription, required: false, type: "text", rows: undefined },
+          ].map((field) => (
+            <div key={field.id} className="flex flex-col gap-1.5">
+              <label htmlFor={field.id} className="font-semibold" style={{ fontSize: "12px", color: "#0E0F10" }}>
+                {field.label}
+              </label>
+              <input
+                id={field.id}
+                type="text"
+                required={field.required}
+                value={field.value}
+                onChange={(e) => field.onChange(e.target.value)}
+                className="w-full rounded-xl border-0 px-4 py-3 font-medium outline-none transition-colors focus:ring-2 focus:ring-[#D7FF00]/30"
+                style={{ background: "#EEEFE9", fontSize: "13px", color: "#0E0F10" }}
+              />
+            </div>
+          ))}
           <div className="flex flex-col gap-1.5">
-            <label className="text-label-sm font-semibold text-ink-500">Nome *</label>
-            <input
-              type="text"
-              required
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              className="w-full rounded-input border-0 bg-[var(--hubia-bg-base-500)] px-4 py-3 text-body-md font-medium text-ink-500 outline-none focus:ring-2 focus:ring-limao-500/30"
-            />
-          </div>
-          <div className="flex flex-col gap-1.5">
-            <label className="text-label-sm font-semibold text-ink-500">Descrição</label>
-            <input
-              type="text"
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-              className="w-full rounded-input border-0 bg-[var(--hubia-bg-base-500)] px-4 py-3 text-body-md font-medium text-ink-500 outline-none focus:ring-2 focus:ring-limao-500/30"
-            />
-          </div>
-          <div className="flex flex-col gap-1.5">
-            <label className="text-label-sm font-semibold text-ink-500">Prompt</label>
+            <label htmlFor="env-prompt" className="font-semibold" style={{ fontSize: "12px", color: "#0E0F10" }}>
+              Fixos (prompt)
+            </label>
             <textarea
-              rows={2}
+              id="env-prompt"
+              rows={3}
               value={prompt}
               onChange={(e) => setPrompt(e.target.value)}
-              className="w-full rounded-input border-0 bg-[var(--hubia-bg-base-500)] px-4 py-3 text-body-md font-medium text-ink-500 outline-none focus:ring-2 focus:ring-limao-500/30"
+              className="w-full rounded-xl border-0 px-4 py-3 font-medium outline-none transition-colors focus:ring-2 focus:ring-[#D7FF00]/30"
+              style={{ background: "#EEEFE9", fontSize: "13px", color: "#0E0F10" }}
             />
           </div>
           <div className="flex flex-col gap-1.5">
-            <label className="text-label-sm font-semibold text-ink-500">URL thumbnail</label>
+            <label htmlFor="env-thumb" className="font-semibold" style={{ fontSize: "12px", color: "#0E0F10" }}>
+              URL thumbnail
+            </label>
             <input
+              id="env-thumb"
               type="url"
               value={thumbnailUrl}
               onChange={(e) => setThumbnailUrl(e.target.value)}
-              className="w-full rounded-input border-0 bg-[var(--hubia-bg-base-500)] px-4 py-3 text-body-md font-medium text-ink-500 outline-none focus:ring-2 focus:ring-limao-500/30"
+              className="w-full rounded-xl border-0 px-4 py-3 font-medium outline-none transition-colors focus:ring-2 focus:ring-[#D7FF00]/30"
+              style={{ background: "#EEEFE9", fontSize: "13px", color: "#0E0F10" }}
             />
           </div>
-          <div className="flex gap-2 pt-2">
+          <div className="flex gap-2 pt-1">
             <button
               type="submit"
               disabled={loading}
-              className="rounded-button bg-limao-500 px-4 py-2 text-label-sm font-semibold text-ink-500 hover:bg-limao-400 disabled:opacity-50"
+              className="rounded-full font-bold transition-opacity hover:opacity-90 disabled:opacity-50"
+              style={{ background: "#D7FF00", color: "#0E0F10", fontSize: "13px", padding: "9px 22px" }}
             >
               {loading ? "Salvando…" : editingId ? "Salvar" : "Criar"}
             </button>
             <button
               type="button"
               onClick={resetForm}
-              className="rounded-button border-0 bg-[var(--hubia-bg-base-500)] px-4 py-2 text-label-sm font-semibold text-ink-500 hover:opacity-90"
+              className="rounded-full border font-semibold transition-colors hover:bg-[#EEEFE9]"
+              style={{ borderColor: "#D9D9D4", color: "#0E0F10", fontSize: "13px", padding: "9px 22px" }}
             >
               Cancelar
             </button>
@@ -275,6 +314,7 @@ export default function CreatorEnvironmentsTab({
         </form>
       </HubiaModal>
 
+      {/* Modal de confirmação de exclusão */}
       <HubiaConfirmModal
         open={deleteModalEnvId !== null}
         onClose={() => { setDeleteModalEnvId(null); setDeleteError(null); }}

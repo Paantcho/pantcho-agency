@@ -5,7 +5,7 @@ Atualizado DEPOIS de cada ação.
 
 ---
 
-**Status:** Fase 1 — Fundação Multi-Tenant; última sessão: padronização de modais e cards Creators.
+**Status:** Fase 1 em andamento — telas de Creators pixel-perfect aprovadas; próximo: Look library, Tom de voz, KPIs reais.
 
 ## Projeto Atual
 HUBIA — Implementação Fase 1 (PRD v4.0, seções 4–8)
@@ -15,111 +15,128 @@ HUBIA — Implementação Fase 1 (PRD v4.0, seções 4–8)
 ## Última sessão (WORKING atualizado ao fechar)
 
 ### 1. Resumo em uma frase
-Padronização **global** de modais (overlay full-screen com blur + botão X) e correção dos cards de Creators com imagem placeholder quando não há avatar.
+Revisão pixel-perfect completa das telas de Creators: cards da lista (fullbleed + parallax zoom + dados estruturados do banco), detalhe (tabs com ícones, hero card, KPIs, Aparência forense, Ambientes categorizados), botão X do modal corrigido, metadata estruturado no Creator, e regra suprema de fidelidade ao Figma criada em `.cursor/rules/`.
 
 ### 2. Arquivos criados ou modificados nesta sessão
 
 | Arquivo | O que foi feito |
-|--------|------------------|
-| `hubia-app/src/components/ui/hubia-modal.tsx` | Modal passou a usar **portal** (`createPortal` em `document.body`) para overlay cobrir tela inteira (incluindo sidebar); adicionado **botão X** no canto superior direito (círculo escuro, ícone X); nova prop opcional `showCloseButton` (default `true`). |
-| `hubia-app/src/app/globals.css` | Classe `.hubia-modal-overlay`: `z-index` alterado de `50` para `9999` para o modal ficar sempre acima de todo o layout. |
-| `hubia-app/src/app/(dashboard)/creators/creators-list-client.tsx` | Definida constante `PLACEHOLDER_AVATAR` (URL Unsplash); quando o creator não tem `avatarUrl`, o card usa essa imagem de exemplo em vez de só iniciais, para visualização real do layout (foto, hover, tags). |
-| `memory/MEMORY.md` | Nova seção **"Modal — Padrão da plataforma inteira (Hubia)"**: regra global (overlay full-screen + blur, sempre usar `HubiaModal`, X para fechar, ações no rodapé; proibido modal parcial ou alert/confirm). |
+|--------|-----------------|
+| `hubia-app/src/app/(dashboard)/creators/creators-list-client.tsx` | Cards fullbleed: foto ocupa 100% do card, gradiente overlay, nome Limão line-height 1.1, idade e cidade/estado em linhas separadas, tags de plataformas vindas do `metadata.platforms` do banco (não hardcoded). Grid `grid-cols-2 sm:grid-cols-3 lg:grid-cols-4` — mesmo tamanho dos cards da Look Library. Parallax zoom `scale-[1.12]`. |
+| `hubia-app/src/app/(dashboard)/creators/actions.ts` | `CreatorRow` e `CreatorDetail` agora expõem `metadata` (city, state, age, birthdate, platforms). `getCreators` e `getCreatorById` retornam metadata estruturado. |
+| `hubia-app/prisma/seed.ts` | Seed da Ninaah atualizado com `metadata: { city: "Pomerode", state: "SC", age: 22, birthdate: "16/05/2004", platforms: ["instagram", "privacy", "tiktok"] }`. |
+| `hubia-app/src/app/(dashboard)/creators/[id]/creator-detail-client.tsx` | Tabs restauradas: fundo branco surface, ícones de volta (User, Palette, MapPin, Shirt, Mic), tab ativa pill Limão. Breadcrumb e botões com tipografia fiel ao Figma. |
+| `hubia-app/src/app/(dashboard)/creators/[id]/tabs/creator-overview-tab.tsx` | Hero card ink-500: avatar 88px quadrado-arredondado, nome 28px Limão, bio branco opaco. 6 KPIs: label tiny cinza, valor 32px Limão. Marcadores com ícones e Veículo Fixo em cards brancos. |
+| `hubia-app/src/app/(dashboard)/creators/[id]/tabs/creator-appearance-tab.tsx` | Banner forense rosa claro com borda. Tabelas 3 colunas (Elemento / Definição Fixa / Tolerância) com header cinza e rows separados. Checklist fundo verde, Blindagem fundo rosa — grid 2x2. |
+| `hubia-app/src/app/(dashboard)/creators/[id]/tabs/creator-environments-tab.tsx` | Banner ink-500 com ícone casa. Cards brancos com tags coloridas: FIXOS (verde), FLEXÍVEIS (laranja), PROIBIDO (rosa). |
+| `hubia-app/src/app/globals.css` | `.hubia-icon-button:hover` corrigido: era `--state-hover` (amarelo invisível no branco) → agora `rgba(62,63,64,0.85)` (cinza escuro visível). |
+| `.cursor/rules/figma-fidelity-supreme.mdc` | Regra suprema criada: `alwaysApply: true`. Define checklist de 10 pontos para analisar referências visuais, proibição de invenção/suposição, checklist de entrega. |
+| `memory/WORKING.md` | Este arquivo atualizado. |
 
 ### 3. O que está funcionando e aprovado
 
-- **Modal global:** Todos os fluxos que usam `HubiaModal` (Nova creator, Editar/Adicionar ambiente, Looks, Tom de voz, confirmação de exclusão) passam a ter overlay full-screen com blur e botão X, renderizado em portal no `body`.
-- **Cards Creators:** Exibem sempre uma imagem (avatar do creator ou placeholder), com tag Ativa/Inativa, hover na foto e tags no rodapé.
-- **Regra em MEMORY:** Padrão de modal documentado para toda a plataforma e para futuros agentes.
+- Cards da lista: fullbleed, gradiente, parallax zoom, nome/idade/cidade/tags — dados reais do banco.
+- Tabs do detalhe: fundo branco, ícones, pill ativa Limão.
+- Hero card e KPIs: layout exato do Figma.
+- Aparência: tabelas forenses, checklist verde, blindagem vermelha.
+- Ambientes: banner escuro, cards brancos categorizados por FIXOS/FLEXÍVEIS/PROIBIDO.
+- Botão X do modal: hover visível (cinza escuro), active (preto sólido).
+- TypeScript: sem erros. Lints: zero.
+- Regra suprema de fidelidade ao Figma ativa em `.cursor/rules/`.
 
-### 4. O que está incompleto ou com problema
+### 4. O que está incompleto ou pendente
 
-- **Validação visual:** Ainda não foi confirmado no browser se o blur cobre 100% da tela (incluindo sidebar) em todos os modais; recomendado um check rápido na próxima sessão.
-- **Placeholder:** A imagem de exemplo é URL externa (Unsplash); se houver política de imagens ou bloqueio, pode ser trocada por asset em `hubia-app/public/`.
+- **Look library tab:** visual não revisado ainda — ajustar conforme imagem 5 do Figma.
+- **Tom de voz tab:** visual não revisado ainda.
+- **KPIs do Overview:** valores hardcoded (39, 64%, 122, etc.) — em produção virão de queries reais.
+- **Veículo Fixo:** placeholder de imagem — em produção usar Supabase Storage.
+- **Natasha Freitas:** seed não tem metadata estruturado ainda (só a Ninaah foi atualizada).
 
 ### 5. Próxima ação exata (o que fazer primeiro na próxima sessão)
 
-1. Abrir o app em `localhost` (ex.: `/creators`), abrir um modal (ex.: "Nova creator" ou "Editar ambiente") e **confirmar** que o fundo fica blur em **toda** a tela (incluindo a sidebar).
-2. Se estiver ok, seguir com o próximo item do plano (Creators ou o que estiver em "Próximos Passos" abaixo); se o blur não cobrir a sidebar, ajustar overlay/portal no `HubiaModal` ou no CSS.
+1. Revisar Look library tab conforme imagem 5 do Figma (node `8-2143`).
+2. Revisar Tom de voz tab conforme imagem 6 do Figma (node `8-2544`).
+3. Adicionar metadata estruturado para a Natasha Freitas via admin ou seed.
+4. Conectar KPIs do Overview ao banco (contar looks, ambientes, pedidos reais).
 
-### 6. Decisões técnicas importantes tomadas hoje
+### 6. Decisões técnicas importantes tomadas nesta sessão
 
-- **Modal:** Renderizar em **portal** (`createPortal(..., document.body)`) para que o overlay seja filho direto do `body` e o `position: fixed; inset: 0` cubra a viewport inteira, independente do layout (sidebar, etc.).
-- **z-index 9999** no overlay para garantir que o modal fique acima de qualquer elemento do shell (sidebar, header, etc.).
-- **Um único componente de modal:** `HubiaModal` é o padrão da plataforma; qualquer tela de criar/editar/ver deve usá-lo (não criar modais ad hoc).
-- **Cards sem avatar:** Usar URL de placeholder em vez de só iniciais, para o layout ser validável visualmente com “imagem real”.
+- **Dados estruturados no creator:** cidade, estado, idade e plataformas ficam em `metadata` (campo JSON no modelo Creator) — não no `bio` texto livre.
+- **Fidelidade por hex direto:** quando token Tailwind não cobre o valor exato, usar `style={{ color: "#..." }}` — fidelidade ao Figma tem prioridade.
+- **Grid da lista = grid da Look Library:** `grid-cols-2 sm:grid-cols-3 lg:grid-cols-4`, aspectRatio `3/4`.
+- **Botão X do modal:** fundo ink-500 (preto), hover cinza escuro `rgba(62,63,64,0.85)`, active preto sólido — nunca usar `--state-hover` (amarelo) em elementos escuros sobre fundo branco.
 
-## O que foi feito
+---
+
+## Histórico de entregas
 
 ### Schema & Config
-- [x] Schema Prisma: `hubia-app/prisma/schema.prisma` (19 models, validado)
-- [x] Config Prisma 7: `hubia-app/prisma/prisma.config.ts` (dotenv + DIRECT_URL)
-- [x] Prisma client singleton: `hubia-app/src/lib/prisma.ts` (adapter-pg)
+- [x] Schema Prisma: 19 models validado
+- [x] Config Prisma 7: `prisma.config.ts` com dotenv + DIRECT_URL
+- [x] Prisma client singleton com `@prisma/adapter-pg`
 
 ### Database
-- [x] `prisma db push` — todas as 19 tabelas criadas no Supabase
+- [x] `prisma db push` — 19 tabelas criadas no Supabase
 - [x] `prisma generate` — client gerado
-- [x] Seed executado: 1 org (Pantcho Agency), 4 planos, 1 branding, 4 feature flags
+- [x] Seed: 1 org, 4 planos, 1 branding, 4 feature flags, Creator Ninaah com metadata
 
 ### Auth & Middleware
-- [x] Supabase client (browser): `hubia-app/src/lib/supabase/client.ts`
-- [x] Supabase client (server): `hubia-app/src/lib/supabase/server.ts`
-- [x] Middleware Next.js: `hubia-app/src/middleware.ts` (refresh + proteção de rotas)
-- [x] Auth callback route: `hubia-app/src/app/auth/callback/route.ts`
-- [x] Login page funcional: email+senha, magic link, Google OAuth
+- [x] Supabase client browser + server
+- [x] Middleware Next.js: refresh + proteção de rotas
+- [x] Auth callback route
+- [x] Login: email+senha, magic link, Google OAuth
 
 ### RLS
-- [x] SQL pronto e executado: `hubia-app/prisma/rls-policies.sql`
+- [x] `rls-policies.sql` pronto e executado
 
 ### Design System
-- [x] `globals.css` com tokens Hubia (cores, radii, tipografia)
-- [x] Tailwind 4 @theme inline com paleta completa
-- [x] Layout root com Urbanist (next/font/google)
-- [x] Font fix: removido @import url() duplicado, --font-sans usa var(--font-urbanist)
+- [x] `globals.css` com tokens Hubia completos
+- [x] Tailwind 4 `@theme inline` com paleta completa
+- [x] Urbanist via `next/font/google`
+- [x] `.hubia-icon-button` hover/active corrigidos
 
 ### Layout Shell
-- [x] Sidebar: `hubia-app/src/components/layout/sidebar.tsx` (12 items, 3 seções)
-- [x] AppShell: `hubia-app/src/components/layout/app-shell.tsx`
-- [x] Route groups: (dashboard) e (auth)
-- [x] Dashboard placeholder: `hubia-app/src/app/(dashboard)/page.tsx`
-- [x] Auth layout: `hubia-app/src/app/(auth)/layout.tsx` (centered, bg-ink-500)
+- [x] Sidebar: 12 itens, 3 seções
+- [x] AppShell
+- [x] Dashboard, auth layout
 
-### Config Pages (F1-E2, E3, E4)
-- [x] Config layout com tabs: `src/app/(dashboard)/config/layout.tsx`
-- [x] Config redirect: `src/app/(dashboard)/config/page.tsx` → /config/equipe
-- [x] Equipe page: conectada ao banco (server actions, listagem/edição de role, auto-join no callback e no layout)
-- [x] Branding page: CRUD OrganizationBranding (cor primária salva; logo/favicon placeholder)
-- [x] Provedores IA page: CRUD AiProvider com API keys criptografadas (`hubia-app/src/lib/encrypt.ts`, ENCRYPTION_KEY em .env.local)
+### Config Pages
+- [x] Config/Equipe — banco (server actions, alterar role)
+- [x] Config/Branding — banco (cor primária)
+- [x] Config/Provedores — banco (CRUD, encrypt keys)
 
 ### Build
-- [x] `npm run build` — compilação limpa, 21 rotas geradas
+- [x] `npm run build` — compilação limpa
 
-### Fase 1 — Entregues (Plano “Próximos passos”)
-- [x] Push main + tag `hubia-app/v0.1.0`
-- [x] Doc Auth: README hubia-app (Google OAuth no Supabase)
-- [x] Config/Equipe → banco (server actions + Prisma, alterar role)
-- [x] Config/Branding → banco (salvar cor primária)
-- [x] Config/Provedores → banco (CRUD, encrypt keys)
-- [x] ThemeProvider dinâmico (cores do tenant no layout dashboard)
-- [x] Seletor de organização na sidebar (cookie `hubia_current_organization_id`, multi-org)
-- [x] Creators list page (F1-E5): listagem do banco + placeholders `/creators/novo` e `/creators/[id]`
-- [x] Dashboard com dados reais (KPIs, Em andamento, Atividade recente, Pedidos prioritários via `dashboard-data.ts`)
+### Fase 1 entregues
+- [x] Tag `hubia-app/v0.1.0` + push main
+- [x] ThemeProvider dinâmico (cores do tenant)
+- [x] Seletor de organização na sidebar
+- [x] Creators list — banco + cards pixel-perfect
+- [x] Dashboard com dados reais (KPIs, atividade)
+- [x] HubiaModal: portal + overlay fullscreen blur + botão X
+- [x] Creators: lista, visão geral, aparência, ambientes — pixel-perfect ao Figma
+- [x] `metadata` estruturado no Creator (city, state, age, platforms)
+- [x] Regra suprema de fidelidade ao Figma (`.cursor/rules/figma-fidelity-supreme.mdc`)
+
+---
 
 ## Próximos Passos
-- [ ] Testar `npm run dev` no browser (visual check completo)
-- [ ] Configurar Google OAuth no dashboard Supabase (se ainda não feito)
-- [ ] Definir `ENCRYPTION_KEY` em `.env.local` para Config → Provedores de IA
-- [ ] **Creators:** Formulário “Novo creator” (`/creators/novo`) e detalhe (`/creators/[id]`) — ver `directives/hubia-plano-creators-proximas-paginas.md`. Figma = referência. Marcar API/agentes; se faltar agente, criar e registrar em MEMORY (autoalimentado).
-- [ ] Upload de logo/favicon em Config/Branding (Supabase Storage)
-- [ ] Demais páginas (Pedidos, Projetos): mesmo plano — rotas/ações, Figma, marcar API/agentes
+- [ ] Revisar Look library tab (Figma node 8-2143)
+- [ ] Revisar Tom de voz tab (Figma node 8-2544)
+- [ ] Adicionar metadata da Natasha Freitas
+- [ ] Conectar KPIs do Overview ao banco
+- [ ] Upload de logo/favicon (Supabase Storage)
+- [ ] Demais páginas: Pedidos, Projetos — rotas, ações, Figma, marcar pontos de API/agentes
 
-## Decisões Tomadas
-- Prisma 7: `prisma.config.ts` com `datasource.url` (não usa mais URL no schema)
-- Prisma 7: PrismaClient precisa de `@prisma/adapter-pg` (engine client-side)
-- Prisma 7: `migrate dev` requer shadow DB (Supabase não permite) — usar `db push`
-- Prisma 7: config não auto-detecta no subdir — usar `--config prisma/prisma.config.ts`
+---
+
+## Decisões Técnicas Acumuladas
+- Prisma 7: `prisma.config.ts`, `@prisma/adapter-pg`, `db push` (sem migrate dev)
 - UUIDs via `gen_random_uuid()` do PostgreSQL
-- Nomes de tabelas snake_case (`@@map`), campos camelCase no Prisma
-- Seed usa DIRECT_URL (porta 5432, sem pooler) para evitar problemas de conexão
-- Middleware: proteção invertida (public routes allowlist em vez de protected routes)
-- Login: email+senha, magic link e Google OAuth via Supabase Auth
+- snake_case nas tabelas (`@@map`), camelCase no Prisma
+- Seed via `npx tsx prisma/seed.ts` (DIRECT_URL porta 5432)
+- Middleware: allowlist de rotas públicas (inversão da proteção)
+- Cards fullbleed: `position: absolute; inset: 0` + `overflow-hidden` no container
+- Dados do creator: `metadata` JSON para campos estruturados (city, state, age, platforms)
+- Fidelidade ao Figma: hex direto > tokens Tailwind quando necessário
+- Botão X modal: hover `rgba(62,63,64,0.85)` — nunca `--state-hover` em contexto escuro/branco

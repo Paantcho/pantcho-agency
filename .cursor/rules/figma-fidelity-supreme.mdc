@@ -1,0 +1,61 @@
+---
+description: Regra suprema de fidelidade ao Figma. Aplica a toda implementação de UI no projeto Hubia.
+alwaysApply: true
+---
+
+# REGRA SUPREMA — Fidelidade Pixel-Perfect ao Figma
+
+## Princípio inviolável
+
+Quando o usuário anexar uma imagem de referência (screenshot do Figma, export, captura de tela) ou indicar uma URL de node do Figma, o agente **DEVE** implementar pixel a pixel, sem inventar nada que não esteja na referência.
+
+**Nunca desviar.** Nunca assumir. Nunca simplificar sem autorização explícita.
+
+---
+
+## O que analisar obrigatoriamente em qualquer referência visual
+
+Antes de escrever uma linha de código, extrair da imagem:
+
+1. **Tipografia:** família, peso (Bold/SemiBold/Regular), tamanho exato (px), line-height, letter-spacing, cor exata (hex)
+2. **Cores:** hex de cada elemento — fundo, texto, borda, ícone, overlay, gradiente
+3. **Espaçamentos:** padding interno, gap entre elementos, margin — tudo em px
+4. **Tamanhos:** largura, altura, aspect-ratio de cada bloco/card/imagem
+5. **Border-radius:** valor exato por elemento (ex.: card=24px, tag=9999px, input=12px)
+6. **Hierarquia visual:** o que fica em cima, o que fica embaixo, o que se sobrepõe
+7. **Estados:** normal, hover, active, disabled, selecionado — se visíveis na referência
+8. **Layout:** se é flex, grid, quantas colunas, alinhamento
+9. **Conteúdo:** quais campos aparecem, em qual ordem, com qual formatação
+10. **Interações:** se há zoom, fade, slide, overlay — descrever antes de implementar
+
+---
+
+## Regras de implementação
+
+- **Zero invenção:** se não aparece na referência, não adiciona
+- **Zero suposição:** se não dá para ver com clareza, perguntar antes de agir
+- **Zero simplificação não autorizada:** não "aproximar" valores — usar os valores exatos
+- **Conteúdo real:** dados que aparecem no card/tela vêm do banco (não mock/hardcoded), exceto quando o campo ainda não existe no schema (neste caso, estruturar o dado e documentar)
+- **Gradientes:** descrever todos os stops com opacidade exata
+- **Fontes:** Urbanist é a fonte exclusiva da Hubia — Bold, SemiBold, Regular
+
+---
+
+## Checklist antes de entregar qualquer tela
+
+- [ ] Todas as cores batem com a referência (usar hex diretamente se necessário)
+- [ ] Tipografia: tamanho, peso e line-height corretos em cada elemento
+- [ ] Espaçamentos internos e externos fiéis
+- [ ] Border-radius por elemento fiel
+- [ ] Hierarquia visual (z-index, posicionamento) correta
+- [ ] Conteúdo exato: campos, ordem, formato
+- [ ] Estados interativos (hover, active) implementados se visíveis na referência
+- [ ] Nenhum elemento inventado que não esteja na referência
+
+---
+
+## Stack permitida para implementação
+
+Next.js 15 / TypeScript / Tailwind 4 / Urbanist / design tokens do globals.css
+
+Usar `style={{ ... }}` com hex direto quando os tokens Tailwind não cobrirem o valor exato — fidelidade ao Figma tem prioridade sobre uso de classe Tailwind.

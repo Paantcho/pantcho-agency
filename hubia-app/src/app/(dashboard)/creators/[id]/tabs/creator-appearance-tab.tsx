@@ -1,44 +1,108 @@
 "use client";
 
 import { useState } from "react";
-import { AlertTriangle, Check, X } from "lucide-react";
+import { AlertTriangle } from "lucide-react";
 import type { CreatorDetail } from "../../actions";
 import { upsertCreatorAppearance } from "../../actions";
 
+// ---- Dados forenses (mock — em produção virão do banco) -------------------------
+
 const ROSTO_ROWS = [
-  { elemento: "Rosto", definicao: "Oval suave, leve afunilamento no queixo", tolerancia: "Expressões discretas" },
+  { elemento: "Rosto", definicao: "Oval suave, leve afunilamento no queixo", tolerancia: "Expressões discretas", alert: false },
   { elemento: "Olhos", definicao: "Amendoado, castanho claro a mel", tolerancia: "NUNCA verde/azul", alert: true },
   { elemento: "Cabelo", definicao: "Longo até cintura, castanho médio, liso/ondulado", tolerancia: "NUNCA loiro platinado", alert: true },
-  { elemento: "Pele", definicao: "Natural, poros discretos, hidratada", tolerancia: "Bronzeado leve" },
-  { elemento: "Lábios", definicao: "Cheios naturais, contorno definido", tolerancia: "Sorriso aberto/fechado" },
-  { elemento: "Sobrancelhas", definicao: "Cheios naturais, contorno definido", tolerancia: "Expressões discretas" },
+  { elemento: "Pele", definicao: "Natural, poros discretos, hidratada", tolerancia: "Bronzeado leve", alert: false },
+  { elemento: "Lábios", definicao: "Cheios naturais, contorno definido", tolerancia: "Sorriso aberto/fechado", alert: false },
+  { elemento: "Dentes", definicao: "Longo até cintura, castanho médio, liso/ondulado", tolerancia: "NUNCA loiro platinado", alert: true },
+  { elemento: "Nariz", definicao: "Natural, poros discretos, hidratada", tolerancia: "Bronzeado leve", alert: false },
+  { elemento: "Sobrancelhas", definicao: "Cheios naturais, contorno definido", tolerancia: "Sorriso aberto/fechado", alert: false },
 ];
 
 const CORPO_ROWS = [
-  { elemento: "Braços", definicao: "Descrição detalhada...", tolerancia: "Deixar claro aqui a regra" },
-  { elemento: "Mãos", definicao: "Descrição detalhada...", tolerancia: "Deixar claro aqui a regra" },
-  { elemento: "Cintura", definicao: "Descrição detalhada...", tolerancia: "Expressões discretas" },
-  { elemento: "Coxas", definicao: "Descrição detalhada...", tolerancia: "Deixar claro aqui a regra" },
+  { elemento: "Braços", definicao: "Descrição detalhada...", tolerancia: "Deixar claro aqui a regra", alert: false },
+  { elemento: "Mãos", definicao: "Descrição detalhada...", tolerancia: "Deixar claro aqui a regra", alert: false },
+  { elemento: "Seios", definicao: "Descrição detalhada...", tolerancia: "NUNCA loiro platinado", alert: true },
+  { elemento: "Barriga", definicao: "Descrição detalhada...", tolerancia: "Deixar claro aqui a regra", alert: false },
+  { elemento: "Cintura", definicao: "Descrição detalhada...", tolerancia: "Expressões discretas", alert: false },
+  { elemento: "Bumbum", definicao: "Descrição detalhada...", tolerancia: "Deixar claro aqui a regra", alert: false },
+  { elemento: "Coxas", definicao: "Descrição detalhada...", tolerancia: "Deixar claro aqui a regra", alert: false },
+  { elemento: "Pernas", definicao: "Descrição detalhada...", tolerancia: "Deixar claro aqui a regra", alert: false },
+  { elemento: "Pés", definicao: "Descrição detalhada...", tolerancia: "Deixar claro aqui a regra", alert: false },
 ];
 
-const CHECKLIST_ITEMS = [
-  "Rosto: Reconhece a mesma pessoa?",
-  "Olhos: Castanho claro/mel — nunca verde ou azul?",
+const CHECKLIST_LEFT = [
+  "Rosto: Reconhece a mesma Ninaah?",
   "Cabelo: Comprimento, textura e cor corretos?",
-  "Pintinha: Presente, lado direito, lugar certo?",
-  "Piercing: Só aparece quando umbigo visível?",
-  "Silhueta: Proporções constantes entre imagens?",
+  "Piercing: Só aparece quando umbigo visível...",
   "Carro: BMW X2 Cape York Green quando presente?",
+];
+const CHECKLIST_RIGHT = [
+  "Olhos: Castanho claro/mel — nunca verde ou azul?",
+  "Pintinha: Presente, lado direito, lugar certo?",
+  "Silhueta: Proporções constantes entre imagens?",
   "Mãos: Dedos corretos, unhas da semana?",
 ];
 
-const BLINDAGEM_ITEMS = [
-  "Alterar traços faciais entre cenas",
+const BLINDAGEM = [
+  "Alterar traços faciais entre cenas...",
   "Sumir com a pintinha do ombro",
   "Criar tatuagens",
   "Mudar cor dos olhos",
   "Aparência de implante exagerado",
+  "Sumir com a pintinha do ombro",
 ];
+
+// ---- Componentes internos -------------------------------------------------------
+
+function TableHeader() {
+  return (
+    <div
+      className="grid grid-cols-3 gap-3 rounded-xl px-4 py-2"
+      style={{ background: "#EEEFE9" }}
+    >
+      {["ELEMENTO", "DEFINIÇÃO FIXA", "TOLERÂNCIA"].map((h) => (
+        <span
+          key={h}
+          className="font-bold uppercase tracking-widest"
+          style={{ fontSize: "9px", color: "#A9AAA5" }}
+        >
+          {h}
+        </span>
+      ))}
+    </div>
+  );
+}
+
+function TableRow({
+  elemento,
+  definicao,
+  tolerancia,
+  alert,
+}: {
+  elemento: string;
+  definicao: string;
+  tolerancia: string;
+  alert: boolean;
+}) {
+  return (
+    <div className="grid grid-cols-3 gap-3 border-b py-2.5 last:border-0" style={{ borderColor: "#EEEFE9" }}>
+      <span className="font-semibold" style={{ fontSize: "12px", color: "#0E0F10" }}>
+        {elemento}
+      </span>
+      <span className="font-medium" style={{ fontSize: "12px", color: "#A9AAA5" }}>
+        {definicao}
+      </span>
+      <span
+        className="font-semibold"
+        style={{ fontSize: "12px", color: alert ? "#FF576D" : "#A9AAA5" }}
+      >
+        {tolerancia}
+      </span>
+    </div>
+  );
+}
+
+// ---- Componente principal -------------------------------------------------------
 
 export default function CreatorAppearanceTab({
   creator,
@@ -72,99 +136,136 @@ export default function CreatorAppearanceTab({
   }
 
   return (
-    <div className="flex flex-col gap-6">
-      {/* Banner rosa — documento forense */}
-      <div className="flex gap-3 rounded-card border border-pink-500/30 bg-pink-500/10 p-4">
-        <AlertTriangle className="h-5 w-5 shrink-0 text-pink-600" />
-        <p className="text-body-sm font-medium text-pink-800">
-          DOCUMENTO FORENSE — Fonte da verdade absoluta. Nenhum detalhe pode ser alterado sem aprovação explícita do responsável.
-        </p>
+    <div className="flex flex-col gap-5">
+      {/* Banner forense — rosa claro */}
+      <div
+        className="flex items-start gap-3 rounded-2xl px-5 py-4"
+        style={{ background: "#FFE8EB", border: "1.5px solid #FFB2BC" }}
+      >
+        <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0" style={{ color: "#FF576D" }} />
+        <div>
+          <p className="font-bold" style={{ fontSize: "12px", color: "#0E0F10" }}>
+            DOCUMENTO FORENSE
+          </p>
+          <p className="font-medium" style={{ fontSize: "12px", color: "#A9AAA5", marginTop: "2px" }}>
+            Fonte da verdade absoluta — nenhum detalhe pode ser alterado sem aprovação explícita de Pantcho..
+          </p>
+        </div>
       </div>
 
-      {/* Tabelas forenses: cada linha como bloco legível (ELEMENTO | DEFINIÇÃO FIXA | TOLERÂNCIA) */}
-      <div className="grid gap-6 lg:grid-cols-2">
-        <div className="rounded-card bg-surface-500 p-6">
-          <h3 className="text-heading-sm font-bold text-ink-500">
+      {/* Tabelas forenses — 2 colunas */}
+      <div className="grid gap-4 lg:grid-cols-2">
+        {/* Rosto */}
+        <div className="rounded-[24px] p-5" style={{ background: "#FFFFFF" }}>
+          <h3 className="font-bold" style={{ fontSize: "16px", color: "#0E0F10" }}>
             Rosto (Forense)
           </h3>
-          <div className="mt-4 space-y-3">
-            {ROSTO_ROWS.map((row) => (
-              <div
-                key={row.elemento}
-                className="rounded-button border-0 bg-[var(--hubia-bg-base-50)] p-3"
-              >
-                <div className="flex flex-wrap items-baseline gap-2">
-                  <span className="text-label-sm font-semibold text-ink-500">{row.elemento}</span>
-                  <span className="text-body-sm font-medium text-base-700">{row.definicao}</span>
-                </div>
-                <p className={`mt-1 text-body-sm font-medium ${row.alert ? "text-red-600" : "text-base-700"}`}>
-                  {row.tolerancia}
-                </p>
-              </div>
-            ))}
+          <div className="mt-4 flex flex-col gap-0">
+            <TableHeader />
+            <div className="mt-1 px-4">
+              {ROSTO_ROWS.map((row) => (
+                <TableRow key={row.elemento} {...row} />
+              ))}
+            </div>
           </div>
         </div>
-        <div className="rounded-card bg-surface-500 p-6">
-          <h3 className="text-heading-sm font-bold text-ink-500">
+
+        {/* Corpo e Silhueta */}
+        <div className="rounded-[24px] p-5" style={{ background: "#FFFFFF" }}>
+          <h3 className="font-bold" style={{ fontSize: "16px", color: "#0E0F10" }}>
             Corpo e Silhueta (Forense)
           </h3>
-          <div className="mt-4 space-y-3">
-            {CORPO_ROWS.map((row) => (
+          <div className="mt-4 flex flex-col gap-0">
+            <TableHeader />
+            <div className="mt-1 px-4">
+              {CORPO_ROWS.map((row) => (
+                <TableRow key={row.elemento} {...row} />
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Checklist + Blindagem — 2 colunas */}
+      <div className="grid gap-4 lg:grid-cols-2">
+        {/* Checklist forense */}
+        <div className="rounded-[24px] p-5" style={{ background: "#FFFFFF" }}>
+          <h3 className="font-bold" style={{ fontSize: "16px", color: "#0E0F10" }}>
+            Checklist Forense — Validar ANTES de aprovar
+          </h3>
+          <div className="mt-4 grid grid-cols-2 gap-2">
+            {CHECKLIST_LEFT.map((item) => (
               <div
-                key={row.elemento}
-                className="rounded-button border-0 bg-[var(--hubia-bg-base-50)] p-3"
+                key={item}
+                className="flex items-start gap-2 rounded-xl p-3"
+                style={{ background: "#E8FFF8" }}
               >
-                <div className="flex flex-wrap items-baseline gap-2">
-                  <span className="text-label-sm font-semibold text-ink-500">{row.elemento}</span>
-                  <span className="text-body-sm font-medium text-base-700">{row.definicao}</span>
-                </div>
-                <p className="mt-1 text-body-sm font-medium text-base-700">{row.tolerancia}</p>
+                <span
+                  className="mt-0.5 shrink-0 font-bold"
+                  style={{ color: "#00FCB0", fontSize: "14px" }}
+                >
+                  ✓
+                </span>
+                <span className="font-medium" style={{ fontSize: "11px", color: "#0E0F10" }}>
+                  {item}
+                </span>
+              </div>
+            ))}
+            {CHECKLIST_RIGHT.map((item) => (
+              <div
+                key={item}
+                className="flex items-start gap-2 rounded-xl p-3"
+                style={{ background: "#E8FFF8" }}
+              >
+                <span
+                  className="mt-0.5 shrink-0 font-bold"
+                  style={{ color: "#00FCB0", fontSize: "14px" }}
+                >
+                  ✓
+                </span>
+                <span className="font-medium" style={{ fontSize: "11px", color: "#0E0F10" }}>
+                  {item}
+                </span>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Blindagem — proibido */}
+        <div className="rounded-[24px] p-5" style={{ background: "#FFFFFF" }}>
+          <h3 className="font-bold" style={{ fontSize: "16px", color: "#0E0F10" }}>
+            Blindagem — Proibido
+          </h3>
+          <div className="mt-4 flex flex-col gap-2">
+            {BLINDAGEM.map((item, i) => (
+              <div
+                key={`${item}-${i}`}
+                className="flex items-start gap-2 rounded-xl p-3"
+                style={{ background: "#FFF0F2" }}
+              >
+                <span
+                  className="mt-0.5 shrink-0 font-bold"
+                  style={{ color: "#FF576D", fontSize: "13px" }}
+                >
+                  ✕
+                </span>
+                <span className="font-medium" style={{ fontSize: "12px", color: "#0E0F10" }}>
+                  {item}
+                </span>
               </div>
             ))}
           </div>
         </div>
       </div>
 
-      {/* Checklist Forense: itens com fundo verde suave e ícone check */}
-      <div className="grid gap-6 lg:grid-cols-2">
-        <div className="rounded-card bg-surface-500 p-6">
-          <h3 className="text-heading-sm font-bold text-ink-500">
-            Checklist Forense — Validar ANTES de aprovar
-          </h3>
-          <ul className="mt-4 space-y-2">
-            {CHECKLIST_ITEMS.map((item) => (
-              <li
-                key={item}
-                className="flex items-start gap-3 rounded-button border-0 bg-green-500/10 p-3"
-              >
-                <Check className="mt-0.5 h-4 w-4 shrink-0 text-green-600" aria-hidden />
-                <span className="text-body-sm font-medium text-ink-500">{item}</span>
-              </li>
-            ))}
-          </ul>
-        </div>
-        <div className="rounded-card bg-surface-500 p-6">
-          <h3 className="text-heading-sm font-bold text-ink-500">
-            Blindagem — Proibido
-          </h3>
-          <ul className="mt-4 space-y-2">
-            {BLINDAGEM_ITEMS.map((item) => (
-              <li
-                key={item}
-                className="flex items-start gap-3 rounded-button border-0 bg-red-500/10 p-3"
-              >
-                <X className="mt-0.5 h-4 w-4 shrink-0 text-red-500" aria-hidden />
-                <span className="text-body-sm font-medium text-ink-500">{item}</span>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </div>
-
-      {/* Editar prompt base (colapsável) */}
+      {/* Editar prompt base */}
       {showEdit ? (
-        <form onSubmit={handleSubmit} className="rounded-card border border-base-600 bg-base-500/20 p-4">
-          <label htmlFor="ap-base" className="text-label-sm text-ink-500">
+        <form
+          onSubmit={handleSubmit}
+          className="rounded-[24px] border p-5"
+          style={{ borderColor: "#D9D9D4", background: "#FFFFFF" }}
+        >
+          <label htmlFor="ap-base" className="font-semibold" style={{ fontSize: "13px", color: "#0E0F10" }}>
             Prompt base (edição)
           </label>
           <textarea
@@ -173,26 +274,31 @@ export default function CreatorAppearanceTab({
             value={basePrompt}
             onChange={(e) => setBasePrompt(e.target.value)}
             placeholder="Descreva a aparência fixa do creator..."
-            className="mt-2 w-full rounded-input border border-base-600 bg-surface-500 px-4 py-3 text-body-md text-ink-500 outline-none focus:border-limao-500"
+            className="mt-2 w-full rounded-xl border px-4 py-3 font-medium outline-none transition-colors focus:border-[#D7FF00]"
+            style={{ borderColor: "#D9D9D4", background: "#EEEFE9", fontSize: "13px", color: "#0E0F10" }}
           />
           <div className="mt-4 flex flex-wrap items-center gap-2">
             <button
               type="submit"
               disabled={loading}
-              className="rounded-button bg-limao-500 px-4 py-2 text-label-sm text-ink-500 hover:bg-limao-400 disabled:opacity-50"
+              className="rounded-full font-bold transition-opacity hover:opacity-90 disabled:opacity-50"
+              style={{ background: "#D7FF00", color: "#0E0F10", fontSize: "13px", padding: "8px 20px" }}
             >
               {loading ? "Salvando…" : "Salvar"}
             </button>
             <button
               type="button"
               onClick={() => setShowEdit(false)}
-              className="rounded-button border border-base-600 px-4 py-2 text-label-sm text-ink-500 hover:bg-base-500"
+              className="rounded-full border font-semibold transition-colors hover:bg-[#EEEFE9]"
+              style={{ borderColor: "#D9D9D4", color: "#0E0F10", fontSize: "13px", padding: "8px 20px" }}
             >
               Cancelar
             </button>
-            {message === "ok" && <span className="text-body-sm font-medium text-green-600">Salvo.</span>}
+            {message === "ok" && (
+              <span className="font-medium" style={{ fontSize: "12px", color: "#00FCB0" }}>Salvo.</span>
+            )}
             {message === "error" && errorText && (
-              <span className="text-body-sm font-medium text-red-600">{errorText}</span>
+              <span className="font-medium" style={{ fontSize: "12px", color: "#FF576D" }}>{errorText}</span>
             )}
           </div>
         </form>
@@ -200,7 +306,8 @@ export default function CreatorAppearanceTab({
         <button
           type="button"
           onClick={() => setShowEdit(true)}
-          className="w-fit rounded-button border border-base-600 px-4 py-2 text-label-sm text-ink-500 hover:bg-base-500"
+          className="w-fit rounded-full border font-semibold transition-colors hover:bg-[#EEEFE9]"
+          style={{ borderColor: "#D9D9D4", color: "#0E0F10", fontSize: "13px", padding: "8px 20px" }}
         >
           Editar prompt base
         </button>

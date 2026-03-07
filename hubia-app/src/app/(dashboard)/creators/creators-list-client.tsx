@@ -6,61 +6,124 @@ import { Plus, Users } from "lucide-react";
 import type { CreatorRow } from "./actions";
 import { NovaCreatorModal } from "./nova-creator-modal";
 
-/** Imagem de exemplo quando o creator não tem avatar — padrão para toda a listagem */
 const PLACEHOLDER_AVATAR =
-  "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=400&h=264&fit=crop";
+  "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=600&h=800&fit=crop&crop=faces,top";
 
 type Filter = "all" | "active" | "inactive";
 
 function CreatorCard({ creator }: { creator: CreatorRow }) {
-  const isInactive = !creator.isActive;
   const imageUrl = creator.avatarUrl?.trim() || PLACEHOLDER_AVATAR;
-  const subtitle = creator.bio
-    ? creator.bio.split("\n")[0].slice(0, 60)
-    : `@${creator.slug}`;
+  const meta = creator.metadata ?? {};
+
+  // Dados estruturados do metadata
+  const age = meta.age ?? null;
+  const city = meta.city ?? null;
+  const state = meta.state ?? null;
+  const platforms: string[] = meta.platforms ?? [];
+
+  // Localização: "Pomerode, SC"
+  const location =
+    city && state ? `${city}, ${state}` : city ?? state ?? null;
 
   return (
     <Link
       href={`/creators/${creator.id}`}
-      className="motion-soft group relative flex min-h-[300px] flex-col overflow-hidden rounded-card bg-ink-500 transition-shadow hover:shadow-xl"
+      className="group relative flex flex-col overflow-hidden rounded-[24px] bg-[#0E0F10] transition-shadow duration-300 hover:shadow-2xl"
+      style={{ aspectRatio: "3/4" }}
     >
-      {/* Tag Ativa/Inativa — canto superior esquerdo, pílula escura, texto Limão */}
-      <span className="absolute left-4 top-4 z-10 rounded-tag bg-ink-500 px-3 py-1.5 text-label-sm font-semibold uppercase tracking-wider text-limao-500">
-        {creator.isActive ? "Ativa" : "Inativa"}
-      </span>
-      {/* Foto: integrada ao card, hover zoom + leve movimento esquerda/cima */}
-      <div
-        className={`relative h-44 shrink-0 overflow-hidden bg-ink-400 ${
-          isInactive ? "grayscale" : ""
-        }`}
-      >
+      {/* Foto fullbleed — parallax zoom só na imagem, card não se move */}
+      <div className="absolute inset-0 overflow-hidden rounded-[24px]">
         <img
           src={imageUrl}
-          alt=""
-          className="h-full w-full object-cover object-top transition-transform duration-300 ease-out group-hover:scale-105 group-hover:translate-x-[-2%] group-hover:translate-y-[-2%]"
+          alt={creator.name}
+          className={`h-full w-full object-cover object-top transition-transform duration-500 ease-out will-change-transform group-hover:scale-[1.12] ${
+            !creator.isActive ? "grayscale" : ""
+          }`}
+        />
+        {/* Gradiente: transparente no topo → ink escuro no rodapé */}
+        <div
+          className="absolute inset-0"
+          style={{
+            background:
+              "linear-gradient(to bottom, rgba(14,15,16,0.0) 0%, rgba(14,15,16,0.1) 40%, rgba(14,15,16,0.82) 70%, rgba(14,15,16,0.97) 100%)",
+          }}
         />
       </div>
-      {/* Nome em Limão + subtítulo em branco */}
-      <div className="flex flex-1 flex-col justify-between p-4">
-        <div>
-          <h2 className="text-heading-sm font-bold leading-tight text-limao-500 line-clamp-2">
-            {creator.name}
-          </h2>
-          <p className="mt-1.5 text-body-md font-medium text-white">
-            {subtitle}
+
+      {/* Tag Ativa/Inativa — canto superior esquerdo */}
+      <div className="absolute left-4 top-4 z-10">
+        <span
+          className="rounded-full bg-[#0E0F10] px-3 py-1 text-[11px] font-bold uppercase tracking-widest"
+          style={{ color: "#D7FF00" }}
+        >
+          {creator.isActive ? "Ativa" : "Inativa"}
+        </span>
+      </div>
+
+      {/* Bloco inferior — sobre o gradiente */}
+      <div className="relative z-10 mt-auto flex flex-col p-5">
+        {/* Nome: bold, Limão, line-height apertado (1.1), pode quebrar 2 linhas */}
+        <h2
+          className="font-bold"
+          style={{
+            fontSize: "clamp(18px,1.8vw,24px)",
+            color: "#D7FF00",
+            lineHeight: 1.1,
+            letterSpacing: "-0.01em",
+          }}
+        >
+          {creator.name}
+        </h2>
+
+        {/* Idade — linha separada, logo abaixo do nome */}
+        {age !== null && (
+          <p
+            className="font-semibold"
+            style={{
+              fontSize: "12px",
+              color: "rgba(255,255,255,0.75)",
+              marginTop: "5px",
+              lineHeight: 1.3,
+            }}
+          >
+            {age} anos
           </p>
-        </div>
-        {/* Tags rodapé: instagram, Privacy, Tiktok — pílulas fundo escuro, texto Limão */}
-        <div className="mt-4 flex flex-wrap gap-2">
-          {["instagram", "Privacy", "Tiktok"].map((label) => (
-            <span
-              key={label}
-              className="rounded-tag bg-ink-500 px-2.5 py-1 text-label-sm font-medium text-limao-500"
-            >
-              {label}
-            </span>
-          ))}
-        </div>
+        )}
+
+        {/* Cidade, Estado — linha separada */}
+        {location && (
+          <p
+            className="font-semibold"
+            style={{
+              fontSize: "12px",
+              color: "rgba(255,255,255,0.75)",
+              marginTop: "1px",
+              lineHeight: 1.3,
+            }}
+          >
+            {location}
+          </p>
+        )}
+
+        {/* Tags de plataformas — do metadata, não hardcoded */}
+        {platforms.length > 0 && (
+          <div className="mt-3 flex flex-wrap gap-1.5">
+            {platforms.map((tag) => (
+              <span
+                key={tag}
+                className="rounded-full px-2.5 py-0.5 text-[10px] font-semibold capitalize"
+                style={{
+                  background: "rgba(14,15,16,0.65)",
+                  color: "#D7FF00",
+                  backdropFilter: "blur(6px)",
+                  border: "1px solid rgba(215,255,0,0.15)",
+                }}
+              >
+                {tag}
+              </span>
+            ))}
+          </div>
+        )}
       </div>
     </Link>
   );
@@ -87,77 +150,97 @@ export default function CreatorsListClient({
 
   return (
     <div className="hubia-fade-in flex flex-col gap-6">
+      {/* Cabeçalho */}
       <div className="flex flex-wrap items-center justify-between gap-4">
-        <h1 className="text-heading-xs text-ink-500">Creators</h1>
+        <h1
+          className="font-bold"
+          style={{ fontSize: "28px", color: "#0E0F10" }}
+        >
+          Creators
+        </h1>
         <div className="flex items-center gap-4">
-          <span className="text-body-md font-medium text-base-700">
+          <span
+            className="font-semibold"
+            style={{ fontSize: "14px", color: "#A9AAA5" }}
+          >
             {ativasCount} {ativasCount === 1 ? "ativa" : "ativas"}
           </span>
           <button
             type="button"
             onClick={() => setModalOpen(true)}
-            className="motion-soft hubia-pressable flex items-center gap-2 rounded-button bg-limao-500 px-4 py-2 text-label-md font-semibold text-ink-500 hover:bg-limao-400"
+            className="flex items-center gap-2 rounded-full font-bold transition-colors duration-200 hover:opacity-90 active:scale-95"
+            style={{
+              background: "#D7FF00",
+              color: "#0E0F10",
+              fontSize: "14px",
+              padding: "10px 22px",
+            }}
           >
-            <Plus size={18} />
+            <Plus size={16} strokeWidth={2.5} />
             Nova creator
           </button>
         </div>
       </div>
 
-      {initialCreators.length > 0 && (
-        <div className="inline-flex w-fit items-center gap-[4px] rounded-card bg-surface-500 p-[6px]">
-          {[
-            { id: "all" as const, label: "Todos" },
-            { id: "active" as const, label: "Ativos" },
-            { id: "inactive" as const, label: "Inativos" },
-          ].map(({ id, label }) => (
-            <button
-              key={id}
-              type="button"
-              onClick={() => setFilter(id)}
-              className={`motion-soft rounded-button px-[20px] py-[10px] text-label-md font-medium ${
-                filter === id
-                  ? "bg-limao-500 font-bold text-ink-500"
-                  : "bg-surface-500 text-base-700 hover:bg-base-500 hover:text-ink-500"
-              }`}
-            >
-              {label}
-            </button>
-          ))}
-        </div>
-      )}
-
-      <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      {/* Grid de cards — mesmo tamanho dos cards da Look Library */}
+      <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
         {creators.map((creator) => (
           <CreatorCard key={creator.id} creator={creator} />
         ))}
 
+        {/* Card "Nova creator" com borda dashed */}
         <button
           type="button"
           onClick={() => setModalOpen(true)}
-          className="motion-soft hubia-pressable flex min-h-[300px] flex-col items-center justify-center gap-3 rounded-card border-2 border-dashed border-base-600 bg-base-500/30 transition-colors hover:border-limao-500/50 hover:bg-base-500/50"
+          className="group flex flex-col items-center justify-center gap-3 rounded-[24px] border-2 border-dashed transition-all duration-300 hover:border-[#D7FF00]/50 hover:bg-[#0E0F10]/[0.04]"
+          style={{
+            aspectRatio: "3/4",
+            borderColor: "#D9D9D4",
+          }}
         >
-          <div className="flex h-14 w-14 items-center justify-center rounded-full bg-base-600">
-            <Plus size={28} className="text-base-700" />
+          <div
+            className="flex h-12 w-12 items-center justify-center rounded-full transition-colors duration-200 group-hover:bg-[#0E0F10]/10"
+            style={{ background: "#EEEFE9" }}
+          >
+            <Plus size={24} style={{ color: "#A9AAA5" }} />
           </div>
-          <span className="text-label-md font-bold uppercase tracking-wider text-base-700">
+          <span
+            className="font-bold uppercase tracking-widest"
+            style={{ fontSize: "11px", color: "#A9AAA5" }}
+          >
             Nova creator
           </span>
         </button>
       </div>
 
+      {/* Estado vazio */}
       {creators.length === 0 && initialCreators.length === 0 && (
-        <div className="flex flex-col items-center justify-center gap-4 rounded-card bg-surface-500 py-16">
-          <div className="flex h-14 w-14 items-center justify-center rounded-full bg-base-500">
-            <Users size={28} className="text-base-700" />
+        <div
+          className="flex flex-col items-center justify-center gap-4 rounded-[30px] py-20"
+          style={{ background: "#FFFFFF" }}
+        >
+          <div
+            className="flex h-14 w-14 items-center justify-center rounded-full"
+            style={{ background: "#EEEFE9" }}
+          >
+            <Users size={28} style={{ color: "#A9AAA5" }} />
           </div>
-          <p className="text-body-md font-medium text-base-700">
+          <p
+            className="font-semibold"
+            style={{ fontSize: "15px", color: "#A9AAA5" }}
+          >
             Nenhum creator cadastrado.
           </p>
           <button
             type="button"
             onClick={() => setModalOpen(true)}
-            className="motion-soft hubia-pressable rounded-button bg-limao-500 px-4 py-2 text-label-sm font-semibold text-ink-500 hover:bg-limao-400"
+            className="rounded-full font-bold transition-opacity hover:opacity-90"
+            style={{
+              background: "#D7FF00",
+              color: "#0E0F10",
+              fontSize: "13px",
+              padding: "10px 22px",
+            }}
           >
             Adicionar primeiro creator
           </button>
@@ -165,14 +248,21 @@ export default function CreatorsListClient({
       )}
 
       {creators.length === 0 && initialCreators.length > 0 && (
-        <div className="rounded-card bg-surface-500 py-12 text-center">
-          <p className="text-body-md font-medium text-base-700">
+        <div
+          className="rounded-[30px] py-12 text-center"
+          style={{ background: "#FFFFFF" }}
+        >
+          <p
+            className="font-semibold"
+            style={{ fontSize: "15px", color: "#A9AAA5" }}
+          >
             Nenhum creator com esse filtro.
           </p>
           <button
             type="button"
             onClick={() => setFilter("all")}
-            className="mt-4 rounded-button border border-base-600 px-4 py-2 text-label-sm font-medium text-ink-500 hover:bg-base-500"
+            className="mt-4 rounded-full border px-5 py-2 text-sm font-semibold transition-colors hover:bg-[#EEEFE9]"
+            style={{ borderColor: "#D9D9D4", color: "#0E0F10" }}
           >
             Ver todos
           </button>

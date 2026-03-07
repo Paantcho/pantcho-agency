@@ -363,11 +363,11 @@
       transform var(--d2) var(--ease-std);
   }
   .hubia-icon-button:hover {
-    background: var(--state-hover);
-    transform: scale(1.08);
+    background: rgba(62, 63, 64, 0.85);
+    transform: scale(1.06);
   }
   .hubia-icon-button:active {
-    background: var(--state-pressed);
+    background: rgba(14, 15, 16, 1);
     transform: scale(0.94);
   }
   .hubia-progress-track {

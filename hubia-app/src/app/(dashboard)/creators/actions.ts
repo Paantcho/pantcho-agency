@@ -13,6 +13,13 @@ export type CreatorRow = {
   avatarUrl: string | null;
   bio: string | null;
   isActive: boolean;
+  metadata: {
+    city?: string;
+    state?: string;
+    age?: number;
+    birthdate?: string;
+    platforms?: string[];
+  };
 };
 
 export async function getCreators(
@@ -28,9 +35,13 @@ export async function getCreators(
       avatarUrl: true,
       bio: true,
       isActive: true,
+      metadata: true,
     },
   });
-  return list;
+  return list.map((c) => ({
+    ...c,
+    metadata: (c.metadata ?? {}) as CreatorRow["metadata"],
+  }));
 }
 
 export type CreatorDetail = CreatorRow & {
@@ -88,6 +99,7 @@ export async function getCreatorById(
     avatarUrl: creator.avatarUrl,
     bio: creator.bio,
     isActive: creator.isActive,
+    metadata: (creator.metadata ?? {}) as CreatorRow["metadata"],
     createdAt: creator.createdAt,
     updatedAt: creator.updatedAt,
     appearance: creator.appearance

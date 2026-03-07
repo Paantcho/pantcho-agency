@@ -3,17 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { AnimatedLink } from "@/components/ui/animated-link";
-import {
-  User,
-  Palette,
-  MapPin,
-  Shirt,
-  Mic,
-  Sparkles,
-  Pencil,
-  Plus,
-  FileEdit,
-} from "lucide-react";
+import { Sparkles, Pencil, Plus, FileEdit, User, Palette, MapPin, Shirt, Mic } from "lucide-react";
 import type { CreatorDetail } from "../actions";
 import { updateCreator } from "../actions";
 import CreatorOverviewTab from "./tabs/creator-overview-tab";
@@ -22,7 +12,7 @@ import CreatorEnvironmentsTab from "./tabs/creator-environments-tab";
 import CreatorLooksTab from "./tabs/creator-looks-tab";
 import CreatorVoiceTab from "./tabs/creator-voice-tab";
 
-const tabs = [
+const TABS = [
   { id: "overview", label: "Visão geral", icon: User },
   { id: "appearance", label: "Aparência", icon: Palette },
   { id: "environments", label: "Ambientes", icon: MapPin },
@@ -30,12 +20,14 @@ const tabs = [
   { id: "voice", label: "Tom de voz", icon: Mic },
 ] as const;
 
-type TabId = (typeof tabs)[number]["id"];
+type TabId = (typeof TABS)[number]["id"];
 
-const tabActions: Record<
-  TabId,
-  { primary?: { label: string; icon: React.ElementType }; secondary?: { label: string; icon: React.ElementType } }
-> = {
+type TabActions = {
+  primary?: { label: string; icon: React.ElementType };
+  secondary?: { label: string; icon: React.ElementType };
+};
+
+const tabActions: Record<TabId, TabActions> = {
   overview: {
     primary: { label: "Gerar prompt", icon: Sparkles },
   },
@@ -78,62 +70,74 @@ export default function CreatorDetailClient({
   }
 
   return (
-    <div className="hubia-fade-in flex flex-col gap-6">
-      {/* Creator inativa: destaque com botão Reativar */}
+    <div className="hubia-fade-in flex flex-col gap-5">
+      {/* Creator inativa: banner de aviso */}
       {!creator.isActive && (
-        <div className="flex flex-wrap items-center justify-between gap-4 rounded-card border border-base-600 bg-surface-500 p-4">
-          <p className="text-label-md font-semibold text-ink-500">
+        <div
+          className="flex flex-wrap items-center justify-between gap-4 rounded-2xl border p-4"
+          style={{ borderColor: "#D9D9D4", background: "#FFFFFF" }}
+        >
+          <p className="font-semibold" style={{ fontSize: "14px", color: "#0E0F10" }}>
             Creator inativa
           </p>
           <button
             type="button"
             onClick={handleReativar}
             disabled={reactivating}
-            className="motion-soft hubia-pressable rounded-button bg-limao-500 px-4 py-2 text-label-md font-semibold text-ink-500 hover:bg-limao-400 disabled:opacity-50"
+            className="rounded-full font-bold transition-opacity hover:opacity-90 disabled:opacity-50"
+            style={{ background: "#D7FF00", color: "#0E0F10", fontSize: "13px", padding: "8px 20px" }}
           >
             {reactivating ? "Reativando…" : "Reativar"}
           </button>
         </div>
       )}
 
-      {/* Breadcrumb: Creators > Nome + botões por aba */}
-      <div className="flex flex-wrap items-center justify-between gap-4">
-        <nav className="flex items-center gap-2 text-body-md text-base-700">
-          <AnimatedLink
-            href="/creators"
-            className="motion-soft hover:text-ink-500"
-          >
+      {/* Cabeçalho: breadcrumb + botões por aba */}
+      <div className="flex flex-wrap items-center justify-between gap-3">
+        <nav className="flex items-center gap-1.5" style={{ fontSize: "14px", color: "#A9AAA5" }}>
+          <AnimatedLink href="/creators" className="transition-colors hover:text-[#0E0F10]" style={{ color: "#A9AAA5" }}>
             Creators
           </AnimatedLink>
-          <span aria-hidden>›</span>
-          <span className="font-medium text-ink-500">{creator.name}</span>
+          <span aria-hidden style={{ color: "#D9D9D4" }}>›</span>
+          <span className="font-semibold" style={{ color: "#0E0F10" }}>{creator.name}</span>
         </nav>
         <div className="flex flex-wrap items-center gap-2">
           {actions?.secondary && (
             <button
               type="button"
               onClick={() => activeTab === "voice" && setVoiceEditModalOpen(true)}
-              className="motion-soft hubia-pressable flex items-center gap-2 rounded-button border border-base-600 bg-surface-500 px-4 py-2 text-label-md text-ink-500 hover:bg-base-500"
+              className="flex items-center gap-2 rounded-full border font-semibold transition-colors duration-200 hover:bg-[#EEEFE9]"
+              style={{
+                borderColor: "#D9D9D4",
+                color: "#0E0F10",
+                fontSize: "13px",
+                padding: "9px 18px",
+                background: "transparent",
+              }}
             >
-              <actions.secondary.icon size={16} />
+              <actions.secondary.icon size={14} />
               {actions.secondary.label}
             </button>
           )}
           {actions?.primary && (
             <button
               type="button"
-              className="motion-soft hubia-pressable flex items-center gap-2 rounded-button bg-limao-500 px-4 py-2 text-label-md font-semibold text-ink-500 hover:bg-limao-400"
+              className="flex items-center gap-2 rounded-full font-bold transition-opacity hover:opacity-90 active:scale-95"
+              style={{ background: "#D7FF00", color: "#0E0F10", fontSize: "13px", padding: "9px 18px" }}
             >
-              <actions.primary.icon size={16} />
+              <actions.primary.icon size={14} />
               {actions.primary.label}
             </button>
           )}
         </div>
       </div>
 
-      {/* Tabs: Visão geral, Aparência, Ambientes, Look library, Tom de voz */}
-      <div className="inline-flex w-fit items-center gap-[4px] rounded-card bg-surface-500 p-[6px]">
-        {tabs.map((tab) => {
+      {/* Tabs — com ícones, fundo surface, ativa em Limão */}
+      <div
+        className="inline-flex items-center gap-1 rounded-[20px] p-1.5"
+        style={{ background: "#FFFFFF", boxShadow: "0 1px 3px rgba(14,15,16,0.06)" }}
+      >
+        {TABS.map((tab) => {
           const isActive = activeTab === tab.id;
           const Icon = tab.icon;
           return (
@@ -141,13 +145,16 @@ export default function CreatorDetailClient({
               key={tab.id}
               type="button"
               onClick={() => setActiveTab(tab.id)}
-              className={`motion-soft flex items-center gap-2 rounded-button px-[20px] py-[10px] text-label-md ${
-                isActive
-                  ? "bg-limao-500 font-bold text-ink-500"
-                  : "bg-surface-500 text-base-700 hover:bg-base-500 hover:text-ink-500"
-              }`}
+              className="flex items-center gap-2 rounded-2xl transition-all duration-200"
+              style={{
+                fontSize: "13px",
+                padding: "8px 18px",
+                background: isActive ? "#D7FF00" : "transparent",
+                color: isActive ? "#0E0F10" : "#A9AAA5",
+                fontWeight: isActive ? 700 : 500,
+              }}
             >
-              <Icon size={16} />
+              <Icon size={14} />
               {tab.label}
             </button>
           );
@@ -155,7 +162,7 @@ export default function CreatorDetailClient({
       </div>
 
       {/* Conteúdo da aba */}
-      <div className="min-h-[200px] transition-opacity duration-[200ms]">
+      <div className="min-h-[200px]">
         {activeTab === "overview" && (
           <CreatorOverviewTab creator={creator} organizationId={organizationId} />
         )}
