@@ -1,8 +1,9 @@
 "use client";
 
 import { AnimatePresence, motion } from "framer-motion";
+import type { Variants } from "framer-motion";
 
-const tabVariants = {
+const tabVariants: Variants = {
   initial: (dir: number) => ({
     opacity: 0,
     x: dir * 24,
@@ -10,18 +11,10 @@ const tabVariants = {
   animate: {
     opacity: 1,
     x: 0,
-    transition: {
-      duration: 0.22,
-      ease: [0.0, 0.0, 0.2, 1] as number[],
-    },
   },
   exit: (dir: number) => ({
     opacity: 0,
     x: dir * -16,
-    transition: {
-      duration: 0.16,
-      ease: [0.4, 0.0, 1.0, 1] as number[],
-    },
   }),
 };
 
@@ -48,6 +41,7 @@ export function TabContent({
         initial="initial"
         animate="animate"
         exit="exit"
+        transition={{ duration: 0.22, ease: [0.0, 0.0, 0.2, 1] }}
         style={{ willChange: "transform, opacity" }}
       >
         {children}
