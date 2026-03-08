@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { motion } from "framer-motion";
 import { Plus, Users } from "lucide-react";
 import type { CreatorRow } from "./actions";
 import { NovaCreatorModal } from "./nova-creator-modal";
@@ -11,27 +12,32 @@ const PLACEHOLDER_AVATAR =
 
 type Filter = "all" | "active" | "inactive";
 
-function CreatorCard({ creator }: { creator: CreatorRow }) {
+const MotionLink = motion.create(Link);
+
+function CreatorCard({ creator, index }: { creator: CreatorRow; index: number }) {
   const imageUrl = creator.avatarUrl?.trim() || PLACEHOLDER_AVATAR;
   const meta = creator.metadata ?? {};
 
-  // Dados estruturados do metadata
   const age = meta.age ?? null;
   const city = meta.city ?? null;
   const state = meta.state ?? null;
   const platforms: string[] = meta.platforms ?? [];
 
-  // Localização: "Pomerode, SC"
   const location =
     city && state ? `${city}, ${state}` : city ?? state ?? null;
 
   return (
-    <Link
+    <MotionLink
       href={`/creators/${creator.id}`}
-      className="group relative flex flex-col overflow-hidden rounded-[24px] bg-[#0E0F10] transition-shadow duration-300 hover:shadow-2xl"
+      className="group relative flex flex-col overflow-hidden rounded-[24px] bg-[#0E0F10]"
       style={{ aspectRatio: "3/4" }}
+      initial={{ opacity: 0, y: 16 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.3, ease: [0, 0, 0.2, 1], delay: Math.min(index * 0.06, 0.3) }}
+      whileHover={{ y: -4 }}
+      whileTap={{ scale: 0.98 }}
     >
-      {/* Foto fullbleed — parallax zoom só na imagem, card não se move */}
+      {/* Foto fullbleed — parallax zoom só na imagem */}
       <div className="absolute inset-0 overflow-hidden rounded-[24px]">
         <img
           src={imageUrl}
@@ -40,7 +46,6 @@ function CreatorCard({ creator }: { creator: CreatorRow }) {
             !creator.isActive ? "grayscale" : ""
           }`}
         />
-        {/* Gradiente: transparente no topo → ink escuro no rodapé */}
         <div
           className="absolute inset-0"
           style={{
@@ -50,7 +55,7 @@ function CreatorCard({ creator }: { creator: CreatorRow }) {
         />
       </div>
 
-      {/* Tag Ativa/Inativa — canto superior esquerdo */}
+      {/* Tag Ativa/Inativa */}
       <div className="absolute left-4 top-4 z-10">
         <span
           className="rounded-full bg-[#0E0F10] px-3 py-1 text-[11px] font-bold uppercase tracking-widest"
@@ -60,9 +65,8 @@ function CreatorCard({ creator }: { creator: CreatorRow }) {
         </span>
       </div>
 
-      {/* Bloco inferior — sobre o gradiente */}
+      {/* Bloco inferior */}
       <div className="relative z-10 mt-auto flex flex-col p-5">
-        {/* Nome: bold, Limão, line-height apertado (1.1), pode quebrar 2 linhas */}
         <h2
           className="font-bold"
           style={{
@@ -75,7 +79,6 @@ function CreatorCard({ creator }: { creator: CreatorRow }) {
           {creator.name}
         </h2>
 
-        {/* Idade — linha separada, logo abaixo do nome */}
         {age !== null && (
           <p
             className="font-semibold"
@@ -90,7 +93,6 @@ function CreatorCard({ creator }: { creator: CreatorRow }) {
           </p>
         )}
 
-        {/* Cidade, Estado — linha separada */}
         {location && (
           <p
             className="font-semibold"
@@ -105,7 +107,6 @@ function CreatorCard({ creator }: { creator: CreatorRow }) {
           </p>
         )}
 
-        {/* Tags de plataformas — do metadata, não hardcoded */}
         {platforms.length > 0 && (
           <div className="mt-3 flex flex-wrap gap-1.5">
             {platforms.map((tag) => (
@@ -125,7 +126,7 @@ function CreatorCard({ creator }: { creator: CreatorRow }) {
           </div>
         )}
       </div>
-    </Link>
+    </MotionLink>
   );
 }
 
@@ -165,38 +166,45 @@ export default function CreatorsListClient({
           >
             {ativasCount} {ativasCount === 1 ? "ativa" : "ativas"}
           </span>
-          <button
+          <motion.button
             type="button"
             onClick={() => setModalOpen(true)}
-            className="flex items-center gap-2 rounded-full font-bold transition-colors duration-200 hover:opacity-90 active:scale-95"
+            className="flex items-center gap-2 rounded-full font-bold"
             style={{
               background: "#D7FF00",
               color: "#0E0F10",
               fontSize: "14px",
               padding: "10px 22px",
             }}
+            whileHover={{ scale: 1.03, backgroundColor: "#DFFF33" }}
+            whileTap={{ scale: 0.96 }}
+            transition={{ duration: 0.15, ease: [0.34, 1.56, 0.64, 1] }}
           >
-            <Plus size={16} strokeWidth={2.5} />
+            <motion.span whileHover={{ scale: 1.2 }} transition={{ duration: 0.3, ease: [0.34, 1.56, 0.64, 1] }}>
+              <Plus size={16} strokeWidth={2.5} />
+            </motion.span>
             Nova creator
-          </button>
+          </motion.button>
         </div>
       </div>
 
-      {/* Grid de cards — mesmo tamanho dos cards da Look Library */}
+      {/* Grid de cards */}
       <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
-        {creators.map((creator) => (
-          <CreatorCard key={creator.id} creator={creator} />
+        {creators.map((creator, i) => (
+          <CreatorCard key={creator.id} creator={creator} index={i} />
         ))}
 
-        {/* Card "Nova creator" com borda dashed */}
-        <button
+        {/* Card "Nova creator" dashed */}
+        <motion.button
           type="button"
           onClick={() => setModalOpen(true)}
-          className="group flex flex-col items-center justify-center gap-3 rounded-[24px] border-2 border-dashed transition-all duration-300 hover:border-[#D7FF00]/50 hover:bg-[#0E0F10]/[0.04]"
-          style={{
-            aspectRatio: "3/4",
-            borderColor: "#D9D9D4",
-          }}
+          className="group flex flex-col items-center justify-center gap-3 rounded-[24px] border-2 border-dashed"
+          style={{ aspectRatio: "3/4", borderColor: "#D9D9D4" }}
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.3, ease: [0, 0, 0.2, 1], delay: Math.min(creators.length * 0.06, 0.3) }}
+          whileHover={{ y: -4, borderColor: "rgba(215,255,0,0.5)" }}
+          whileTap={{ scale: 0.98 }}
         >
           <div
             className="flex h-12 w-12 items-center justify-center rounded-full transition-colors duration-200 group-hover:bg-[#0E0F10]/10"
@@ -210,10 +218,10 @@ export default function CreatorsListClient({
           >
             Nova creator
           </span>
-        </button>
+        </motion.button>
       </div>
 
-      {/* Estado vazio */}
+      {/* Estado vazio — sem creators cadastrados */}
       {creators.length === 0 && initialCreators.length === 0 && (
         <div
           className="flex flex-col items-center justify-center gap-4 rounded-[30px] py-20"
@@ -231,22 +239,26 @@ export default function CreatorsListClient({
           >
             Nenhum creator cadastrado.
           </p>
-          <button
+          <motion.button
             type="button"
             onClick={() => setModalOpen(true)}
-            className="rounded-full font-bold transition-opacity hover:opacity-90"
+            className="rounded-full font-bold"
             style={{
               background: "#D7FF00",
               color: "#0E0F10",
               fontSize: "13px",
               padding: "10px 22px",
             }}
+            whileHover={{ scale: 1.03, backgroundColor: "#DFFF33" }}
+            whileTap={{ scale: 0.96 }}
+            transition={{ duration: 0.15, ease: [0.34, 1.56, 0.64, 1] }}
           >
             Adicionar primeiro creator
-          </button>
+          </motion.button>
         </div>
       )}
 
+      {/* Estado vazio — filtro sem resultado */}
       {creators.length === 0 && initialCreators.length > 0 && (
         <div
           className="rounded-[30px] py-12 text-center"
@@ -258,14 +270,17 @@ export default function CreatorsListClient({
           >
             Nenhum creator com esse filtro.
           </p>
-          <button
+          <motion.button
             type="button"
             onClick={() => setFilter("all")}
-            className="mt-4 rounded-full border px-5 py-2 text-sm font-semibold transition-colors hover:bg-[#EEEFE9]"
+            className="mt-4 rounded-full border px-5 py-2 text-sm font-semibold"
             style={{ borderColor: "#D9D9D4", color: "#0E0F10" }}
+            whileHover={{ scale: 1.03, backgroundColor: "#EEEFE9" }}
+            whileTap={{ scale: 0.96 }}
+            transition={{ duration: 0.15, ease: [0.34, 1.56, 0.64, 1] }}
           >
             Ver todos
-          </button>
+          </motion.button>
         </div>
       )}
 

@@ -1,8 +1,9 @@
 import { Button } from "@/components/ui/button";
 import { AnimatedLink } from "@/components/ui/animated-link";
-import { Plus, TrendingUp, Globe, Code2, Clapperboard } from "lucide-react";
+import { Plus, Globe, Code2, Clapperboard } from "lucide-react";
 import { getCurrentOrganizationId } from "@/lib/auth-organization";
 import { getDashboardData } from "./dashboard-data";
+import { KpiCards, PedidosPrioritariosCards } from "./dashboard-motion";
 
 function formatDatePtBr(date: Date) {
   return new Intl.DateTimeFormat("pt-BR", {
@@ -110,26 +111,8 @@ export default async function DashboardPage() {
         </Button>
       </div>
 
-      {/* 4 KPI cards — cores distintas, tipografia card-kpi */}
-      <div className="grid grid-cols-1 gap-[16px] sm:grid-cols-2 lg:grid-cols-4">
-        {kpiCards.map((kpi) => (
-          <div
-            key={kpi.label}
-            className={`motion-soft rounded-card flex flex-col justify-between gap-[6px] p-5 ${kpi.bg} transition-transform duration-150 hover:opacity-95`}
-          >
-            <div className={`card-kpi-label ${kpi.labelClass}`}>{kpi.label}</div>
-            <div className={`card-kpi-value ${kpi.valueClass}`}>{kpi.value}</div>
-            {(kpi.sub || kpi.trend) && (
-              <div className={`card-kpi-sub ${kpi.subClass}`}>
-                {kpi.trend === "up" && (
-                  <TrendingUp className="size-3 shrink-0" aria-hidden />
-                )}
-                {kpi.sub}
-              </div>
-            )}
-          </div>
-        ))}
-      </div>
+      {/* 4 KPI cards — Client Component com stagger */}
+      <KpiCards cards={kpiCards} />
 
       {/* Status dos Squads — um único box branco, diagramação lado a lado */}
       <div className="flex flex-col gap-3">
@@ -250,49 +233,10 @@ export default async function DashboardPage() {
         </div>
       </div>
 
-      {/* Pedidos Prioritários */}
+      {/* Pedidos Prioritários — Client Component com stagger + whileHover */}
       <div>
-        <h2 className="text-heading-xs font-bold text-ink-500 mb-4">
-          Pedidos Prioritários
-        </h2>
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {data.pedidosPrioritarios.length === 0 ? (
-            <div className="rounded-card bg-surface-500 p-5 text-center text-body-sm text-base-700">
-              Nenhum pedido prioritário no momento.
-            </div>
-          ) : (
-            data.pedidosPrioritarios.map((pedido) => (
-              <div
-                key={pedido.id}
-                className="motion-soft rounded-card bg-surface-500 p-5"
-              >
-                <div className="flex items-start justify-between gap-2">
-                  <span
-                    className={`rounded-full px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider ${pedido.badgeClass}`}
-                  >
-                    {pedido.badge}
-                  </span>
-                  <span className="text-label-sm text-base-700">{pedido.id}</span>
-                </div>
-                <h3 className="mt-3 text-label-md text-ink-500">
-                  {pedido.title}
-                </h3>
-                <p className="mt-1 text-body-sm text-base-700">
-                  {pedido.desc}
-                </p>
-                <p className="mt-2 text-body-sm text-base-700">
-                  {pedido.status}
-                </p>
-                <div className="mt-3 hubia-progress-track h-1">
-                  <div
-                    className="hubia-progress-bar bg-ink-500"
-                    style={{ width: `${pedido.pct}%` }}
-                  />
-                </div>
-              </div>
-            ))
-          )}
-        </div>
+        <h2 className="text-heading-xs font-bold text-ink-500 mb-4">Pedidos Prioritários</h2>
+        <PedidosPrioritariosCards pedidos={data.pedidosPrioritarios} />
       </div>
     </div>
   );

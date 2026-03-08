@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { motion } from "framer-motion";
 import { HubiaModal } from "@/components/ui/hubia-modal";
 import { createCreator } from "./actions";
 
@@ -143,20 +144,26 @@ export function NovaCreatorModal({
           </label>
         </div>
         <div className="mt-2 flex flex-wrap items-center gap-3">
-          <button
+          <motion.button
             type="submit"
             disabled={loading}
-            className="motion-soft hubia-pressable rounded-button bg-limao-500 px-6 py-3 text-label-md font-semibold text-ink-500 hover:bg-limao-400 disabled:opacity-50"
+            className="rounded-button bg-limao-500 px-6 py-3 text-label-md font-semibold text-ink-500 disabled:opacity-50"
+            whileHover={{ scale: 1.03, backgroundColor: "#DFFF33" }}
+            whileTap={{ scale: 0.96 }}
+            transition={{ duration: 0.15, ease: [0.34, 1.56, 0.64, 1] }}
           >
             {loading ? "Salvando…" : "Salvar"}
-          </button>
-          <button
+          </motion.button>
+          <motion.button
             type="button"
             onClick={onClose}
-            className="motion-soft rounded-button border-0 bg-[var(--hubia-bg-base-500)] px-6 py-3 text-label-md font-semibold text-ink-500 hover:opacity-90"
+            className="rounded-button bg-[var(--hubia-bg-base-500)] px-6 py-3 text-label-md font-semibold text-ink-500"
+            whileHover={{ scale: 1.03, backgroundColor: "rgba(213,210,201,0.5)" }}
+            whileTap={{ scale: 0.96 }}
+            transition={{ duration: 0.15, ease: [0.34, 1.56, 0.64, 1] }}
           >
             Cancelar
-          </button>
+          </motion.button>
         </div>
       </form>
     </HubiaModal>

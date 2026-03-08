@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
+import { AnimatePresence, motion } from "framer-motion";
 import { MoreHorizontal } from "lucide-react";
 import { updateMemberRole } from "./actions";
 import { MemberRole } from "@prisma/client";
@@ -58,35 +59,49 @@ export default function EquipeClient({
 
   return (
     <div className="relative flex flex-col items-end gap-1" ref={ref}>
-      <button
+      {/* Icon button — MoreHorizontal */}
+      <motion.button
         type="button"
         onClick={() => setOpen((v) => !v)}
         disabled={loading}
-        className="flex h-[36px] w-[36px] items-center justify-center rounded-button text-base-700 transition-colors duration-200 hover:bg-base-500 hover:text-ink-500 disabled:opacity-50"
+        className="flex h-[36px] w-[36px] items-center justify-center rounded-button text-base-700 disabled:opacity-50"
+        whileHover={{ scale: 1.12, color: "#0E0F10", backgroundColor: "rgba(14,15,16,0.04)" }}
+        whileTap={{ scale: 0.90 }}
+        transition={{ duration: 0.15, ease: [0.34, 1.56, 0.64, 1] }}
       >
         <MoreHorizontal size={18} />
-      </button>
-      {error && (
-        <p className="text-body-sm font-medium text-red-600">{error}</p>
-      )}
-      {open && (
-        <div className="absolute right-0 top-full z-10 mt-1 min-w-[160px] rounded-card border border-base-600 bg-surface-500 py-1 shadow-lg">
-          <p className="px-3 py-1 text-label-sm text-base-700">
-            Alterar para
-          </p>
-          {roles.map((role) => (
-            <button
-              key={role}
-              type="button"
-              onClick={() => handleChangeRole(role)}
-              disabled={role === memberRole}
-              className="w-full px-3 py-2 text-left text-body-sm text-ink-500 hover:bg-base-500 disabled:opacity-50"
-            >
-              {roleLabels[role]}
-            </button>
-          ))}
-        </div>
-      )}
+      </motion.button>
+
+      {error && <p className="text-body-sm font-medium text-red-600">{error}</p>}
+
+      {/* Dropdown — AnimatePresence para animação de entrada/saída */}
+      <AnimatePresence>
+        {open && (
+          <motion.div
+            className="absolute right-0 top-full z-10 mt-1 min-w-[160px] rounded-card border border-base-600 bg-surface-500 py-1"
+            initial={{ opacity: 0, y: -6, scale: 0.96 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: -6, scale: 0.96 }}
+            transition={{ duration: 0.15, ease: [0, 0, 0.2, 1] }}
+          >
+            <p className="px-3 py-1 text-label-sm text-base-700">Alterar para</p>
+            {roles.map((role) => (
+              <motion.button
+                key={role}
+                type="button"
+                onClick={() => handleChangeRole(role)}
+                disabled={role === memberRole}
+                className="w-full px-3 py-2 text-left text-body-sm text-ink-500 disabled:opacity-50"
+                whileHover={{ backgroundColor: "rgba(238,239,233,1)" }}
+                whileTap={{ scale: 0.98 }}
+                transition={{ duration: 0.1 }}
+              >
+                {roleLabels[role]}
+              </motion.button>
+            ))}
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }

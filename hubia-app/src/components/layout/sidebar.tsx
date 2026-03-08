@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect } from "react";
 import { usePathname, useRouter } from "next/navigation";
+import { motion } from "framer-motion";
 import { AnimatedLink } from "@/components/ui/animated-link";
 import {
   LayoutDashboard,
@@ -27,28 +28,29 @@ interface MenuItem {
   icon: LucideIcon;
   href: string;
   badge?: number;
+  iconClass?: string;
 }
 
 const menuSections: (MenuItem[] | "separator")[] = [
   [
-    { label: "Dashboard", icon: LayoutDashboard, href: "/" },
-    { label: "Pedidos", icon: ClipboardList, href: "/pedidos", badge: 3 },
+    { label: "Dashboard", icon: LayoutDashboard, href: "/", iconClass: "icon-pulse" },
+    { label: "Pedidos", icon: ClipboardList, href: "/pedidos", badge: 3, iconClass: "icon-bounce-y" },
   ],
   "separator",
   [
-    { label: "Calendario", icon: Calendar, href: "/calendario" },
-    { label: "Gerador", icon: Sparkles, href: "/gerador" },
-    { label: "Projetos", icon: FolderKanban, href: "/projetos" },
-    { label: "Creators", icon: Users, href: "/creators" },
-    { label: "Relatorio", icon: BarChart3, href: "/relatorio" },
+    { label: "Calendario", icon: Calendar, href: "/calendario", iconClass: "icon-wiggle" },
+    { label: "Gerador", icon: Sparkles, href: "/gerador", iconClass: "icon-spark" },
+    { label: "Projetos", icon: FolderKanban, href: "/projetos", iconClass: "icon-bounce-y" },
+    { label: "Creators", icon: Users, href: "/creators", iconClass: "icon-pulse" },
+    { label: "Relatorio", icon: BarChart3, href: "/relatorio", iconClass: "icon-pulse" },
   ],
   "separator",
   [
-    { label: "Conhecimento", icon: BookOpen, href: "/conhecimento" },
-    { label: "Agentes", icon: Bot, href: "/agentes" },
-    { label: "Memoria", icon: Brain, href: "/memoria" },
-    { label: "Arquitetura", icon: Network, href: "/arquitetura" },
-    { label: "Config", icon: Settings, href: "/config" },
+    { label: "Conhecimento", icon: BookOpen, href: "/conhecimento", iconClass: "icon-wiggle" },
+    { label: "Agentes", icon: Bot, href: "/agentes", iconClass: "icon-nod" },
+    { label: "Memoria", icon: Brain, href: "/memoria", iconClass: "icon-pulse-double" },
+    { label: "Arquitetura", icon: Network, href: "/arquitetura", iconClass: "icon-nod" },
+    { label: "Config", icon: Settings, href: "/config", iconClass: "icon-spin-partial" },
   ],
 ];
 
@@ -63,6 +65,29 @@ export function Sidebar({
   const router = useRouter();
   const [orgOpen, setOrgOpen] = useState(false);
   const orgRef = useRef<HTMLDivElement>(null);
+
+  // Pill deslizante — refs por href para calcular posição
+  const itemRefs = useRef<Record<string, HTMLAnchorElement | null>>({});
+  const navRef = useRef<HTMLElement>(null);
+  const [pillTop, setPillTop] = useState(0);
+  const [pillHeight, setPillHeight] = useState(44);
+
+  const allItems = menuSections
+    .filter((s): s is MenuItem[] => s !== "separator")
+    .flat();
+
+  useEffect(() => {
+    const activeItem = allItems.find((item) => isActive(item.href));
+    if (!activeItem) return;
+    const el = itemRefs.current[activeItem.href];
+    const nav = navRef.current;
+    if (!el || !nav) return;
+    const navRect = nav.getBoundingClientRect();
+    const elRect = el.getBoundingClientRect();
+    setPillTop(elRect.top - navRect.top + nav.scrollTop);
+    setPillHeight(elRect.height);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [pathname]);
 
   useEffect(() => {
     function handleClickOutside(e: MouseEvent) {
@@ -100,7 +125,20 @@ export function Sidebar({
       </div>
 
       {/* Navigation */}
-      <nav className="flex-1 overflow-y-auto px-[16px]">
+      <nav ref={navRef} className="relative flex-1 overflow-y-auto px-[16px]">
+        {/* Pill deslizante — UMA div absoluta, move com spring */}
+        <motion.div
+          aria-hidden
+          className="pointer-events-none absolute left-[16px] right-[16px] rounded-[18px] bg-limao-500"
+          animate={{ top: pillTop, height: pillHeight }}
+          transition={{
+            type: "spring",
+            stiffness: 380,
+            damping: 28,
+            mass: 1,
+          }}
+        />
+
         {menuSections.map((section, sectionIdx) => {
           if (section === "separator") {
             return (
@@ -121,13 +159,20 @@ export function Sidebar({
                   <AnimatedLink
                     key={item.href}
                     href={item.href}
-                    className={`motion-soft flex items-center gap-[14px] rounded-button px-[16px] py-[12px] text-label-md ${
+                    ref={(el) => { itemRefs.current[item.href] = el; }}
+                    className={`group relative z-10 flex items-center gap-[14px] rounded-button px-[16px] py-[12px] text-label-md transition-[color,background-color] duration-150 ${
                       active
-                        ? "bg-limao-500 text-ink-500"
-                        : "bg-surface-500 text-base-700 hover:bg-base-500 hover:text-ink-500"
+                        ? "text-ink-500"
+                        : "text-base-700 hover:bg-[#D5D2C9]/40 hover:text-ink-500 active:bg-[#D5D2C9]/70"
                     }`}
                   >
-                    <Icon size={20} strokeWidth={2} />
+                    <Icon
+                      size={20}
+                      strokeWidth={2}
+                      className={`shrink-0 transition-colors duration-150 ${
+                        active ? "text-ink-500" : "text-base-700 group-hover:text-ink-500"
+                      } ${item.iconClass ?? ""}`}
+                    />
                     <span className="flex-1">{item.label}</span>
                     {item.badge !== undefined && (
                       <span className="flex h-[22px] min-w-[22px] items-center justify-center rounded-[8px] bg-ink-500 px-[6px] text-[11px] font-bold text-limao-500">

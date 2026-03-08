@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { motion } from "framer-motion";
 import { AnimatedLink } from "@/components/ui/animated-link";
 import { ArrowLeft } from "lucide-react";
 import { createCreator } from "../actions";
@@ -53,13 +54,18 @@ export default function CreatorFormClient({
   return (
     <form onSubmit={handleSubmit} className="flex flex-col gap-6">
       <div className="flex items-center gap-4">
-        <AnimatedLink
-          href="/creators"
-          className="motion-soft flex items-center gap-2 text-body-md text-base-700 hover:text-ink-500"
+        <motion.div
+          whileHover={{ x: -2 }}
+          transition={{ duration: 0.15, ease: [0.34, 1.56, 0.64, 1] }}
         >
-          <ArrowLeft size={18} />
-          Voltar para Creators
-        </AnimatedLink>
+          <AnimatedLink
+            href="/creators"
+            className="flex items-center gap-2 text-body-md text-base-700 transition-colors duration-150 hover:text-ink-500"
+          >
+            <ArrowLeft size={18} />
+            Voltar para Creators
+          </AnimatedLink>
+        </motion.div>
       </div>
 
       {error && (
@@ -155,19 +161,29 @@ export default function CreatorFormClient({
       </div>
 
       <div className="flex flex-wrap items-center gap-4">
-        <button
+        <motion.button
           type="submit"
           disabled={loading}
-          className="motion-soft hubia-pressable rounded-button bg-limao-500 px-6 py-3 text-label-md font-semibold text-ink-500 hover:bg-limao-400 disabled:opacity-50"
+          className="rounded-button bg-limao-500 px-6 py-3 text-label-md font-semibold text-ink-500 disabled:opacity-50"
+          whileHover={{ scale: 1.03, backgroundColor: "#DFFF33" }}
+          whileTap={{ scale: 0.96 }}
+          transition={{ duration: 0.15, ease: [0.34, 1.56, 0.64, 1] }}
         >
           {loading ? "Criando…" : "Criar creator"}
-        </button>
-        <AnimatedLink
-          href="/creators"
-          className="motion-soft rounded-button border border-base-600 bg-surface-500 px-6 py-3 text-label-md text-ink-500 hover:bg-base-500"
+        </motion.button>
+        <motion.div
+          whileHover={{ scale: 1.03, backgroundColor: "rgba(213,210,201,0.5)" }}
+          whileTap={{ scale: 0.96 }}
+          style={{ borderRadius: "18px" }}
+          transition={{ duration: 0.15, ease: [0.34, 1.56, 0.64, 1] }}
         >
-          Cancelar
-        </AnimatedLink>
+          <AnimatedLink
+            href="/creators"
+            className="block rounded-button border border-base-600 bg-surface-500 px-6 py-3 text-label-md text-ink-500"
+          >
+            Cancelar
+          </AnimatedLink>
+        </motion.div>
       </div>
     </form>
   );

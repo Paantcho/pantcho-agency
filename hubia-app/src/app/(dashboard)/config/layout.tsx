@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef, useState, useEffect } from "react";
+import { motion } from "framer-motion";
 import { AnimatedLink } from "@/components/ui/animated-link";
 import { TabContent } from "@/components/ui/tab-content";
 import { usePathname } from "next/navigation";
@@ -65,17 +66,20 @@ export default function ConfigLayout({
         style={{ background: "#FFFFFF" }}
       >
         {/* Pill */}
-        <div
+        <motion.div
           aria-hidden
-          className="pointer-events-none absolute rounded-[14px]"
+          className="pointer-events-none absolute rounded-[9999px]"
+          animate={{ left: pillLeft, width: pillWidth }}
+          transition={{
+            type: "spring",
+            stiffness: 420,
+            damping: 30,
+            mass: 0.8,
+          }}
           style={{
-            left: pillLeft,
-            width: pillWidth,
             top: 6,
             bottom: 6,
             background: "#D7FF00",
-            transition:
-              "left 300ms cubic-bezier(0.2, 0, 0.0, 1), width 300ms cubic-bezier(0.2, 0, 0.0, 1)",
           }}
         />
 
@@ -83,23 +87,31 @@ export default function ConfigLayout({
           const isActive =
             pathname === tab.href || pathname.startsWith(tab.href + "/");
           return (
-            <AnimatedLink
+            <motion.div
               key={tab.href}
-              href={tab.href}
-              ref={(el) => { linkRefs.current[idx] = el; }}
-              className="relative z-10 rounded-[14px]"
-              style={{
-                fontSize: "13px",
-                padding: "8px 20px",
-                fontWeight: isActive ? 700 : 500,
-                color: isActive ? "#0E0F10" : "#A9AAA5",
-                transition: "color 150ms cubic-bezier(0.4, 0, 0.2, 1)",
-                display: "inline-flex",
-                alignItems: "center",
-              }}
+              className="relative z-10"
+              whileHover={isActive ? {} : { backgroundColor: "rgba(213,210,201,0.35)" }}
+              whileTap={{ scale: 0.97 }}
+              style={{ borderRadius: "9999px" }}
+              transition={{ duration: 0.15, ease: [0.4, 0, 0.2, 1] }}
             >
-              {tab.label}
-            </AnimatedLink>
+              <AnimatedLink
+                href={tab.href}
+                ref={(el) => { linkRefs.current[idx] = el; }}
+                className="block rounded-[9999px]"
+                style={{
+                  fontSize: "13px",
+                  padding: "8px 20px",
+                  fontWeight: isActive ? 700 : 500,
+                  color: isActive ? "#0E0F10" : "#A9AAA5",
+                  transition: "color 150ms cubic-bezier(0.4, 0, 0.2, 1)",
+                  display: "inline-flex",
+                  alignItems: "center",
+                }}
+              >
+                {tab.label}
+              </AnimatedLink>
+            </motion.div>
           );
         })}
       </div>

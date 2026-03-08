@@ -1,7 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { motion } from "framer-motion";
 import { AnimatedLink } from "@/components/ui/animated-link";
 import { Sparkles, Pencil, Plus, FileEdit, User, Palette, MapPin, Shirt, Mic } from "lucide-react";
 import type { CreatorDetail } from "../actions";
@@ -62,6 +63,23 @@ export default function CreatorDetailClient({
   const [voiceEditModalOpen, setVoiceEditModalOpen] = useState(false);
   const actions = tabActions[activeTab];
 
+  // Pill deslizante das tabs
+  const tabsContainerRef = useRef<HTMLDivElement>(null);
+  const tabBtnRefs = useRef<(HTMLButtonElement | null)[]>(Array(TABS.length).fill(null));
+  const [pillLeft, setPillLeft] = useState(0);
+  const [pillWidth, setPillWidth] = useState(0);
+
+  useEffect(() => {
+    const idx = TABS.findIndex((t) => t.id === activeTab);
+    const btn = tabBtnRefs.current[idx];
+    const container = tabsContainerRef.current;
+    if (!btn || !container) return;
+    const cRect = container.getBoundingClientRect();
+    const bRect = btn.getBoundingClientRect();
+    setPillLeft(bRect.left - cRect.left);
+    setPillWidth(bRect.width);
+  }, [activeTab]);
+
   async function handleReativar() {
     setReactivating(true);
     const result = await updateCreator(organizationId, creator.id, { isActive: true });
@@ -80,15 +98,18 @@ export default function CreatorDetailClient({
           <p className="font-semibold" style={{ fontSize: "14px", color: "#0E0F10" }}>
             Creator inativa
           </p>
-          <button
+          <motion.button
             type="button"
             onClick={handleReativar}
             disabled={reactivating}
-            className="rounded-full font-bold transition-opacity hover:opacity-90 disabled:opacity-50"
+            className="rounded-full font-bold disabled:opacity-50"
             style={{ background: "#D7FF00", color: "#0E0F10", fontSize: "13px", padding: "8px 20px" }}
+            whileHover={{ scale: 1.03, backgroundColor: "#DFFF33" }}
+            whileTap={{ scale: 0.96 }}
+            transition={{ duration: 0.15, ease: [0.34, 1.56, 0.64, 1] }}
           >
             {reactivating ? "Reativando…" : "Reativar"}
-          </button>
+          </motion.button>
         </div>
       )}
 
@@ -103,10 +124,10 @@ export default function CreatorDetailClient({
         </nav>
         <div className="flex flex-wrap items-center gap-2">
           {actions?.secondary && (
-            <button
+            <motion.button
               type="button"
               onClick={() => activeTab === "voice" && setVoiceEditModalOpen(true)}
-              className="flex items-center gap-2 rounded-full border font-semibold transition-colors duration-200 hover:bg-[#EEEFE9]"
+              className="flex items-center gap-2 rounded-full border font-semibold"
               style={{
                 borderColor: "#D9D9D4",
                 color: "#0E0F10",
@@ -114,49 +135,80 @@ export default function CreatorDetailClient({
                 padding: "9px 18px",
                 background: "transparent",
               }}
+              whileHover={{ scale: 1.03, backgroundColor: "#EEEFE9" }}
+              whileTap={{ scale: 0.96 }}
+              transition={{ duration: 0.15, ease: [0.34, 1.56, 0.64, 1] }}
             >
               <actions.secondary.icon size={14} />
               {actions.secondary.label}
-            </button>
+            </motion.button>
           )}
           {actions?.primary && (
-            <button
+            <motion.button
               type="button"
-              className="flex items-center gap-2 rounded-full font-bold transition-opacity hover:opacity-90 active:scale-95"
+              className="flex items-center gap-2 rounded-full font-bold"
               style={{ background: "#D7FF00", color: "#0E0F10", fontSize: "13px", padding: "9px 18px" }}
+              whileHover={{ scale: 1.03, backgroundColor: "#DFFF33" }}
+              whileTap={{ scale: 0.96 }}
+              transition={{ duration: 0.15, ease: [0.34, 1.56, 0.64, 1] }}
             >
-              <actions.primary.icon size={14} />
+              <motion.span whileHover={{ scale: 1.2 }} transition={{ duration: 0.3, ease: [0.34, 1.56, 0.64, 1] }}>
+                <actions.primary.icon size={14} />
+              </motion.span>
               {actions.primary.label}
-            </button>
+            </motion.button>
           )}
         </div>
       </div>
 
-      {/* Tabs — com ícones, fundo surface, ativa em Limão */}
+      {/* Tabs — pill deslizante com spring */}
       <div
-        className="inline-flex items-center gap-1 rounded-[20px] p-1.5"
-        style={{ background: "#FFFFFF", boxShadow: "0 1px 3px rgba(14,15,16,0.06)" }}
+        ref={tabsContainerRef}
+        className="relative inline-flex items-center rounded-[9999px] p-1.5"
+        style={{ background: "#FFFFFF" }}
       >
-        {TABS.map((tab) => {
+        {/* Pill spring */}
+        <motion.div
+          aria-hidden
+          className="pointer-events-none absolute rounded-[9999px]"
+          animate={{ left: pillLeft, width: pillWidth }}
+          transition={{
+            type: "spring",
+            stiffness: 420,
+            damping: 30,
+            mass: 0.8,
+          }}
+          style={{ top: 6, bottom: 6, background: "#D7FF00" }}
+        />
+
+        {TABS.map((tab, idx) => {
           const isActive = activeTab === tab.id;
           const Icon = tab.icon;
           return (
-            <button
+            <motion.button
               key={tab.id}
+              ref={(el) => { tabBtnRefs.current[idx] = el; }}
               type="button"
               onClick={() => setActiveTab(tab.id)}
-              className="flex items-center gap-2 rounded-2xl transition-all duration-200"
+              className="relative z-10 flex items-center gap-2 rounded-[9999px]"
               style={{
                 fontSize: "13px",
                 padding: "8px 18px",
-                background: isActive ? "#D7FF00" : "transparent",
+                background: "transparent",
                 color: isActive ? "#0E0F10" : "#A9AAA5",
                 fontWeight: isActive ? 700 : 500,
               }}
+              whileHover={
+                isActive
+                  ? {}
+                  : { color: "#0E0F10", backgroundColor: "rgba(213,210,201,0.35)" }
+              }
+              whileTap={{ scale: 0.97 }}
+              transition={{ duration: 0.15, ease: [0.4, 0, 0.2, 1] }}
             >
               <Icon size={14} />
               {tab.label}
-            </button>
+            </motion.button>
           );
         })}
       </div>
