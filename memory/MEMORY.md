@@ -39,7 +39,35 @@ Next.js 15+ / TypeScript / Tailwind / Shadcn / Supabase / Prisma / Vercel / Figm
 
 ### Padrões definitivos de motion (nunca mudar sem atualizar regra)
 
-**Botão primário/secundário/ghost:**
+**Botão com ícone — padrão OBRIGATÓRIO (variantes propagadas):**
+```tsx
+// CORRETO — o filho herda o estado hover do pai automaticamente
+<motion.button
+  initial="rest"
+  whileHover="hovered"
+  whileTap={{ scale: 0.96 }}
+  animate="rest"
+  variants={{
+    rest: { scale: 1, backgroundColor: "#D7FF00" },
+    hovered: { scale: 1.03, backgroundColor: "#DFFF33" },
+  }}
+  transition={{ duration: 0.15, ease: [0.34, 1.56, 0.64, 1] }}
+>
+  <motion.span
+    className="flex items-center"
+    variants={{ rest: { scale: 1 }, hovered: { scale: 1.2 } }}
+    transition={{ duration: 0.25, ease: [0.34, 1.56, 0.64, 1] }}
+  >
+    <PlusIcon size={16} />
+  </motion.span>
+  Label
+</motion.button>
+
+// ERRADO — whileHover no filho NÃO dispara quando o hover é no pai
+// <motion.span whileHover={{ scale: 1.2 }}> — NUNCA FAZER ISSO
+```
+
+**Botão primário/secundário/ghost (sem ícone):**
 ```tsx
 <motion.button
   whileHover={{ scale: 1.03, backgroundColor: /* tom mais claro */ }}
@@ -64,6 +92,7 @@ Hover areia nos inativos: rgba(213,210,201,0.4) — hex #D5D2C9
 stiffness: 420, damping: 30, mass: 0.8
 Hover areia nos inativos: rgba(213,210,201,0.35)
 whileTap: scale 0.97
+Ícones: variantes propagadas rest/hovered no motion.button pai
 ```
 
 **Modal — 3 camadas (inviolável):**
@@ -89,9 +118,11 @@ NUNCA: shadow-* (flat design)
 ```
 
 ### Componentes de motion reutilizáveis
-- **`SlidingTabs`** (`hubia-app/src/components/ui/sliding-tabs.tsx`) — tabs com pill spring + hover areia
+- **`SlidingTabs`** (`hubia-app/src/components/ui/sliding-tabs.tsx`) — tabs com pill spring + hover areia + variantes propagadas nos ícones
 - **`TabContent`** (`hubia-app/src/components/ui/tab-content.tsx`) — conteúdo com animação direcional
 - **`HubiaModal`** (`hubia-app/src/components/ui/hubia-modal.tsx`) — modal com 3 camadas obrigatórias + AnimatePresence
+- **`HubiaSelect`** (`hubia-app/src/components/ui/hubia-select.tsx`) — **NOVO** dropdown 100% customizado, zero `<select>` nativo
+- **`HubiaToastProvider`** + `toast.*` (`hubia-app/src/components/ui/hubia-toast.tsx`) — **NOVO** toast Hubia com Zustand, registrado no root layout
 - **`Button`** (`hubia-app/src/components/ui/button.tsx`) — MotionButton com whileHover/whileTap (asChild preservado)
 - **`KpiCards` / `PedidosPrioritariosCards`** (`dashboard-motion.tsx`) — Client Components com stagger
 

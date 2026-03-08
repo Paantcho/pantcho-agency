@@ -20,6 +20,19 @@ Toda sessão começa aqui. Este arquivo garante que nenhuma regra, decisão ou p
 
 ---
 
+## Componentes UI reutilizáveis (usar sempre — nunca reinventar)
+
+| Componente | Arquivo | Para que serve |
+|-----------|---------|----------------|
+| `SlidingTabs` | `components/ui/sliding-tabs.tsx` | Tabs com pill spring + hover areia + ícones com variantes propagadas |
+| `TabContent` | `components/ui/tab-content.tsx` | Conteúdo de tab com animação direcional |
+| `HubiaModal` | `components/ui/hubia-modal.tsx` | Modal com 3 camadas obrigatórias + AnimatePresence |
+| `HubiaSelect` | `components/ui/hubia-select.tsx` | **Dropdown 100% customizado** — substitui todo `<select>` nativo |
+| `HubiaToastProvider` + `toast.*` | `components/ui/hubia-toast.tsx` | **Sistema de toast Hubia** — substitui `alert()`, `confirm()` e libs externas. Registrado no root layout |
+| `Button` | `components/ui/button.tsx` | MotionButton com whileHover/whileTap (asChild preservado) |
+
+---
+
 ## Memória do projeto (ler antes de qualquer ação)
 
 | Arquivo | Conteúdo |
@@ -57,11 +70,14 @@ Toda sessão começa aqui. Este arquivo garante que nenhuma regra, decisão ou p
 - Durações: 100–500ms conforme tabela em `motion-interactions.mdc`
 - Cards sempre com **stagger** (`i * 60ms`, máx 300ms total)
 - Modal: **3 camadas obrigatórias** (overlay blur, container scale, botão X rotate) + `AnimatePresence` — nunca `if (!open) return null`
-- Botões: sempre `whileHover scale:1.03` + `whileTap scale:0.96` — nunca botão sem hover/tap
+- Botões com ícone: **variantes propagadas** — `initial="rest" whileHover="hovered" animate="rest"` no pai + `variants` no filho. NUNCA `whileHover` direto no `motion.span` filho
+- Botões sem ícone: `whileHover scale:1.03` + `whileTap scale:0.96`
 - Icon buttons: `whileHover scale:1.12` + `whileTap scale:0.90`
 - Sidebar: hover areia `rgba(213,210,201,0.4)` nos inativos + ícones semânticos por item
-- Tabs: hover areia `rgba(213,210,201,0.35)` nos inativos + `whileTap scale:0.97`
+- Tabs: hover areia `rgba(213,210,201,0.35)` nos inativos + `whileTap scale:0.97` + variantes propagadas nos ícones
 - Dropdowns: sempre `AnimatePresence` — nunca `{open && <div>}` sem animação
+- Selects: **sempre `HubiaSelect`** — nunca `<select>` nativo HTML
+- Toasts/feedback: **sempre `toast.*`** do `hubia-toast.tsx` — nunca `alert()`, `confirm()` ou biblioteca externa
 - Consultar `hubia-motion-enforcement.mdc` antes de criar qualquer componente interativo
 
 ### Fidelidade ao Figma
