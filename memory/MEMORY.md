@@ -25,43 +25,75 @@ Atualizado quando há decisão importante, preferência nova, ou lição aprendi
 ## Stack Padrão (Dev Squad)
 Next.js 15+ / TypeScript / Tailwind / Shadcn / Supabase / Prisma / Vercel / Figma MCP
 
-## Motion e Interação (Hubia) — SISTEMA COMPLETO
-- **Documento único para motion:** `.cursor/rules/motion-interactions.mdc` (`alwaysApply: true`)
+## Motion e Interação (Hubia) — SISTEMA COMPLETO E ENFORCEMENT ATIVO
+
+- **Lei de motion:** `.cursor/rules/hubia-motion-enforcement.mdc` (`alwaysApply: true`) — documento definitivo e inviolável
+- **Padrões detalhados:** `.cursor/rules/motion-interactions.mdc` (`alwaysApply: true`)
 - **Regra global:** Framer Motion obrigatório para todos os componentes React animados. CSS keyframes apenas em `globals.css` para ícones SVG via `group-hover`.
-- **Regras de cursor ativas:** `.cursor/rules/` contém 4 arquivos todos com `alwaysApply: true`:
+- **Regras de cursor ativas:** `.cursor/rules/` contém 5 arquivos todos com `alwaysApply: true`:
   - `00-hubia-master.mdc` — índice mestre, lido primeiro
   - `hubia-design-system.mdc` — tokens, tipografia, cores, componentes, proibições
-  - `motion-interactions.mdc` — motion system completo (sidebar pill, tabs pill, transições de página, cards stagger, accordions, modais 3 camadas, toasts, animações de ícone)
+  - `motion-interactions.mdc` — motion system completo
   - `figma-fidelity-supreme.mdc` — regra suprema pixel-perfect ao Figma
+  - `hubia-motion-enforcement.mdc` — **LEI DE MOTION** (nova, mais específica): checklist pré-entrega, 10 proibições, padrões exatos de código para cada tipo de elemento
+
+### Padrões definitivos de motion (nunca mudar sem atualizar regra)
+
+**Botão primário/secundário/ghost:**
+```tsx
+<motion.button
+  whileHover={{ scale: 1.03, backgroundColor: /* tom mais claro */ }}
+  whileTap={{ scale: 0.96 }}
+  transition={{ duration: 0.15, ease: [0.34, 1.56, 0.64, 1] }}
+>
+```
+
+**Botão icon-only:**
+```tsx
+whileHover={{ scale: 1.12 }} / whileTap={{ scale: 0.90 }}
+```
+
+**Sidebar — pill spring:**
+```
+stiffness: 380, damping: 28, mass: 1
+Hover areia nos inativos: rgba(213,210,201,0.4) — hex #D5D2C9
+```
+
+**Tabs — pill spring:**
+```
+stiffness: 420, damping: 30, mass: 0.8
+Hover areia nos inativos: rgba(213,210,201,0.35)
+whileTap: scale 0.97
+```
+
+**Modal — 3 camadas (inviolável):**
+```
+Camada 1: overlay rgba(14,15,16,0→0.70) + blur 0→12px, 250ms ease-dec
+Camada 2: scale 0.88→1, y 20→0, opacity 0→1, 280ms ease-dec
+Camada 3: botão X whileHover rotate 90° scale 1.1
+AnimatePresence obrigatório — NUNCA if(!open) return null
+```
+
+**Cards — stagger obrigatório:**
+```tsx
+delay: Math.min(i * 0.06, 0.3)
+initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}
+whileHover={{ y: -4 }} whileTap={{ scale: 0.98 }}
+```
+
+**Dropdown:**
+```tsx
+AnimatePresence + initial={{ opacity: 0, y: -6, scale: 0.96 }}
+NUNCA: {open && <div>} sem AnimatePresence
+NUNCA: shadow-* (flat design)
+```
 
 ### Componentes de motion reutilizáveis
-- **`SlidingTabs`** (`hubia-app/src/components/ui/sliding-tabs.tsx`) — tabs horizontais com pill deslizante. Props: `tabs`, `activeId`, `onChange`. Pill: `#D7FF00` (ou branco conforme contexto), `border-radius: 14px`, transição `left/width 300ms cubic-bezier(0.2,0,0.0,1)`.
-- **`TabContent`** (`hubia-app/src/components/ui/tab-content.tsx`) — wrapper de conteúdo de tab com animação direcional Shared Axis horizontal. Props: `tabKey`, `direction` (+1/-1), `children`.
-
-### Sidebar pill (padrão)
-- UMA `<div>` absoluta dentro do `<nav>`, move via `top + height`
-- Background: `#D7FF00`, `border-radius: 18px`
-- Transição CSS: `top 300ms cubic-bezier(0.2, 0, 0.0, 1)` (ease-emp)
-- Posição calculada via `useRef` + `offsetTop/offsetHeight` no `<a>` ativo
-- `AnimatedLink` usa `React.forwardRef` para expor o DOM
-
-### Transição de página (padrão)
-- `AnimatePresence mode="wait"` com `key={pathname}` — SOMENTE no conteúdo principal
-- Sidebar fica FORA do wrapper — não pode estar dentro do AnimatePresence
-- Entrada: `opacity 0→1, y 12→0` em 280ms `[0,0,0.2,1]`
-- Saída: `opacity 1→0, y 0→-8` em 200ms `[0.4,0,1,1]`
-- `background: #EEEFE9` + `isolation: isolate` no `motion.div` — evita ghosting
-- `willChange: "transform, opacity"` — melhora performance
-
-### Tabs com pill (padrão)
-- Usar componente `SlidingTabs` — não reimplementar
-- Combinar com `TabContent` para animação direcional do conteúdo
-- Calcular `direction` comparando índice anterior vs. novo
-
-### Animações de ícone da sidebar
-- 12 keyframes em `globals.css` (icon-pulse, icon-bounce-y, icon-wiggle, icon-spark, icon-flip, icon-nod, icon-spin-slow, icon-grow, icon-nudge, icon-pulse-double, icon-rotate-sm, icon-spin-partial)
-- Disparam via `group-hover` no item pai
-- Cada item de menu tem `iconClass` específico — ver tabela em `motion-interactions.mdc`
+- **`SlidingTabs`** (`hubia-app/src/components/ui/sliding-tabs.tsx`) — tabs com pill spring + hover areia
+- **`TabContent`** (`hubia-app/src/components/ui/tab-content.tsx`) — conteúdo com animação direcional
+- **`HubiaModal`** (`hubia-app/src/components/ui/hubia-modal.tsx`) — modal com 3 camadas obrigatórias + AnimatePresence
+- **`Button`** (`hubia-app/src/components/ui/button.tsx`) — MotionButton com whileHover/whileTap (asChild preservado)
+- **`KpiCards` / `PedidosPrioritariosCards`** (`dashboard-motion.tsx`) — Client Components com stagger
 
 ## Modal — Padrão da plataforma inteira (Hubia)
 - **Regra global:** Em **toda** a plataforma, qualquer modal de criar/editar/ver segue o mesmo padrão.

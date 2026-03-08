@@ -5,68 +5,64 @@ Atualizado DEPOIS de cada ação.
 
 ---
 
-**Status:** Fase 1 em andamento — animações de sistema implementadas (sidebar pill, transição de página, tabs deslizantes, tab-content direcional); próximo: metadata Natasha, KPIs reais, Pedidos/Projetos.
+**Status:** Motion enforcement completo e commitado. Sistema de interação padronizado em toda a plataforma existente. Pronto para avançar para novas páginas.
 
 ## Projeto Atual
-HUBIA — Implementação Fase 1 (PRD v4.0, seções 4–8)
+HUBIA — Implementação contínua (motion enforcement + próximas páginas)
 
 ---
 
-## Última sessão (WORKING atualizado ao fechar)
+## Última sessão
 
 ### 1. Resumo em uma frase
-Implementação completa do sistema de animações e motion da plataforma: sidebar pill deslizante, transição de página Shared Axis vertical, tabs com pill deslizante horizontal, animação direcional de conteúdo de tabs (Shared Axis horizontal), animações de ícone da sidebar via CSS keyframes, hover states dos itens de menu; pixel-perfect revisado nas tabs Look Library e Tom de Voz.
+Motion enforcement total: spring nas pills (sidebar + tabs), 3 camadas obrigatórias nos modais com AnimatePresence, stagger nos cards, hover areia nos itens inativos de sidebar e tabs, animações semânticas de ícone na sidebar, `motion.button` em todos os botões da plataforma, nova regra `hubia-motion-enforcement.mdc` criada e ativada.
 
-### 2. Arquivos criados ou modificados nesta sessão
+### 2. Arquivos criados ou modificados
 
 | Arquivo | O que foi feito |
 |--------|-----------------|
-| `.cursor/rules/motion-interactions.mdc` | Regra permanente de motion criada/expandida: Framer Motion obrigatório para React, sidebar pill, tabs pill, transições de página, cards stagger, accordions, modais 3 camadas, toasts, animações de ícone por item, proibições adicionais de motion. |
-| `hubia-app/src/app/globals.css` | Adicionados 12 `@keyframes` para animações de ícone da sidebar (icon-pulse, icon-bounce-y, icon-wiggle, icon-spark, icon-flip, icon-nod, icon-spin-slow, icon-grow, icon-nudge, icon-pulse-double, icon-rotate-sm, icon-spin-partial). Background `html, body { background: #EEEFE9 }`. Classes `.sidebar-item` e `.sidebar-item-icon` para hover states. Classe `.hubia-main-transition` removida. |
-| `hubia-app/src/components/layout/sidebar.tsx` | Pill deslizante: `<div>` absoluta com `top: pillTop, height: pillHeight` + `transition: top 300ms cubic-bezier(0.2,0,0.0,1)`. Refs por item via `useRef`. Ícones trocados para os corretos (`CalendarDays`, `FolderOpen`, `BarChart2`). `iconClass` por item. Hover state: texto #A9AAA5 → #0E0F10 em 150ms. `AnimatedLink` com `data-active`. |
-| `hubia-app/src/components/ui/animated-link.tsx` | Refatorado com `React.forwardRef` para expor o `<a>` DOM — necessário para cálculo de `offsetTop`/`offsetHeight` dos refs da sidebar. |
-| `hubia-app/src/components/layout/app-shell.tsx` | Transição de página Shared Axis vertical via Framer Motion `AnimatePresence mode="wait"` com `key={pathname}`. `PageTransition` component com `motion.div`: entrada `opacity 0→1, y 12→0` em 280ms, saída `opacity 1→0, y 0→-8` em 200ms. `background: #EEEFE9` e `isolation: isolate` no wrapper para evitar ghosting. `willChange: "transform, opacity"`. |
-| `hubia-app/src/components/ui/sliding-tabs.tsx` | **NOVO.** Tabs horizontais com pill deslizante. `containerRef` + `btnRefs` + `useEffect` calcula `pillLeft` e `pillWidth` via `getBoundingClientRect`. Pill: `background: #D7FF00`, `border-radius: 14px`, transição `left/width 300ms cubic-bezier(0.2,0,0.0,1)`. Container: `background: #FFFFFF`, `border-radius: 20px`. Texto inativo: `#A9AAA5`, ativo: `#0E0F10`. |
-| `hubia-app/src/components/ui/tab-content.tsx` | **NOVO.** Wrapper de conteúdo de tab com animação direcional Shared Axis horizontal. `AnimatePresence mode="wait"` + `motion.div` com `custom={direction}`. Entrada: `x: dir*24, opacity 0 → 0, 0` em 220ms ease-dec. Saída: `x: dir*-16, opacity → 0` em 160ms ease-acc. |
-| `hubia-app/src/app/(dashboard)/config/layout.tsx` | Tabs de config (Equipe/Branding/Provedores) refatoradas para `SlidingTabs` + `TabContent` direcional. Pill #EEEFE9 com bg branco. |
-| `hubia-app/src/app/(dashboard)/creators/[id]/tabs/creator-looks-tab.tsx` | Revisão pixel-perfect: filtros brancos com borda cinza (`bg: #FFFFFF, border: #D9D9D4`), ativo Limão. Cards `aspectRatio: 3/4`, `borderRadius: 16px`. Animação estrela no hover. |
-| `hubia-app/src/app/(dashboard)/creators/[id]/tabs/creator-voice-tab.tsx` | Revisão pixel-perfect: "Tom Geral" full-width; grid de 3 colunas para Instagram/Privacy/Tiktok; grid 3 colunas para Vocabulário/Emojis/Legendas. |
-| `memory/WORKING.md` | Este arquivo atualizado. |
+| `.cursor/rules/hubia-motion-enforcement.mdc` | **NOVO.** Lei de motion: botões, sidebar, tabs, modais 3 camadas, cards stagger, dropdowns AnimatePresence, inputs, 3 estados universais, checklist pré-entrega, 10 proibições absolutas. `alwaysApply: true`. |
+| `hubia-app/src/components/layout/sidebar.tsx` | Pill: `motion.div` spring (380/28/1). Hover areia `#D5D2C9/40` nos inativos. Ícones com `iconClass` semântico por item (`icon-pulse`, `icon-spark`, `icon-nod` etc). `group` no link para disparar keyframes CSS. |
+| `hubia-app/src/components/ui/sliding-tabs.tsx` | Pill: `motion.div` spring (420/30/0.8). Botões: `motion.button` com `whileHover` areia + `whileTap`. |
+| `hubia-app/src/components/ui/hubia-modal.tsx` | Reescrito com `AnimatePresence` + 3 camadas (overlay blur 0→12px, container scale 0.88→1 y 20→0, botão X rotate 90°). `if (!open) return null` removido. |
+| `hubia-app/src/components/ui/button.tsx` | `MotionButton` com `whileHover scale:1.03` + `whileTap scale:0.96`. `asChild` preservado para Radix Slot. |
+| `hubia-app/src/app/(dashboard)/creators/creators-list-client.tsx` | `CreatorCard` → `MotionLink` com stagger (i*0.06, max 0.3s) + `whileHover y:-4` + `whileTap`. `shadow-2xl` removido. Botões `motion.button`. |
+| `hubia-app/src/app/(dashboard)/creators/[id]/creator-detail-client.tsx` | Tabs: `motion.button` com hover areia + `whileTap`. Botões de ação (Reativar, primário, secundário): `motion.button`. |
+| `hubia-app/src/app/(dashboard)/creators/nova-creator-modal.tsx` | Botões Salvar/Cancelar: `motion.button`. |
+| `hubia-app/src/app/(dashboard)/creators/novo/creator-form-client.tsx` | Botão submit + link Cancelar: `motion.button`/`motion.div`. Link Voltar: `motion.div` com `x:-2` hover. |
+| `hubia-app/src/app/(dashboard)/config/layout.tsx` | Tabs: `motion.div` wrapper com hover areia + `whileTap`. Pill: spring. |
+| `hubia-app/src/app/(dashboard)/config/equipe/equipe-client.tsx` | Icon button `MoreHorizontal`: `whileHover scale:1.12 / whileTap scale:0.90`. Dropdown: `AnimatePresence` fade+scale. `shadow-lg` removido. |
+| `hubia-app/src/app/(dashboard)/config/provedores/provedores-client.tsx` | Modais inline → `ProviderModal` com `AnimatePresence` + 3 camadas obrigatórias. Botões `motion.button`. |
+| `hubia-app/src/app/(dashboard)/config/branding/branding-color-form.tsx` | Botão Salvar: `motion.button`. Input: `transition-[border-color,box-shadow]`. |
+| `hubia-app/src/app/(dashboard)/page.tsx` | KPI cards + Pedidos Prioritários → `dashboard-motion.tsx` (Client Component). |
+| `hubia-app/src/app/(dashboard)/dashboard-motion.tsx` | **NOVO.** `KpiCards` + `PedidosPrioritariosCards` com stagger + `whileHover`. |
 
 ### 3. O que está funcionando e aprovado
 
-- Sidebar pill desliza suavemente entre itens (CSS transition `cubic-bezier(0.2,0,0.0,1)`).
-- Ícones da sidebar animam no hover (wiggle, spark, pulse, bounce, etc.) via CSS keyframes.
-- Hover state de itens inativos: texto escurece, sem fundo extra.
-- Transição de página: conteúdo sobe/desce com fade — sidebar NÃO pisca.
-- Tabs das páginas de detalhe e config: pill desliza horizontalmente.
-- Conteúdo de tab anima diagonalmente (direcional) ao trocar aba.
-- `AnimatedLink` com `forwardRef` — refs funcionam para cálculo de posição.
-- Look Library e Tom de Voz: pixel-perfect corrigidos.
+- ✅ Sidebar: pill spring elástica + hover areia nos inativos + ícones animam semanticamente no hover
+- ✅ Tabs (todas): pill spring + hover areia + whileTap nos botões
+- ✅ Modais: 3 camadas com AnimatePresence (overlay blur, container scale, botão X rotate)
+- ✅ Botões: `motion.button` em toda a plataforma (primário, secundário, ghost, icon)
+- ✅ Cards Creators: stagger de entrada + whileHover y:-4 + flat design (sem shadow)
+- ✅ Dropdowns: AnimatePresence fade+scale
+- ✅ `hubia-motion-enforcement.mdc`: regra ativa que guia toda nova criação
 
 ### 4. O que está incompleto ou pendente
 
-- **Pill das tabs:** ainda usa CSS transition (não spring) — o ajuste de spring foi solicitado mas revertido a pedido do usuário.
-- **Pill da sidebar:** idem, CSS transition — spring não aplicado.
-- **KPIs do Overview:** valores hardcoded.
-- **Veículo Fixo:** placeholder de imagem.
-- **Natasha Freitas:** seed sem metadata estruturado.
+- [ ] Páginas por construir: Pedidos, Projetos, Calendário, Gerador, Relatório, Conhecimento, Agentes, Memória, Arquitetura
+- [ ] KPIs do Creator Overview: alguns valores hardcoded
+- [ ] Metadata da Natasha Freitas: seed sem campos estruturados
+- [ ] Upload de avatar/logo: ainda URL manual
 
 ### 5. Próxima ação exata
 
-1. Confirmar com o usuário se quer spring na pill (sidebar + tabs) ou manter CSS.
-2. Adicionar metadata estruturado para a Natasha Freitas.
-3. Conectar KPIs do Overview ao banco.
-4. Demais páginas: Pedidos, Projetos.
+→ Escolher próxima página para construir (Pedidos é a prioridade indicada no backlog).
+→ Antes de qualquer nova tela: consultar Figma (MCP), mapear rotas e ações, seguir `hubia-motion-enforcement.mdc` desde o primeiro componente.
 
-### 6. Decisões técnicas importantes tomadas nesta sessão
+### 6. Regra de ouro para novas páginas
 
-- **Framer Motion para transições de página:** `AnimatePresence mode="wait"` só no conteúdo principal — sidebar fica fora.
-- **Ghosting prevenido:** `background: #EEEFE9` + `isolation: isolate` no `motion.div` de transição de página.
-- **Sliding pill com refs DOM:** `useRef` + `offsetTop/offsetHeight` para sidebar, `getBoundingClientRect` para tabs (necessário pois tabs ficam em container relativo).
-- **`forwardRef` no AnimatedLink:** expõe o `<a>` DOM para o array de refs da sidebar.
-- **Tab content direcional:** comparar índice da tab clicada vs. anterior para calcular `direction` (+1 ou -1).
-- **Spring revertido a pedido do usuário:** spring era mais fluido mas causou problema visual. Mantido CSS transition por ora.
+**Toda nova página/componente deve passar pelo checklist de `hubia-motion-enforcement.mdc` antes de ser entregue.**
+Não existe botão sem `whileHover`/`whileTap`. Não existe modal sem as 3 camadas. Não existe lista de cards sem stagger.
 
 ---
 
@@ -74,89 +70,60 @@ Implementação completa do sistema de animações e motion da plataforma: sideb
 
 ### Schema & Config
 - [x] Schema Prisma: 19 models validado
-- [x] Config Prisma 7: `prisma.config.ts` com dotenv + DIRECT_URL
-- [x] Prisma client singleton com `@prisma/adapter-pg`
+- [x] Config Prisma 7 + singleton + adapter-pg
 
 ### Database
-- [x] `prisma db push` — 19 tabelas criadas no Supabase
-- [x] `prisma generate` — client gerado
-- [x] Seed: 1 org, 4 planos, 1 branding, 4 feature flags, Creator Ninaah com metadata
+- [x] `prisma db push` — 19 tabelas no Supabase
+- [x] Seed: 1 org, 1 branding, Creator Ninaah com metadata
 
 ### Auth & Middleware
 - [x] Supabase client browser + server
-- [x] Middleware Next.js: refresh + proteção de rotas
-- [x] Auth callback route
+- [x] Middleware: refresh + proteção de rotas
 - [x] Login: email+senha, magic link, Google OAuth
 
 ### RLS
-- [x] `rls-policies.sql` pronto e executado
+- [x] `rls-policies.sql` executado
 
 ### Design System
 - [x] `globals.css` com tokens Hubia completos
 - [x] Tailwind 4 `@theme inline` com paleta completa
 - [x] Urbanist via `next/font/google`
-- [x] `.hubia-icon-button` hover/active corrigidos
+- [x] 12 `@keyframes` de ícone em `globals.css`
 
 ### Layout Shell
-- [x] Sidebar: 12 itens, 3 seções, pill deslizante, ícones animados, hover states
+- [x] Sidebar: 12 itens, pill spring, ícones animados semanticamente, hover areia
 - [x] AppShell com transição de página Shared Axis vertical
-- [x] Dashboard, auth layout
 
 ### Config Pages
-- [x] Config/Equipe — banco (server actions, alterar role)
-- [x] Config/Branding — banco (cor primária)
-- [x] Config/Provedores — banco (CRUD, encrypt keys)
-- [x] Config tabs: SlidingTabs + TabContent direcional
+- [x] Config/Equipe, Branding, Provedores — banco + CRUD
+- [x] Config tabs: SlidingTabs spring + TabContent direcional
 
-### Motion System
-- [x] `motion-interactions.mdc` — regra permanente completa
-- [x] Sidebar pill deslizante (CSS ease-emp)
-- [x] Transição de página Shared Axis vertical (Framer Motion)
-- [x] `SlidingTabs` — componente reutilizável para tabs com pill
-- [x] `TabContent` — componente reutilizável para conteúdo direcional
-- [x] Animações de ícone CSS keyframes (12 keyframes)
-- [x] Hover state dos itens do menu
+### Motion System — COMPLETO
+- [x] `hubia-motion-enforcement.mdc` — lei de motion (`alwaysApply: true`)
+- [x] `motion-interactions.mdc` — padrões detalhados (`alwaysApply: true`)
+- [x] Sidebar: pill spring + hover areia + ícones semânticos
+- [x] Tabs: pill spring + hover areia + whileTap
+- [x] Modais: 3 camadas com AnimatePresence
+- [x] Botões: MotionButton em toda a plataforma
+- [x] Cards: stagger + whileHover + flat design
+- [x] Dropdowns: AnimatePresence fade+scale
+- [x] Transição de página: Shared Axis vertical
+
+### Creators
+- [x] Lista de creators — banco + cards pixel-perfect + motion
+- [x] Creator detail: 5 tabs (visão geral, aparência, ambientes, looks, voz)
+- [x] Nova creator modal
+- [x] Formulário novo creator
 
 ### Build
-- [x] `npm run build` — compilação limpa
-
-### Fase 1 entregues
-- [x] Tag `hubia-app/v0.1.0` + push main
-- [x] ThemeProvider dinâmico (cores do tenant)
-- [x] Seletor de organização na sidebar
-- [x] Creators list — banco + cards pixel-perfect
-- [x] Dashboard com dados reais (KPIs, atividade)
-- [x] HubiaModal: portal + overlay fullscreen blur + botão X
-- [x] Creators: lista, visão geral, aparência, ambientes — pixel-perfect ao Figma
-- [x] `metadata` estruturado no Creator (city, state, age, platforms)
-- [x] Regra suprema de fidelidade ao Figma (`.cursor/rules/figma-fidelity-supreme.mdc`)
-- [x] Sistema de animações completo (sidebar, página, tabs)
+- [x] `npm run build` — compilação limpa (commit anterior)
 
 ---
 
-## Próximos Passos
-- [ ] Decidir: spring ou CSS transition na pill (sidebar + tabs)
-- [ ] Revisar Creator detail tabs (Figma nodes 8:2143, 8:2544) — Look Library, Tom de voz
-- [ ] Adicionar metadata da Natasha Freitas
-- [ ] Conectar KPIs do Overview ao banco
-- [ ] Upload de logo/favicon (Supabase Storage)
-- [ ] Demais páginas: Pedidos, Projetos — rotas, ações, Figma, marcar pontos de API/agentes
-
----
-
-## Decisões Técnicas Acumuladas
-- Prisma 7: `prisma.config.ts`, `@prisma/adapter-pg`, `db push` (sem migrate dev)
-- UUIDs via `gen_random_uuid()` do PostgreSQL
-- snake_case nas tabelas (`@@map`), camelCase no Prisma
-- Seed via `npx tsx prisma/seed.ts` (DIRECT_URL porta 5432)
-- Middleware: allowlist de rotas públicas (inversão da proteção)
-- Cards fullbleed: `position: absolute; inset: 0` + `overflow-hidden` no container
-- Dados do creator: `metadata` JSON para campos estruturados (city, state, age, platforms)
-- Fidelidade ao Figma: hex direto > tokens Tailwind quando necessário
-- Botão X modal: hover `rgba(62,63,64,0.85)` — nunca `--state-hover` em contexto escuro/branco
-- Sidebar pill: UMA `<div>` absoluta move via `top + height`, CSS transition ease-emp
-- Transição de página: `AnimatePresence mode="wait"` só no conteúdo — sidebar fora do wrapper
-- Ghosting prevenido: `background: #EEEFE9` + `isolation: isolate` no `motion.div`
-- `AnimatedLink` com `forwardRef` — expõe DOM para cálculo de refs
-- Tabs com pill: `SlidingTabs` (reutilizável), posição via `getBoundingClientRect`
-- Tab content direcional: `TabContent` com `direction` (+1/-1) e Shared Axis horizontal
+## Próximas Páginas (por ordem de prioridade)
+- [ ] **Pedidos** — lista, detalhe, criar, status
+- [ ] **Projetos** — lista, kanban ou lista, detalhe
+- [ ] **Calendário** — visualização mensal/semanal
+- [ ] **Gerador** — interface de geração de prompts
+- [ ] **Relatório** — dashboard de métricas
+- [ ] **Conhecimento, Agentes, Memória, Arquitetura** — páginas de sistema

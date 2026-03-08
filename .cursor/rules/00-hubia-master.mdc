@@ -16,6 +16,7 @@ Toda sessão começa aqui. Este arquivo garante que nenhuma regra, decisão ou p
 | `.cursor/rules/hubia-design-system.mdc` | Tokens de design, tipografia, cores, border-radius, sidebar, botões, modais, proibições absolutas, ciclo PLAN→EXECUTE→REFLECT |
 | `.cursor/rules/motion-interactions.mdc` | Framer Motion obrigatório, sidebar pill, tabs pill, transições de página, cards stagger, accordions, modais 3 camadas, toasts, animações de ícone |
 | `.cursor/rules/figma-fidelity-supreme.mdc` | Regra suprema: toda imagem de referência = pixel-perfect, checklist de 10 pontos, zero invenção, zero suposição |
+| `.cursor/rules/hubia-motion-enforcement.mdc` | **LEI DE MOTION** — padrões exatos de código (botões, sidebar, tabs, modais 3 camadas, cards stagger, dropdowns), checklist pré-entrega, 10 proibições. Lida antes de criar qualquer componente interativo. |
 
 ---
 
@@ -55,7 +56,13 @@ Toda sessão começa aqui. Este arquivo garante que nenhuma regra, decisão ou p
 - Easings: `ease-std` / `ease-dec` / `ease-acc` / `ease-emp` / `ease-exp` — nunca `ease`, `linear`, `ease-in-out`
 - Durações: 100–500ms conforme tabela em `motion-interactions.mdc`
 - Cards sempre com **stagger** (`i * 60ms`, máx 300ms total)
-- Modal: **3 camadas obrigatórias** (overlay blur, container scale, botão X rotate)
+- Modal: **3 camadas obrigatórias** (overlay blur, container scale, botão X rotate) + `AnimatePresence` — nunca `if (!open) return null`
+- Botões: sempre `whileHover scale:1.03` + `whileTap scale:0.96` — nunca botão sem hover/tap
+- Icon buttons: `whileHover scale:1.12` + `whileTap scale:0.90`
+- Sidebar: hover areia `rgba(213,210,201,0.4)` nos inativos + ícones semânticos por item
+- Tabs: hover areia `rgba(213,210,201,0.35)` nos inativos + `whileTap scale:0.97`
+- Dropdowns: sempre `AnimatePresence` — nunca `{open && <div>}` sem animação
+- Consultar `hubia-motion-enforcement.mdc` antes de criar qualquer componente interativo
 
 ### Fidelidade ao Figma
 - Referência visual = implementar pixel a pixel — **zero invenção**
