@@ -25,6 +25,122 @@ Atualizado quando há decisão importante, preferência nova, ou lição aprendi
 ## Stack Padrão (Dev Squad)
 Next.js 15+ / TypeScript / Tailwind / Shadcn / Supabase / Prisma / Vercel / Figma MCP
 
+---
+
+## PADRÃO DE LAYOUT DE PÁGINA — OBRIGATÓRIO EM TODA PÁGINA
+
+**Toda página interna da plataforma Hubia segue esta hierarquia:**
+
+```
+[FUNDO #EEEFE9]
+  ├── Linha 1: h1 título + botão de ação primária — SOLTOS sobre o fundo, sem container
+  ├── Linha 2: tab-navbar (filtros/squad/views) — SOLTO sobre o fundo, sem container
+  └── Linha 3: White box — div rounded-[20px] bg-white p-5 — apenas o conteúdo principal
+                  └── Kanban / Lista / Calendário / Grid de cards / etc.
+```
+
+**Regras:**
+- AppShell NUNCA coloca white box global — revertido e travado
+- `<h1>` e botão "Novo X" ficam FORA do white box, sobre #EEEFE9
+- A tab-navbar fica FORA do white box, sobre #EEEFE9
+- O white box (`rounded-[20px] bg-white p-5 min-h-[400px]`) envolve APENAS o conteúdo
+- Cards dentro do white box usam `#F7F7F5` (não branco puro) para criar hierarquia sem sombra
+
+---
+
+## PALETA DE STATUS — TRAVADA GLOBALMENTE
+
+Status são fixos e compartilhados por Pedidos e Projetos. NUNCA inventar novas cores.
+
+| Status | BG | Texto | Dot |
+|---|---|---|---|
+| backlog | #F0F0F0 | #666666 | #999999 |
+| aguardando | #FFF3CD | #856404 | #F0AD00 |
+| em_andamento | #F0FF80 | #5A6600 | #8B9B00 |
+| revisao | #E8F4FD | #1565C0 | #1976D2 |
+| aprovado | #E8F5E9 | #2E7D32 | #43A047 |
+| concluido | #0E0F10 | #FFFFFF | #D7FF00 |
+| cancelado | #FFEBEE | #C62828 | #E53935 |
+
+**Regra crítica:** NUNCA usar #D7FF00 (limão) como cor de texto sobre fundo branco ou claro — é ilegível. O status "em_andamento" usa `#F0FF80` (limão pastel) como fundo com `#5A6600` (verde escuro) como texto.
+
+---
+
+## CREATOR — CAMPO CONDICIONAL
+
+O campo "Creator" em modais e sidebars de Pedido deve aparecer APENAS quando:
+- `tipo === 'imagem'`
+- `tipo === 'video'`
+- `tipo === 'creator'`
+
+Quando o tipo é DEV (landing page, sistema, agente, etc.) o campo NÃO deve aparecer. Em seu lugar, exibir badge estático "DEV" em `#0E0F10` com texto `#D7FF00`.
+
+---
+
+## TOASTS — PALETA HUBIA (TRAVADA)
+
+```
+success / info  → fundo #D7FF00 (limão), texto #0E0F10 (ink), ícone ink
+error / warning → fundo #0E0F10 (ink), texto #FFFFFF (branco), ícone colorido
+```
+
+**Nunca:** fundos cinza, branco, ou qualquer outra cor. Toasts devem ser visíveis sobre qualquer fundo da plataforma (inclusive o white box branco).
+
+---
+
+## DRAG AND DROP KANBAN
+
+- Biblioteca: `@dnd-kit/core`, `@dnd-kit/sortable`, `@dnd-kit/utilities`
+- Ao iniciar drag: capturar `height` real do card via `getBoundingClientRect()` e armazenar em `draggingHeight`
+- Drop zone vazia ("Soltar aqui"): height = `draggingHeight` (dinâmico — não fixo)
+- Coluna ao receber: `minHeight = draggingHeight + 16` para acomodar visualmente
+- Overlay de arrastar: card rotacionado levemente com sombra
+- Coluna destino em hover: destaque visual com border dashed + mudança de fundo
+
+---
+
+## HUBIA DATE PICKER — COMPONENTE OBRIGATÓRIO
+
+`<input type="date">` nativo é **PROIBIDO** na plataforma Hubia.
+Sempre usar o componente `HubiaDatePicker` implementado em `pedidos-client.tsx`.
+Quando for reutilizado em outras páginas, extrair para `components/ui/hubia-date-picker.tsx`.
+
+---
+
+## MODAL "NOVO PEDIDO" — PADRÃO
+
+- Largura mínima: `max-w-[680px]`
+- Layout: `grid grid-cols-2 gap-x-5 gap-y-4` — 2 colunas, sem overflow-y-scroll
+- Criação inline de projeto: botão "Criar novo" abre input, cria via server action, auto-seleciona
+- Creator: condicional por tipo (ver regra acima)
+- Datepicker: HubiaDatePicker — nunca input nativo
+
+---
+
+## CADEIA DE PRODUÇÃO (pedidos/[id])
+
+A cadeia de produção no detalhe do pedido é dinâmica por `tipo`:
+
+**Audiovisual/Creator/Imagem/Video:**
+Planner → Copywriter → Diretor de Arte → Diretor de Cena → Especialista Consistência → Eng. Prompts
+
+**DEV (landing page, sistema, etc.):**
+Arquiteto de Informação → Designer UX/UI → Desenvolvedor → Agente QA → Deploy
+
+Cada etapa mostra: avatar/ícone do role, título, descrição, status (Concluído/Pendente).
+
+---
+
+## UPLOAD DE RESULTADO — PADRÃO
+
+O componente `UploadResultado` em `/pedidos/[id]` deve:
+- Aceitar drag and drop real (ondragover, ondrop)
+- Aceitar múltiplos arquivos (imagens + vídeos)
+- Mostrar preview dos arquivos com botão de remover
+- Feedback visual ao arrastar arquivo para a área
+
+---
+
 ## Motion e Interação (Hubia) — SISTEMA COMPLETO E ENFORCEMENT ATIVO
 
 - **Lei de motion:** `.cursor/rules/hubia-motion-enforcement.mdc` (`alwaysApply: true`) — documento definitivo e inviolável
@@ -142,6 +258,7 @@ NUNCA: shadow-* (flat design)
 - **`HubiaToastProvider`** + `toast.*` (`hubia-app/src/components/ui/hubia-toast.tsx`) — toast Hubia com Zustand, registrado no root layout
 - **`Button`** (`hubia-app/src/components/ui/button.tsx`) — MotionButton com whileHover/whileTap
 - **`KpiCards` / `PedidosPrioritariosCards`** (`dashboard-motion.tsx`) — Client Components com stagger
+- **`HubiaDatePicker`** (inline em `pedidos-client.tsx`, extrair para `components/ui/`) — calendário customizado, sem input nativo
 
 ## Modal — Padrão da plataforma inteira (Hubia)
 - **Regra global:** Em **toda** a plataforma, qualquer modal de criar/editar/ver segue o mesmo padrão.
@@ -155,7 +272,8 @@ NUNCA: shadow-* (flat design)
 ## Auto-Draft — Padrão Universal de Formulários
 - **Regra:** Todo formulário de criação (novo agente, novo squad, novo pedido, etc.) deve salvar rascunho no `localStorage` ao fechar sem submeter.
 - **Chave:** `hubia:[entidade]:[contexto]` — ex: `hubia:novo-agente:rascunho`, `hubia:novo-agente:squad:${squadId}`
-- **Fluxo:** Ao fechar com conteúdo → salvar + mostrar banner "💾 Rascunho salvo". Ao reabrir → restaurar. Ao submeter com sucesso → apagar rascunho.
+- **Fluxo:** Ao fechar com conteúdo → salvar silenciosamente (SEM toast). Ao reabrir → restaurar. Ao submeter com sucesso → apagar rascunho.
+- **Sem toast de rascunho:** o salvamento automático é silencioso — nunca exibir "Rascunho salvo" como toast. Isso é comportamento de sistema, não de interface.
 - **Sem localStorage no SSR:** sempre checar `typeof window !== "undefined"` antes de acessar `localStorage`.
 
 ## Páginas Agentes — Estrutura de Rotas
@@ -204,6 +322,8 @@ NUNCA: shadow-* (flat design)
 - Nomes criativos para agentes (ainda não definidos)
 - **Rollback sempre disponível:** usuário usa `git checkout --` para reverter sessões. Nunca commitar sem consolidar memória.
 - **Não implementar sem aprovação:** animações novas (ex.: spring na pill) precisam de confirmação visual antes de commitar.
+- **Agentes devem ser proativos:** o usuário não quer descobrir bugs — os agentes (QA, Orquestrador) devem identificar e reportar problemas antes da revisão humana.
+- **Design próprio:** nunca usar padrões de UI "plagiados" de outros sistemas (ex.: bloco de revisão com barra colorida lateral). Tudo deve ter identidade Hubia.
 
 ## Visão de Longo Prazo
 - Novos squads: marketing, financeiro, CRM, social media

@@ -48,18 +48,43 @@ export const toast = {
     useToastStore.getState().add({ message, type: "info", duration }),
 };
 
-// ─── Configuração visual por tipo ─────────────────────────────────
-const CONFIG: Record<ToastType, { icon: React.ReactNode; accent: string }> = {
-  success: { icon: <Check size={14} strokeWidth={3} />, accent: "#22c55e" },
-  error:   { icon: <X size={14} strokeWidth={3} />, accent: "#ef4444" },
-  warning: { icon: <AlertTriangle size={14} strokeWidth={2.5} />, accent: "#f59e0b" },
-  info:    { icon: <Info size={14} strokeWidth={2.5} />, accent: "#3b82f6" },
+// ─── Paleta Hubia para toasts ─────────────────────────────────────
+// success / info  → fundo #D7FF00 (limão), texto #0E0F10 (ink)
+// error / warning → fundo #0E0F10 (ink), texto #FFFFFF (branco)
+
+const TOAST_PALETTE: Record<ToastType, {
+  bg: string; text: string; iconBg: string; iconColor: string; closeBg: string; icon: React.ReactNode;
+}> = {
+  success: {
+    bg: "#D7FF00", text: "#0E0F10",
+    iconBg: "#0E0F10", iconColor: "#D7FF00",
+    closeBg: "rgba(14,15,16,0.12)",
+    icon: <Check size={13} strokeWidth={3} />,
+  },
+  info: {
+    bg: "#D7FF00", text: "#0E0F10",
+    iconBg: "#0E0F10", iconColor: "#D7FF00",
+    closeBg: "rgba(14,15,16,0.12)",
+    icon: <Info size={13} strokeWidth={2.5} />,
+  },
+  error: {
+    bg: "#0E0F10", text: "#FFFFFF",
+    iconBg: "#E53935", iconColor: "#FFFFFF",
+    closeBg: "rgba(255,255,255,0.12)",
+    icon: <X size={13} strokeWidth={3} />,
+  },
+  warning: {
+    bg: "#0E0F10", text: "#FFFFFF",
+    iconBg: "#FB8C00", iconColor: "#FFFFFF",
+    closeBg: "rgba(255,255,255,0.12)",
+    icon: <AlertTriangle size={13} strokeWidth={2.5} />,
+  },
 };
 
 // ─── Item individual ──────────────────────────────────────────────
 function ToastItem({ toast: t }: { toast: Toast }) {
   const remove = useToastStore((s) => s.remove);
-  const cfg = CONFIG[t.type];
+  const p = TOAST_PALETTE[t.type];
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
@@ -73,33 +98,36 @@ function ToastItem({ toast: t }: { toast: Toast }) {
       animate={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
       exit={{ opacity: 0, x: 30, scale: 0.92 }}
       transition={{ duration: 0.3, ease: [0, 0, 0.2, 1] }}
-      className="flex items-start gap-3 rounded-[16px] bg-white px-4 py-3.5 pr-3"
+      className="flex items-center gap-3 rounded-[16px] px-4 py-3.5 pr-3"
       style={{
-        minWidth: "280px",
+        backgroundColor: p.bg,
+        minWidth: "260px",
         maxWidth: "380px",
-        boxShadow: "0 4px 24px rgba(14,15,16,0.12)",
       }}
     >
+      {/* Ícone */}
       <div
-        className="mt-0.5 flex h-[22px] w-[22px] shrink-0 items-center justify-center rounded-full text-white"
-        style={{ background: cfg.accent }}
+        className="flex-shrink-0 flex h-[22px] w-[22px] items-center justify-center rounded-full"
+        style={{ backgroundColor: p.iconBg, color: p.iconColor }}
       >
-        {cfg.icon}
+        {p.icon}
       </div>
-      <p className="flex-1 text-[13px] font-semibold leading-[1.45]" style={{ color: "#0E0F10" }}>
+      {/* Mensagem */}
+      <p className="flex-1 text-[13px] font-bold leading-snug" style={{ color: p.text }}>
         {t.message}
       </p>
+      {/* Fechar */}
       <motion.button
         type="button"
         onClick={() => remove(t.id)}
         aria-label="Fechar"
-        className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full"
-        style={{ color: "#A9AAA5" }}
-        whileHover={{ rotate: 90, scale: 1.1, color: "#0E0F10" }}
+        className="flex-shrink-0 flex h-6 w-6 items-center justify-center rounded-full"
+        style={{ backgroundColor: p.closeBg, color: p.text }}
+        whileHover={{ rotate: 90, scale: 1.15 }}
         whileTap={{ rotate: 90, scale: 0.9 }}
         transition={{ duration: 0.15, ease: [0.34, 1.56, 0.64, 1] }}
       >
-        <X size={13} strokeWidth={2.5} />
+        <X size={12} strokeWidth={2.5} />
       </motion.button>
     </motion.div>
   );

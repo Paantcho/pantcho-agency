@@ -1,6 +1,6 @@
 // ============================================================
-// HUBIA — Prisma Schema · Fase 1 (Fundação Multi-Tenant)
-// PRD v4.0 · Seções 4–8
+// HUBIA — Prisma Schema · Fase 2 (Pedidos, Conhecimento, Gatilhos)
+// PRD v4.0 · Seções 4–9
 // ============================================================
 
 generator client {
@@ -46,7 +46,17 @@ enum PedidoTipo {
   app
   site
   sistema
+  creator
+  skill
+  agente
   outro
+}
+
+enum PedidoSourceType {
+  manual
+  telegram
+  api
+  webhook
 }
 
 enum PromptOutputStatus {
@@ -80,6 +90,14 @@ enum SquadStatus {
   ativo
   em_breve
   planejado
+}
+
+enum KnowledgeSourceType {
+  pdf
+  md
+  imagem
+  link
+  texto
 }
 
 // ============================================================
@@ -321,21 +339,23 @@ model CreatorVoice {
 // ============================================================
 
 model Pedido {
-  id             String         @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  organizationId String         @map("organization_id") @db.Uuid
-  projetoId      String?        @map("projeto_id") @db.Uuid
-  creatorId      String?        @map("creator_id") @db.Uuid
+  id             String            @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  organizationId String            @map("organization_id") @db.Uuid
+  projetoId      String?           @map("projeto_id") @db.Uuid
+  creatorId      String?           @map("creator_id") @db.Uuid
   titulo         String
-  descricao      String?        @db.Text
-  tipo           PedidoTipo     @default(imagem)
-  status         PedidoStatus   @default(rascunho)
-  urgencia       PedidoUrgencia @default(media)
-  briefing       Json           @default("{}")
-  dueAt          DateTime?      @map("due_at") @db.Timestamptz
-  completedAt    DateTime?      @map("completed_at") @db.Timestamptz
-  createdBy      String?        @map("created_by") @db.Uuid
-  createdAt      DateTime       @default(now()) @map("created_at") @db.Timestamptz
-  updatedAt      DateTime       @updatedAt @map("updated_at") @db.Timestamptz
+  descricao      String?           @db.Text
+  tipo           PedidoTipo        @default(imagem)
+  status         PedidoStatus      @default(rascunho)
+  urgencia       PedidoUrgencia    @default(media)
+  sourceType     PedidoSourceType  @default(manual) @map("source_type")
+  sourcePayload  Json              @default("{}") @map("source_payload")
+  briefing       Json              @default("{}")
+  dueAt          DateTime?         @map("due_at") @db.Timestamptz
+  completedAt    DateTime?         @map("completed_at") @db.Timestamptz
+  createdBy      String?           @map("created_by") @db.Uuid
+  createdAt      DateTime          @default(now()) @map("created_at") @db.Timestamptz
+  updatedAt      DateTime          @updatedAt @map("updated_at") @db.Timestamptz
 
   organization Organization  @relation(fields: [organizationId], references: [id], onDelete: Cascade)
   projeto      Projeto?      @relation(fields: [projetoId], references: [id])
@@ -344,6 +364,7 @@ model Pedido {
 
   @@index([organizationId])
   @@index([organizationId, status])
+  @@index([organizationId, dueAt])
   @@map("pedidos")
 }
 
@@ -500,19 +521,27 @@ model EntityVersion {
 }
 
 model KnowledgeEntry {
-  id             String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  organizationId String   @map("organization_id") @db.Uuid
+  id             String              @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  organizationId String              @map("organization_id") @db.Uuid
   title          String
-  content        String   @db.Text
+  content        String              @db.Text
+  summary        String?             @db.Text
   category       String?
-  tags           Json     @default("[]")
-  createdBy      String?  @map("created_by") @db.Uuid
-  createdAt      DateTime @default(now()) @map("created_at") @db.Timestamptz
-  updatedAt      DateTime @updatedAt @map("updated_at") @db.Timestamptz
+  sourceType     KnowledgeSourceType @default(texto) @map("source_type")
+  sourceUrl      String?             @map("source_url")
+  fileUrl        String?             @map("file_url")
+  tags           Json                @default("[]")
+  aiProcessed    Boolean             @default(false) @map("ai_processed")
+  aiMetadata     Json                @default("{}") @map("ai_metadata")
+  createdBy      String?             @map("created_by") @db.Uuid
+  createdAt      DateTime            @default(now()) @map("created_at") @db.Timestamptz
+  updatedAt      DateTime            @updatedAt @map("updated_at") @db.Timestamptz
 
   organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
 
   @@index([organizationId])
+  @@index([organizationId, category])
+  @@index([organizationId, sourceType])
   @@map("knowledge_entries")
 }
 
@@ -524,12 +553,16 @@ model ActivityLog {
   entityType     String?  @map("entity_type")
   entityId       String?  @map("entity_id") @db.Uuid
   metadata       Json     @default("{}")
+  // Gatilhos: isAlert=true significa que este evento deve notificar pessoas/agentes
+  isAlert        Boolean  @default(false) @map("is_alert")
+  alertReadBy    Json     @default("[]") @map("alert_read_by")
   createdAt      DateTime @default(now()) @map("created_at") @db.Timestamptz
 
   organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
 
   @@index([organizationId])
   @@index([organizationId, action])
+  @@index([organizationId, isAlert])
   @@index([entityType, entityId])
   @@map("activity_logs")
 }

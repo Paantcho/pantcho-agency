@@ -1,13 +1,27 @@
-export default function ConhecimentoPage() {
+import { prisma } from "@/lib/prisma";
+import { createClient } from "@/lib/supabase/server";
+import ConhecimentoClient from "./conhecimento-client";
+import { getKnowledgeEntries, getCategorias } from "./actions";
+
+export default async function ConhecimentoPage() {
+  const supabase = await createClient();
+  const { data: { user } } = await supabase.auth.getUser();
+
+  const member = user?.id
+    ? await prisma.organizationMember.findFirst({ where: { userId: user.id, isActive: true } })
+    : null;
+
+  const organizationId = member?.organizationId ?? null;
+
+  const [entradas, categorias] = organizationId
+    ? await Promise.all([getKnowledgeEntries(organizationId), getCategorias(organizationId)])
+    : [[], []];
+
   return (
-    <div className="flex flex-col gap-4">
-      <h1 className="text-heading-md text-ink-500">Conhecimento</h1>
-      <p className="text-body-md text-base-700">
-        Base de conhecimento e documentação.
-      </p>
-      <div className="rounded-card bg-surface-500 p-8 text-center">
-        <p className="text-body-md text-base-700">Em breve.</p>
-      </div>
-    </div>
+    <ConhecimentoClient
+      organizationId={organizationId ?? ""}
+      initialEntradas={entradas}
+      initialCategorias={categorias}
+    />
   );
 }

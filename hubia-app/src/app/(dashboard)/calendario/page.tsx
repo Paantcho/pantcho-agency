@@ -1,13 +1,28 @@
-export default function CalendarioPage() {
+import { prisma } from "@/lib/prisma";
+import { createClient } from "@/lib/supabase/server";
+import CalendarioClient from "./calendario-client";
+import { getPedidosCalendario } from "./actions";
+
+export default async function CalendarioPage() {
+  const supabase = await createClient();
+  const { data: { user } } = await supabase.auth.getUser();
+
+  const member = user?.id
+    ? await prisma.organizationMember.findFirst({ where: { userId: user.id, isActive: true } })
+    : null;
+
+  const organizationId = member?.organizationId ?? null;
+  const agora = new Date();
+  const pedidos = organizationId
+    ? await getPedidosCalendario(organizationId, agora.getFullYear(), agora.getMonth() + 1)
+    : [];
+
   return (
-    <div className="flex flex-col gap-4">
-      <h1 className="text-heading-md text-ink-500">Calendário</h1>
-      <p className="text-body-md text-base-700">
-        Planejamento e agenda de entregas.
-      </p>
-      <div className="rounded-card bg-surface-500 p-8 text-center">
-        <p className="text-body-md text-base-700">Em breve.</p>
-      </div>
-    </div>
+    <CalendarioClient
+      organizationId={organizationId ?? ""}
+      initialPedidos={pedidos}
+      initialAno={agora.getFullYear()}
+      initialMes={agora.getMonth() + 1}
+    />
   );
 }

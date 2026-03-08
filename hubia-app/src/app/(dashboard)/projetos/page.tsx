@@ -1,13 +1,18 @@
-export default function ProjetosPage() {
-  return (
-    <div className="flex flex-col gap-4">
-      <h1 className="text-heading-md text-ink-500">Projetos</h1>
-      <p className="text-body-md text-base-700">
-        Projetos e entregas.
-      </p>
-      <div className="rounded-card bg-surface-500 p-8 text-center">
-        <p className="text-body-md text-base-700">Em breve.</p>
-      </div>
-    </div>
-  );
+import { prisma } from "@/lib/prisma";
+import { createClient } from "@/lib/supabase/server";
+import ProjetosClient from "./projetos-client";
+import { getProjetos } from "./actions";
+
+export default async function ProjetosPage() {
+  const supabase = await createClient();
+  const { data: { user } } = await supabase.auth.getUser();
+
+  const member = user?.id
+    ? await prisma.organizationMember.findFirst({ where: { userId: user.id, isActive: true } })
+    : null;
+
+  const organizationId = member?.organizationId ?? null;
+  const projetos = organizationId ? await getProjetos(organizationId) : [];
+
+  return <ProjetosClient organizationId={organizationId ?? ""} initialProjetos={projetos} />;
 }

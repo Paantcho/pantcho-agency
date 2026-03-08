@@ -1,13 +1,22 @@
-export default function RelatorioPage() {
-  return (
-    <div className="flex flex-col gap-4">
-      <h1 className="text-heading-md text-ink-500">Relatório</h1>
-      <p className="text-body-md text-base-700">
-        Relatórios e métricas.
-      </p>
-      <div className="rounded-card bg-surface-500 p-8 text-center">
-        <p className="text-body-md text-base-700">Em breve.</p>
-      </div>
-    </div>
-  );
+import { prisma } from "@/lib/prisma";
+import { createClient } from "@/lib/supabase/server";
+import RelatorioClient from "./relatorio-client";
+import { getRelatorioStats } from "./actions";
+
+export default async function RelatorioPage() {
+  const supabase = await createClient();
+  const { data: { user } } = await supabase.auth.getUser();
+
+  const member = user?.id
+    ? await prisma.organizationMember.findFirst({ where: { userId: user.id, isActive: true } })
+    : null;
+
+  const organizationId = member?.organizationId ?? null;
+  const stats = organizationId ? await getRelatorioStats(organizationId) : {
+    totalPedidos: 0, emAndamento: 0, entreguesMes: 0, creatorsAtivos: 0, projetos: 0,
+    pedidosPorStatus: [], pedidosPorTipo: [], pedidosPorUrgencia: [],
+    activityRecente: [], pedidosRecentes: [],
+  };
+
+  return <RelatorioClient organizationId={organizationId ?? ""} initialStats={stats} />;
 }

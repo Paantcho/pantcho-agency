@@ -5,66 +5,70 @@ Atualizado DEPOIS de cada ação.
 
 ---
 
-**Status:** Página Agentes + Squad Detail entregues com motion completo. Build limpo. Memória consolidada.
+**Status:** Sprint "Pedidos v2 + Refinamentos Visuais" — COMPLETO. Build limpo. Zero erros TypeScript.
 
 ## Projeto Atual
-HUBIA — Implementação contínua de páginas (Agentes concluído, próximo: Pedidos)
+HUBIA — Sprint de refinamento profundo da plataforma. Página Pedidos refeita do zero com layout correto (título solto, tab-navbar com pill, white box apenas no conteúdo), DnD real no Kanban, modal Novo Pedido sem scroll em 2 colunas, toasts Hubia com cores limpas, upload de resultado com drag and drop, página `/pedidos/[id]` com cadeia de produção, prompt final e contexto automático fiel à ref do usuário. Página `/projetos/[id]` completamente reconstruída com tabs dinâmicas por squad.
 
 ---
 
-## Última sessão (2026-03-08)
+## Última sessão (2026-03-08 — Sprint Pedidos v2 + Refinamentos)
 
 ### 1. Resumo em uma frase
-Página Agentes refinada com correções de motion (animate vs style), página de detalhe do agente (`/agentes/[slug]`), página de detalhe do squad (`/agentes/squad/[slug]`) com seleção múltipla de agentes, criação inline e auto-draft de rascunho; botão "Criar novo squad" funcional.
+Pedidos totalmente refatorados: layout correto com white box só no conteúdo, DnD funcional e adaptativo, modal sem scroll em 2 colunas com "criar projeto" inline, cores de status travadas e legíveis em qualquer fundo, toasts limão/ink, upload com drag real, cadeia de produção e prompt final na página de detalhe.
 
 ### 2. Arquivos criados ou modificados
 
 | Arquivo | O que foi feito |
 |--------|-----------------|
-| `src/app/(dashboard)/agentes/agentes-client.tsx` | Modal Novo Agente com auto-draft no localStorage; modal "Criar novo squad" funcional; `TabSquads` com links nos headers; `TabSquadsFuturos` com cards clicáveis; `NovoSquadModal` novo; `AddAgentModal` refatorado para seleção múltipla; botões de status/squad corrigidos com `animate` em vez de `style` |
-| `src/app/(dashboard)/agentes/actions.ts` | Adicionadas: `getSquadBySlug`, `getAllAgents`, `addAgentToSquad`, `removeAgentFromSquad`, `createSquad`, `SquadDetail` interface |
-| `src/app/(dashboard)/agentes/[slug]/page.tsx` | **NOVO.** Server Component da página de detalhe do agente |
-| `src/app/(dashboard)/agentes/[slug]/agent-detail-client.tsx` | **NOVO.** Página de detalhe: 2 colunas, menu de documentos com `animate` (sem bug de seleção), versioning com `EntityVersion`, histórico de versões, editor de documentos |
-| `src/app/(dashboard)/agentes/squad/[slug]/page.tsx` | **NOVO.** Server Component da página de detalhe do squad; auto-cria squads futuros no banco na primeira visita |
-| `src/app/(dashboard)/agentes/squad/[slug]/squad-detail-client.tsx` | **NOVO.** Página de detalhe do squad: lista de agentes, `AddAgentModal` com seleção múltipla + grid de cards ticáveis + botão confirmar, `NovoAgenteModal` com auto-draft |
-| `src/components/ui/hubia-portal.tsx` | **NOVO (sessão anterior).** `createPortal` para modais no `document.body` — corrige `backdrop-filter` em qualquer contexto |
+| `src/components/layout/app-shell.tsx` | Revertido ao original — zero white box global. Cada página gerencia seu próprio container |
+| `src/components/ui/hubia-toast.tsx` | **REESCRITO.** Paleta Hubia: success/info = fundo limão (#D7FF00) + texto ink; error/warning = fundo ink (#0E0F10) + texto branco |
+| `src/app/(dashboard)/pedidos/pedidos-client.tsx` | **COMPLETAMENTE REESCRITO (v3).** Layout correto: título + botão soltos, tab-navbar squad com pill spring, white box só no conteúdo. DnD com @dnd-kit: colunas destacadas ao arrastar, drop zone adaptativa ao tamanho do card, overlay com rotate. Modal Novo Pedido 2 colunas sem scroll. Criar projeto inline. HubiaDatePicker próprio. Creator condicional por tipo. Filtros squad + busca + urgência. Kanban cards em #F7F7F5 sobre white box |
+| `src/app/(dashboard)/pedidos/[id]/pedido-detail-client.tsx` | **COMPLETAMENTE REESCRITO.** Cadeia de produção dinâmica por tipo (Planner→Copywriter→Diretor de Arte→Diretor de Cena→Consistência→Eng.Prompts para audiovisual; Arquiteto→Designer→Dev→QA→Deploy para dev). Prompt Final em card #0E0F10 com botão copiar. Contexto Automático na lateral. Upload de resultado com drag and drop real + múltiplos arquivos + preview. Notas editáveis. Briefing editável inline. Creator só aparece para tipos audiovisual. |
+| `src/app/(dashboard)/projetos/[id]/projeto-detail-client.tsx` | **COMPLETAMENTE REESCRITO.** Tabs dinâmicas por squad (Dev: 7 tabs; Audiovisual: 6 tabs). KPIs animados com progresso. Stack tech em badges. Decisões. Link para Figma |
 
-### 3. O que está funcionando e aprovado
+### 3. O que está funcionando e aprovado (confirmado pelo usuário)
 
-- ✅ Sidebar: pill spring + hover areia + ícones semânticos + dropdown de org
-- ✅ Tabs (`SlidingTabs`): pill spring + variantes propagadas + hover areia + whileTap
-- ✅ Modais: 3 camadas com `HubiaPortal` (backdrop blur full-screen em 100% dos casos)
-- ✅ Botões: `animate={{ backgroundColor }}` em vez de `style` — nunca congela com Framer Motion
-- ✅ `HubiaSelect`, `HubiaToastProvider`, `HubiaPortal` — componentes globais
-- ✅ Gerador de Prompt: 3 tabs + modal + Server Action + motion completo
-- ✅ Página Agentes: 4 tabs completos, banco, seed, motion
-- ✅ Página Agente (detalhe): 2 colunas, docs, versioning, histórico
-- ✅ Página Squad (detalhe): agentes, adicionar (multi-select), remover, criar novo
-- ✅ Auto-draft: formulários salvam rascunho no localStorage ao fechar sem publicar
-- ✅ Build limpo (`npm run build` sem erros)
+- ✅ Layout: título + "Novo Pedido" soltos sobre #EEEFE9, tab-navbar abaixo, white box apenas no conteúdo
+- ✅ Tab-navbar squad: Todos / AUDIOVISUAL / DEV com pill spring
+- ✅ Toggle views: Kanban / Calendário / Lista com pill spring preta + texto limão
+- ✅ Filtros: busca animada + dropdown urgência
+- ✅ Kanban DnD: arrastar entre colunas, colunas destacadas, drop zone adaptativa ao tamanho do card
+- ✅ Kanban cards em #F7F7F5 sobre white box — hierarquia visual sem sombra
+- ✅ Modal Novo Pedido: 2 colunas, sem scroll, datepicker nunca cortado, creator condicional, criar projeto inline
+- ✅ HubiaDatePicker: calendário customizado, sem input nativo
+- ✅ Página /pedidos/[id]: cadeia de produção, prompt final, contexto automático, upload resultado
+- ✅ Upload resultado: drag and drop real, múltiplos arquivos, preview
+- ✅ Toasts: limão (success/info) e ink (error/warning) — sem conflito com qualquer fundo
+- ✅ Paleta de status travada: cada status tem bg/text/dot calculados para legibilidade absoluta
+- ✅ "Em Progresso" legível: fundo #F0FF80, texto #5A6600 (nunca limão sobre branco)
+- ✅ Página /projetos/[id]: tabs por squad, KPIs, stack, decisões
+- ✅ Efeito "Movido para Backlog" no toast ao fazer DnD
 
-### 4. O que está incompleto ou pendente
+### 4. Regras derivadas desta sessão (consolidar no MEMORY.md)
 
-- [ ] Páginas por construir: **Pedidos**, Projetos, Calendário, Relatório, Conhecimento, Memória, Arquitetura
-- [ ] Review geral de motion nas páginas mais antigas (Config, Dashboard)
-- [ ] KPIs do Creator Overview: alguns valores hardcoded
-- [ ] Upload de avatar/logo: ainda URL manual
+- **White box:** AppShell nunca tem white box global. Cada página coloca `rounded-[20px] bg-white p-5` APENAS ao redor do conteúdo principal.
+- **Título e controles:** ficam FORA do white box, sobre o fundo #EEEFE9
+- **Paleta de status:** TRAVADA em STATUS_PALETTE — nunca usar limão como cor de texto sobre branco
+- **Creator condicional:** aparece APENAS para tipos imagem/video/creator — nunca para DEV
+- **Toasts:** success/info = #D7FF00 (limão), error/warning = #0E0F10 (ink)
+- **DnD:** drop zone herda altura do card arrastado via getBoundingClientRect()
 
-### 5. Próxima ação exata
+### 5. O que está incompleto ou pendente
 
-→ Próxima página a construir: **Pedidos** (prioridade do backlog).
-→ Antes de começar: verificar se existe node Figma para a tela.
-→ Toda nova tela: `HubiaSelect`, `HubiaPortal` em modais, `toast.*`, variantes propagadas, `animate` nunca `style` para valores dinâmicos.
+- [ ] Auth: usuário precisa ter membership para salvar novos pedidos via form (dev workaround via getCurrentOrganizationId)
+- [ ] Revisão geral de outras páginas com o mesmo padrão de layout (título solto + tab-navbar + white box)
+- [ ] Calendário: opção de visualização semanal além da mensal
+- [ ] Revisão em revisão: múltiplos revisores (redator, diretor de arte, planejador) — fluxo de aprovação
+- [ ] Memória, Conhecimento, Relatório — construção completa
+- [ ] API keys: Supabase Storage, Telegram, AI providers (ver `memory/CHECKLIST-FINAL.md`)
 
-### 6. Regras críticas aprendidas nesta sessão
+### 6. Próxima ação exata
 
-- **`animate` vs `style` com Framer Motion:** Nunca use `style={{ background: isActive ? ... }}` para valores que mudam. O Framer Motion congela o valor no primeiro render do hover. **Sempre** use `animate={{ backgroundColor: isSel ? "#X" : "#Y" }}` com `initial={false}`.
-- **`HubiaPortal` obrigatório em modais:** Qualquer modal que precise de `backdrop-filter: blur()` full-screen DEVE usar `HubiaPortal` (createPortal para `document.body`). Framer Motion e outros wrappers criam stacking context que quebram o blur.
-- **Auto-draft universal:** Todo formulário de criação que o usuário pode fechar acidentalmente deve salvar rascunho no `localStorage` com chave única. Restaurar ao reabrir. Limpar ao submeter com sucesso.
+→ Aplicar o padrão "título + tab-navbar + white box" em todas as páginas que ainda usam o layout antigo (Projetos, Creators, Gerador, etc.).
+→ Construir páginas restantes: Memória, Conhecimento, Relatório.
 
 ---
-
-## Histórico de entregas
 
 ### Schema & Config
 - [x] Schema Prisma: 19+ models validados
@@ -73,6 +77,7 @@ Página Agentes refinada com correções de motion (animate vs style), página d
 ### Database
 - [x] `prisma db push` — 19+ tabelas no Supabase
 - [x] Seed: 1 org, 1 branding, Creator Ninaah com metadata, Dev Squad + Audiovisual Squad, 9 agentes, 17 skills
+- [x] Seed v2: 11 pedidos distribuídos em todos os status, 3 projetos com metadata rica, 2 creators
 
 ### Auth & Middleware
 - [x] Supabase client browser + server
@@ -106,6 +111,7 @@ Página Agentes refinada com correções de motion (animate vs style), página d
 - [x] Cards: stagger + whileHover + flat design
 - [x] Dropdowns: AnimatePresence fade+scale
 - [x] Transição de página: Shared Axis vertical
+- [x] DnD Kanban: @dnd-kit, colunas destacadas, drop zone adaptativa
 
 ### Creators
 - [x] Lista de creators — banco + cards pixel-perfect + motion
@@ -122,10 +128,26 @@ Página Agentes refinada com correções de motion (animate vs style), página d
 
 ### UI Components (reutilizáveis globais)
 - [x] `HubiaSelect` — dropdown customizado sem `<select>` nativo
-- [x] `HubiaToastProvider` + `toast.*` — sistema de toast Hubia (Zustand)
+- [x] `HubiaToastProvider` + `toast.*` — toast Hubia com Zustand: limão (success/info) + ink (error/warning)
 - [x] `HubiaPortal` — createPortal para modais com backdrop blur full-screen
 - [x] `SlidingTabs` com variantes propagadas nos ícones
 - [x] `HubiaModal` — modal base com 3 camadas
+- [x] `HubiaDatePicker` — calendário customizado, sem `<input type="date">` nativo
+
+### Pedidos (COMPLETO v2)
+- [x] Lista Kanban com DnD (@dnd-kit) — arrastar entre colunas com feedback visual
+- [x] Calendário mensal com eventos coloridos por tipo
+- [x] Lista tabular com todos os metadados
+- [x] Modal Novo Pedido: 2 colunas, sem scroll, criar projeto inline, creator condicional
+- [x] Modal Detalhe: 4 KPIs, tabs dinâmicas por tipo, status flow clicável
+- [x] Página /pedidos/[id]: cadeia de produção, prompt final, contexto automático, upload resultado
+- [x] Briefing editável inline (JSON)
+- [x] Upload de resultado: drag and drop real, múltiplos arquivos, preview
+
+### Projetos (COMPLETO v1)
+- [x] Lista com cards, KPIs, filtros
+- [x] Modal Novo Projeto
+- [x] Página /projetos/[id]: tabs por squad, KPIs animados, stack, decisões, link Figma
 
 ### Agentes (COMPLETO)
 - [x] Schema: Squad + SquadAgent + SquadStatus + EntityVersion
@@ -137,6 +159,7 @@ Página Agentes refinada com correções de motion (animate vs style), página d
 - [x] Página Agente (`/agentes/[slug]`): 2 colunas, docs, versioning, histórico de versões
 - [x] Página Squad (`/agentes/squad/[slug]`): agentes, adicionar multi-select, remover, criar novo
 - [x] Auto-draft: rascunhos salvos no localStorage
+- [x] Agente QA/Review criado: `dev-squad/agents/qa-review/SOUL.md`
 
 ### Build
 - [x] `npm run build` — compilação limpa
@@ -144,9 +167,8 @@ Página Agentes refinada com correções de motion (animate vs style), página d
 ---
 
 ## Próximas Páginas (por ordem de prioridade)
-- [ ] **Pedidos** — lista, detalhe, criar, status
-- [ ] **Projetos** — lista, kanban ou lista, detalhe
-- [ ] **Calendário** — visualização mensal/semanal
+- [ ] **Aplicar layout padrão** (título + tab-navbar + white box) em Projetos, Creators, Gerador
+- [ ] **Calendário** — visualização semanal além da mensal
 - [ ] **Relatório** — dashboard de métricas
 - [ ] **Conhecimento** — base de conhecimento
 - [ ] **Memória** — memória dos agentes

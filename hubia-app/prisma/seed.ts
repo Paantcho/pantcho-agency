@@ -1,8 +1,17 @@
+/**
+ * HUBIA — Seed de dados mockados
+ *
+ * Popula o banco com dados realistas para que todas as páginas
+ * fiquem funcionais imediatamente, sem depender de cadastros manuais.
+ *
+ * Execução: npm run db:seed
+ */
+
+import path from "node:path";
+import dotenv from "dotenv";
 import { Pool } from "pg";
 import { PrismaPg } from "@prisma/adapter-pg";
 import { PrismaClient } from "@prisma/client";
-import dotenv from "dotenv";
-import path from "node:path";
 
 dotenv.config({ path: path.join(__dirname, "..", ".env.local") });
 
@@ -10,475 +19,357 @@ const pool = new Pool({ connectionString: process.env.DIRECT_URL });
 const adapter = new PrismaPg(pool);
 const prisma = new PrismaClient({ adapter });
 
+// ─── IDs reais do banco ───────────────────────────────────────────────────────
+const ORG_ID = "8d1c0aac-3e9b-44c5-b0b8-7529d5da0412"; // Pantcho Agency — já existe
+const CREATOR_NINAAH_ID = "dceffb0a-ea8a-4303-9d5a-25cb2b15752e"; // Ninaah — já existe
+
+// IDs para novos dados
+const CREATOR_SOFIA_ID = "a1b2c3d4-0000-0000-0000-000000000201";
+const PROJETO_HUB_ID = "a1b2c3d4-0000-0000-0000-000000000100";
+const PROJETO_NINAAH_ID = "a1b2c3d4-0000-0000-0000-000000000101";
+const PROJETO_PRIVACY_ID = "a1b2c3d4-0000-0000-0000-000000000102";
+
+// Data helpers
+const hoje = new Date();
+const d = (offsetDays: number) => {
+  const dt = new Date(hoje);
+  dt.setDate(dt.getDate() + offsetDays);
+  dt.setHours(12, 0, 0, 0);
+  return dt;
+};
+
 async function main() {
-  console.log("Seeding database...");
+  console.log("🌱 Iniciando seed...");
+  console.log(`   Organização: ${ORG_ID}`);
 
-  // 1. Plano interno (sem limites) para a Pantcho Agency
-  const planInterno = await prisma.plan.upsert({
-    where: { slug: "interno" },
+  // ─── 1. Creator Sofia ────────────────────────────────────────────────────
+  await prisma.creator.upsert({
+    where: { id: CREATOR_SOFIA_ID },
     update: {},
     create: {
-      name: "Interno",
-      slug: "interno",
-      description: "Plano interno da Pantcho Agency — sem limites.",
-      price: null,
-      interval: null,
-      limits: {
-        max_creators: -1,
-        max_prompts_per_month: -1,
-        max_team_members: -1,
-        max_ai_providers: -1,
-        max_projects: -1,
-      },
-      features: ["all"],
+      id: CREATOR_SOFIA_ID,
+      organizationId: ORG_ID,
+      name: "Sofia Alves",
+      slug: "sofia-alves",
+      avatarUrl: "https://api.dicebear.com/9.x/avataaars/svg?seed=sofia",
+      bio: "Creator fitness e bem-estar.",
       isActive: true,
-      sortOrder: 0,
-    },
-  });
-
-  // 2. Planos para usuários futuros (Fase 2 — criados agora para referência)
-  const planFree = await prisma.plan.upsert({
-    where: { slug: "free" },
-    update: {},
-    create: {
-      name: "Free",
-      slug: "free",
-      description: "Plano gratuito com limites básicos.",
-      price: 0,
-      interval: "monthly",
-      limits: {
-        max_creators: 1,
-        max_prompts_per_month: 50,
-        max_team_members: 1,
-        max_ai_providers: 1,
-        max_projects: 3,
-      },
-      features: ["basic"],
-      isActive: true,
-      sortOrder: 1,
-    },
-  });
-
-  const planPro = await prisma.plan.upsert({
-    where: { slug: "pro" },
-    update: {},
-    create: {
-      name: "Pro",
-      slug: "pro",
-      description: "Para profissionais e pequenas equipes.",
-      price: 49.9,
-      interval: "monthly",
-      limits: {
-        max_creators: 5,
-        max_prompts_per_month: 500,
-        max_team_members: 5,
-        max_ai_providers: 3,
-        max_projects: 20,
-      },
-      features: ["basic", "pro"],
-      isActive: true,
-      sortOrder: 2,
-    },
-  });
-
-  const planBusiness = await prisma.plan.upsert({
-    where: { slug: "business" },
-    update: {},
-    create: {
-      name: "Business",
-      slug: "business",
-      description: "Para agências e empresas.",
-      price: 149.9,
-      interval: "monthly",
-      limits: {
-        max_creators: 20,
-        max_prompts_per_month: 2000,
-        max_team_members: 20,
-        max_ai_providers: 10,
-        max_projects: -1,
-      },
-      features: ["basic", "pro", "business"],
-      isActive: true,
-      sortOrder: 3,
-    },
-  });
-
-  // 3. Organização seed — Pantcho Agency
-  const pantchoAgency = await prisma.organization.upsert({
-    where: { slug: "pantcho-agency" },
-    update: {},
-    create: {
-      name: "Pantcho Agency",
-      slug: "pantcho-agency",
-      planId: planInterno.id,
-      isActive: true,
-      settings: {
-        isSeeded: true,
-        tier: "internal",
+      metadata: {
+        platforms: ["instagram", "youtube"],
+        city: "Rio de Janeiro",
+        age: 26,
+        niche: "fitness",
       },
     },
   });
 
-  // 4. Branding da Pantcho Agency (Limão-500 como primária)
-  await prisma.organizationBranding.upsert({
-    where: { organizationId: pantchoAgency.id },
+  // ─── 2. Projetos ─────────────────────────────────────────────────────────
+  await prisma.projeto.upsert({
+    where: { id: PROJETO_HUB_ID },
     update: {},
     create: {
-      organizationId: pantchoAgency.id,
-      colorPrimary: "#D7FF00",
-      colorScale: {
-        "50": "#FAFFCC",
-        "100": "#F5FF99",
-        "200": "#EDFF66",
-        "300": "#E2FF33",
-        "400": "#D7FF00",
-        "500": "#D7FF00",
-        "600": "#ACCC00",
-        "700": "#819900",
-        "800": "#566600",
-        "900": "#2B3300",
+      id: PROJETO_HUB_ID,
+      organizationId: ORG_ID,
+      nome: "Pantcho Agency Hub",
+      descricao: "Sistema operacional centralizado da Pantcho Agency. 33 páginas, 8 módulos.",
+      status: "ativo",
+      metadata: {
+        squad: "Dev Squad",
+        prioridade: "Alta",
+        progresso: 35,
+        figmaUrl: "https://figma.com/file/LuXTz9U7A7dNgdOO5Vt50S",
+        objetivo: "Sistema operacional centralizado da agência",
+        deadline: "2026-04-15",
+        version: "v1",
+        stack: ["Next.js 15", "TypeScript", "Tailwind", "Supabase", "Prisma"],
+        tarefas: [
+          { id: 1, titulo: "PRD completo — 700+ linhas", concluido: true },
+          { id: 2, titulo: "Wireframes HTML — 30 telas", concluido: true },
+          { id: 3, titulo: "Design System definido", concluido: true },
+          { id: 4, titulo: "Figma — 6 telas essenciais", concluido: false },
+          { id: 5, titulo: "Scaffold Next.js 15", concluido: false },
+          { id: 6, titulo: "Supabase schema", concluido: false },
+          { id: 7, titulo: "Google Login + auth", concluido: false },
+          { id: 8, titulo: "Deploy agency.paantcho.com", concluido: false },
+        ],
+        decisoes: [
+          { titulo: "Google Login único", desc: "Simplicidade de onboarding", data: "2026-02-15" },
+          { titulo: "Sidebar sem subitens aninhados", desc: "Navegação via abas internas", data: "2026-02-20" },
+          { titulo: "Tema base: claro (#EEEFE9)", desc: "Com toggle dark futuro", data: "2026-02-22" },
+        ],
+        modulos: 7,
+        telas: 30,
       },
     },
   });
 
-  // 5. Feature flags globais
-  const flags = [
-    { name: "ai_generation", description: "Geração de conteúdo com IA", isGlobal: true },
-    { name: "video_generation", description: "Geração de vídeo (Fase 3)", isGlobal: false, planRequired: "business" },
-    { name: "white_label", description: "White-label e domínio customizado (Fase 3)", isGlobal: false, planRequired: "enterprise" },
-    { name: "custom_ai_providers", description: "Provedores de IA customizados", isGlobal: false, planRequired: "pro" },
+  await prisma.projeto.upsert({
+    where: { id: PROJETO_NINAAH_ID },
+    update: {},
+    create: {
+      id: PROJETO_NINAAH_ID,
+      organizationId: ORG_ID,
+      nome: "Conteúdo Ninaah — Março",
+      descricao: "Pack mensal de posts para a Ninaah. 30 posts + prompts.",
+      status: "ativo",
+      metadata: {
+        squad: "Audiovisual Squad",
+        prioridade: "Alta",
+        progresso: 60,
+        objetivo: "Produção do conteúdo mensal da creator Ninaah Dornfeld",
+        deadline: "2026-03-31",
+        version: "v1",
+        posts: 30,
+        postsConcluidos: 18,
+        tarefas: [
+          { id: 1, titulo: "Brief mensal aprovado", concluido: true },
+          { id: 2, titulo: "Pack Piscina — 6 imagens", concluido: true },
+          { id: 3, titulo: "Pack Fachada — 4 imagens", concluido: false },
+          { id: 4, titulo: "Reels cozinha — 3 vídeos", concluido: false },
+          { id: 5, titulo: "Stories diários — 30 templates", concluido: false },
+        ],
+        decisoes: [
+          { titulo: "Mood elegante para março", desc: "Tons quentes, luz dourada", data: "2026-03-01" },
+          { titulo: "Limite 20 fotos/seção", desc: "Para manter qualidade", data: "2026-03-02" },
+        ],
+        modulos: 3,
+        telas: 18,
+      },
+    },
+  });
+
+  await prisma.projeto.upsert({
+    where: { id: PROJETO_PRIVACY_ID },
+    update: {},
+    create: {
+      id: PROJETO_PRIVACY_ID,
+      organizationId: ORG_ID,
+      nome: "Landing Page Privacy",
+      descricao: "Homepage da plataforma social Privacy. Figma MCP + Next.js.",
+      status: "ativo",
+      metadata: {
+        squad: "Dev Squad",
+        prioridade: "Média",
+        progresso: 40,
+        objetivo: "Landing page de alta conversão para o Privacy",
+        deadline: "2026-03-20",
+        version: "v1",
+        stack: ["Next.js 15", "Figma MCP", "Vercel"],
+        tarefas: [
+          { id: 1, titulo: "Briefing aprovado", concluido: true },
+          { id: 2, titulo: "Design Figma — 6 telas", concluido: false },
+          { id: 3, titulo: "Desenvolvimento frontend", concluido: false },
+          { id: 4, titulo: "Deploy Vercel", concluido: false },
+        ],
+        decisoes: [
+          { titulo: "Next.js + Tailwind", desc: "Stack definida", data: "2026-03-05" },
+        ],
+        modulos: 1,
+        telas: 6,
+      },
+    },
+  });
+
+  // ─── 3. Pedidos ──────────────────────────────────────────────────────────
+  const pedidos = [
+    {
+      id: "a1b2c3d4-0000-0000-0000-000000000300",
+      titulo: "Reels Ninaah Cozinha",
+      descricao: "3 vídeos curtos. Creator: Ninaah. Tom: descontraído e elegante.",
+      tipo: "video" as const,
+      status: "rascunho" as const,
+      urgencia: "media" as const,
+      creatorId: CREATOR_NINAAH_ID,
+      projetoId: PROJETO_NINAAH_ID,
+      dueAt: d(5),
+      briefing: { squad: "AUDIOVISUAL", referencias: ["@minimalistbaker"], formato: "Reels 9:16", duracao: "15-30s" },
+    },
+    {
+      id: "a1b2c3d4-0000-0000-0000-000000000301",
+      titulo: "Landing Page Privacy",
+      descricao: "Homepage completa. Next.js 15. Figma MCP.",
+      tipo: "landing_page" as const,
+      status: "em_andamento" as const,
+      urgencia: "alta" as const,
+      creatorId: null as null,
+      projetoId: PROJETO_PRIVACY_ID,
+      dueAt: d(12),
+      briefing: { squad: "DEV", stack: ["Next.js 15", "Figma MCP"], progresso: 40, fase: "Frontend" },
+    },
+    {
+      id: "a1b2c3d4-0000-0000-0000-000000000302",
+      titulo: "Pack Ninaah Piscina Março",
+      descricao: "6 imagens. Mood elegante. Tarde.",
+      tipo: "imagem" as const,
+      status: "aguardando" as const,
+      urgencia: "critica" as const,
+      creatorId: CREATOR_NINAAH_ID,
+      projetoId: PROJETO_NINAAH_ID,
+      dueAt: d(-3),
+      briefing: { squad: "AUDIOVISUAL", quantidade: 6, mood: "Elegante", horario: "Tarde", validacao: "Pendente" },
+    },
+    {
+      id: "a1b2c3d4-0000-0000-0000-000000000303",
+      titulo: "Conteúdo Ninaah Março",
+      descricao: "Pack mensal. 18/30 posts concluídos.",
+      tipo: "imagem" as const,
+      status: "em_andamento" as const,
+      urgencia: "media" as const,
+      creatorId: CREATOR_NINAAH_ID,
+      projetoId: PROJETO_NINAAH_ID,
+      dueAt: d(23),
+      briefing: { squad: "AUDIOVISUAL", total: 30, concluidos: 18, pendentes: 12 },
+    },
+    {
+      id: "a1b2c3d4-0000-0000-0000-000000000304",
+      titulo: "Agency Hub PRD Final",
+      descricao: "700 linhas. Aprovação Pantcho.",
+      tipo: "sistema" as const,
+      status: "revisao" as const,
+      urgencia: "alta" as const,
+      creatorId: null as null,
+      projetoId: PROJETO_HUB_ID,
+      dueAt: d(3),
+      briefing: { squad: "DEV", linhas: 700, aprovacaoPendente: true },
+    },
+    {
+      id: "a1b2c3d4-0000-0000-0000-000000000305",
+      titulo: "Dev Squad v2.0 Arquitetura",
+      descricao: "Diagrama completo do sistema.",
+      tipo: "sistema" as const,
+      status: "entregue" as const,
+      urgencia: "baixa" as const,
+      creatorId: null as null,
+      projetoId: PROJETO_HUB_ID,
+      dueAt: d(-7),
+      completedAt: d(-6),
+      briefing: { squad: "DEV" },
+    },
+    {
+      id: "a1b2c3d4-0000-0000-0000-000000000306",
+      titulo: "APPEARANCE.md Ninaah v1.0",
+      descricao: "Documento forense completo.",
+      tipo: "creator" as const,
+      status: "entregue" as const,
+      urgencia: "baixa" as const,
+      creatorId: CREATOR_NINAAH_ID,
+      projetoId: PROJETO_NINAAH_ID,
+      dueAt: d(-10),
+      completedAt: d(-9),
+      briefing: { squad: "AUDIOVISUAL" },
+    },
+    {
+      id: "a1b2c3d4-0000-0000-0000-000000000307",
+      titulo: "Blog Privacy — SEO",
+      descricao: "10 artigos. Keywords definidas.",
+      tipo: "site" as const,
+      status: "rascunho" as const,
+      urgencia: "baixa" as const,
+      creatorId: null as null,
+      projetoId: PROJETO_PRIVACY_ID,
+      dueAt: d(15),
+      briefing: { squad: "DEV", artigos: 10 },
+    },
+    {
+      id: "a1b2c3d4-0000-0000-0000-000000000308",
+      titulo: "Ninaah Fachada Pack",
+      descricao: "4 imagens. Mood: Elegante.",
+      tipo: "imagem" as const,
+      status: "rascunho" as const,
+      urgencia: "media" as const,
+      creatorId: CREATOR_NINAAH_ID,
+      projetoId: PROJETO_NINAAH_ID,
+      dueAt: d(8),
+      briefing: { squad: "AUDIOVISUAL", quantidade: 4, mood: "Elegante" },
+    },
+    {
+      id: "a1b2c3d4-0000-0000-0000-000000000309",
+      titulo: "Deploy Agency Hub v1",
+      descricao: "Deploy em agency.paantcho.com via Vercel.",
+      tipo: "sistema" as const,
+      status: "aguardando" as const,
+      urgencia: "alta" as const,
+      creatorId: null as null,
+      projetoId: PROJETO_HUB_ID,
+      dueAt: d(28),
+      briefing: { squad: "DEV", plataforma: "Vercel", dominio: "agency.paantcho.com" },
+    },
+    {
+      id: "a1b2c3d4-0000-0000-0000-000000000310",
+      titulo: "Review Dev Squad v2",
+      descricao: "Revisão completa do sistema de agentes.",
+      tipo: "sistema" as const,
+      status: "revisao" as const,
+      urgencia: "alta" as const,
+      creatorId: null as null,
+      projetoId: PROJETO_HUB_ID,
+      dueAt: d(21),
+      briefing: { squad: "DEV", escopo: "Todos os agentes" },
+    },
   ];
 
-  for (const flag of flags) {
-    await prisma.featureFlag.upsert({
-      where: { name: flag.name },
-      update: {},
-      create: flag,
+  for (const p of pedidos) {
+    const data = {
+      organizationId: ORG_ID,
+      titulo: p.titulo,
+      descricao: p.descricao,
+      tipo: p.tipo,
+      status: p.status,
+      urgencia: p.urgencia,
+      sourceType: "manual" as const,
+      creatorId: p.creatorId,
+      projetoId: p.projetoId,
+      dueAt: p.dueAt,
+      completedAt: "completedAt" in p ? (p as { completedAt?: Date }).completedAt ?? null : null,
+      briefing: p.briefing as object,
+    };
+    await prisma.pedido.upsert({
+      where: { id: p.id },
+      update: { status: p.status, urgencia: p.urgencia, dueAt: p.dueAt, briefing: p.briefing as object },
+      create: { id: p.id, ...data },
     });
   }
 
-  // 6. Creator seed — Ninaah Dornfeld (dados da audiovisual-squad/memory/creators/ninaah/)
-  const ninaah = await prisma.creator.upsert({
-    where: {
-      organizationId_slug: {
-        organizationId: pantchoAgency.id,
-        slug: "ninaah-dornfeld",
-      },
-    },
-    update: {
-      metadata: {
-        city: "Pomerode",
-        state: "SC",
-        age: 22,
-        birthdate: "16/05/2004",
-        platforms: ["instagram", "privacy", "tiktok"],
-      },
-    },
-    create: {
-      organizationId: pantchoAgency.id,
-      name: "Ninaah Dornfeld",
-      slug: "ninaah-dornfeld",
-      bio: "Creator digital. Identidade forense documentada em APPEARANCE e AMBIENTES. Santa Catarina, Brasil.",
-      isActive: true,
-      metadata: {
-        city: "Pomerode",
-        state: "SC",
-        age: 22,
-        birthdate: "16/05/2004",
-        platforms: ["instagram", "privacy", "tiktok"],
-      },
-    },
-  });
-
-  await prisma.creatorAppearance.upsert({
-    where: { creatorId: ninaah.id },
-    update: {},
-    create: {
-      creatorId: ninaah.id,
-      basePrompt: `Mulher, 1,63m, rosto oval, olhos amendoados castanho claro a mel, cabelo longo castanho claro a médio (liso a levemente ondulado nas pontas). Silhueta: cintura definida, proporções naturais. Pele bem cuidada, natural. Consistência forense: traços fixos, pintinha no ombro direito. Dois moods: (A) feminina elegante (B) jovem descolada toque esportivo. Localização: Pomerode, SC. Riqueza implícita, bom gosto.`,
-      markers: [],
-      protected: [],
-    },
-  });
-
-  const envs = [
-    { name: "Sala Principal", description: "Sofá contemporâneo off-white, mesa de centro, TV, tapete neutro.", prompt: "Sala de estar contemporânea, sofá grande off-white/bege, mesa de centro madeira clara, TV em painel, iluminação quente indireta, janelas amplas com cortina de linho." },
-    { name: "Cozinha Gourmet", description: "Ilha grande, bancada clara, eletros embutidos.", prompt: "Cozinha gourmet integrada, ilha com banquetas, bancada quartzo/mármore claro, eletros embutidos inox, pendentes lineares, vista para jardim/piscina." },
-    { name: "Quarto da Ninaah", description: "Andar superior, cama king, ripado madeira.", prompt: "Quarto andar superior, cama king roupa de cama neutra, cabeceira estofada ou ripado madeira, parede ripado com luz indireta quente, vista área arborizada SC." },
-    { name: "Área da Piscina", description: "Piscina retangular, deck claro, espreguiçadeiras.", prompt: "Área da piscina, piscina retangular contemporânea, deck claro, espreguiçadeiras minimalistas, árvore âncora visível, paisagismo SC (sem palmeiral nordeste)." },
-    { name: "Garagem", description: "2 vagas, BMW X2 Cape York Green.", prompt: "Garagem 2 vagas, teto luz embutida, paredes cinza claro, chão concreto polido. BMW X2 2025 Cape York Green metallic." },
+  // ─── 4. ActivityLog ──────────────────────────────────────────────────────
+  const logs = [
+    { action: "pedido.criado", entityType: "pedido", entityId: "a1b2c3d4-0000-0000-0000-000000000302", metadata: { titulo: "Pack Ninaah Piscina Março" }, isAlert: true },
+    { action: "pedido.status_alterado", entityType: "pedido", entityId: "a1b2c3d4-0000-0000-0000-000000000301", metadata: { de: "rascunho", para: "em_andamento" }, isAlert: true },
+    { action: "projeto.criado", entityType: "projeto", entityId: PROJETO_HUB_ID, metadata: { nome: "Pantcho Agency Hub" }, isAlert: true },
+    { action: "creator.criada", entityType: "creator", entityId: CREATOR_NINAAH_ID, metadata: { nome: "Ninaah Dornfeld" }, isAlert: true },
+    { action: "pedido.atualizado", entityType: "pedido", entityId: "a1b2c3d4-0000-0000-0000-000000000303", metadata: { campos: ["briefing"] }, isAlert: false },
   ];
-  const existingEnvs = await prisma.creatorEnvironment.findMany({
-    where: { creatorId: ninaah.id },
-  });
-  if (existingEnvs.length === 0) {
-    for (const env of envs) {
-      await prisma.creatorEnvironment.create({
+
+  for (const log of logs) {
+    const exists = await prisma.activityLog.findFirst({
+      where: { organizationId: ORG_ID, action: log.action, entityId: log.entityId },
+    });
+    if (!exists) {
+      await prisma.activityLog.create({
         data: {
-          creatorId: ninaah.id,
-          name: env.name,
-          description: env.description,
-          prompt: env.prompt,
+          organizationId: ORG_ID,
+          action: log.action,
+          entityType: log.entityType,
+          entityId: log.entityId,
+          metadata: log.metadata as object,
+          isAlert: log.isAlert,
         },
       });
     }
   }
 
-  await prisma.creatorVoice.upsert({
-    where: { creatorId: ninaah.id },
-    update: {},
-    create: {
-      creatorId: ninaah.id,
-      tone: "Elegante e acessível; alterna entre polida e descolada conforme o contexto.",
-      style: "Natural chic. Textos curtos e objetivos. Evitar jargões. Tom varia por plataforma (Instagram mais solto, site mais refinado).",
-      rules: [],
-      examples: [],
-    },
-  });
-
-  console.log("Seed completo:");
-  console.log(`  - Planos: ${planInterno.name}, ${planFree.name}, ${planPro.name}, ${planBusiness.name}`);
-  console.log(`  - Organização: ${pantchoAgency.name} (${pantchoAgency.slug})`);
-  console.log(`  - Feature flags: ${flags.length}`);
-  console.log(`  - Creator: ${ninaah.name} (${ninaah.slug})`);
-
-  // ─── SKILLS — Dev Squad ──────────────────────────────────────────────
-  const devSkillsData = [
-    { name: "prd", slug: "prd", description: "Requisitos — SEMPRE primeiro em projeto novo", isAlways: true },
-    { name: "analise-figma", slug: "analise-figma", description: "Extração de design, tokens, componentes via MCP" },
-    { name: "arquitetura", slug: "arquitetura", description: "Stack, estrutura, pastas, dependências" },
-    { name: "frontend", slug: "frontend", description: "UI, componentes, responsividade" },
-    { name: "backend", slug: "backend", description: "APIs, banco, autenticação" },
-    { name: "qa-review", slug: "qa-review", description: "Revisão de qualidade antes de entregar" },
-    { name: "seguranca", slug: "seguranca", description: "Auth, validação, OWASP Top 10" },
-    { name: "nextjs-patterns", slug: "nextjs-patterns", description: "Padrões Next.js 15 App Router" },
-  ];
-
-  const devSkills: Record<string, { id: string }> = {};
-  for (const s of devSkillsData) {
-    const skill = await prisma.skill.upsert({
-      where: { organizationId_slug: { organizationId: pantchoAgency.id, slug: s.slug } },
-      update: { description: s.description },
-      create: {
-        organizationId: pantchoAgency.id,
-        name: s.name,
-        slug: s.slug,
-        description: s.description,
-        isActive: true,
-        config: s.isAlways ? { always: true } : {},
-      },
-    });
-    devSkills[s.slug] = { id: skill.id };
-  }
-
-  // ─── SKILLS — Audiovisual Squad ──────────────────────────────────────
-  const avSkillsData = [
-    { name: "creator-bible", slug: "creator-bible", description: "Identidade completa do creator — SEMPRE", isAlways: true },
-    { name: "image-prompt", slug: "image-prompt", description: "Geração de prompts de imagem" },
-    { name: "video-prompt", slug: "video-prompt", description: "Geração de prompts de vídeo" },
-    { name: "scene-composition", slug: "scene-composition", description: "Composição técnica de cena" },
-    { name: "consistency-validation", slug: "consistency-validation", description: "Checklist forense de identidade" },
-    { name: "creator-voice", slug: "creator-voice", description: "Tom, vocabulário, voz da creator" },
-    { name: "content-calendar", slug: "content-calendar", description: "Planejamento de semana e mês" },
-    { name: "reference-deconstruction", slug: "reference-deconstruction", description: "Análise de foto de referência" },
-    { name: "visual-identity", slug: "visual-identity", description: "Estética, paleta e mood" },
-  ];
-
-  const avSkills: Record<string, { id: string }> = {};
-  for (const s of avSkillsData) {
-    const skill = await prisma.skill.upsert({
-      where: { organizationId_slug: { organizationId: pantchoAgency.id, slug: s.slug } },
-      update: { description: s.description },
-      create: {
-        organizationId: pantchoAgency.id,
-        name: s.name,
-        slug: s.slug,
-        description: s.description,
-        isActive: true,
-        config: s.isAlways ? { always: true } : {},
-      },
-    });
-    avSkills[s.slug] = { id: skill.id };
-  }
-
-  // ─── AGENTES ─────────────────────────────────────────────────────────
-  const agentsData = [
-    // Dev Squad
-    {
-      name: "Orquestrador",
-      slug: "orquestrador",
-      description: "Recebe pedidos, classifica intenção e roteia para o squad correto. Ponto único de entrada.",
-      status: "ativo" as const,
-      squad: "dev-squad",
-      tags: ["AGENTS.md", "MEMORY.md"],
-      skills: [] as string[],
-    },
-    {
-      name: "Desenvolvimento",
-      slug: "desenvolvimento",
-      description: "Transforma designs em código. Next.js 15, TypeScript, Shadcn, Supabase. Nível sênior+.",
-      status: "ativo" as const,
-      squad: "dev-squad",
-      tags: ["PRD", "Frontend", "JS", "+6"],
-      skills: ["prd", "analise-figma", "arquitetura", "frontend", "backend", "qa-review", "seguranca", "nextjs-patterns"],
-    },
-    {
-      name: "Criador de Agentes",
-      slug: "criador-de-agentes",
-      description: "Fábrica de novos squads e agentes. Gera SOUL.md, skills e integra na memória.",
-      status: "rascunho" as const,
-      squad: "dev-squad",
-      tags: [],
-      skills: ["prd", "arquitetura"],
-    },
-    // Audiovisual Squad
-    {
-      name: "Planner",
-      slug: "planner",
-      description: "Cria calendário semanal. Define narrativa, ambientes, momentos e formatos.",
-      status: "rascunho" as const,
-      squad: "audiovisual-squad",
-      tags: ["serviço X", "serviço Y", "serviço Z"],
-      skills: ["content-calendar", "creator-bible"],
-    },
-    {
-      name: "Copywriter",
-      slug: "copywriter",
-      description: "Escreve legendas, scripts e voz autêntica da creator. Zero copy genérico de IA.",
-      status: "rascunho" as const,
-      squad: "audiovisual-squad",
-      tags: ["produto A", "produto B", "produto C"],
-      skills: ["creator-voice", "creator-bible"],
-    },
-    {
-      name: "Diretor de Arte",
-      slug: "diretor-de-arte",
-      description: "Define mood, paleta, estética visual e referências para cada post.",
-      status: "rascunho" as const,
-      squad: "audiovisual-squad",
-      tags: [],
-      skills: ["visual-identity", "creator-bible", "reference-deconstruction"],
-    },
-    {
-      name: "Diretor de Cena",
-      slug: "diretor-de-cena",
-      description: "Composição técnica: câmera, lente, luz, ângulo, props e ambiente.",
-      status: "rascunho" as const,
-      squad: "audiovisual-squad",
-      tags: [],
-      skills: ["scene-composition", "creator-bible", "image-prompt"],
-    },
-    {
-      name: "Consistência",
-      slug: "consistencia",
-      description: "Guarda da identidade. Poder de veto. Valida cada imagem contra APPEARANCE.md.",
-      status: "ativo" as const,
-      squad: "audiovisual-squad",
-      tags: ["status ativo", "status inativo", "status pendente"],
-      skills: ["consistency-validation", "creator-bible"],
-    },
-    {
-      name: "Eng. de Prompts",
-      slug: "eng-de-prompts",
-      description: "Gera o prompt final otimizado para imagem e vídeo. Aplica regras forenses.",
-      status: "ativo" as const,
-      squad: "audiovisual-squad",
-      tags: [],
-      skills: ["image-prompt", "video-prompt", "creator-bible", "consistency-validation"],
-    },
-  ];
-
-  const createdAgents: Record<string, { id: string }> = {};
-  for (const a of agentsData) {
-    const agent = await prisma.agent.upsert({
-      where: { organizationId_slug: { organizationId: pantchoAgency.id, slug: a.slug } },
-      update: { description: a.description, status: a.status, config: { tags: a.tags, squad: a.squad } },
-      create: {
-        organizationId: pantchoAgency.id,
-        name: a.name,
-        slug: a.slug,
-        description: a.description,
-        status: a.status,
-        config: { tags: a.tags, squad: a.squad },
-      },
-    });
-    createdAgents[a.slug] = { id: agent.id };
-
-    // skills do agente
-    const allSkills = { ...devSkills, ...avSkills };
-    for (const skillSlug of a.skills) {
-      const skill = allSkills[skillSlug];
-      if (!skill) continue;
-      await prisma.agentSkill.upsert({
-        where: { agentId_skillId: { agentId: agent.id, skillId: skill.id } },
-        update: {},
-        create: { agentId: agent.id, skillId: skill.id },
-      });
-    }
-  }
-
-  // ─── SQUADS ──────────────────────────────────────────────────────────
-  const squadsData = [
-    {
-      name: "Dev Squad",
-      slug: "dev-squad",
-      description: "Engenharia & Sistemas",
-      icon: "code",
-      color: "#D7FF00",
-      status: "ativo" as const,
-      tags: ["Next.js", "TypeScript", "Supabase"],
-      agents: ["orquestrador", "desenvolvimento", "criador-de-agentes"],
-    },
-    {
-      name: "Audiovisual Squad",
-      slug: "audiovisual-squad",
-      description: "Creators & Estúdio",
-      icon: "pen-tool",
-      color: "#D7FF00",
-      status: "ativo" as const,
-      tags: ["Imagem", "Vídeo", "Copy"],
-      agents: ["planner", "copywriter", "diretor-de-arte", "diretor-de-cena", "consistencia", "eng-de-prompts"],
-    },
-  ];
-
-  for (const s of squadsData) {
-    const squad = await prisma.squad.upsert({
-      where: { organizationId_slug: { organizationId: pantchoAgency.id, slug: s.slug } },
-      update: { description: s.description, status: s.status },
-      create: {
-        organizationId: pantchoAgency.id,
-        name: s.name,
-        slug: s.slug,
-        description: s.description,
-        icon: s.icon,
-        color: s.color,
-        status: s.status,
-        tags: s.tags,
-      },
-    });
-
-    for (const agentSlug of s.agents) {
-      const agent = createdAgents[agentSlug];
-      if (!agent) continue;
-      await prisma.squadAgent.upsert({
-        where: { squadId_agentId: { squadId: squad.id, agentId: agent.id } },
-        update: {},
-        create: { squadId: squad.id, agentId: agent.id },
-      });
-    }
-  }
-
-  console.log(`  - Skills Dev Squad: ${devSkillsData.length}`);
-  console.log(`  - Skills Audiovisual Squad: ${avSkillsData.length}`);
-  console.log(`  - Agentes: ${agentsData.length}`);
-  console.log(`  - Squads: ${squadsData.length}`);
+  console.log("✅ Seed concluído!");
+  console.log(`   → 1 creator adicional (Sofia)`);
+  console.log(`   → 3 projetos criados`);
+  console.log(`   → ${pedidos.length} pedidos criados`);
+  console.log(`   → ${logs.length} logs de atividade criados`);
 }
 
 main()
   .catch((e) => {
-    console.error(e);
+    console.error("❌ Seed falhou:", e.message ?? e);
     process.exit(1);
   })
   .finally(async () => {
     await prisma.$disconnect();
+    await pool.end();
   });

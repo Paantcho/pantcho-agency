@@ -10,6 +10,7 @@ const configTabs = [
   { label: "Equipe", href: "/config/equipe" },
   { label: "Branding", href: "/config/branding" },
   { label: "Provedores IA", href: "/config/provedores" },
+  { label: "Segurança", href: "/config/seguranca" },
 ];
 
 export default function ConfigLayout({
