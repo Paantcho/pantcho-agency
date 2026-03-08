@@ -135,11 +135,23 @@ export default function CreatorDetailClient({
                 padding: "9px 18px",
                 background: "transparent",
               }}
-              whileHover={{ scale: 1.03, backgroundColor: "#EEEFE9" }}
+              initial="rest"
+              whileHover="hovered"
               whileTap={{ scale: 0.96 }}
+              animate="rest"
+              variants={{
+                rest: { backgroundColor: "transparent" },
+                hovered: { scale: 1.03, backgroundColor: "#EEEFE9" },
+              }}
               transition={{ duration: 0.15, ease: [0.34, 1.56, 0.64, 1] }}
             >
-              <actions.secondary.icon size={14} />
+              <motion.span
+                className="flex items-center"
+                variants={{ rest: { scale: 1 }, hovered: { scale: 1.2 } }}
+                transition={{ duration: 0.25, ease: [0.34, 1.56, 0.64, 1] }}
+              >
+                <actions.secondary.icon size={14} />
+              </motion.span>
               {actions.secondary.label}
             </motion.button>
           )}
@@ -148,11 +160,21 @@ export default function CreatorDetailClient({
               type="button"
               className="flex items-center gap-2 rounded-full font-bold"
               style={{ background: "#D7FF00", color: "#0E0F10", fontSize: "13px", padding: "9px 18px" }}
-              whileHover={{ scale: 1.03, backgroundColor: "#DFFF33" }}
+              initial="rest"
+              whileHover="hovered"
               whileTap={{ scale: 0.96 }}
+              animate="rest"
+              variants={{
+                rest: { scale: 1, backgroundColor: "#D7FF00" },
+                hovered: { scale: 1.03, backgroundColor: "#DFFF33" },
+              }}
               transition={{ duration: 0.15, ease: [0.34, 1.56, 0.64, 1] }}
             >
-              <motion.span whileHover={{ scale: 1.2 }} transition={{ duration: 0.3, ease: [0.34, 1.56, 0.64, 1] }}>
+              <motion.span
+                className="flex items-center"
+                variants={{ rest: { scale: 1 }, hovered: { scale: 1.2 } }}
+                transition={{ duration: 0.3, ease: [0.34, 1.56, 0.64, 1] }}
+              >
                 <actions.primary.icon size={14} />
               </motion.span>
               {actions.primary.label}

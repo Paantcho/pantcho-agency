@@ -20,7 +20,14 @@ interface SlidingTabsProps {
 /**
  * Tabs horizontais com pill spring.
  * UMA motion.div absoluta se move. Botões inativos têm hover areia + whileTap.
+ * O ícone usa variante "hovered" que propaga do pai para o filho automaticamente.
  */
+
+const iconVariants = {
+  rest: { scale: 1 },
+  hovered: { scale: 1.2 },
+};
+
 export function SlidingTabs({ tabs, activeId, onChange }: SlidingTabsProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const btnRefs = useRef<(HTMLButtonElement | null)[]>(Array(tabs.length).fill(null));
@@ -63,7 +70,11 @@ export function SlidingTabs({ tabs, activeId, onChange }: SlidingTabsProps) {
             ref={(el) => { btnRefs.current[idx] = el; }}
             type="button"
             onClick={() => onChange(tab.id)}
-            className="group relative z-10 flex items-center gap-2 rounded-[9999px]"
+            initial="rest"
+            whileHover={!isActive ? "hovered" : "rest"}
+            whileTap={{ scale: 0.97 }}
+            animate="rest"
+            className="relative z-10 flex items-center gap-2 rounded-[9999px]"
             style={{
               fontSize: "13px",
               padding: "8px 18px",
@@ -71,21 +82,20 @@ export function SlidingTabs({ tabs, activeId, onChange }: SlidingTabsProps) {
               fontWeight: isActive ? 700 : 500,
               background: "transparent",
             }}
-            whileHover={
-              isActive
-                ? {}
-                : { color: "#0E0F10", backgroundColor: "rgba(213,210,201,0.35)" }
-            }
-            whileTap={{ scale: 0.97 }}
+            variants={{
+              rest: { color: isActive ? "#0E0F10" : "#A9AAA5", backgroundColor: "rgba(0,0,0,0)" },
+              hovered: { color: "#0E0F10", backgroundColor: "rgba(213,210,201,0.35)" },
+            }}
             transition={{ duration: 0.15, ease: [0.4, 0, 0.2, 1] }}
           >
             {Icon && (
-              <Icon
-                size={14}
-                className={`shrink-0 transition-colors duration-150 ${
-                  isActive ? "" : `group-hover:text-[#0E0F10] ${tab.iconClass ?? ""}`
-                }`}
-              />
+              <motion.span
+                className="shrink-0 flex items-center"
+                variants={!isActive ? iconVariants : undefined}
+                transition={{ duration: 0.3, ease: [0.34, 1.56, 0.64, 1] }}
+              >
+                <Icon size={14} />
+              </motion.span>
             )}
             {tab.label}
           </motion.button>
