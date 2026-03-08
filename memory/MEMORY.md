@@ -35,7 +35,7 @@ Next.js 15+ / TypeScript / Tailwind / Shadcn / Supabase / Prisma / Vercel / Figm
   - `hubia-design-system.mdc` — tokens, tipografia, cores, componentes, proibições
   - `motion-interactions.mdc` — motion system completo
   - `figma-fidelity-supreme.mdc` — regra suprema pixel-perfect ao Figma
-  - `hubia-motion-enforcement.mdc` — **LEI DE MOTION** (nova, mais específica): checklist pré-entrega, 10 proibições, padrões exatos de código para cada tipo de elemento
+  - `hubia-motion-enforcement.mdc` — **LEI DE MOTION**: checklist pré-entrega, 10 proibições, padrões exatos de código
 
 ### Padrões definitivos de motion (nunca mudar sem atualizar regra)
 
@@ -67,6 +67,20 @@ Next.js 15+ / TypeScript / Tailwind / Shadcn / Supabase / Prisma / Vercel / Figm
 // <motion.span whileHover={{ scale: 1.2 }}> — NUNCA FAZER ISSO
 ```
 
+**⚠️ REGRA CRÍTICA — `animate` vs `style` com Framer Motion:**
+```tsx
+// CORRETO — Framer Motion controla o valor e reage a mudanças de estado
+<motion.button
+  initial={false}
+  animate={{ backgroundColor: isActive ? "#0E0F10" : "rgba(0,0,0,0)" }}
+  whileHover={!isActive ? { backgroundColor: "rgba(213,210,201,0.35)" } : undefined}
+>
+
+// ERRADO — style é estático no mount; Framer Motion congela o background no hover
+// <motion.button style={{ background: isActive ? "#0E0F10" : "transparent" }}>
+// NUNCA usar style para valores que mudam com estado React + Framer Motion
+```
+
 **Botão primário/secundário/ghost (sem ícone):**
 ```tsx
 <motion.button
@@ -95,12 +109,14 @@ whileTap: scale 0.97
 Ícones: variantes propagadas rest/hovered no motion.button pai
 ```
 
-**Modal — 3 camadas (inviolável):**
+**Modal — 3 camadas (inviolável) + HubiaPortal OBRIGATÓRIO:**
 ```
 Camada 1: overlay rgba(14,15,16,0→0.70) + blur 0→12px, 250ms ease-dec
 Camada 2: scale 0.88→1, y 20→0, opacity 0→1, 280ms ease-dec
 Camada 3: botão X whileHover rotate 90° scale 1.1
 AnimatePresence obrigatório — NUNCA if(!open) return null
+HubiaPortal (createPortal → document.body) OBRIGATÓRIO — sem isso o backdrop-filter
+não aplica full-screen (Framer Motion/CSS transforms criam stacking context)
 ```
 
 **Cards — stagger obrigatório:**
@@ -121,22 +137,37 @@ NUNCA: shadow-* (flat design)
 - **`SlidingTabs`** (`hubia-app/src/components/ui/sliding-tabs.tsx`) — tabs com pill spring + hover areia + variantes propagadas nos ícones
 - **`TabContent`** (`hubia-app/src/components/ui/tab-content.tsx`) — conteúdo com animação direcional
 - **`HubiaModal`** (`hubia-app/src/components/ui/hubia-modal.tsx`) — modal com 3 camadas obrigatórias + AnimatePresence
-- **`HubiaSelect`** (`hubia-app/src/components/ui/hubia-select.tsx`) — **NOVO** dropdown 100% customizado, zero `<select>` nativo
-- **`HubiaToastProvider`** + `toast.*` (`hubia-app/src/components/ui/hubia-toast.tsx`) — **NOVO** toast Hubia com Zustand, registrado no root layout
-- **`Button`** (`hubia-app/src/components/ui/button.tsx`) — MotionButton com whileHover/whileTap (asChild preservado)
+- **`HubiaPortal`** (`hubia-app/src/components/ui/hubia-portal.tsx`) — **OBRIGATÓRIO em modais** — createPortal para `document.body`, garante backdrop-filter full-screen
+- **`HubiaSelect`** (`hubia-app/src/components/ui/hubia-select.tsx`) — dropdown 100% customizado, zero `<select>` nativo
+- **`HubiaToastProvider`** + `toast.*` (`hubia-app/src/components/ui/hubia-toast.tsx`) — toast Hubia com Zustand, registrado no root layout
+- **`Button`** (`hubia-app/src/components/ui/button.tsx`) — MotionButton com whileHover/whileTap
 - **`KpiCards` / `PedidosPrioritariosCards`** (`dashboard-motion.tsx`) — Client Components com stagger
 
 ## Modal — Padrão da plataforma inteira (Hubia)
 - **Regra global:** Em **toda** a plataforma, qualquer modal de criar/editar/ver segue o mesmo padrão.
-- **Comportamento:** Overlay **full-screen** (tela inteira), com **blur** no fundo e caixa de conteúdo centralizada. O overlay cobre sidebar e tudo (renderizado em portal no `body`).
-- **Componente:** `hubia-app/src/components/ui/hubia-modal.tsx` — usar sempre este componente; não criar modais ad-hoc.
-- **Conteúdo do modal:** Título no topo; **botão X** no canto superior direito para fechar; dentro da caixa: formulário, texto (copy), ou qualquer conteúdo. Ações no rodapé conforme o caso: **Salvar**, **Cancelar**, **Copiar** (ou outras), sempre no DS Hubia (Limão, bordas, sem UI de sistema).
+- **Comportamento:** Overlay **full-screen** (tela inteira), com **blur** no fundo e caixa de conteúdo centralizada. O overlay cobre sidebar e tudo (renderizado via `HubiaPortal` no `body`).
+- **`HubiaPortal` obrigatório:** Sem `createPortal`, transforms CSS e Framer Motion criam stacking contexts que limitam o `backdrop-filter` a um sub-contêiner. Toda modal deve usar `HubiaPortal`.
+- **Componente:** `hubia-app/src/components/ui/hubia-modal.tsx` — usar sempre; não criar modais ad-hoc.
+- **Conteúdo do modal:** Título no topo; **botão X** no canto superior direito para fechar; ações no rodapé conforme o caso.
 - **Nunca:** modal que ocupa só parte da tela, fundo branco sem blur, ou diálogos nativos (alert/confirm).
-- **Botão X:** fundo `#0E0F10`, hover `rgba(62,63,64,0.85)` (cinza visível), active preto sólido + scale(0.94). **Nunca** usar `--state-hover` (amarelo) em botões escuros — fica invisível.
+- **Botão X:** fundo `#0E0F10`, hover `rgba(62,63,64,0.85)`, active preto sólido + scale(0.94). **Nunca** usar `--state-hover` (amarelo) em botões escuros.
+
+## Auto-Draft — Padrão Universal de Formulários
+- **Regra:** Todo formulário de criação (novo agente, novo squad, novo pedido, etc.) deve salvar rascunho no `localStorage` ao fechar sem submeter.
+- **Chave:** `hubia:[entidade]:[contexto]` — ex: `hubia:novo-agente:rascunho`, `hubia:novo-agente:squad:${squadId}`
+- **Fluxo:** Ao fechar com conteúdo → salvar + mostrar banner "💾 Rascunho salvo". Ao reabrir → restaurar. Ao submeter com sucesso → apagar rascunho.
+- **Sem localStorage no SSR:** sempre checar `typeof window !== "undefined"` antes de acessar `localStorage`.
+
+## Páginas Agentes — Estrutura de Rotas
+```
+/agentes                        → lista de squads + 4 tabs
+/agentes/[slug]                 → detalhe de um agente (docs, versioning, skills)
+/agentes/squad/[slug]           → detalhe de um squad (agentes, adicionar, remover)
+```
 
 ## Construção de páginas Hubia (autoalimentado)
-- **Plano:** `directives/hubia-plano-creators-proximas-paginas.md` — construir páginas (começando por Creators) com mapa de rotas, ações, interações, cadastros; marcar onde haverá API e onde agentes serão acionados; APIs não conectar ainda. Telas conforme Figma.
-- **Onde tem API = onde entram agentes** (ex.: creator em pedidos → audiovisual-squad). Se faltar agente para alguma capacidade: criar via Criador de Agentes, registrar em AGENTS.md (Criador já faz) e **registrar em MEMORY** que o agente foi criado/adicionado e para que serve — sistema autoalimentado.
+- **Plano:** `directives/hubia-plano-creators-proximas-paginas.md` — construir páginas com mapa de rotas, ações, interações, cadastros; marcar onde haverá API e onde agentes serão acionados; APIs não conectar ainda. Telas conforme Figma.
+- **Onde tem API = onde entram agentes** (ex.: creator em pedidos → audiovisual-squad).
 
 ## Cards de Creator — Padrão visual (Hubia)
 - **Layout:** fullbleed — foto ocupa 100% do card (`position: absolute; inset: 0`), gradiente overlay escuro, conteúdo sobre o gradiente.
@@ -148,12 +179,12 @@ NUNCA: shadow-* (flat design)
   4. Cidade, Estado — linha separada, branco 75%, `fontSize: 12px`
   5. Tags de plataformas — pílulas escuras com backdrop-blur, texto Limão, vindas de `metadata.platforms`
 - **Hover:** parallax zoom `scale-[1.12]` apenas na imagem internamente — card não se move.
-- **Dados estruturados:** cidade, estado, idade e plataformas ficam em `metadata` (JSON) do modelo Creator — nunca parsear do `bio`.
+- **Dados estruturados:** cidade, estado, idade e plataformas ficam em `metadata` (JSON) — nunca parsear do `bio`.
 
 ## Fidelidade ao Figma — Regra Suprema
 - **Regra em `.cursor/rules/figma-fidelity-supreme.mdc`** (`alwaysApply: true`): quando o usuário anexar imagem ou indicar node Figma, implementar pixel a pixel — zero invenção, zero suposição, zero simplificação sem autorização.
 - **Checklist obrigatório:** tipografia, cores (hex exato), espaçamentos, border-radius, hierarquia, estados, layout, conteúdo, interações — tudo extraído da referência antes de codificar.
-- **Hex direto > tokens Tailwind** quando necessário para pixel-perfect: usar `style={{ color: "#..." }}` sem hesitar.
+- **Hex direto > tokens Tailwind** quando necessário para pixel-perfect.
 
 ## Creators Ativas (Audiovisual Squad)
 - **Ninaah Dornfeld** — `audiovisual-squad/memory/creators/ninaah/`
