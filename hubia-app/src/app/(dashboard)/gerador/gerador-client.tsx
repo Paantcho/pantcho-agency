@@ -2,9 +2,10 @@
 
 import { useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Sparkles, Copy, Check, Upload, ChevronDown, History, Wand2, ImageIcon } from "lucide-react";
+import { Sparkles, Copy, Check, Upload, History, Wand2, ImageIcon, Plus } from "lucide-react";
 import { SlidingTabs } from "@/components/ui/sliding-tabs";
 import { HubiaModal } from "@/components/ui/hubia-modal";
+import { HubiaSelect } from "@/components/ui/hubia-select";
 import type { CreatorOption, GeradorFormData, GeradorResult } from "./actions";
 import { gerarPrompt } from "./actions";
 
@@ -51,48 +52,6 @@ function FieldLabel({ children }: { children: React.ReactNode }) {
     >
       {children}
     </span>
-  );
-}
-
-// ─── Select estilizado ───────────────────────────────────────────
-function StyledSelect({
-  value,
-  onChange,
-  options,
-  placeholder,
-  disabled,
-}: {
-  value: string;
-  onChange: (v: string) => void;
-  options: { value: string; label: string }[];
-  placeholder?: string;
-  disabled?: boolean;
-}) {
-  return (
-    <div className="relative">
-      <select
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
-        disabled={disabled}
-        className="w-full appearance-none rounded-[10px] border border-transparent py-2.5 pl-3.5 pr-9 text-[14px] font-semibold text-ink-500 outline-none transition-[border-color,box-shadow] duration-150 focus:border-ink-500 focus:shadow-[0_0_0_3px_rgba(14,15,16,0.08)] disabled:opacity-50"
-        style={{ background: "#EEEFE9" }}
-      >
-        {placeholder && (
-          <option value="" disabled>
-            {placeholder}
-          </option>
-        )}
-        {options.map((o) => (
-          <option key={o.value} value={o.value}>
-            {o.label}
-          </option>
-        ))}
-      </select>
-      <ChevronDown
-        size={14}
-        className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-[#A9AAA5]"
-      />
-    </div>
   );
 }
 
@@ -182,7 +141,7 @@ function BriefingOutputSection({
           {/* CREATOR */}
           <div>
             <FieldLabel>Creator</FieldLabel>
-            <StyledSelect
+            <HubiaSelect
               value={form.creatorId}
               onChange={(v) => setForm((f) => ({ ...f, creatorId: v, ambienteId: "" }))}
               options={creators.map((c) => ({ value: c.id, label: c.name }))}
@@ -193,7 +152,7 @@ function BriefingOutputSection({
           {/* AMBIENTE */}
           <div>
             <FieldLabel>Ambiente</FieldLabel>
-            <StyledSelect
+            <HubiaSelect
               value={form.ambienteId}
               onChange={(v) => setForm((f) => ({ ...f, ambienteId: v }))}
               options={environmentOptions}
@@ -205,7 +164,7 @@ function BriefingOutputSection({
           {/* MOOD */}
           <div>
             <FieldLabel>Mood</FieldLabel>
-            <StyledSelect
+            <HubiaSelect
               value={form.mood}
               onChange={(v) => setForm((f) => ({ ...f, mood: v }))}
               options={MOODS.map((m) => ({ value: m, label: m }))}
@@ -216,7 +175,7 @@ function BriefingOutputSection({
           {/* HORÁRIO */}
           <div>
             <FieldLabel>Horário</FieldLabel>
-            <StyledSelect
+            <HubiaSelect
               value={form.horario}
               onChange={(v) => setForm((f) => ({ ...f, horario: v }))}
               options={HORARIOS.map((h) => ({ value: h, label: h }))}
@@ -227,7 +186,7 @@ function BriefingOutputSection({
           {/* CÂMERA */}
           <div>
             <FieldLabel>Câmera</FieldLabel>
-            <StyledSelect
+            <HubiaSelect
               value={form.camera}
               onChange={(v) => setForm((f) => ({ ...f, camera: v }))}
               options={CAMERAS.map((c) => ({ value: c, label: c }))}
@@ -238,7 +197,7 @@ function BriefingOutputSection({
           {/* LENTE */}
           <div>
             <FieldLabel>Lente</FieldLabel>
-            <StyledSelect
+            <HubiaSelect
               value={form.lente}
               onChange={(v) => setForm((f) => ({ ...f, lente: v }))}
               options={LENTES.map((l) => ({ value: l, label: l }))}
@@ -743,9 +702,9 @@ function ModalVerCompleto({
 
 // ─── Tabs config ──────────────────────────────────────────────────
 const TABS = [
-  { id: "gerador", label: "GERADOR", icon: Wand2 },
-  { id: "historico", label: "HISTÓRICO", icon: History },
-  { id: "photo-cloner", label: "PHOTO CLONER", icon: ImageIcon },
+  { id: "gerador", label: "GERADOR", icon: Wand2, iconClass: "icon-spark" },
+  { id: "historico", label: "HISTÓRICO", icon: History, iconClass: "icon-spin-slow" },
+  { id: "photo-cloner", label: "PHOTO CLONER", icon: ImageIcon, iconClass: "icon-flip" },
 ];
 
 // ─── Componente principal ─────────────────────────────────────────
@@ -800,8 +759,11 @@ export function GeradorClient({ creators }: { creators: CreatorOption[] }) {
           whileTap={{ scale: 0.96 }}
           transition={{ duration: 0.15, ease: [0.34, 1.56, 0.64, 1] }}
         >
-          <motion.span whileHover={{ scale: 1.2 }} transition={{ duration: 0.2 }}>
-            <span style={{ fontSize: "16px", fontWeight: 900 }}>+</span>
+          <motion.span
+            whileHover={{ scale: 1.2, rotate: 90 }}
+            transition={{ duration: 0.2, ease: [0.34, 1.56, 0.64, 1] }}
+          >
+            <Plus size={16} strokeWidth={2.5} />
           </motion.span>
           Novo pedido
         </motion.button>

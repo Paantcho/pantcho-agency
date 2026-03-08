@@ -5,7 +5,7 @@ Atualizado DEPOIS de cada ação.
 
 ---
 
-**Status:** Motion enforcement completo e commitado. Sistema de interação padronizado em toda a plataforma existente. Pronto para avançar para novas páginas.
+**Status:** Página Gerador de Prompt construída pixel-perfect com 3 tabs, modal e motion enforcement. Build limpo.
 
 ## Projeto Atual
 HUBIA — Implementação contínua (motion enforcement + próximas páginas)
@@ -49,7 +49,8 @@ Motion enforcement total: spring nas pills (sidebar + tabs), 3 camadas obrigató
 
 ### 4. O que está incompleto ou pendente
 
-- [ ] Páginas por construir: Pedidos, Projetos, Calendário, Gerador, Relatório, Conhecimento, Agentes, Memória, Arquitetura
+- [ ] Páginas por construir: Pedidos, Projetos, Calendário, Relatório, Conhecimento, Agentes, Memória, Arquitetura
+- [x] **Gerador de Prompt** — 3 tabs (Gerador, Histórico, Photo Cloner) + modal + Server Action + motion enforcement completo
 - [ ] KPIs do Creator Overview: alguns valores hardcoded
 - [ ] Metadata da Natasha Freitas: seed sem campos estruturados
 - [ ] Upload de avatar/logo: ainda URL manual
@@ -122,6 +123,7 @@ Não existe botão sem `whileHover`/`whileTap`. Não existe modal sem as 3 camad
 
 ## Próximas Páginas (por ordem de prioridade)
 - [ ] **Pedidos** — lista, detalhe, criar, status
+- [ ] **Projetos** — lista, kanban ou lista, detalhe
 - [ ] **Projetos** — lista, kanban ou lista, detalhe
 - [ ] **Calendário** — visualização mensal/semanal
 - [ ] **Gerador** — interface de geração de prompts

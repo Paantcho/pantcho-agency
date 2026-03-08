@@ -8,6 +8,7 @@ export interface SlideTab {
   id: string;
   label: string;
   icon?: LucideIcon;
+  iconClass?: string;
 }
 
 interface SlidingTabsProps {
@@ -62,7 +63,7 @@ export function SlidingTabs({ tabs, activeId, onChange }: SlidingTabsProps) {
             ref={(el) => { btnRefs.current[idx] = el; }}
             type="button"
             onClick={() => onChange(tab.id)}
-            className="relative z-10 flex items-center gap-2 rounded-[9999px]"
+            className="group relative z-10 flex items-center gap-2 rounded-[9999px]"
             style={{
               fontSize: "13px",
               padding: "8px 18px",
@@ -78,7 +79,14 @@ export function SlidingTabs({ tabs, activeId, onChange }: SlidingTabsProps) {
             whileTap={{ scale: 0.97 }}
             transition={{ duration: 0.15, ease: [0.4, 0, 0.2, 1] }}
           >
-            {Icon && <Icon size={14} />}
+            {Icon && (
+              <Icon
+                size={14}
+                className={`shrink-0 transition-colors duration-150 ${
+                  isActive ? "" : `group-hover:text-[#0E0F10] ${tab.iconClass ?? ""}`
+                }`}
+              />
+            )}
             {tab.label}
           </motion.button>
         );

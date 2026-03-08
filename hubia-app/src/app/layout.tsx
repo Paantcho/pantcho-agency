@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Urbanist } from "next/font/google";
 import "./globals.css";
+import { HubiaToastProvider } from "@/components/ui/hubia-toast";
 
 const urbanist = Urbanist({
   variable: "--font-urbanist",
@@ -22,6 +23,7 @@ export default function RootLayout({
     <html lang="pt-BR" className={urbanist.variable}>
       <body className="font-sans antialiased">
         {children}
+        <HubiaToastProvider />
       </body>
     </html>
   );

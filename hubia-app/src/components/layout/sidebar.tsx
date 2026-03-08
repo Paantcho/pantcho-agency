@@ -2,7 +2,7 @@
 
 import { useState, useRef, useEffect } from "react";
 import { usePathname, useRouter } from "next/navigation";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { AnimatedLink } from "@/components/ui/animated-link";
 import {
   LayoutDashboard,
@@ -42,11 +42,11 @@ const menuSections: (MenuItem[] | "separator")[] = [
     { label: "Gerador", icon: Sparkles, href: "/gerador", iconClass: "icon-spark" },
     { label: "Projetos", icon: FolderKanban, href: "/projetos", iconClass: "icon-bounce-y" },
     { label: "Creators", icon: Users, href: "/creators", iconClass: "icon-pulse" },
-    { label: "Relatorio", icon: BarChart3, href: "/relatorio", iconClass: "icon-pulse" },
+    { label: "Relatorio", icon: BarChart3, href: "/relatorio", iconClass: "icon-grow" },
   ],
   "separator",
   [
-    { label: "Conhecimento", icon: BookOpen, href: "/conhecimento", iconClass: "icon-wiggle" },
+    { label: "Conhecimento", icon: BookOpen, href: "/conhecimento", iconClass: "icon-flip" },
     { label: "Agentes", icon: Bot, href: "/agentes", iconClass: "icon-nod" },
     { label: "Memoria", icon: Brain, href: "/memoria", iconClass: "icon-pulse-double" },
     { label: "Arquitetura", icon: Network, href: "/arquitetura", iconClass: "icon-nod" },
@@ -200,33 +200,53 @@ export function Sidebar({
               {currentOrg?.name ?? "—"}
             </p>
           ) : (
-            <button
+            <motion.button
               type="button"
               onClick={() => setOrgOpen((v) => !v)}
-              className="motion-soft mt-1 flex w-full items-center justify-between gap-2 rounded-button text-left text-label-sm text-ink-500 hover:bg-base-600/50"
+              className="mt-1 flex w-full items-center justify-between gap-2 rounded-[10px] px-2 py-1.5 text-left text-label-sm text-ink-500"
+              whileHover={{ backgroundColor: "rgba(213,210,201,0.35)" }}
+              whileTap={{ scale: 0.97 }}
+              transition={{ duration: 0.15, ease: [0.4, 0, 0.2, 1] }}
             >
               <span className="min-w-0 truncate">{currentOrg?.name ?? "—"}</span>
-              <ChevronDown size={14} className="shrink-0" />
-            </button>
+              <motion.span
+                animate={{ rotate: orgOpen ? 180 : 0 }}
+                transition={{ duration: 0.2, ease: [0.4, 0, 0.2, 1] }}
+              >
+                <ChevronDown size={14} className="shrink-0 text-base-700" />
+              </motion.span>
+            </motion.button>
           )}
-          {orgOpen && organizations.length > 1 && (
-            <div className="motion-soft mt-1 rounded-card border border-base-600 bg-surface-500 py-1">
-              {organizations.map((org) => (
-                <button
-                  key={org.id}
-                  type="button"
-                  onClick={() => handleSwitchOrg(org.id)}
-                  className={`motion-soft w-full px-3 py-2 text-left text-body-sm hover:bg-base-500 ${
-                    org.id === currentOrganizationId
-                      ? "font-semibold text-ink-500"
-                      : "text-base-700"
-                  }`}
-                >
-                  {org.name}
-                </button>
-              ))}
-            </div>
-          )}
+          <AnimatePresence>
+            {orgOpen && organizations.length > 1 && (
+              <motion.div
+                initial={{ opacity: 0, y: -6, scale: 0.97 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, y: -6, scale: 0.97 }}
+                transition={{ duration: 0.15, ease: [0, 0, 0.2, 1] }}
+                className="mt-1 overflow-hidden rounded-[12px] bg-white py-1.5"
+                style={{ boxShadow: "0 8px 24px rgba(14,15,16,0.12)" }}
+              >
+                {organizations.map((org) => (
+                  <motion.button
+                    key={org.id}
+                    type="button"
+                    onClick={() => handleSwitchOrg(org.id)}
+                    className={`w-full px-3 py-2 text-left text-[13px] ${
+                      org.id === currentOrganizationId
+                        ? "font-semibold text-ink-500"
+                        : "font-medium text-base-700"
+                    }`}
+                    whileHover={{ backgroundColor: "#EEEFE9", color: "#0E0F10" }}
+                    whileTap={{ scale: 0.98 }}
+                    transition={{ duration: 0.12 }}
+                  >
+                    {org.name}
+                  </motion.button>
+                ))}
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
       </div>
     </aside>
