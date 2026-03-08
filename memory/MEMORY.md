@@ -283,6 +283,43 @@ NUNCA: shadow-* (flat design)
 /agentes/squad/[slug]           → detalhe de um squad (agentes, adicionar, remover)
 ```
 
+## PROJETOS — ESTRUTURA ADAPTATIVA POR TIPO (TRAVADO)
+
+### 15 tipos de projeto disponíveis
+```
+creator, landing_page, hotsite, microsite, app, saas, sistema, ferramenta,
+conteudo, campanha, branding, mockup, documentacao, operacao, outro
+```
+
+### Grupos para filtro na lista
+- **Creator & Conteúdo**: creator, conteudo, campanha
+- **Web & Dev**: landing_page, hotsite, microsite, app, saas, sistema, ferramenta
+- **Criação & Visual**: branding, mockup
+- **Outros**: documentacao, operacao, outro
+
+### Abas universais (aparecem em TODOS os tipos)
+Visão Geral · Contexto · Tarefas · Pedidos · Memória · Rules · Log
+
+### Abas específicas por tipo
+| Tipo | Abas extras |
+|------|------------|
+| creator | Identidade · Aparência · Tom de Voz |
+| saas / app / sistema | PRD · Arquitetura · Deploy · Banco · Integrações |
+| landing_page / hotsite / microsite | PRD · Design · Deploy |
+| ferramenta | PRD · Arquitetura |
+| conteudo / campanha | Conceito |
+| branding / mockup | Conceito |
+
+### Modal de criação — 2 passos (inviolável)
+1. **Passo 1:** Galeria de tipos agrupada → usuário seleciona
+2. **Passo 2:** Formulário → nome, objetivo, prazo. Squad preenchido automaticamente pelo tipo.
+
+### getCurrentOrganizationId() — OBRIGATÓRIO em páginas
+Todas as páginas de rota dinâmica devem usar `getCurrentOrganizationId()` de `lib/auth-organization.ts`.
+**NUNCA** usar lookup manual de `organizationMember` em page.tsx — fallback de dev não funciona.
+
+---
+
 ## Construção de páginas Hubia (autoalimentado)
 - **Plano:** `directives/hubia-plano-creators-proximas-paginas.md` — construir páginas com mapa de rotas, ações, interações, cadastros; marcar onde haverá API e onde agentes serão acionados; APIs não conectar ainda. Telas conforme Figma.
 - **Onde tem API = onde entram agentes** (ex.: creator em pedidos → audiovisual-squad).
