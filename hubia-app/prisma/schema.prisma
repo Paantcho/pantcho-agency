@@ -73,6 +73,24 @@ enum ProjetoStatus {
   cancelado
 }
 
+enum ProjetoTipo {
+  creator
+  landing_page
+  hotsite
+  microsite
+  app
+  saas
+  sistema
+  ferramenta
+  conteudo
+  campanha
+  branding
+  mockup
+  documentacao
+  operacao
+  outro
+}
+
 enum AiProviderType {
   anthropic
   openai
@@ -397,6 +415,7 @@ model Projeto {
   organizationId String        @map("organization_id") @db.Uuid
   nome           String
   descricao      String?       @db.Text
+  tipo           ProjetoTipo   @default(outro)
   status         ProjetoStatus @default(ativo)
   metadata       Json          @default("{}")
   createdBy      String?       @map("created_by") @db.Uuid

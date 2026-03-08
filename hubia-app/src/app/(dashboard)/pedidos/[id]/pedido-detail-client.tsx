@@ -884,7 +884,7 @@ function TabConteudo({
             Escolher arquivos
           </motion.div>
         </motion.div>
-        {briefing.referencias && (
+        {!!briefing.referencias && (
           <div className="flex flex-wrap gap-2">
             {(Array.isArray(briefing.referencias) ? briefing.referencias : [briefing.referencias]).map((ref, i) => (
               <span key={i} className="rounded-[8px] bg-[#EEEFE9] px-3 py-1.5 text-[12px] font-semibold text-[#0E0F10]">

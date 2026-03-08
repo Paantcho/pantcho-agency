@@ -11,6 +11,7 @@ type LogAction =
   // Projetos
   | "projeto.criado"
   | "projeto.atualizado"
+  | "projeto.editado"
   | "projeto.status_alterado"
   | "projeto.deletado"
   // Creators

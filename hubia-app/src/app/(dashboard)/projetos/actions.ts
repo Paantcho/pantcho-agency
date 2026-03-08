@@ -5,12 +5,15 @@ import { revalidatePath } from "next/cache";
 import { logActivity } from "@/lib/activity-log";
 import { dispatchTrigger } from "@/lib/triggers";
 import { createClient } from "@/lib/supabase/server";
-import type { ProjetoStatus } from "@prisma/client";
+import type { ProjetoStatus, ProjetoTipo } from "@prisma/client";
+
+// ─── Tipos exportados ─────────────────────────────────────────────────────────
 
 export type ProjetoCard = {
   id: string;
   nome: string;
   descricao: string | null;
+  tipo: ProjetoTipo;
   status: ProjetoStatus;
   createdAt: string;
   pedidosCount: number;
@@ -30,6 +33,22 @@ export type ProjetoDetail = ProjetoCard & {
   }[];
 };
 
+export type CreateProjetoData = {
+  nome: string;
+  tipo: ProjetoTipo;
+  descricao?: string;
+  metadata?: Record<string, unknown>;
+};
+
+export type UpdateProjetoData = {
+  nome?: string;
+  descricao?: string;
+  tipo?: ProjetoTipo;
+  metadata?: Record<string, unknown>;
+};
+
+// ─── Queries ──────────────────────────────────────────────────────────────────
+
 export async function getProjetos(organizationId: string): Promise<ProjetoCard[]> {
   const rows = await prisma.projeto.findMany({
     where: { organizationId },
@@ -46,6 +65,7 @@ export async function getProjetos(organizationId: string): Promise<ProjetoCard[]
       id: p.id,
       nome: p.nome,
       descricao: p.descricao,
+      tipo: p.tipo,
       status: p.status,
       createdAt: p.createdAt.toISOString(),
       pedidosCount: p._count.pedidos,
@@ -76,6 +96,7 @@ export async function getProjetoById(organizationId: string, id: string): Promis
     id: p.id,
     nome: p.nome,
     descricao: p.descricao,
+    tipo: p.tipo,
     status: p.status,
     createdAt: p.createdAt.toISOString(),
     pedidosCount: p.pedidos.length,
@@ -93,9 +114,11 @@ export async function getProjetoById(organizationId: string, id: string): Promis
   };
 }
 
+// ─── Mutations ────────────────────────────────────────────────────────────────
+
 export async function createProjeto(
   organizationId: string,
-  data: { nome: string; descricao?: string; metadata?: Record<string, unknown> }
+  data: CreateProjetoData
 ): Promise<{ ok: true; id: string } | { ok: false; error: string }> {
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
@@ -107,10 +130,20 @@ export async function createProjeto(
       organizationId,
       nome: data.nome.trim(),
       descricao: data.descricao?.trim() ?? null,
+      tipo: data.tipo,
       status: "ativo",
       metadata: (data.metadata ?? {}) as object,
       createdBy: user?.id ?? null,
     },
+  });
+
+  await logActivity({
+    organizationId,
+    userId: user?.id,
+    action: "projeto.criado",
+    entityType: "projeto",
+    entityId: projeto.id,
+    metadata: { nome: projeto.nome, tipo: projeto.tipo },
   });
 
   await dispatchTrigger({
@@ -123,6 +156,40 @@ export async function createProjeto(
 
   revalidatePath("/projetos");
   return { ok: true, id: projeto.id };
+}
+
+export async function updateProjeto(
+  organizationId: string,
+  projetoId: string,
+  data: UpdateProjetoData
+): Promise<{ ok: boolean; error?: string }> {
+  const supabase = await createClient();
+  const { data: { user } } = await supabase.auth.getUser();
+
+  const existing = await prisma.projeto.findFirst({ where: { id: projetoId, organizationId } });
+  if (!existing) return { ok: false, error: "Projeto não encontrado" };
+
+  await prisma.projeto.update({
+    where: { id: projetoId },
+    data: {
+      ...(data.nome !== undefined && { nome: data.nome }),
+      ...(data.descricao !== undefined && { descricao: data.descricao }),
+      ...(data.tipo !== undefined && { tipo: data.tipo }),
+      ...(data.metadata !== undefined && { metadata: data.metadata as object }),
+    },
+  });
+
+  await logActivity({
+    organizationId,
+    userId: user?.id,
+    action: "projeto.editado",
+    entityType: "projeto",
+    entityId: projetoId,
+    metadata: { campos: Object.keys(data) },
+  });
+
+  revalidatePath(`/projetos/${projetoId}`);
+  return { ok: true };
 }
 
 export async function updateProjetoStatus(
@@ -149,5 +216,60 @@ export async function updateProjetoStatus(
 
   revalidatePath("/projetos");
   revalidatePath(`/projetos/${projetoId}`);
+  return { ok: true };
+}
+
+export async function updateProjetoMetadata(
+  organizationId: string,
+  projetoId: string,
+  section: string,
+  value: unknown
+): Promise<{ ok: boolean; error?: string }> {
+  const supabase = await createClient();
+  const { data: { user } } = await supabase.auth.getUser();
+
+  const existing = await prisma.projeto.findFirst({ where: { id: projetoId, organizationId } });
+  if (!existing) return { ok: false, error: "Projeto não encontrado" };
+
+  const currentMeta = (existing.metadata as Record<string, unknown>) ?? {};
+  const newMeta = { ...currentMeta, [section]: value };
+
+  await prisma.projeto.update({ where: { id: projetoId }, data: { metadata: newMeta as object } });
+
+  await logActivity({
+    organizationId,
+    userId: user?.id,
+    action: "projeto.editado",
+    entityType: "projeto",
+    entityId: projetoId,
+    metadata: { secao: section },
+  });
+
+  revalidatePath(`/projetos/${projetoId}`);
+  return { ok: true };
+}
+
+export async function deleteProjeto(
+  organizationId: string,
+  projetoId: string
+): Promise<{ ok: boolean; error?: string }> {
+  const supabase = await createClient();
+  const { data: { user } } = await supabase.auth.getUser();
+
+  const existing = await prisma.projeto.findFirst({ where: { id: projetoId, organizationId } });
+  if (!existing) return { ok: false, error: "Projeto não encontrado" };
+
+  await prisma.projeto.delete({ where: { id: projetoId } });
+
+  await logActivity({
+    organizationId,
+    userId: user?.id,
+    action: "projeto.deletado",
+    entityType: "projeto",
+    entityId: projetoId,
+    metadata: { nome: existing.nome },
+  });
+
+  revalidatePath("/projetos");
   return { ok: true };
 }

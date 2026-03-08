@@ -1331,7 +1331,7 @@ function NovoPedidoModal({
   const handleCriarProjeto = async () => {
     if (!nomeProjeto.trim()) return;
     setLoadingProjeto(true);
-    const result = await createProjeto(organizationId, { nome: nomeProjeto.trim() });
+    const result = await createProjeto(organizationId, { nome: nomeProjeto.trim(), tipo: "outro" });
     setLoadingProjeto(false);
     if (!result.ok) { toast.error("Erro ao criar projeto"); return; }
     const novoProjeto = { id: result.id, nome: nomeProjeto.trim() };

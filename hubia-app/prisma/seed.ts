@@ -66,12 +66,13 @@ async function main() {
   // ─── 2. Projetos ─────────────────────────────────────────────────────────
   await prisma.projeto.upsert({
     where: { id: PROJETO_HUB_ID },
-    update: {},
+    update: { tipo: "saas" },
     create: {
       id: PROJETO_HUB_ID,
       organizationId: ORG_ID,
       nome: "Pantcho Agency Hub",
       descricao: "Sistema operacional centralizado da Pantcho Agency. 33 páginas, 8 módulos.",
+      tipo: "saas",
       status: "ativo",
       metadata: {
         squad: "Dev Squad",
@@ -105,12 +106,13 @@ async function main() {
 
   await prisma.projeto.upsert({
     where: { id: PROJETO_NINAAH_ID },
-    update: {},
+    update: { tipo: "conteudo" },
     create: {
       id: PROJETO_NINAAH_ID,
       organizationId: ORG_ID,
       nome: "Conteúdo Ninaah — Março",
       descricao: "Pack mensal de posts para a Ninaah. 30 posts + prompts.",
+      tipo: "conteudo",
       status: "ativo",
       metadata: {
         squad: "Audiovisual Squad",
@@ -140,12 +142,13 @@ async function main() {
 
   await prisma.projeto.upsert({
     where: { id: PROJETO_PRIVACY_ID },
-    update: {},
+    update: { tipo: "landing_page" },
     create: {
       id: PROJETO_PRIVACY_ID,
       organizationId: ORG_ID,
       nome: "Landing Page Privacy",
       descricao: "Homepage da plataforma social Privacy. Figma MCP + Next.js.",
+      tipo: "landing_page",
       status: "ativo",
       metadata: {
         squad: "Dev Squad",
@@ -166,6 +169,93 @@ async function main() {
         ],
         modulos: 1,
         telas: 6,
+      },
+    },
+  });
+
+  // ─── 2b. Projetos adicionais por tipo ────────────────────────────────────
+  await prisma.projeto.upsert({
+    where: { id: "a1b2c3d4-0000-0000-0000-000000000103" },
+    update: { tipo: "creator" },
+    create: {
+      id: "a1b2c3d4-0000-0000-0000-000000000103",
+      organizationId: ORG_ID,
+      nome: "Creator Ninaah Dornfeld",
+      descricao: "Universo operacional completo da Ninaah. Identidade, aparência, tom de voz, ambientes e regras.",
+      tipo: "creator",
+      status: "ativo",
+      metadata: {
+        squad: "Audiovisual Squad",
+        objetivo: "Construir e manter a identidade consistente da creator Ninaah Dornfeld",
+        prazo: "Contínuo",
+        progresso: 75,
+        identidade: "Ninaah é uma criadora de conteúdo de lifestyle e gastronomia, 26 anos, com estética clean e sofisticada. Transmite praticidade com elegância.",
+        tom_de_voz: "Acolhedor, sofisticado, casual mas com propósito. Nunca usa gírias excessivas. Fala em primeira pessoa.",
+        aparencia: "Pele clara, cabelos castanhos lisos, estilo minimalista. Tons neutros: off-white, bege, terracota. Ambientes bem iluminados.",
+        memoria: [
+          { texto: "Audiência responde melhor a conteúdos de cozinha gravados no período da tarde", data: "2026-03-01" },
+          { texto: "Evitar roupas com estampas muito chamativas — foca no produto", data: "2026-02-20" },
+        ],
+        rules: [
+          { regra: "Nunca usar filtros que distorçam a aparência natural" },
+          { regra: "Backgrounds devem ser limpos — máximo 2 elementos decorativos" },
+          { regra: "Áudio limpo obrigatório — sem eco" },
+        ],
+        tarefas: [
+          { id: 1, titulo: "Documento de identidade completo", concluido: true },
+          { id: 2, titulo: "Guia de aparência revisado", concluido: true },
+          { id: 3, titulo: "Tom de voz validado com client", concluido: true },
+          { id: 4, titulo: "Pack de ambientes catalogados", concluido: false },
+          { id: 5, titulo: "Guia de looks por estação", concluido: false },
+        ],
+        decisoes: [
+          { titulo: "Estética clean-luxe", desc: "Definida em workshop criativo", data: "2026-02-10" },
+          { titulo: "Paleta tons neutros", desc: "Off-white, bege, terracota como cores base", data: "2026-02-10" },
+        ],
+        modulos_ativos: ["Identidade", "Aparência", "Tom de Voz", "Ambientes", "Regras", "Conteúdo", "Assets", "Memória"],
+        log: [
+          { acao: "Projeto criado", data: "2026-02-01" },
+          { acao: "Identidade concluída", data: "2026-02-15" },
+          { acao: "Tom de voz validado", data: "2026-02-28" },
+        ],
+      },
+    },
+  });
+
+  await prisma.projeto.upsert({
+    where: { id: "a1b2c3d4-0000-0000-0000-000000000104" },
+    update: { tipo: "branding" },
+    create: {
+      id: "a1b2c3d4-0000-0000-0000-000000000104",
+      organizationId: ORG_ID,
+      nome: "Branding Pantcho Agency",
+      descricao: "Identidade visual e diretrizes de marca da agência. Logo, tipografia, paleta, mockups.",
+      tipo: "branding",
+      status: "pausado",
+      metadata: {
+        squad: "Audiovisual Squad",
+        objetivo: "Criar identidade visual coesa para uso externo da agência",
+        prazo: "Q2 2026",
+        progresso: 30,
+        conceito: "Identidade minimalista e editorial. Preto, limão e branco. Tipografia geométrica. Sensação de agência de nicho premium.",
+        memoria: [
+          { texto: "Cliente prefere referências de agências europeias — A-OK, Snøhetta", data: "2026-01-15" },
+        ],
+        rules: [
+          { regra: "Cor limão #D7FF00 é exclusiva — não usar em tons degradê" },
+          { regra: "Tipografia principal: Urbanist. Secundária: nenhuma" },
+        ],
+        tarefas: [
+          { id: 1, titulo: "Moodboard aprovado", concluido: true },
+          { id: 2, titulo: "Conceito criativo definido", concluido: true },
+          { id: 3, titulo: "Proposta de logo", concluido: false },
+          { id: 4, titulo: "Manual de marca", concluido: false },
+          { id: 5, titulo: "Mockups finais", concluido: false },
+        ],
+        decisoes: [
+          { titulo: "Preto + Limão como paleta base", desc: "Alta distinção visual no mercado", data: "2026-01-20" },
+        ],
+        modulos_ativos: ["Contexto", "Conceito", "Referências", "Exploração Visual", "Assets", "Apresentações"],
       },
     },
   });
