@@ -25,13 +25,43 @@ Atualizado quando há decisão importante, preferência nova, ou lição aprendi
 ## Stack Padrão (Dev Squad)
 Next.js 15+ / TypeScript / Tailwind / Shadcn / Supabase / Prisma / Vercel / Figma MCP
 
-## Motion e Interação (Hubia)
-- **Documento único para motion:** `.cursor/rules/motion-interactions.mdc` (`alwaysApply: true`) — Framer Motion obrigatório para React, CSS keyframes só para ícones SVG em globals.css. Sidebar pill, tabs pill, transições de página, cards stagger, accordions, modais 3 camadas, toasts, animações de ícone por item da sidebar.
+## Motion e Interação (Hubia) — SISTEMA COMPLETO
+- **Documento único para motion:** `.cursor/rules/motion-interactions.mdc` (`alwaysApply: true`)
+- **Regra global:** Framer Motion obrigatório para todos os componentes React animados. CSS keyframes apenas em `globals.css` para ícones SVG via `group-hover`.
 - **Regras de cursor ativas:** `.cursor/rules/` contém 4 arquivos todos com `alwaysApply: true`:
   - `00-hubia-master.mdc` — índice mestre, lido primeiro
   - `hubia-design-system.mdc` — tokens, tipografia, cores, componentes, proibições
-  - `motion-interactions.mdc` — motion system completo, Framer Motion, stagger, modais 3 camadas
+  - `motion-interactions.mdc` — motion system completo (sidebar pill, tabs pill, transições de página, cards stagger, accordions, modais 3 camadas, toasts, animações de ícone)
   - `figma-fidelity-supreme.mdc` — regra suprema pixel-perfect ao Figma
+
+### Componentes de motion reutilizáveis
+- **`SlidingTabs`** (`hubia-app/src/components/ui/sliding-tabs.tsx`) — tabs horizontais com pill deslizante. Props: `tabs`, `activeId`, `onChange`. Pill: `#D7FF00` (ou branco conforme contexto), `border-radius: 14px`, transição `left/width 300ms cubic-bezier(0.2,0,0.0,1)`.
+- **`TabContent`** (`hubia-app/src/components/ui/tab-content.tsx`) — wrapper de conteúdo de tab com animação direcional Shared Axis horizontal. Props: `tabKey`, `direction` (+1/-1), `children`.
+
+### Sidebar pill (padrão)
+- UMA `<div>` absoluta dentro do `<nav>`, move via `top + height`
+- Background: `#D7FF00`, `border-radius: 18px`
+- Transição CSS: `top 300ms cubic-bezier(0.2, 0, 0.0, 1)` (ease-emp)
+- Posição calculada via `useRef` + `offsetTop/offsetHeight` no `<a>` ativo
+- `AnimatedLink` usa `React.forwardRef` para expor o DOM
+
+### Transição de página (padrão)
+- `AnimatePresence mode="wait"` com `key={pathname}` — SOMENTE no conteúdo principal
+- Sidebar fica FORA do wrapper — não pode estar dentro do AnimatePresence
+- Entrada: `opacity 0→1, y 12→0` em 280ms `[0,0,0.2,1]`
+- Saída: `opacity 1→0, y 0→-8` em 200ms `[0.4,0,1,1]`
+- `background: #EEEFE9` + `isolation: isolate` no `motion.div` — evita ghosting
+- `willChange: "transform, opacity"` — melhora performance
+
+### Tabs com pill (padrão)
+- Usar componente `SlidingTabs` — não reimplementar
+- Combinar com `TabContent` para animação direcional do conteúdo
+- Calcular `direction` comparando índice anterior vs. novo
+
+### Animações de ícone da sidebar
+- 12 keyframes em `globals.css` (icon-pulse, icon-bounce-y, icon-wiggle, icon-spark, icon-flip, icon-nod, icon-spin-slow, icon-grow, icon-nudge, icon-pulse-double, icon-rotate-sm, icon-spin-partial)
+- Disparam via `group-hover` no item pai
+- Cada item de menu tem `iconClass` específico — ver tabela em `motion-interactions.mdc`
 
 ## Modal — Padrão da plataforma inteira (Hubia)
 - **Regra global:** Em **toda** a plataforma, qualquer modal de criar/editar/ver segue o mesmo padrão.
@@ -78,6 +108,8 @@ Next.js 15+ / TypeScript / Tailwind / Shadcn / Supabase / Prisma / Vercel / Figm
 - Comunicação em português BR
 - Tom profissional mas acessível
 - Nomes criativos para agentes (ainda não definidos)
+- **Rollback sempre disponível:** usuário usa `git checkout --` para reverter sessões. Nunca commitar sem consolidar memória.
+- **Não implementar sem aprovação:** animações novas (ex.: spring na pill) precisam de confirmação visual antes de commitar.
 
 ## Visão de Longo Prazo
 - Novos squads: marketing, financeiro, CRM, social media

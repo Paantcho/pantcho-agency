@@ -5,7 +5,7 @@ Atualizado DEPOIS de cada ação.
 
 ---
 
-**Status:** Fase 1 em andamento — telas de Creators pixel-perfect aprovadas; próximo: Look library, Tom de voz, KPIs reais.
+**Status:** Fase 1 em andamento — animações de sistema implementadas (sidebar pill, transição de página, tabs deslizantes, tab-content direcional); próximo: metadata Natasha, KPIs reais, Pedidos/Projetos.
 
 ## Projeto Atual
 HUBIA — Implementação Fase 1 (PRD v4.0, seções 4–8)
@@ -15,55 +15,58 @@ HUBIA — Implementação Fase 1 (PRD v4.0, seções 4–8)
 ## Última sessão (WORKING atualizado ao fechar)
 
 ### 1. Resumo em uma frase
-Revisão pixel-perfect completa das telas de Creators: cards da lista (fullbleed + parallax zoom + dados estruturados do banco), detalhe (tabs com ícones, hero card, KPIs, Aparência forense, Ambientes categorizados), botão X do modal corrigido, metadata estruturado no Creator, e regra suprema de fidelidade ao Figma criada em `.cursor/rules/`.
+Implementação completa do sistema de animações e motion da plataforma: sidebar pill deslizante, transição de página Shared Axis vertical, tabs com pill deslizante horizontal, animação direcional de conteúdo de tabs (Shared Axis horizontal), animações de ícone da sidebar via CSS keyframes, hover states dos itens de menu; pixel-perfect revisado nas tabs Look Library e Tom de Voz.
 
 ### 2. Arquivos criados ou modificados nesta sessão
 
 | Arquivo | O que foi feito |
 |--------|-----------------|
-| `hubia-app/src/app/(dashboard)/creators/creators-list-client.tsx` | Cards fullbleed: foto ocupa 100% do card, gradiente overlay, nome Limão line-height 1.1, idade e cidade/estado em linhas separadas, tags de plataformas vindas do `metadata.platforms` do banco (não hardcoded). Grid `grid-cols-2 sm:grid-cols-3 lg:grid-cols-4` — mesmo tamanho dos cards da Look Library. Parallax zoom `scale-[1.12]`. |
-| `hubia-app/src/app/(dashboard)/creators/actions.ts` | `CreatorRow` e `CreatorDetail` agora expõem `metadata` (city, state, age, birthdate, platforms). `getCreators` e `getCreatorById` retornam metadata estruturado. |
-| `hubia-app/prisma/seed.ts` | Seed da Ninaah atualizado com `metadata: { city: "Pomerode", state: "SC", age: 22, birthdate: "16/05/2004", platforms: ["instagram", "privacy", "tiktok"] }`. |
-| `hubia-app/src/app/(dashboard)/creators/[id]/creator-detail-client.tsx` | Tabs restauradas: fundo branco surface, ícones de volta (User, Palette, MapPin, Shirt, Mic), tab ativa pill Limão. Breadcrumb e botões com tipografia fiel ao Figma. |
-| `hubia-app/src/app/(dashboard)/creators/[id]/tabs/creator-overview-tab.tsx` | Hero card ink-500: avatar 88px quadrado-arredondado, nome 28px Limão, bio branco opaco. 6 KPIs: label tiny cinza, valor 32px Limão. Marcadores com ícones e Veículo Fixo em cards brancos. |
-| `hubia-app/src/app/(dashboard)/creators/[id]/tabs/creator-appearance-tab.tsx` | Banner forense rosa claro com borda. Tabelas 3 colunas (Elemento / Definição Fixa / Tolerância) com header cinza e rows separados. Checklist fundo verde, Blindagem fundo rosa — grid 2x2. |
-| `hubia-app/src/app/(dashboard)/creators/[id]/tabs/creator-environments-tab.tsx` | Banner ink-500 com ícone casa. Cards brancos com tags coloridas: FIXOS (verde), FLEXÍVEIS (laranja), PROIBIDO (rosa). |
-| `hubia-app/src/app/globals.css` | `.hubia-icon-button:hover` corrigido: era `--state-hover` (amarelo invisível no branco) → agora `rgba(62,63,64,0.85)` (cinza escuro visível). |
-| `.cursor/rules/figma-fidelity-supreme.mdc` | Regra suprema criada: `alwaysApply: true`. Define checklist de 10 pontos para analisar referências visuais, proibição de invenção/suposição, checklist de entrega. |
+| `.cursor/rules/motion-interactions.mdc` | Regra permanente de motion criada/expandida: Framer Motion obrigatório para React, sidebar pill, tabs pill, transições de página, cards stagger, accordions, modais 3 camadas, toasts, animações de ícone por item, proibições adicionais de motion. |
+| `hubia-app/src/app/globals.css` | Adicionados 12 `@keyframes` para animações de ícone da sidebar (icon-pulse, icon-bounce-y, icon-wiggle, icon-spark, icon-flip, icon-nod, icon-spin-slow, icon-grow, icon-nudge, icon-pulse-double, icon-rotate-sm, icon-spin-partial). Background `html, body { background: #EEEFE9 }`. Classes `.sidebar-item` e `.sidebar-item-icon` para hover states. Classe `.hubia-main-transition` removida. |
+| `hubia-app/src/components/layout/sidebar.tsx` | Pill deslizante: `<div>` absoluta com `top: pillTop, height: pillHeight` + `transition: top 300ms cubic-bezier(0.2,0,0.0,1)`. Refs por item via `useRef`. Ícones trocados para os corretos (`CalendarDays`, `FolderOpen`, `BarChart2`). `iconClass` por item. Hover state: texto #A9AAA5 → #0E0F10 em 150ms. `AnimatedLink` com `data-active`. |
+| `hubia-app/src/components/ui/animated-link.tsx` | Refatorado com `React.forwardRef` para expor o `<a>` DOM — necessário para cálculo de `offsetTop`/`offsetHeight` dos refs da sidebar. |
+| `hubia-app/src/components/layout/app-shell.tsx` | Transição de página Shared Axis vertical via Framer Motion `AnimatePresence mode="wait"` com `key={pathname}`. `PageTransition` component com `motion.div`: entrada `opacity 0→1, y 12→0` em 280ms, saída `opacity 1→0, y 0→-8` em 200ms. `background: #EEEFE9` e `isolation: isolate` no wrapper para evitar ghosting. `willChange: "transform, opacity"`. |
+| `hubia-app/src/components/ui/sliding-tabs.tsx` | **NOVO.** Tabs horizontais com pill deslizante. `containerRef` + `btnRefs` + `useEffect` calcula `pillLeft` e `pillWidth` via `getBoundingClientRect`. Pill: `background: #D7FF00`, `border-radius: 14px`, transição `left/width 300ms cubic-bezier(0.2,0,0.0,1)`. Container: `background: #FFFFFF`, `border-radius: 20px`. Texto inativo: `#A9AAA5`, ativo: `#0E0F10`. |
+| `hubia-app/src/components/ui/tab-content.tsx` | **NOVO.** Wrapper de conteúdo de tab com animação direcional Shared Axis horizontal. `AnimatePresence mode="wait"` + `motion.div` com `custom={direction}`. Entrada: `x: dir*24, opacity 0 → 0, 0` em 220ms ease-dec. Saída: `x: dir*-16, opacity → 0` em 160ms ease-acc. |
+| `hubia-app/src/app/(dashboard)/config/layout.tsx` | Tabs de config (Equipe/Branding/Provedores) refatoradas para `SlidingTabs` + `TabContent` direcional. Pill #EEEFE9 com bg branco. |
+| `hubia-app/src/app/(dashboard)/creators/[id]/tabs/creator-looks-tab.tsx` | Revisão pixel-perfect: filtros brancos com borda cinza (`bg: #FFFFFF, border: #D9D9D4`), ativo Limão. Cards `aspectRatio: 3/4`, `borderRadius: 16px`. Animação estrela no hover. |
+| `hubia-app/src/app/(dashboard)/creators/[id]/tabs/creator-voice-tab.tsx` | Revisão pixel-perfect: "Tom Geral" full-width; grid de 3 colunas para Instagram/Privacy/Tiktok; grid 3 colunas para Vocabulário/Emojis/Legendas. |
 | `memory/WORKING.md` | Este arquivo atualizado. |
 
 ### 3. O que está funcionando e aprovado
 
-- Cards da lista: fullbleed, gradiente, parallax zoom, nome/idade/cidade/tags — dados reais do banco.
-- Tabs do detalhe: fundo branco, ícones, pill ativa Limão.
-- Hero card e KPIs: layout exato do Figma.
-- Aparência: tabelas forenses, checklist verde, blindagem vermelha.
-- Ambientes: banner escuro, cards brancos categorizados por FIXOS/FLEXÍVEIS/PROIBIDO.
-- Botão X do modal: hover visível (cinza escuro), active (preto sólido).
-- TypeScript: sem erros. Lints: zero.
-- Regra suprema de fidelidade ao Figma ativa em `.cursor/rules/`.
+- Sidebar pill desliza suavemente entre itens (CSS transition `cubic-bezier(0.2,0,0.0,1)`).
+- Ícones da sidebar animam no hover (wiggle, spark, pulse, bounce, etc.) via CSS keyframes.
+- Hover state de itens inativos: texto escurece, sem fundo extra.
+- Transição de página: conteúdo sobe/desce com fade — sidebar NÃO pisca.
+- Tabs das páginas de detalhe e config: pill desliza horizontalmente.
+- Conteúdo de tab anima diagonalmente (direcional) ao trocar aba.
+- `AnimatedLink` com `forwardRef` — refs funcionam para cálculo de posição.
+- Look Library e Tom de Voz: pixel-perfect corrigidos.
 
 ### 4. O que está incompleto ou pendente
 
-- **Look library tab:** visual não revisado ainda — ajustar conforme imagem 5 do Figma.
-- **Tom de voz tab:** visual não revisado ainda.
-- **KPIs do Overview:** valores hardcoded (39, 64%, 122, etc.) — em produção virão de queries reais.
-- **Veículo Fixo:** placeholder de imagem — em produção usar Supabase Storage.
-- **Natasha Freitas:** seed não tem metadata estruturado ainda (só a Ninaah foi atualizada).
+- **Pill das tabs:** ainda usa CSS transition (não spring) — o ajuste de spring foi solicitado mas revertido a pedido do usuário.
+- **Pill da sidebar:** idem, CSS transition — spring não aplicado.
+- **KPIs do Overview:** valores hardcoded.
+- **Veículo Fixo:** placeholder de imagem.
+- **Natasha Freitas:** seed sem metadata estruturado.
 
-### 5. Próxima ação exata (o que fazer primeiro na próxima sessão)
+### 5. Próxima ação exata
 
-1. Revisar Look library tab conforme imagem 5 do Figma (node `8-2143`).
-2. Revisar Tom de voz tab conforme imagem 6 do Figma (node `8-2544`).
-3. Adicionar metadata estruturado para a Natasha Freitas via admin ou seed.
-4. Conectar KPIs do Overview ao banco (contar looks, ambientes, pedidos reais).
+1. Confirmar com o usuário se quer spring na pill (sidebar + tabs) ou manter CSS.
+2. Adicionar metadata estruturado para a Natasha Freitas.
+3. Conectar KPIs do Overview ao banco.
+4. Demais páginas: Pedidos, Projetos.
 
 ### 6. Decisões técnicas importantes tomadas nesta sessão
 
-- **Dados estruturados no creator:** cidade, estado, idade e plataformas ficam em `metadata` (campo JSON no modelo Creator) — não no `bio` texto livre.
-- **Fidelidade por hex direto:** quando token Tailwind não cobre o valor exato, usar `style={{ color: "#..." }}` — fidelidade ao Figma tem prioridade.
-- **Grid da lista = grid da Look Library:** `grid-cols-2 sm:grid-cols-3 lg:grid-cols-4`, aspectRatio `3/4`.
-- **Botão X do modal:** fundo ink-500 (preto), hover cinza escuro `rgba(62,63,64,0.85)`, active preto sólido — nunca usar `--state-hover` (amarelo) em elementos escuros sobre fundo branco.
+- **Framer Motion para transições de página:** `AnimatePresence mode="wait"` só no conteúdo principal — sidebar fica fora.
+- **Ghosting prevenido:** `background: #EEEFE9` + `isolation: isolate` no `motion.div` de transição de página.
+- **Sliding pill com refs DOM:** `useRef` + `offsetTop/offsetHeight` para sidebar, `getBoundingClientRect` para tabs (necessário pois tabs ficam em container relativo).
+- **`forwardRef` no AnimatedLink:** expõe o `<a>` DOM para o array de refs da sidebar.
+- **Tab content direcional:** comparar índice da tab clicada vs. anterior para calcular `direction` (+1 ou -1).
+- **Spring revertido a pedido do usuário:** spring era mais fluido mas causou problema visual. Mantido CSS transition por ora.
 
 ---
 
@@ -95,14 +98,24 @@ Revisão pixel-perfect completa das telas de Creators: cards da lista (fullbleed
 - [x] `.hubia-icon-button` hover/active corrigidos
 
 ### Layout Shell
-- [x] Sidebar: 12 itens, 3 seções
-- [x] AppShell
+- [x] Sidebar: 12 itens, 3 seções, pill deslizante, ícones animados, hover states
+- [x] AppShell com transição de página Shared Axis vertical
 - [x] Dashboard, auth layout
 
 ### Config Pages
 - [x] Config/Equipe — banco (server actions, alterar role)
 - [x] Config/Branding — banco (cor primária)
 - [x] Config/Provedores — banco (CRUD, encrypt keys)
+- [x] Config tabs: SlidingTabs + TabContent direcional
+
+### Motion System
+- [x] `motion-interactions.mdc` — regra permanente completa
+- [x] Sidebar pill deslizante (CSS ease-emp)
+- [x] Transição de página Shared Axis vertical (Framer Motion)
+- [x] `SlidingTabs` — componente reutilizável para tabs com pill
+- [x] `TabContent` — componente reutilizável para conteúdo direcional
+- [x] Animações de ícone CSS keyframes (12 keyframes)
+- [x] Hover state dos itens do menu
 
 ### Build
 - [x] `npm run build` — compilação limpa
@@ -117,12 +130,13 @@ Revisão pixel-perfect completa das telas de Creators: cards da lista (fullbleed
 - [x] Creators: lista, visão geral, aparência, ambientes — pixel-perfect ao Figma
 - [x] `metadata` estruturado no Creator (city, state, age, platforms)
 - [x] Regra suprema de fidelidade ao Figma (`.cursor/rules/figma-fidelity-supreme.mdc`)
+- [x] Sistema de animações completo (sidebar, página, tabs)
 
 ---
 
 ## Próximos Passos
-- [ ] Revisar Look library tab (Figma node 8-2143)
-- [ ] Revisar Tom de voz tab (Figma node 8-2544)
+- [ ] Decidir: spring ou CSS transition na pill (sidebar + tabs)
+- [ ] Revisar Creator detail tabs (Figma nodes 8:2143, 8:2544) — Look Library, Tom de voz
 - [ ] Adicionar metadata da Natasha Freitas
 - [ ] Conectar KPIs do Overview ao banco
 - [ ] Upload de logo/favicon (Supabase Storage)
@@ -140,3 +154,9 @@ Revisão pixel-perfect completa das telas de Creators: cards da lista (fullbleed
 - Dados do creator: `metadata` JSON para campos estruturados (city, state, age, platforms)
 - Fidelidade ao Figma: hex direto > tokens Tailwind quando necessário
 - Botão X modal: hover `rgba(62,63,64,0.85)` — nunca `--state-hover` em contexto escuro/branco
+- Sidebar pill: UMA `<div>` absoluta move via `top + height`, CSS transition ease-emp
+- Transição de página: `AnimatePresence mode="wait"` só no conteúdo — sidebar fora do wrapper
+- Ghosting prevenido: `background: #EEEFE9` + `isolation: isolate` no `motion.div`
+- `AnimatedLink` com `forwardRef` — expõe DOM para cálculo de refs
+- Tabs com pill: `SlidingTabs` (reutilizável), posição via `getBoundingClientRect`
+- Tab content direcional: `TabContent` com `direction` (+1/-1) e Shared Axis horizontal

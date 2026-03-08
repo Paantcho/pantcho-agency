@@ -167,3 +167,184 @@ Auto-dismiss: 3500ms
 15. **NUNCA** simplifique o modal para "só o container" — as 3 camadas são inegociáveis---
 alwaysApply: true
 ---
+
+
+
+## ─────────────────────────────────────────────
+## ADIÇÃO AO motion-interactions.mdc
+## Cole no final do arquivo existente
+## ─────────────────────────────────────────────
+
+---
+
+## LINGUAGEM DE INTERAÇÃO UNIVERSAL — REGRA PERMANENTE
+
+Todo elemento interativo do Hubia responde ao hover e ao clique.
+Sem exceção. Se o usuário pode clicar, ele recebe feedback visual.
+Esta regra se aplica a: itens de menu, tabs, botões, ícones, cards,
+links, toggles, checkboxes, qualquer coisa clicável.
+
+---
+
+### OS 3 ESTADOS OBRIGATÓRIOS
+
+Todo elemento interativo tem exatamente 3 estados:
+
+```
+NORMAL  → aparência padrão, sem destaque
+HOVER   → usuário passou o mouse → elemento "acende" sutilmente
+ATIVO   → clicado/selecionado → destaque completo
+```
+
+Nunca existe apenas Normal + Ativo sem Hover no meio.
+
+---
+
+### HOVER — COMPORTAMENTO PADRÃO POR TIPO DE ELEMENTO
+
+**Itens de menu (sidebar, tabs horizontais, nav):**
+```
+- Fundo: rgba(14,15,16,0.04) aparece suavemente
+- Texto: #A9AAA5 → #0E0F10
+- Ícone: faz a animação semântica dele (pulse, wiggle, spark, etc.)
+- Scale do container: NÃO escala — só muda cor e fundo
+- Transição: 150ms cubic-bezier(0.4, 0, 0.2, 1)
+```
+
+**Botões (primário, secundário, ghost, danger):**
+```
+- Scale: 1 → 1.03
+- Cor de fundo: fica um tom mais claro
+- Transição: 150ms cubic-bezier(0.34, 1.56, 0.64, 1)  ← leve overshoot
+```
+
+**Ícones soltos (icon buttons, ações inline):**
+```
+- Scale do container: 1 → 1.12
+- Cor: #A9AAA5 → #0E0F10
+- O SVG faz a animação semântica dele
+- Transição: 150ms cubic-bezier(0.34, 1.56, 0.64, 1)
+```
+
+**Cards:**
+```
+- translateY: 0 → -4px  ← sobe levemente
+- Transição: 200ms cubic-bezier(0.34, 1.56, 0.64, 1)
+```
+
+**Links e textos clicáveis:**
+```
+- Cor: muda para a cor primária #D7FF00 ou #0E0F10 conforme contexto
+- Underline: aparece sutilmente
+- Transição: 100ms
+```
+
+---
+
+### ACTIVE/PRESS — COMPORTAMENTO PADRÃO
+
+Quando o usuário clica (mousedown), o elemento afunda levemente:
+
+```
+Botões:          scale 1.03 → 0.96
+Ícones soltos:   scale 1.12 → 0.90
+Itens de menu:   scale leve 0.98 momentâneo
+Cards:           scale 1 → 0.98
+Transição: 100ms cubic-bezier(0.4, 0, 1, 1)  ← rápido, como pressão física
+```
+
+---
+
+### ÍCONES DENTRO DE BOTÕES — REGRA ESPECÍFICA
+
+Todo botão que contém um ícone além do texto:
+o ícone faz micro-animação no hover do botão pai.
+
+```
+Botão com ícone de envio (Send, ArrowRight, etc.):
+  hover → ícone faz spark ou nudge para a direita (translateX 2px)
+
+Botão com ícone de adicionar (Plus, PlusCircle):
+  hover → ícone faz pulse: scale 1→1.2→1
+
+Botão com ícone de download/upload:
+  hover → ícone faz bounce vertical
+
+Botão com ícone de deletar/remover (Trash, X):
+  hover → ícone faz wiggle
+
+Botão com ícone de configuração (Settings, Sliders):
+  hover → ícone faz spin parcial (30-60°)
+
+Botão com ícone de refresh/sync:
+  hover → ícone faz spin completo (360°)
+
+Regra geral: se não há animação específica definida,
+o ícone faz pulse suave (scale 1→1.15→1) em 300ms.
+```
+
+---
+
+### IMPLEMENTAÇÃO — PADRÃO DE CÓDIGO
+
+**Para itens de menu e tabs (grupo hover):**
+```tsx
+<button className="group flex items-center gap-3.5 px-4 py-3 rounded-[18px]
+                   transition-colors duration-150
+                   hover:bg-black/[0.04]">
+  <IconComponent
+    size={20}
+    className="text-[#A9AAA5] group-hover:text-[#0E0F10]
+               transition-colors duration-150
+               group-hover:[animation-name:icon-pulse]
+               [animation-duration:350ms]
+               [animation-timing-function:cubic-bezier(0.34,1.56,0.64,1)]
+               [animation-fill-mode:forwards]" />
+  <span className="text-[#A9AAA5] group-hover:text-[#0E0F10]
+                   transition-colors duration-150 font-semibold text-[18px]">
+    Label
+  </span>
+</button>
+```
+
+**Para botões com ícone (Framer Motion):**
+```tsx
+<motion.button
+  whileHover={{ scale: 1.03 }}
+  whileTap={{ scale: 0.96 }}
+  transition={{ duration: 0.15, ease: [0.34, 1.56, 0.64, 1] }}
+  className="flex items-center gap-2"
+>
+  <motion.div
+    className="icon-wrapper"
+    whileHover={{ /* animação específica do ícone */ }}
+  >
+    <PlusIcon size={18} />
+  </motion.div>
+  Novo projeto
+</motion.button>
+```
+
+**Para ícones soltos:**
+```tsx
+<motion.button
+  whileHover={{ scale: 1.12, color: '#0E0F10' }}
+  whileTap={{ scale: 0.90 }}
+  transition={{ duration: 0.15, ease: [0.34, 1.56, 0.64, 1] }}
+>
+  <TrashIcon size={18} className="group-hover:[animation-name:icon-wiggle]" />
+</motion.button>
+```
+
+---
+
+### PROIBIÇÕES ADICIONAIS
+
+16. **NUNCA** crie um elemento clicável sem estado de hover
+17. **NUNCA** use cursor:pointer sem ter uma animação de hover correspondente
+18. **NUNCA** implemente hover apenas com mudança de cor — sempre há
+    pelo menos um efeito adicional (scale, translate ou animação de ícone)
+19. **NUNCA** use a mesma animação para todos os ícones — cada ícone
+    tem semântica própria e animação correspondente
+20. **NUNCA** implemente active/press sem o afundamento (scale < 1) —
+    o clique precisa ter sensação de pressão física

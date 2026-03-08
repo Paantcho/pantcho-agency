@@ -143,11 +143,12 @@ export default function CreatorLooksTab({
             key={f}
             type="button"
             onClick={() => setLookFilter(f)}
-            className={`motion-soft rounded-button px-4 py-2 text-label-sm font-semibold ${
+            style={
               lookFilter === f
-                ? "bg-ink-500 text-white"
-                : "bg-surface-500 text-base-700 hover:bg-base-500 hover:text-ink-500"
-            }`}
+                ? { background: "#D7FF00", color: "#0E0F10", borderColor: "#D7FF00" }
+                : { background: "#FFFFFF", color: "#0E0F10", borderColor: "#D9D9D4" }
+            }
+            className="motion-soft rounded-[18px] border px-4 py-2 text-[13px] font-semibold transition-colors duration-150"
           >
             {f}
           </button>
@@ -155,87 +156,101 @@ export default function CreatorLooksTab({
       </div>
 
       {displayLooks.length === 0 ? (
-        <div className="rounded-card border border-dashed border-base-600 bg-base-500/30 py-12 text-center">
-          <p className="text-body-md font-medium text-base-700">Nenhum look cadastrado.</p>
+        <div className="rounded-[16px] border border-dashed border-base-600 bg-base-500/30 py-12 text-center">
+          <p className="font-medium text-base-700" style={{ fontSize: "14px" }}>Nenhum look cadastrado.</p>
           <button
             type="button"
             onClick={openAddModal}
-            className="mt-4 rounded-button bg-limao-500 px-4 py-2 text-label-sm font-semibold text-ink-500 hover:bg-limao-400"
+            className="mt-4 rounded-[18px] px-4 py-2 text-[13px] font-semibold text-ink-500"
+            style={{ background: "#D7FF00" }}
           >
             Adicionar look
           </button>
         </div>
       ) : (
-        <>
-          <button
-            type="button"
-            onClick={openAddModal}
-            className="rounded-button border border-base-600 px-4 py-2 text-label-sm font-medium text-ink-500 hover:bg-base-500"
-          >
-            + Adicionar look
-          </button>
-          <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
-            {displayLooks.map((look) => (
-              <div key={look.id} className="flex flex-col">
-                <div className="group relative overflow-hidden rounded-card bg-ink-400 transition-shadow hover:shadow-lg">
-                  {look.isMock && (
-                    <span className="absolute right-2 top-2 z-10 rounded-tag bg-ink-500/90 px-2 py-0.5 text-[10px] font-semibold uppercase text-limao-500">
-                      Mock
-                    </span>
+        <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
+          {displayLooks.map((look) => (
+            <div key={look.id} className="flex flex-col">
+              {/* Card fullbleed — foto ocupa 100% */}
+              <div
+                className="group relative overflow-hidden"
+                style={{ borderRadius: "16px", aspectRatio: "3/4" }}
+              >
+                {/* Estrela favorito — canto superior esquerdo */}
+                <button
+                  type="button"
+                  onClick={() => toggleFavorite(look.id)}
+                  className="absolute left-3 top-3 z-10 rounded-full p-1 text-white/80 transition-colors hover:text-limao-500"
+                  aria-label={favoriteIds.has(look.id) ? "Remover favorito" : "Favoritar"}
+                >
+                  <Star
+                    size={18}
+                    className={favoriteIds.has(look.id) ? "fill-[#D7FF00] text-[#D7FF00]" : "fill-transparent"}
+                  />
+                </button>
+
+                {/* Imagem de fundo */}
+                <div className="absolute inset-0 bg-[#1a1a1a]">
+                  {look.thumbnailUrl ? (
+                    <img
+                      src={look.thumbnailUrl}
+                      alt={look.name}
+                      className="h-full w-full object-cover object-top transition-transform duration-500 group-hover:scale-[1.05]"
+                    />
+                  ) : creator.avatarUrl ? (
+                    <img
+                      src={creator.avatarUrl}
+                      alt={look.name}
+                      className="h-full w-full object-cover object-top transition-transform duration-500 group-hover:scale-[1.05]"
+                    />
+                  ) : (
+                    <div className="flex h-full w-full items-center justify-center">
+                      <span className="font-bold text-white/20" style={{ fontSize: "32px" }}>
+                        {look.name.slice(0, 2)}
+                      </span>
+                    </div>
                   )}
+                </div>
+
+                {/* Gradiente overlay + texto */}
+                <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-[#0E0F10]/95 via-[#0E0F10]/50 to-transparent p-3 pt-12">
+                  <p
+                    className="font-bold leading-tight"
+                    style={{ fontSize: "15px", color: "#D7FF00" }}
+                  >
+                    {look.name}
+                  </p>
+                  <p
+                    className="mt-0.5 font-medium"
+                    style={{ fontSize: "11px", color: "rgba(255,255,255,0.75)" }}
+                  >
+                    {look.date} · Pedido #{look.pedido}
+                  </p>
+                </div>
+              </div>
+
+              {/* Botões de editar/excluir — apenas looks reais */}
+              {!look.isMock && (
+                <div className="mt-2 flex gap-2">
                   <button
                     type="button"
-                    onClick={() => toggleFavorite(look.id)}
-                    className="absolute left-2 top-2 z-10 rounded-full p-1 text-white/80 transition-colors hover:text-limao-500"
-                    aria-label={favoriteIds.has(look.id) ? "Remover favorito" : "Favoritar"}
+                    onClick={() => startEdit(creator.looks.find((l) => l.id === look.id)!)}
+                    className="rounded-[10px] border border-base-600 px-3 py-1.5 text-[11px] font-semibold text-ink-500 transition-colors hover:bg-base-600/30"
                   >
-                    <Star
-                      size={20}
-                      className={favoriteIds.has(look.id) ? "fill-amber-400 text-amber-400" : ""}
-                    />
+                    Editar
                   </button>
-                  <div className="aspect-[3/4] w-full overflow-hidden bg-ink-500">
-                    {look.thumbnailUrl ? (
-                      <img src={look.thumbnailUrl} alt="" className="h-full w-full object-cover object-top" />
-                    ) : (
-                      <div className="flex h-full w-full items-center justify-center bg-ink-500">
-                        {creator.avatarUrl ? (
-                          <img src={creator.avatarUrl} alt="" className="h-full w-full object-cover object-top" />
-                        ) : (
-                          <span className="text-heading-md font-bold text-white/40">{look.name.slice(0, 2)}</span>
-                        )}
-                      </div>
-                    )}
-                  </div>
-                  <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-ink-500/95 to-transparent p-3 pt-8">
-                    <p className="font-bold text-limao-500">{look.name}</p>
-                    <p className="text-[11px] text-white/80">
-                      {look.date} • Pedido #{look.pedido}
-                    </p>
-                  </div>
+                  <button
+                    type="button"
+                    onClick={() => setDeleteModalLookId(look.id)}
+                    className="rounded-[10px] border border-red-400/40 px-3 py-1.5 text-[11px] font-semibold text-red-500 transition-colors hover:bg-red-500/10"
+                  >
+                    Excluir
+                  </button>
                 </div>
-                {!look.isMock && (
-                  <div className="mt-2 flex gap-2">
-                    <button
-                      type="button"
-                      onClick={() => startEdit(creator.looks.find((l) => l.id === look.id)!)}
-                      className="rounded-button border border-base-600 px-2 py-1 text-[11px] font-medium text-ink-500 hover:bg-base-500"
-                    >
-                      Editar
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => setDeleteModalLookId(look.id)}
-                      className="rounded-button border border-red-500/50 px-2 py-1 text-[11px] text-red-600 hover:bg-red-500/10"
-                    >
-                      Excluir
-                    </button>
-                  </div>
-                )}
-              </div>
-            ))}
-          </div>
-        </>
+              )}
+            </div>
+          ))}
+        </div>
       )}
 
       <HubiaModal

@@ -83,75 +83,76 @@ export default function CreatorVoiceTab({
       </div>
 
       {/* Grid de cards */}
+      {/* Tom Geral — full width */}
+      <div className="rounded-[16px] p-6" style={{ background: "#FFFFFF" }}>
+        <h3 className="font-bold text-ink-500" style={{ fontSize: "17px" }}>Tom Geral</h3>
+        <p className="mt-2 text-base-700" style={{ fontSize: "14px", lineHeight: "1.6" }}>{tomGeral}</p>
+      </div>
+
+      {/* Instagram / Privacy / Tiktok — 3 colunas */}
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        <div className="rounded-card bg-surface-500 p-6 lg:col-span-2">
-          <h3 className="text-heading-sm font-bold text-ink-500">Tom Geral</h3>
-          <p className="mt-2 text-body-md text-base-700">{tomGeral}</p>
+        <div className="rounded-[16px] p-6" style={{ background: "#FFFFFF" }}>
+          <h3 className="font-bold text-ink-500" style={{ fontSize: "17px" }}>Instagram</h3>
+          <p className="mt-2 text-base-700" style={{ fontSize: "13px", lineHeight: "1.6" }}>{instagramText}</p>
         </div>
-        <div className="rounded-card bg-surface-500 p-6">
-          <h3 className="text-heading-sm font-bold text-ink-500">Instagram</h3>
-          <p className="mt-2 text-body-sm text-base-700">{instagramText}</p>
+        <div className="rounded-[16px] p-6" style={{ background: "#FFFFFF" }}>
+          <h3 className="font-bold text-ink-500" style={{ fontSize: "17px" }}>Privacy / onlyfans</h3>
+          <p className="mt-2 text-base-700" style={{ fontSize: "13px", lineHeight: "1.6" }}>{privacyText}</p>
         </div>
-        <div className="rounded-card bg-surface-500 p-6">
-          <h3 className="text-heading-sm font-bold text-ink-500">Privacy / onlyfans</h3>
-          <p className="mt-2 text-body-sm text-base-700">{privacyText}</p>
-        </div>
-        <div className="rounded-card bg-surface-500 p-6">
-          <h3 className="text-heading-sm font-bold text-ink-500">Tiktok</h3>
-          <p className="mt-2 text-body-sm text-base-700">{tiktokText}</p>
+        <div className="rounded-[16px] p-6" style={{ background: "#FFFFFF" }}>
+          <h3 className="font-bold text-ink-500" style={{ fontSize: "17px" }}>Tiktok</h3>
+          <p className="mt-2 text-base-700" style={{ fontSize: "13px", lineHeight: "1.6" }}>{tiktokText}</p>
         </div>
       </div>
 
-      <div className="grid gap-4 sm:grid-cols-2">
-        <div className="rounded-card bg-surface-500 p-6">
-          <h3 className="text-heading-sm font-bold text-ink-500">Vocabulário</h3>
+      {/* Vocabulário / Emojis / Exemplos de Legendas — 3 colunas */}
+      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="rounded-[16px] p-6" style={{ background: "#FFFFFF" }}>
+          <h3 className="font-bold text-ink-500" style={{ fontSize: "17px" }}>Vocabulário</h3>
           <div className="mt-4 space-y-3">
             <div>
-              <span className="flex items-center gap-2 text-label-sm font-semibold text-green-700">
+              <span className="flex items-center gap-2 font-semibold text-green-700" style={{ fontSize: "13px" }}>
                 <Check className="h-4 w-4" /> USA
               </span>
-              <p className="mt-1 text-body-sm text-base-700">
+              <p className="mt-1 text-base-700" style={{ fontSize: "13px" }}>
                 {usaTerms.join(", ")}
               </p>
             </div>
             <div>
-              <span className="flex items-center gap-2 text-label-sm font-semibold text-pink-600">
+              <span className="flex items-center gap-2 font-semibold text-pink-600" style={{ fontSize: "13px" }}>
                 <X className="h-4 w-4" /> EVITA
               </span>
-              <p className="mt-1 text-body-sm text-base-700">
+              <p className="mt-1 text-base-700" style={{ fontSize: "13px" }}>
                 {evitaTerms.join(", ")}
               </p>
             </div>
           </div>
         </div>
-        <div className="rounded-card bg-surface-500 p-6">
-          <h3 className="text-heading-sm font-bold text-ink-500">Emojis</h3>
+        <div className="rounded-[16px] p-6" style={{ background: "#FFFFFF" }}>
+          <h3 className="font-bold text-ink-500" style={{ fontSize: "17px" }}>Emojis</h3>
           <div className="mt-4 space-y-3">
             <div>
-              <span className="flex items-center gap-2 text-label-sm font-semibold text-green-700">
+              <span className="flex items-center gap-2 font-semibold text-green-700" style={{ fontSize: "13px" }}>
                 <Check className="h-4 w-4" /> USA
               </span>
-              <p className="mt-1 text-body-sm text-base-700">{usaEmojis}</p>
+              <p className="mt-1 text-base-700" style={{ fontSize: "13px" }}>{usaEmojis}</p>
             </div>
             <div>
-              <span className="flex items-center gap-2 text-label-sm font-semibold text-pink-600">
+              <span className="flex items-center gap-2 font-semibold text-pink-600" style={{ fontSize: "13px" }}>
                 <X className="h-4 w-4" /> EVITA
               </span>
-              <p className="mt-1 text-body-sm text-base-700">{evitaEmojis}</p>
+              <p className="mt-1 text-base-700" style={{ fontSize: "13px" }}>{evitaEmojis}</p>
             </div>
           </div>
         </div>
-      </div>
-
-      <div className="rounded-card bg-surface-500 p-6">
-        <h3 className="text-heading-sm font-bold text-ink-500">
-          Exemplos de Legendas
-        </h3>
-        <ul className="mt-4 list-disc space-y-1 pl-5 text-body-sm font-medium text-base-700">
-          {exemplosLegendas.map((ex) => (
-            <li key={ex}>{ex}</li>
-          ))}
-        </ul>
+        <div className="rounded-[16px] p-6" style={{ background: "#FFFFFF" }}>
+          <h3 className="font-bold text-ink-500" style={{ fontSize: "17px" }}>Exemplos de Legendas</h3>
+          <ul className="mt-4 space-y-2" style={{ fontSize: "13px", color: "#5E5E5F" }}>
+            {exemplosLegendas.map((ex) => (
+              <li key={ex}>{ex}</li>
+            ))}
+          </ul>
+        </div>
       </div>
 
       <HubiaModal
