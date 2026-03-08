@@ -5,7 +5,7 @@ Atualizado DEPOIS de cada ação.
 
 ---
 
-**Status:** Gerador de Prompt concluído pixel-perfect. Selects customizados, toast Hubia, ícones animados via variantes propagadas — build limpo.
+**Status:** Página Agentes concluída pixel-perfect — 4 tabs, banco, seed, motion. Build limpo.
 
 ## Projeto Atual
 HUBIA — Implementação contínua (motion enforcement + próximas páginas)
@@ -130,6 +130,15 @@ Gerador de Prompt entregue com 3 tabs + modal; depois: selects nativos substitu�
 
 ### Build
 - [x] `npm run build` — compilação limpa (último commit)
+
+### Agentes
+- [x] Schema: Squad + SquadAgent + SquadStatus + db push + generate
+- [x] Seed: Dev Squad + Audiovisual Squad, 9 agentes, 17 skills
+- [x] Tab Squads: grid 3 colunas, cards pretos, filtros pill, stagger
+- [x] Tab Skills Registry: 2 colunas flat, badge SEMPRE, botão EDITAR animado
+- [x] Tab Fluxo do Orquestrador: diagrama com stagger
+- [x] Tab Squads Futuros: banner dashed + grid status colorido + card Criar
+- [x] Build limpo
 
 ---
 
