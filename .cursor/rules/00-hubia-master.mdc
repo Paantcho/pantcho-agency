@@ -1,0 +1,100 @@
+---
+description: Índice mestre de todas as regras, memória e contexto do projeto Hubia. Lido em toda sessão para garantir continuidade total.
+alwaysApply: true
+---
+
+# HUBIA — Índice Mestre de Regras e Memória
+
+Toda sessão começa aqui. Este arquivo garante que nenhuma regra, decisão ou padrão seja esquecido.
+
+---
+
+## Arquivos de regra ativos (todos com alwaysApply: true)
+
+| Arquivo | Conteúdo |
+|---------|----------|
+| `.cursor/rules/hubia-design-system.mdc` | Tokens de design, tipografia, cores, border-radius, sidebar, botões, modais, proibições absolutas, ciclo PLAN→EXECUTE→REFLECT |
+| `.cursor/rules/motion-interactions.mdc` | Framer Motion obrigatório, sidebar pill, tabs pill, transições de página, cards stagger, accordions, modais 3 camadas, toasts, animações de ícone |
+| `.cursor/rules/figma-fidelity-supreme.mdc` | Regra suprema: toda imagem de referência = pixel-perfect, checklist de 10 pontos, zero invenção, zero suposição |
+
+---
+
+## Memória do projeto (ler antes de qualquer ação)
+
+| Arquivo | Conteúdo |
+|---------|----------|
+| `memory/WORKING.md` | Tarefa ativa, última sessão, o que está feito, o que está pendente, próxima ação exata |
+| `memory/MEMORY.md` | Decisões permanentes, preferências do usuário, padrões estabelecidos |
+| `memory/README.md` | Protocolo de memória e ciclo de consolidação |
+
+---
+
+## Contexto do projeto
+
+- **Produto:** Hubia — SaaS multi-tenant da Pantcho Agency
+- **Stack:** Next.js 15 · TypeScript · Tailwind 4 · Shadcn/UI · Supabase · Prisma · Vercel
+- **App:** `hubia-app/` neste repositório
+- **Figma:** chave `LuXTz9U7A7dNgdOO5Vt50S` — fonte da verdade de design
+- **Idioma:** português brasileiro em todos os outputs (código, comentários, respostas)
+- **Usuário:** diretor de arte, não desenvolvedor — explicar decisões técnicas de forma simples
+
+---
+
+## Regras que NUNCA podem ser esquecidas
+
+### Design
+- Flat design absoluto — ZERO box-shadow em UI
+- Fonte exclusiva: **Urbanist** (Bold, SemiBold, Regular)
+- Cor primária: **#D7FF00** (Limão-500) / Ink: **#0E0F10**
+- Background da app: **#EEEFE9** — nunca bg-gray, bg-slate, bg-zinc
+- Sidebar: branca (#FFFFFF), pill Limão deslizante com easing `cubic-bezier(0.2,0,0.0,1)`
+
+### Motion
+- **Framer Motion** para todos os componentes React animados
+- CSS keyframes apenas em `globals.css` para ícones SVG via `group-hover`
+- Easings: `ease-std` / `ease-dec` / `ease-acc` / `ease-emp` / `ease-exp` — nunca `ease`, `linear`, `ease-in-out`
+- Durações: 100–500ms conforme tabela em `motion-interactions.mdc`
+- Cards sempre com **stagger** (`i * 60ms`, máx 300ms total)
+- Modal: **3 camadas obrigatórias** (overlay blur, container scale, botão X rotate)
+
+### Fidelidade ao Figma
+- Referência visual = implementar pixel a pixel — **zero invenção**
+- Checklist obrigatório: tipografia, cores, espaçamentos, border-radius, hierarquia, estados, layout, conteúdo, interações
+- Hex direto > tokens Tailwind quando necessário para fidelidade exata
+
+### Multi-tenancy
+- `organization_id` em **todas** as queries — sem exceção
+- RLS no Supabase em todas as tabelas
+- API keys sempre criptografadas, nunca plaintext
+
+### Dados de Creator
+- Campos estruturados (city, state, age, platforms) ficam em `metadata` JSON
+- Nunca parsear esses dados do campo `bio` texto livre
+- Tags de plataformas nos cards: vindas de `metadata.platforms` do banco
+
+---
+
+## Ciclo obrigatório em toda tarefa
+
+```
+PLAN → antes de escrever código, listar o que vai fazer
+EXECUTE → escrever seguindo todas as regras
+REFLECT → "Um diretor de arte aprovaria este resultado visualmente?"
+```
+
+Se a resposta for não → corrigir antes de mostrar.
+
+---
+
+## Onde encontrar cada coisa
+
+```
+.cursor/rules/          → regras do Cursor (carregadas automaticamente)
+memory/                 → estado e decisões do projeto
+directives/             → planos detalhados de construção de páginas
+agents/                 → alma e configuração dos agentes
+dev-squad/              → skills e referências técnicas
+audiovisual-squad/      → creators, memória audiovisual
+hubia-app/              → código da aplicação Next.js
+hubia-app/prisma/       → schema, seed, migrations
+```

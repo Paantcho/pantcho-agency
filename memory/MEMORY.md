@@ -26,8 +26,12 @@ Atualizado quando há decisão importante, preferência nova, ou lição aprendi
 Next.js 15+ / TypeScript / Tailwind / Shadcn / Supabase / Prisma / Vercel / Figma MCP
 
 ## Motion e Interação (Hubia)
-- **Documento único para motion:** `directives/HUBIA-Motion-Guide.html` — apenas animações, easings, durações, hover/focus, modais, transições. Componentes e elementos visuais vêm do Design System (outro documento). Todos os agentes devem consultar o Motion Guide ao trabalhar com motion ou interação.
-- **Agente responsável:** Motion & Interação (dev-squad) — especialista que deixa a interface fluida, gostosa e elegante nesse aspecto.
+- **Documento único para motion:** `.cursor/rules/motion-interactions.mdc` (`alwaysApply: true`) — Framer Motion obrigatório para React, CSS keyframes só para ícones SVG em globals.css. Sidebar pill, tabs pill, transições de página, cards stagger, accordions, modais 3 camadas, toasts, animações de ícone por item da sidebar.
+- **Regras de cursor ativas:** `.cursor/rules/` contém 4 arquivos todos com `alwaysApply: true`:
+  - `00-hubia-master.mdc` — índice mestre, lido primeiro
+  - `hubia-design-system.mdc` — tokens, tipografia, cores, componentes, proibições
+  - `motion-interactions.mdc` — motion system completo, Framer Motion, stagger, modais 3 camadas
+  - `figma-fidelity-supreme.mdc` — regra suprema pixel-perfect ao Figma
 
 ## Modal — Padrão da plataforma inteira (Hubia)
 - **Regra global:** Em **toda** a plataforma, qualquer modal de criar/editar/ver segue o mesmo padrão.

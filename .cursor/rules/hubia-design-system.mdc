@@ -1,0 +1,338 @@
+---
+description: Design system completo do Hubia — tokens, componentes, proibições absolutas e ciclo de trabalho. Extraído diretamente do Figma LuXTz9U7A7dNgdOO5Vt50S.
+alwaysApply: true
+---
+
+# HUBIA — Regras Permanentes do Cursor
+# Lido automaticamente em TODA conversa. Nunca ignore estas regras.
+# Valores extraídos diretamente do Figma: LuXTz9U7A7dNgdOO5Vt50S
+
+---
+
+## IDENTIDADE DO PROJETO
+
+Plataforma SaaS multi-tenant chamada **Hubia**, desenvolvida pela Pantcho Agency.
+Stack: Next.js 15 · TypeScript · Tailwind CSS · Shadcn/UI · Supabase · Prisma · Vercel.
+O usuário é diretor de arte — não desenvolvedor. Explique decisões técnicas em linguagem simples.
+Idioma: **português brasileiro sempre**, inclusive comentários no código.
+
+---
+
+## TOKENS DE DESIGN — VALORES EXATOS DO FIGMA
+
+### Cores (nunca invente valores)
+```
+--limao-500:   #D7FF00   ← cor primária / accent principal
+--ink-500:     #0E0F10   ← cor mais escura / texto principal
+--ink-300:     #5E5E5F   ← texto secundário
+--bg-base-500: #EEEFE9   ← fundo geral da aplicação
+--bg-base-600: #D9D9D4   ← superfície levemente mais escura
+--bg-base-700: #A9AAA5   ← placeholders e textos desativados
+--surface-500: #FFFFFF   ← superfície de cards e sidebar
+--accent-sand: #D5D2C9   ← bordas dashed, detalhes neutros
+```
+
+Em Tailwind, mapeie assim no tailwind.config:
+```js
+colors: {
+  limao: { 500: '#D7FF00', 400: '#DFFF33', 600: '#C4E800' },
+  ink:   { 500: '#0E0F10', 300: '#5E5E5F', 200: '#8A8B8C', 100: '#D4D5D6' },
+  base:  { 500: '#EEEFE9', 600: '#D9D9D4', 700: '#A9AAA5' },
+}
+```
+
+### Tipografia — APENAS Urbanist, sem exceções
+```
+Fonte: 'Urbanist' (Google Fonts)
+NUNCA use Inter, Roboto, Arial ou qualquer outra fonte.
+
+Tamanhos:
+  display-xl:   96px / weight 900
+  heading-2xl:  44px / weight 700
+  heading-xl:   36px / weight 700
+  heading-lg:   28px / weight 600
+  heading-md:   24px / weight 600
+  heading-sm:   20px / weight 700  ← Heading/X small do Figma
+  label-lg:     18px / weight 600 / tracking 0.3px  ← botões, sidebar
+  label-md:     16px / weight 600 / tracking 0.3px
+  label-sm:     14px / weight 600 / tracking 0.3px
+  caption:      10px / weight 700 / tracking 0.3px  ← tags de status
+```
+
+### Border Radius
+```
+--r-sm:   6px
+--r-md:   10px
+--r-lg:   16px
+--r-xl:   20px
+--r-2xl:  30px   ← cards de creator
+--r-pill: 9999px
+--r-sidebar-item: 18px  ← VALOR EXATO do Figma para botões da sidebar
+```
+
+---
+
+## REGRAS DE DESIGN — INVIOLÁVEIS
+
+### 1. FLAT DESIGN ABSOLUTO
+- **ZERO box-shadow** em qualquer elemento de UI
+- **ZERO border** em cards, modais ou painéis (exceto bordas dashed para empty states)
+- Separação visual é feita com diferença de cor de fundo, NUNCA com sombra
+- Único lugar permitido para shadow: foco de input (`box-shadow: 0 0 0 3px rgba(14,15,16,0.08)`)
+
+### 2. SIDEBAR
+- Largura: **250px**
+- Background: **#FFFFFF** (branco, não #0E0F10)
+- Border radius: `rounded-br-[40px] rounded-tr-[40px]` (direita arredondada)
+- Botões da sidebar: `px-[16px] py-[12px] rounded-[18px]`
+- Item ativo: background `#D7FF00`, texto `#0E0F10`
+- Item inativo: background `#FFFFFF`, texto `#A9AAA5`
+- A pill animada é uma `<div>` com `position: absolute` que desliza com `transition: top 300ms cubic-bezier(0.2, 0, 0.0, 1)`
+- **NUNCA** use `bg-gray-*` ou `bg-neutral-*` na sidebar
+
+### 3. BOTÕES — Dimensões exatas do Figma
+```
+Botão primário:
+  background: #D7FF00
+  text: #0E0F10
+  padding: px-[16px] py-[12px]   ← EXATO do Figma
+  border-radius: rounded-[18px]  ← EXATO do Figma
+  font: Urbanist SemiBold 18px tracking-[0.3px]
+  hover: scale(1.03) + background mais claro (#DFFF33)
+  active: scale(0.96) + background mais escuro (#C4E800)
+  ZERO border, ZERO box-shadow
+
+Botão secundário:
+  background: #FFFFFF ou var(--i50)
+  text: #0E0F10
+  mesmos padding e border-radius
+  hover: scale(1.03)
+  active: scale(0.96)
+
+Botão ghost:
+  background: transparent
+  text: #5E5E5F
+  hover: background rgba(14,15,16,0.04) + scale(1.03)
+```
+
+### 4. MODAIS — Implementação COMPLETA obrigatória
+Todo modal tem TRÊS camadas obrigatórias — se qualquer camada estiver faltando, o modal está errado:
+
+**Camada 1 — Overlay:**
+```css
+background: rgba(14, 15, 16, 0.70)
+backdrop-filter: blur(12px)
+/* Anima de 0 → 0.70 e blur(0) → blur(12px) ao abrir */
+transition: background 250ms cubic-bezier(0,0,0.2,1),
+            backdrop-filter 250ms cubic-bezier(0,0,0.2,1)
+```
+
+**Camada 2 — Container do modal:**
+```css
+background: #FFFFFF
+border-radius: 20px  /* --r-xl */
+padding: 28px
+/* Anima scale(0.88) translateY(20px) → scale(1) translateY(0) ao abrir */
+transition: transform 300ms cubic-bezier(0,0,0.2,1),
+            opacity 250ms cubic-bezier(0,0,0.2,1)
+```
+
+**Camada 3 — Botão fechar (X):**
+```css
+/* Gira 90° ao hover */
+transition: transform 200ms cubic-bezier(0.34,1.56,0.64,1)
+hover: rotate(90deg) scale(1.1)
+active: rotate(90deg) scale(0.9)
+```
+
+Ao **fechar**: animação inversa com `cubic-bezier(0.4, 0, 1, 1)` (accelerate).
+Nunca use `display:none` para esconder o modal — use opacity + pointer-events.
+
+### 5. FUNDO DA APLICAÇÃO
+- Background geral: **#EEEFE9** (não branco, não cinza puro)
+- Cards sobre o fundo: **#FFFFFF**
+- NUNCA use `bg-gray-100`, `bg-slate-*`, `bg-zinc-*` — sempre use os tokens
+
+### 6. ANIMAÇÕES DE PÁGINA
+Toda troca de rota usa esta animação no wrapper de conteúdo:
+```css
+/* Entrar */
+@keyframes page-enter {
+  from { opacity: 0; transform: translateY(12px); filter: blur(4px); }
+  to   { opacity: 1; transform: translateY(0);    filter: blur(0);   }
+}
+animation: page-enter 300ms cubic-bezier(0,0,0.2,1) both;
+
+/* Implementação em Next.js (layout.tsx): */
+/* Use Framer Motion AnimatePresence com key={pathname} */
+```
+
+### 7. ÍCONES
+- Use `lucide-react` como biblioteca padrão
+- Tamanho padrão: 20px nos botões da sidebar, 18px em icon buttons
+- Em icon buttons, o SVG anima ao hover (pop, wiggle, spark, spin — conforme semântica)
+
+---
+
+## MOTION SYSTEM — Material Design 3
+
+### Easings (use SEMPRE estes nomes como referência)
+```
+ease-std: cubic-bezier(0.4, 0, 0.2, 1)   ← hover de botões, movimento geral
+ease-dec: cubic-bezier(0.0, 0, 0.2, 1)   ← entrar na tela (modais, toasts abrindo)
+ease-acc: cubic-bezier(0.4, 0, 1.0, 1)   ← sair da tela (modais, toasts fechando)
+ease-emp: cubic-bezier(0.2, 0, 0.0, 1)   ← pill da sidebar e tabs
+ease-exp: cubic-bezier(0.34, 1.56, 0.64, 1) ← ícones, badges (tem leve overshoot)
+```
+
+### Durações
+```
+100ms ← micro-feedback de cor
+150ms ← hover de botões
+200ms ← dropdowns pequenos, saída de elementos
+250ms ← overlay, elementos médios
+300ms ← PADRÃO PRINCIPAL (modais, sidebar pill, tabs)
+400ms ← transições de página, toasts saindo
+500ms ← animações elaboradas de ícones
+```
+
+### Regras de motion obrigatórias
+- NUNCA use `transition: all` — especifique propriedades
+- NUNCA use `ease`, `linear`, ou `ease-in-out` diretamente — use os easings acima
+- Botões sempre: `hover: scale(1.03)` / `active: scale(0.96)`
+- Sidebar pill: `transition: top 300ms cubic-bezier(0.2, 0, 0.0, 1)`
+- Tabs pill: `transition: left 300ms cubic-bezier(0.2, 0, 0.0, 1), width 300ms cubic-bezier(0.2, 0, 0.0, 1)`
+
+---
+
+## COMPONENTES — PADRÕES OBRIGATÓRIOS
+
+### Sidebar pill animada
+```tsx
+// UMA div absoluta que se move — não remova/adicione classes nos itens
+<nav className="relative">
+  <div 
+    id="nav-pill"
+    className="absolute left-3 right-3 rounded-[14px] bg-limao-500 transition-[top] duration-300"
+    style={{ top: activePillTop, height: activePillHeight }}
+  />
+  {navItems.map(item => (
+    <button
+      key={item.id}
+      ref={item.ref}  // necessário para calcular posição
+      onClick={() => setActive(item.id)}
+      className="relative z-10 flex items-center gap-3.5 px-4 py-3 w-full rounded-[18px]"
+    >
+      <item.Icon size={20} className={isActive ? 'text-ink-500' : 'text-base-700'} />
+      <span className={`text-[18px] font-semibold tracking-[0.3px] ${isActive ? 'text-ink-500' : 'text-base-700'}`}>
+        {item.label}
+      </span>
+    </button>
+  ))}
+</nav>
+```
+
+### Tabs com pill
+```tsx
+// Mesma lógica: UMA div se move horizontalmente
+<div className="relative flex bg-base-600/30 rounded-[10px] p-1">
+  <div
+    className="absolute top-1 h-[calc(100%-8px)] bg-white rounded-[8px] shadow-sm transition-[left,width] duration-300"
+    style={{ left: pillLeft, width: pillWidth }}
+  />
+  {tabs.map(tab => (
+    <button key={tab.id} ref={tab.ref} onClick={() => selectTab(tab.id)}
+      className="relative z-10 px-[18px] py-2 text-[14px] font-semibold">
+      {tab.label}
+    </button>
+  ))}
+</div>
+```
+
+### Input
+```tsx
+<input className="
+  h-11 px-3.5 w-full rounded-[10px] border border-transparent
+  bg-base-600/20 font-urbanist text-[15px] text-ink-500
+  outline-none placeholder:text-base-700
+  hover:border-ink-100
+  focus:border-ink-500 focus:shadow-[0_0_0_3px_rgba(14,15,16,0.08)]
+  transition-[border-color,box-shadow] duration-150
+  data-[error=true]:border-red-500 data-[error=true]:shadow-[0_0_0_3px_rgba(229,57,53,0.10)]
+" />
+```
+
+### Toast
+```tsx
+// Sempre no canto inferior direito, empilhados
+// Entra: translateY(20px) scale(0.88) blur(4px) → normal, duration 300ms ease-dec
+// Sai: translateX(30px) scale(0.92) → opacity 0, duration 400ms ease-acc
+// Auto-dismiss: 3500ms
+```
+
+---
+
+## ESTRUTURA DE ARQUIVOS
+
+```
+hubia-app/
+  src/
+    app/
+      (auth)/          ← rotas autenticadas
+      layout.tsx       ← AnimatePresence aqui
+    components/
+      ui/              ← Shadcn + customizados
+      layout/
+        Sidebar.tsx    ← com pill animada
+        Tabs.tsx       ← com pill horizontal
+      modals/
+        Modal.tsx      ← componente base com overlay+blur+animação
+    lib/
+    styles/
+      globals.css      ← tokens CSS aqui
+```
+
+---
+
+## PROIBIÇÕES ABSOLUTAS
+
+1. **NUNCA** use `box-shadow` em cards, modais ou painéis de UI
+2. **NUNCA** use outra fonte além de `Urbanist`
+3. **NUNCA** use `bg-gray-*`, `bg-slate-*`, `bg-zinc-*`, `bg-neutral-*`
+4. **NUNCA** use `transition: all`
+5. **NUNCA** abra um modal sem overlay com blur — sempre as 3 camadas
+6. **NUNCA** use `display: none` para esconder elementos animados
+7. **NUNCA** use valores de cor que não sejam os tokens acima
+8. **NUNCA** use border-radius diferente dos definidos nos tokens
+9. **NUNCA** crie sidebar com background escuro — a sidebar do Hubia é **branca**
+10. **NUNCA** anime `width` ou `height` diretamente — use `max-height` ou `scale`
+
+---
+
+## CICLO OBRIGATÓRIO EM TODA TAREFA
+
+1. **PLAN** — antes de escrever qualquer código, liste o que vai fazer
+2. **EXECUTE** — escreva o código seguindo todas as regras acima
+3. **REFLECT** — antes de entregar, pergunte: "Um diretor de arte aprovaria este resultado visualmente?"
+
+Se a resposta for não → corrija antes de mostrar.
+
+---
+
+## REFERÊNCIA RÁPIDA DE VALORES DO FIGMA
+
+| Elemento | Valor exato |
+|---|---|
+| Botão primário padding | `px-4 py-3` (16px × 12px) |
+| Botão border-radius | `rounded-[18px]` |
+| Botão font | Urbanist SemiBold 18px |
+| Sidebar largura | 250px |
+| Sidebar border-radius | `rounded-br-[40px] rounded-tr-[40px]` |
+| Card creator border-radius | `rounded-[30px]` |
+| Background geral | `#EEEFE9` |
+| Sidebar background | `#FFFFFF` |
+| Item ativo sidebar | `bg-[#D7FF00]` text `#0E0F10` |
+| Item inativo sidebar | `bg-white` text `#A9AAA5` |
+| Fonte única | Urbanist (Google Fonts) |
+| Cor primária | `#D7FF00` |
+| Cor texto principal | `#0E0F10` |

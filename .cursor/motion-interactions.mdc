@@ -1,0 +1,169 @@
+---
+description: Regras de motion, animações e microinterações do Hubia.
+alwaysApply: true
+---
+
+
+## ─────────────────────────────────────────────
+## ADIÇÃO AO .cursorrules — Interações e Animações
+## Cole no final do arquivo .cursorrules existente
+## ─────────────────────────────────────────────
+
+---
+
+## BIBLIOTECA DE ANIMAÇÕES — REGRA PERMANENTE
+
+Toda animação na plataforma usa **Framer Motion**.
+Nunca use CSS keyframes puro para componentes React — use Framer Motion.
+CSS keyframes são permitidos apenas em globals.css para animações de ícone SVG via `group-hover`.
+
+Instalar: `npm install framer-motion`
+
+---
+
+## SIDEBAR — COMPORTAMENTO OBRIGATÓRIO
+
+### Pill deslizante
+- UMA `<div>` com `position: absolute` dentro do nav
+- Move via `style={{ top: pillTop, height: pillHeight }}`
+- Transition: `top 300ms cubic-bezier(0.2, 0, 0.0, 1)` — SEMPRE este easing
+- Posição calculada via `useRef` no botão ativo: `ref.current.offsetTop`
+- NUNCA use opacity ou display para "mostrar/esconder" a pill — ela sempre existe, só muda de posição
+
+### Hover dos itens (inativos)
+- Cor do texto: `#A9AAA5` → `#0E0F10` em 150ms
+- SEM background no hover — apenas mudança de cor
+- O ícone anima conforme tabela abaixo
+
+### Animações de ícone por item da sidebar
+Todos os ícones são componentes `lucide-react` com `size={20}`.
+A animação dispara no `group-hover` do item pai.
+Duração padrão: 350ms. Easing: `cubic-bezier(0.34, 1.56, 0.64, 1)` (ease-exp).
+
+```
+Dashboard   → LayoutDashboard  → pulse: scale 1→1.15→1
+Pedidos     → ClipboardList    → bounce: translateY 0→-3px→0
+Calendário  → CalendarDays     → wiggle: rotate 0→-8deg→8deg→0
+Gerador     → Sparkles         → spark: scale 1→1.4→0.9→1
+Projetos    → FolderOpen       → nudge: translateY 0→-2px→0
+Creators    → Users            → pulse: scale 1→1.15→1
+Relatório   → BarChart2        → grow: scaleY 0.85→1 (origin bottom)
+Conhecimento→ BookOpen         → flip: rotateY 0→12deg→0
+Agentes     → Bot              → nod: rotate 0→-8deg→8deg→0
+Memória     → Brain            → pulse duplo: scale 1→1.1→1→1.1→1
+Arquitetura → Network          → rotate leve: rotate 0→12deg→0
+Config      → Settings         → spin parcial: rotate 0→60deg lento
+```
+
+CSS a adicionar em globals.css:
+```css
+.group:hover .icon-pulse     { animation: icon-pulse 400ms cubic-bezier(0.34,1.56,0.64,1) forwards }
+.group:hover .icon-bounce-y  { animation: icon-bounce-y 350ms cubic-bezier(0.34,1.56,0.64,1) forwards }
+.group:hover .icon-wiggle    { animation: icon-wiggle 400ms cubic-bezier(0.34,1.56,0.64,1) forwards }
+.group:hover .icon-spark     { animation: icon-spark 350ms cubic-bezier(0.34,1.56,0.64,1) forwards }
+.group:hover .icon-flip      { animation: icon-flip 400ms cubic-bezier(0.34,1.56,0.64,1) forwards }
+.group:hover .icon-nod       { animation: icon-nod 400ms cubic-bezier(0.34,1.56,0.64,1) forwards }
+.group:hover .icon-spin-slow { animation: icon-spin-slow 500ms cubic-bezier(0.4,0,0.2,1) forwards }
+
+@keyframes icon-pulse    { 0%,100%{transform:scale(1)}    50%{transform:scale(1.15)} }
+@keyframes icon-bounce-y { 0%,100%{transform:translateY(0)} 40%{transform:translateY(-3px)} 70%{transform:translateY(1px)} }
+@keyframes icon-wiggle   { 0%,100%{transform:rotate(0)}  25%{transform:rotate(-8deg)}  75%{transform:rotate(8deg)} }
+@keyframes icon-spark    { 0%{transform:scale(1)} 30%{transform:scale(1.4)} 65%{transform:scale(0.9)} 100%{transform:scale(1)} }
+@keyframes icon-flip     { 0%,100%{transform:rotateY(0)} 50%{transform:rotateY(12deg)} }
+@keyframes icon-nod      { 0%,100%{transform:rotate(0)}  30%{transform:rotate(-8deg)}  70%{transform:rotate(8deg)} }
+@keyframes icon-spin-slow{ from{transform:rotate(0)} to{transform:rotate(60deg)} }
+```
+
+---
+
+## TABS HORIZONTAIS — COMPORTAMENTO OBRIGATÓRIO
+
+Mesmo princípio da sidebar: UMA div se move horizontalmente.
+
+```
+pill: position absolute, top: 4px, height: calc(100% - 8px)
+background: white, border-radius: 8px
+transition: left 300ms cubic-bezier(0.2,0,0.0,1), width 300ms cubic-bezier(0.2,0,0.0,1)
+container: bg #EEEFE9, border-radius: 10px, padding: 4px
+tab inativo: text #A9AAA5
+tab ativo: text #0E0F10
+```
+
+---
+
+## TRANSIÇÕES DE PÁGINA — OBRIGATÓRIO EM TODO LAYOUT
+
+```
+EntRADA:  opacity 0→1, y 12→0, blur 4px→0  | 280ms ease-dec [0,0,0.2,1]
+SAÍDA:    opacity 1→0, y 0→-8, blur 0→3px  | 200ms ease-acc [0.4,0,1,1]
+Implementação: AnimatePresence mode="wait" com key={pathname} no layout.tsx
+```
+
+---
+
+## CARDS — COMPORTAMENTO OBRIGATÓRIO
+
+### Entrada em stagger
+- Delay: `i * 60ms` por card, máximo 300ms total
+- Animação: `opacity 0→1, y 16→0` em 300ms ease-dec
+- Nunca aparecem todos de uma vez
+
+### Hover
+```
+whileHover: y -4px em 200ms
+whileTap: scale 0.98
+```
+
+---
+
+## ACCORDIONS — COMPORTAMENTO OBRIGATÓRIO
+
+```
+Abrir:  height 0→auto, opacity 0→1 em 250ms ease-dec
+Fechar: height auto→0, opacity 1→0 em 200ms ease-acc
+Chevron: rotate 0→180deg em 200ms ease-std
+Sempre overflow: hidden no container animado
+```
+
+---
+
+## MODAIS — 3 CAMADAS OBRIGATÓRIAS (nunca simplificar)
+
+```
+Camada 1 - Overlay:
+  abrir:  bg rgba(14,15,16,0)   → rgba(14,15,16,0.70) + blur 0→12px em 250ms
+  fechar: bg rgba(14,15,16,0.70)→ rgba(14,15,16,0)    + blur 12px→0 em 200ms
+
+Camada 2 - Container:
+  abrir:  scale 0.88, y 20, opacity 0 → scale 1, y 0, opacity 1 em 280ms ease-dec
+  fechar: scale 1, y 0 → scale 0.92, y 10, opacity 0 em 200ms ease-acc
+
+Camada 3 - Botão X:
+  hover: rotate 90deg + scale 1.1 em 150ms ease-exp
+  tap:   rotate 90deg + scale 0.9
+```
+
+---
+
+## TOASTS — COMPORTAMENTO OBRIGATÓRIO
+
+```
+Posição: fixed bottom-6 right-6, z-[9999]
+Stack: flex-col gap-2 (novos toasts empilham acima)
+
+Entrar:  opacity 0, y 20, scale 0.88, blur 4px → normal em 300ms ease-dec
+Sair:    opacity 1 → 0, x 0→30, scale 1→0.92 em 400ms ease-acc
+Auto-dismiss: 3500ms
+```
+
+---
+
+## PROIBIÇÕES ADICIONAIS DE MOTION
+
+11. **NUNCA** implemente transição de página sem AnimatePresence — página nova não pode "cortar" direto
+12. **NUNCA** use `setTimeout` para animações — use Framer Motion `AnimatePresence` + `exit`
+13. **NUNCA** deixe cards aparecerem todos juntos sem stagger
+14. **NUNCA** abra um accordion com `display: block` puro — sempre com animação de height
+15. **NUNCA** simplifique o modal para "só o container" — as 3 camadas são inegociáveis---
+alwaysApply: true
+---
