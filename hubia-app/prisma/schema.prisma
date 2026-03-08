@@ -8,7 +8,7 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
+  provider  = "postgresql"
 }
 
 // ============================================================
@@ -76,6 +76,12 @@ enum AgentStatus {
   rascunho
 }
 
+enum SquadStatus {
+  ativo
+  em_breve
+  planejado
+}
+
 // ============================================================
 // GLOBAL (sem organization_id)
 // ============================================================
@@ -141,6 +147,7 @@ model Organization {
   projetos         Projeto[]
   agents           Agent[]
   skills           Skill[]
+  squads           Squad[]
   entityVersions   EntityVersion[]
   knowledgeEntries KnowledgeEntry[]
   activityLogs     ActivityLog[]
@@ -400,6 +407,7 @@ model Agent {
 
   organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
   skills       AgentSkill[]
+  squads       SquadAgent[]
 
   @@unique([organizationId, slug])
   @@index([organizationId])
@@ -435,6 +443,39 @@ model AgentSkill {
 
   @@unique([agentId, skillId])
   @@map("agent_skills")
+}
+
+model Squad {
+  id             String      @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  organizationId String      @map("organization_id") @db.Uuid
+  name           String
+  slug           String
+  description    String?     @db.Text
+  icon           String?     // ex: "code", "pen-tool"
+  color          String?     // cor hex do badge, ex: "#D7FF00"
+  status         SquadStatus @default(planejado)
+  tags           String[]    @default([])
+  createdAt      DateTime    @default(now()) @map("created_at") @db.Timestamptz
+  updatedAt      DateTime    @updatedAt @map("updated_at") @db.Timestamptz
+
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  agents       SquadAgent[]
+
+  @@unique([organizationId, slug])
+  @@index([organizationId])
+  @@map("squads")
+}
+
+model SquadAgent {
+  id      String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  squadId String @map("squad_id") @db.Uuid
+  agentId String @map("agent_id") @db.Uuid
+
+  squad Squad @relation(fields: [squadId], references: [id], onDelete: Cascade)
+  agent Agent @relation(fields: [agentId], references: [id], onDelete: Cascade)
+
+  @@unique([squadId, agentId])
+  @@map("squad_agents")
 }
 
 // ============================================================

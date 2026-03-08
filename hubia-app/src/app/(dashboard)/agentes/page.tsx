@@ -1,13 +1,13 @@
-export default function AgentesPage() {
-  return (
-    <div className="flex flex-col gap-4">
-      <h1 className="text-heading-md text-ink-500">Agentes</h1>
-      <p className="text-body-md text-base-700">
-        Squads e agentes disponíveis.
-      </p>
-      <div className="rounded-card bg-surface-500 p-8 text-center">
-        <p className="text-body-md text-base-700">Em breve.</p>
-      </div>
-    </div>
-  );
+import { getSquadsWithAgents, getSkillsBySquad } from "./actions";
+import { AgentesClient } from "./agentes-client";
+
+export const metadata = { title: "Agentes — Hubia" };
+
+export default async function AgentesPage() {
+  const [squads, skillsBySquad] = await Promise.all([
+    getSquadsWithAgents(),
+    getSkillsBySquad(),
+  ]);
+
+  return <AgentesClient squads={squads} skillsBySquad={skillsBySquad} />;
 }

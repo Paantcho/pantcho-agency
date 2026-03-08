@@ -241,6 +241,237 @@ async function main() {
   console.log(`  - Organização: ${pantchoAgency.name} (${pantchoAgency.slug})`);
   console.log(`  - Feature flags: ${flags.length}`);
   console.log(`  - Creator: ${ninaah.name} (${ninaah.slug})`);
+
+  // ─── SKILLS — Dev Squad ──────────────────────────────────────────────
+  const devSkillsData = [
+    { name: "prd", slug: "prd", description: "Requisitos — SEMPRE primeiro em projeto novo", isAlways: true },
+    { name: "analise-figma", slug: "analise-figma", description: "Extração de design, tokens, componentes via MCP" },
+    { name: "arquitetura", slug: "arquitetura", description: "Stack, estrutura, pastas, dependências" },
+    { name: "frontend", slug: "frontend", description: "UI, componentes, responsividade" },
+    { name: "backend", slug: "backend", description: "APIs, banco, autenticação" },
+    { name: "qa-review", slug: "qa-review", description: "Revisão de qualidade antes de entregar" },
+    { name: "seguranca", slug: "seguranca", description: "Auth, validação, OWASP Top 10" },
+    { name: "nextjs-patterns", slug: "nextjs-patterns", description: "Padrões Next.js 15 App Router" },
+  ];
+
+  const devSkills: Record<string, { id: string }> = {};
+  for (const s of devSkillsData) {
+    const skill = await prisma.skill.upsert({
+      where: { organizationId_slug: { organizationId: pantchoAgency.id, slug: s.slug } },
+      update: { description: s.description },
+      create: {
+        organizationId: pantchoAgency.id,
+        name: s.name,
+        slug: s.slug,
+        description: s.description,
+        isActive: true,
+        config: s.isAlways ? { always: true } : {},
+      },
+    });
+    devSkills[s.slug] = { id: skill.id };
+  }
+
+  // ─── SKILLS — Audiovisual Squad ──────────────────────────────────────
+  const avSkillsData = [
+    { name: "creator-bible", slug: "creator-bible", description: "Identidade completa do creator — SEMPRE", isAlways: true },
+    { name: "image-prompt", slug: "image-prompt", description: "Geração de prompts de imagem" },
+    { name: "video-prompt", slug: "video-prompt", description: "Geração de prompts de vídeo" },
+    { name: "scene-composition", slug: "scene-composition", description: "Composição técnica de cena" },
+    { name: "consistency-validation", slug: "consistency-validation", description: "Checklist forense de identidade" },
+    { name: "creator-voice", slug: "creator-voice", description: "Tom, vocabulário, voz da creator" },
+    { name: "content-calendar", slug: "content-calendar", description: "Planejamento de semana e mês" },
+    { name: "reference-deconstruction", slug: "reference-deconstruction", description: "Análise de foto de referência" },
+    { name: "visual-identity", slug: "visual-identity", description: "Estética, paleta e mood" },
+  ];
+
+  const avSkills: Record<string, { id: string }> = {};
+  for (const s of avSkillsData) {
+    const skill = await prisma.skill.upsert({
+      where: { organizationId_slug: { organizationId: pantchoAgency.id, slug: s.slug } },
+      update: { description: s.description },
+      create: {
+        organizationId: pantchoAgency.id,
+        name: s.name,
+        slug: s.slug,
+        description: s.description,
+        isActive: true,
+        config: s.isAlways ? { always: true } : {},
+      },
+    });
+    avSkills[s.slug] = { id: skill.id };
+  }
+
+  // ─── AGENTES ─────────────────────────────────────────────────────────
+  const agentsData = [
+    // Dev Squad
+    {
+      name: "Orquestrador",
+      slug: "orquestrador",
+      description: "Recebe pedidos, classifica intenção e roteia para o squad correto. Ponto único de entrada.",
+      status: "ativo" as const,
+      squad: "dev-squad",
+      tags: ["AGENTS.md", "MEMORY.md"],
+      skills: [] as string[],
+    },
+    {
+      name: "Desenvolvimento",
+      slug: "desenvolvimento",
+      description: "Transforma designs em código. Next.js 15, TypeScript, Shadcn, Supabase. Nível sênior+.",
+      status: "ativo" as const,
+      squad: "dev-squad",
+      tags: ["PRD", "Frontend", "JS", "+6"],
+      skills: ["prd", "analise-figma", "arquitetura", "frontend", "backend", "qa-review", "seguranca", "nextjs-patterns"],
+    },
+    {
+      name: "Criador de Agentes",
+      slug: "criador-de-agentes",
+      description: "Fábrica de novos squads e agentes. Gera SOUL.md, skills e integra na memória.",
+      status: "rascunho" as const,
+      squad: "dev-squad",
+      tags: [],
+      skills: ["prd", "arquitetura"],
+    },
+    // Audiovisual Squad
+    {
+      name: "Planner",
+      slug: "planner",
+      description: "Cria calendário semanal. Define narrativa, ambientes, momentos e formatos.",
+      status: "rascunho" as const,
+      squad: "audiovisual-squad",
+      tags: ["serviço X", "serviço Y", "serviço Z"],
+      skills: ["content-calendar", "creator-bible"],
+    },
+    {
+      name: "Copywriter",
+      slug: "copywriter",
+      description: "Escreve legendas, scripts e voz autêntica da creator. Zero copy genérico de IA.",
+      status: "rascunho" as const,
+      squad: "audiovisual-squad",
+      tags: ["produto A", "produto B", "produto C"],
+      skills: ["creator-voice", "creator-bible"],
+    },
+    {
+      name: "Diretor de Arte",
+      slug: "diretor-de-arte",
+      description: "Define mood, paleta, estética visual e referências para cada post.",
+      status: "rascunho" as const,
+      squad: "audiovisual-squad",
+      tags: [],
+      skills: ["visual-identity", "creator-bible", "reference-deconstruction"],
+    },
+    {
+      name: "Diretor de Cena",
+      slug: "diretor-de-cena",
+      description: "Composição técnica: câmera, lente, luz, ângulo, props e ambiente.",
+      status: "rascunho" as const,
+      squad: "audiovisual-squad",
+      tags: [],
+      skills: ["scene-composition", "creator-bible", "image-prompt"],
+    },
+    {
+      name: "Consistência",
+      slug: "consistencia",
+      description: "Guarda da identidade. Poder de veto. Valida cada imagem contra APPEARANCE.md.",
+      status: "ativo" as const,
+      squad: "audiovisual-squad",
+      tags: ["status ativo", "status inativo", "status pendente"],
+      skills: ["consistency-validation", "creator-bible"],
+    },
+    {
+      name: "Eng. de Prompts",
+      slug: "eng-de-prompts",
+      description: "Gera o prompt final otimizado para imagem e vídeo. Aplica regras forenses.",
+      status: "ativo" as const,
+      squad: "audiovisual-squad",
+      tags: [],
+      skills: ["image-prompt", "video-prompt", "creator-bible", "consistency-validation"],
+    },
+  ];
+
+  const createdAgents: Record<string, { id: string }> = {};
+  for (const a of agentsData) {
+    const agent = await prisma.agent.upsert({
+      where: { organizationId_slug: { organizationId: pantchoAgency.id, slug: a.slug } },
+      update: { description: a.description, status: a.status, config: { tags: a.tags, squad: a.squad } },
+      create: {
+        organizationId: pantchoAgency.id,
+        name: a.name,
+        slug: a.slug,
+        description: a.description,
+        status: a.status,
+        config: { tags: a.tags, squad: a.squad },
+      },
+    });
+    createdAgents[a.slug] = { id: agent.id };
+
+    // skills do agente
+    const allSkills = { ...devSkills, ...avSkills };
+    for (const skillSlug of a.skills) {
+      const skill = allSkills[skillSlug];
+      if (!skill) continue;
+      await prisma.agentSkill.upsert({
+        where: { agentId_skillId: { agentId: agent.id, skillId: skill.id } },
+        update: {},
+        create: { agentId: agent.id, skillId: skill.id },
+      });
+    }
+  }
+
+  // ─── SQUADS ──────────────────────────────────────────────────────────
+  const squadsData = [
+    {
+      name: "Dev Squad",
+      slug: "dev-squad",
+      description: "Engenharia & Sistemas",
+      icon: "code",
+      color: "#D7FF00",
+      status: "ativo" as const,
+      tags: ["Next.js", "TypeScript", "Supabase"],
+      agents: ["orquestrador", "desenvolvimento", "criador-de-agentes"],
+    },
+    {
+      name: "Audiovisual Squad",
+      slug: "audiovisual-squad",
+      description: "Creators & Estúdio",
+      icon: "pen-tool",
+      color: "#D7FF00",
+      status: "ativo" as const,
+      tags: ["Imagem", "Vídeo", "Copy"],
+      agents: ["planner", "copywriter", "diretor-de-arte", "diretor-de-cena", "consistencia", "eng-de-prompts"],
+    },
+  ];
+
+  for (const s of squadsData) {
+    const squad = await prisma.squad.upsert({
+      where: { organizationId_slug: { organizationId: pantchoAgency.id, slug: s.slug } },
+      update: { description: s.description, status: s.status },
+      create: {
+        organizationId: pantchoAgency.id,
+        name: s.name,
+        slug: s.slug,
+        description: s.description,
+        icon: s.icon,
+        color: s.color,
+        status: s.status,
+        tags: s.tags,
+      },
+    });
+
+    for (const agentSlug of s.agents) {
+      const agent = createdAgents[agentSlug];
+      if (!agent) continue;
+      await prisma.squadAgent.upsert({
+        where: { squadId_agentId: { squadId: squad.id, agentId: agent.id } },
+        update: {},
+        create: { squadId: squad.id, agentId: agent.id },
+      });
+    }
+  }
+
+  console.log(`  - Skills Dev Squad: ${devSkillsData.length}`);
+  console.log(`  - Skills Audiovisual Squad: ${avSkillsData.length}`);
+  console.log(`  - Agentes: ${agentsData.length}`);
+  console.log(`  - Squads: ${squadsData.length}`);
 }
 
 main()
