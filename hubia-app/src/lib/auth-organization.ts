@@ -1,6 +1,7 @@
 import { createClient } from "@/lib/supabase/server";
 import { prisma } from "@/lib/prisma";
 import { cookies } from "next/headers";
+import { MemberRole } from "@prisma/client";
 
 const CURRENT_ORG_COOKIE = "hubia_current_organization_id";
 
@@ -96,4 +97,28 @@ export async function getOrganizationsForCurrentUser(): Promise<{
 export async function getCurrentOrganizationId(): Promise<string | null> {
   const { currentId } = await getOrganizationsForCurrentUser();
   return currentId;
+}
+
+/**
+ * Retorna o role do usuário atual na organização especificada.
+ * Em dev sem login, retorna "owner" para permitir uso completo da plataforma.
+ */
+export async function getCurrentUserRoleInOrg(
+  organizationId: string
+): Promise<MemberRole | null> {
+  const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  if (!user?.id) {
+    if (process.env.NODE_ENV === "development") return "owner";
+    return null;
+  }
+
+  const member = await prisma.organizationMember.findFirst({
+    where: { organizationId, userId: user.id, isActive: true },
+    select: { role: true },
+  });
+  return member?.role ?? null;
 }

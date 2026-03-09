@@ -6,6 +6,26 @@ import { logActivity } from "@/lib/activity-log";
 import { createClient } from "@/lib/supabase/server";
 import type { KnowledgeSourceType } from "@prisma/client";
 
+export type ItemTipo =
+  | "link"
+  | "arquivo"
+  | "imagem"
+  | "documento"
+  | "referencia"
+  | "aprendizado"
+  | "insight"
+  | "regra_sugerida"
+  | "manual"
+  | "texto";
+
+export type ItemStatus =
+  | "bruto"
+  | "processando"
+  | "processado"
+  | "revisado"
+  | "aplicado"
+  | "arquivado";
+
 export type KnowledgeCard = {
   id: string;
   title: string;
@@ -17,6 +37,17 @@ export type KnowledgeCard = {
   tags: string[];
   aiProcessed: boolean;
   createdAt: string;
+  // Campos enriquecidos (derivados de metadata JSON ou campos extras)
+  itemTipo?: ItemTipo;
+  itemStatus?: ItemStatus;
+  projetoVinculado?: string | null;
+  creatorVinculado?: string | null;
+  qtdAprendizados?: number;
+  qtdLicoes?: number;
+  qtdRulesSugeridas?: number;
+  temAnexos?: boolean;
+  temLinks?: boolean;
+  origem?: string | null;
 };
 
 export async function getKnowledgeEntries(
@@ -31,18 +62,31 @@ export async function getKnowledgeEntries(
     orderBy: { createdAt: "desc" },
   });
 
-  return rows.map((k) => ({
-    id: k.id,
-    title: k.title,
-    summary: k.summary,
-    category: k.category,
-    sourceType: k.sourceType,
-    sourceUrl: k.sourceUrl,
-    fileUrl: k.fileUrl,
-    tags: Array.isArray(k.tags) ? (k.tags as string[]) : [],
-    aiProcessed: k.aiProcessed,
-    createdAt: k.createdAt.toISOString(),
-  }));
+  return rows.map((k) => {
+    const meta = (k.aiMetadata as Record<string, unknown>) ?? {};
+    return {
+      id: k.id,
+      title: k.title,
+      summary: k.summary,
+      category: k.category,
+      sourceType: k.sourceType,
+      sourceUrl: k.sourceUrl,
+      fileUrl: k.fileUrl,
+      tags: Array.isArray(k.tags) ? (k.tags as string[]) : [],
+      aiProcessed: k.aiProcessed,
+      createdAt: k.createdAt.toISOString(),
+      itemTipo: (meta.itemTipo as ItemTipo) ?? null,
+      itemStatus: (meta.itemStatus as ItemStatus) ?? "bruto",
+      projetoVinculado: (meta.projetoVinculado as string) ?? null,
+      creatorVinculado: (meta.creatorVinculado as string) ?? null,
+      qtdAprendizados: (meta.qtdAprendizados as number) ?? 0,
+      qtdLicoes: (meta.qtdLicoes as number) ?? 0,
+      qtdRulesSugeridas: (meta.qtdRulesSugeridas as number) ?? 0,
+      temAnexos: (meta.temAnexos as boolean) ?? false,
+      temLinks: !!(k.sourceUrl || (meta.temLinks as boolean)),
+      origem: (meta.origem as string) ?? null,
+    };
+  });
 }
 
 export async function createKnowledgeEntry(
@@ -55,6 +99,10 @@ export async function createKnowledgeEntry(
     sourceUrl?: string;
     fileUrl?: string;
     tags?: string[];
+    itemTipo?: ItemTipo;
+    projetoVinculado?: string;
+    creatorVinculado?: string;
+    origem?: string;
   }
 ): Promise<{ ok: true; id: string } | { ok: false; error: string }> {
   const supabase = await createClient();
@@ -62,6 +110,19 @@ export async function createKnowledgeEntry(
 
   if (!data.title.trim()) return { ok: false, error: "Título é obrigatório" };
   if (!data.content.trim()) return { ok: false, error: "Conteúdo é obrigatório" };
+
+  const meta = {
+    itemTipo: data.itemTipo ?? "texto",
+    itemStatus: "bruto" as ItemStatus,
+    projetoVinculado: data.projetoVinculado ?? null,
+    creatorVinculado: data.creatorVinculado ?? null,
+    origem: data.origem ?? null,
+    qtdAprendizados: 0,
+    qtdLicoes: 0,
+    qtdRulesSugeridas: 0,
+    temAnexos: !!(data.fileUrl),
+    temLinks: !!(data.sourceUrl),
+  };
 
   const entry = await prisma.knowledgeEntry.create({
     data: {
@@ -74,6 +135,7 @@ export async function createKnowledgeEntry(
       fileUrl: data.fileUrl?.trim() || null,
       tags: data.tags ?? [],
       createdBy: user?.id ?? null,
+      aiMetadata: meta,
     },
   });
 
@@ -83,7 +145,7 @@ export async function createKnowledgeEntry(
     action: "conhecimento.entrada_criada",
     entityType: "knowledge_entry",
     entityId: entry.id,
-    metadata: { title: entry.title, sourceType: entry.sourceType },
+    metadata: { title: entry.title, sourceType: entry.sourceType, itemTipo: meta.itemTipo },
   });
 
   revalidatePath("/conhecimento");
@@ -102,7 +164,7 @@ export async function updateKnowledgeEntry(
   }
 ): Promise<{ ok: boolean; error?: string }> {
   const existing = await prisma.knowledgeEntry.findFirst({ where: { id, organizationId } });
-  if (!existing) return { ok: false, error: "Entrada não encontrada" };
+  if (!existing) return { ok: false, error: "Item não encontrado" };
 
   await prisma.knowledgeEntry.update({
     where: { id },
@@ -124,7 +186,7 @@ export async function deleteKnowledgeEntry(
   id: string
 ): Promise<{ ok: boolean; error?: string }> {
   const existing = await prisma.knowledgeEntry.findFirst({ where: { id, organizationId } });
-  if (!existing) return { ok: false, error: "Entrada não encontrada" };
+  if (!existing) return { ok: false, error: "Item não encontrado" };
   await prisma.knowledgeEntry.delete({ where: { id } });
   revalidatePath("/conhecimento");
   return { ok: true };

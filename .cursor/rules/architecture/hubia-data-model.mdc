@@ -1,0 +1,378 @@
+# HUBIA — MODELO ESTRUTURAL DE DADOS DA PLATAFORMA
+
+Versão: 1.0  
+Tipo: Documento estrutural de arquitetura de dados  
+Objetivo: Definir o modelo oficial de entidades da Hubia para garantir consistência no banco de dados e permitir evolução futura da plataforma.
+
+Este documento define as entidades fundamentais do sistema, suas relações e responsabilidades.
+
+Ele deve ser considerado referência estrutural para o banco de dados e para qualquer lógica de backend da plataforma.
+
+
+--------------------------------------------------
+
+PRINCÍPIO FUNDAMENTAL
+
+A Hubia é uma plataforma baseada em organização.
+
+Toda informação do sistema deve estar vinculada a uma organização.
+
+A hierarquia principal da plataforma é:
+
+Plataforma  
+Organização  
+Usuários  
+Recursos
+
+
+Ou seja:
+
+Hubia → Organizations → Users → Recursos da plataforma
+
+
+--------------------------------------------------
+
+ENTIDADES PRINCIPAIS DO SISTEMA
+
+
+1. Organization
+
+Representa uma organização que utiliza a plataforma.
+
+Exemplos:
+
+Pantcho Agency  
+Privacy  
+Empresa X
+
+
+Campos principais sugeridos:
+
+id  
+name  
+slug  
+plan  
+logo_url  
+favicon_url  
+primary_color  
+custom_domain  
+created_at  
+updated_at
+
+
+Responsabilidades:
+
+armazenar identidade da organização  
+definir plano atual  
+definir branding  
+definir domínio customizado  
+
+
+--------------------------------------------------
+
+2. User
+
+Representa um usuário da plataforma.
+
+Usuários podem pertencer a uma ou mais organizações.
+
+Campos principais sugeridos:
+
+id  
+name  
+email  
+avatar_url  
+created_at  
+updated_at
+
+
+Usuários não devem possuir permissões diretamente.
+
+Permissões são definidas pelo papel dentro da organização.
+
+
+--------------------------------------------------
+
+3. Membership
+
+Representa o vínculo entre um usuário e uma organização.
+
+Essa tabela define o papel do usuário dentro da organização.
+
+Campos principais sugeridos:
+
+id  
+organization_id  
+user_id  
+role  
+created_at
+
+
+Papéis possíveis:
+
+owner  
+admin  
+editor  
+viewer
+
+
+owner
+
+controle total da organização  
+não pode ser removido
+
+
+admin
+
+pode gerenciar membros  
+pode alterar configurações
+
+
+editor
+
+acesso completo às funcionalidades operacionais
+
+
+viewer
+
+acesso somente leitura
+
+
+--------------------------------------------------
+
+4. Plan
+
+Define o plano da organização.
+
+Planos atuais da Hubia:
+
+basic  
+professional  
+advanced  
+enterprise
+
+
+Campos sugeridos:
+
+id  
+name  
+level  
+created_at
+
+
+Exemplo de níveis:
+
+basic → nível 1  
+professional → nível 2  
+advanced → nível 3  
+enterprise → nível 4
+
+
+--------------------------------------------------
+
+5. Feature
+
+Representa funcionalidades da plataforma.
+
+Essa entidade permite que funcionalidades sejam liberadas por plano no futuro.
+
+Campos sugeridos:
+
+id  
+key  
+description
+
+
+Exemplos de features:
+
+creators  
+projects  
+calendar  
+knowledge  
+agents  
+memory  
+architecture  
+branding_custom  
+custom_domain
+
+
+--------------------------------------------------
+
+6. PlanFeature
+
+Relaciona planos com funcionalidades.
+
+Define quais funcionalidades cada plano possui.
+
+Campos sugeridos:
+
+id  
+plan_id  
+feature_id
+
+
+Exemplo de lógica futura:
+
+basic
+
+creators
+
+
+professional
+
+creators  
+projects  
+calendar
+
+
+advanced
+
+creators  
+projects  
+calendar  
+knowledge  
+agents  
+memory
+
+
+enterprise
+
+todas as funcionalidades
+
+
+Neste momento essa estrutura pode existir apenas como preparação futura.
+
+
+--------------------------------------------------
+
+RELACIONAMENTO ENTRE ENTIDADES
+
+
+Organization
+  possui muitos Memberships
+
+Membership
+  conecta User com Organization
+
+User
+  pode participar de múltiplas organizações
+
+Organization
+  possui um Plan
+
+Plan
+  possui várias Features através de PlanFeature
+
+
+Representação simplificada:
+
+
+Organization
+   |
+   |--- Membership --- User
+   |
+   |--- Plan --- PlanFeature --- Feature
+
+
+--------------------------------------------------
+
+REGRAS IMPORTANTES
+
+
+1) Todo recurso da plataforma deve possuir organization_id.
+
+Isso inclui:
+
+projects  
+creators  
+memory  
+agents  
+knowledge  
+orders  
+etc
+
+
+Isso garante isolamento de dados entre organizações.
+
+
+--------------------------------------------------
+
+2) Permissões devem sempre considerar role + plano.
+
+
+Exemplo:
+
+um usuário editor pode acessar funcionalidades operacionais.
+
+mas funcionalidades podem depender também do plano da organização.
+
+
+--------------------------------------------------
+
+3) Proprietário da organização possui acesso total.
+
+Mesmo que o plano limite alguma funcionalidade, o proprietário deve conseguir visualizar e administrar o sistema.
+
+
+--------------------------------------------------
+
+4) A plataforma deve sempre identificar a organização ativa.
+
+Exemplo:
+
+getCurrentOrganizationId()
+
+
+Toda operação deve respeitar esse contexto.
+
+
+--------------------------------------------------
+
+SUPORTE FUTURO PARA MULTI ORGANIZAÇÃO
+
+Embora atualmente o uso principal seja uma organização interna, a arquitetura deve suportar múltiplas organizações.
+
+Exemplo futuro:
+
+Hubia Platform
+
+Organization A  
+Organization B  
+Organization C
+
+
+Cada organização deve possuir isolamento completo de dados.
+
+
+--------------------------------------------------
+
+SUPORTE FUTURO PARA DOMÍNIOS CUSTOMIZADOS
+
+Organizações do plano enterprise podem configurar domínio próprio.
+
+Exemplo:
+
+hub.empresa.com.br
+
+O domínio apenas aponta para a infraestrutura da Hubia.
+
+O backend continua sendo compartilhado.
+
+
+--------------------------------------------------
+
+OBJETIVO FINAL
+
+Este modelo garante que a Hubia possa evoluir de:
+
+plataforma interna  
+para  
+produto SaaS escalável
+
+
+Sem necessidade de refatoração estrutural futura.
+
+
+--------------------------------------------------
+
+FIM DO DOCUMENTO

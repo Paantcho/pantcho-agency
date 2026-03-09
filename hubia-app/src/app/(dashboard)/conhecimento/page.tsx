@@ -1,7 +1,7 @@
 import { prisma } from "@/lib/prisma";
 import { createClient } from "@/lib/supabase/server";
 import ConhecimentoClient from "./conhecimento-client";
-import { getKnowledgeEntries, getCategorias } from "./actions";
+import { getKnowledgeEntries } from "./actions";
 
 export default async function ConhecimentoPage() {
   const supabase = await createClient();
@@ -13,15 +13,12 @@ export default async function ConhecimentoPage() {
 
   const organizationId = member?.organizationId ?? null;
 
-  const [entradas, categorias] = organizationId
-    ? await Promise.all([getKnowledgeEntries(organizationId), getCategorias(organizationId)])
-    : [[], []];
+  const entradas = organizationId ? await getKnowledgeEntries(organizationId) : [];
 
   return (
     <ConhecimentoClient
       organizationId={organizationId ?? ""}
       initialEntradas={entradas}
-      initialCategorias={categorias}
     />
   );
 }

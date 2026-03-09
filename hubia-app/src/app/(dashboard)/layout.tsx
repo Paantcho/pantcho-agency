@@ -3,8 +3,8 @@ import { ThemeProvider } from "@/components/theme-provider";
 import {
   ensureUserHasOrganization,
   getOrganizationsForCurrentUser,
-  getCurrentOrganizationId,
 } from "@/lib/auth-organization";
+import { getOrgContext } from "@/lib/org-context";
 import { getBranding } from "@/app/(dashboard)/config/branding/actions";
 
 export default async function DashboardLayout({
@@ -13,9 +13,16 @@ export default async function DashboardLayout({
   children: React.ReactNode;
 }) {
   await ensureUserHasOrganization();
-  const { organizations, currentId } = await getOrganizationsForCurrentUser();
-  const organizationId = await getCurrentOrganizationId();
-  const branding = organizationId ? await getBranding(organizationId) : null;
+
+  const [{ organizations, currentId }, orgContext] = await Promise.all([
+    getOrganizationsForCurrentUser(),
+    getOrgContext(),
+  ]);
+
+  const branding = orgContext.organizationId
+    ? await getBranding(orgContext.organizationId)
+    : null;
+
   const colorPrimary = branding?.colorPrimary ?? null;
   const colorPrimaryHover =
     branding?.colorScale &&
@@ -26,7 +33,13 @@ export default async function DashboardLayout({
 
   return (
     <ThemeProvider colorPrimary={colorPrimary} colorPrimaryHover={colorPrimaryHover}>
-      <AppShell organizations={organizations} currentOrganizationId={currentId}>
+      <AppShell
+        organizations={organizations}
+        currentOrganizationId={currentId}
+        userRole={orgContext.userRole}
+        planSlug={orgContext.planSlug}
+        enabledFeatures={orgContext.enabledFeatures}
+      >
         {children}
       </AppShell>
     </ThemeProvider>

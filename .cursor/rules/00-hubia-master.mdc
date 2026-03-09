@@ -11,12 +11,27 @@ Toda sessão começa aqui. Este arquivo garante que nenhuma regra, decisão ou p
 
 ## Arquivos de regra ativos (todos com alwaysApply: true)
 
-| Arquivo | Conteúdo |
-|---------|----------|
-| `.cursor/rules/hubia-design-system.mdc` | Tokens de design, tipografia, cores, border-radius, sidebar, botões, modais, proibições absolutas, ciclo PLAN→EXECUTE→REFLECT |
-| `.cursor/rules/motion-interactions.mdc` | Framer Motion obrigatório, sidebar pill, tabs pill, transições de página, cards stagger, accordions, modais 3 camadas, toasts, animações de ícone |
-| `.cursor/rules/figma-fidelity-supreme.mdc` | Regra suprema: toda imagem de referência = pixel-perfect, checklist de 10 pontos, zero invenção, zero suposição |
-| `.cursor/rules/hubia-motion-enforcement.mdc` | **LEI DE MOTION** — padrões exatos de código (botões, sidebar, tabs, modais 3 camadas, cards stagger, dropdowns), checklist pré-entrega, 10 proibições. Lida antes de criar qualquer componente interativo. |
+Estrutura organizada por domínio em `.cursor/rules/<domínio>/`.
+
+| Arquivo | Domínio | Conteúdo |
+|---------|---------|----------|
+| `.cursor/rules/architecture/hubia-platform-governance.mdc` | architecture | Constituição técnica da plataforma — multi-org, sidebar, planos, feature flags, exportações, segurança |
+| `.cursor/rules/architecture/hubia-data-model.mdc` | architecture | Schema Prisma, models, relações, regras de dados |
+| `.cursor/rules/ai/hubia-ai-providers.mdc` | ai | Provedores de IA, API keys, integração com modelos |
+| `.cursor/rules/design/hubia-design-system.mdc` | design | Tokens de design, tipografia, cores, border-radius, sidebar, botões, modais, proibições absolutas |
+| `.cursor/rules/design/figma-fidelity-supreme.mdc` | design | Regra suprema: toda imagem de referência = pixel-perfect, checklist de 10 pontos, zero invenção |
+| `.cursor/rules/motion/motion-interactions.mdc` | motion | Framer Motion obrigatório, sidebar pill, tabs pill, transições de página, cards stagger, accordions, modais 3 camadas, toasts |
+| `.cursor/rules/motion/hubia-motion-enforcement.mdc` | motion | **LEI DE MOTION** — padrões exatos de código, checklist pré-entrega, 10 proibições |
+
+### Regra para novos documentos
+
+| Novo documento sobre... | Salvar em |
+|-------------------------|-----------|
+| Arquitetura, multi-tenancy, planos, governança | `rules/architecture/` |
+| IA, modelos, providers, prompts | `rules/ai/` |
+| Design system, UI, componentes visuais | `rules/design/` |
+| Motion, animações, interações, hover | `rules/motion/` |
+| Novo domínio sem pasta → criar pasta nova | `rules/<novo-dominio>/` |
 
 ---
 
@@ -114,12 +129,17 @@ Se a resposta for não → corrigir antes de mostrar.
 ## Onde encontrar cada coisa
 
 ```
-.cursor/rules/          → regras do Cursor (carregadas automaticamente)
-memory/                 → estado e decisões do projeto
-directives/             → planos detalhados de construção de páginas
-agents/                 → alma e configuração dos agentes
-dev-squad/              → skills e referências técnicas
-audiovisual-squad/      → creators, memória audiovisual
-hubia-app/              → código da aplicação Next.js
-hubia-app/prisma/       → schema, seed, migrations
+.cursor/rules/                    → regras do Cursor (carregadas automaticamente)
+  00-hubia-master.mdc             → este arquivo (índice mestre — sempre na raiz)
+  architecture/                   → governança, data model, multi-tenancy
+  ai/                             → provedores de IA, modelos, prompts
+  design/                         → design system, Figma fidelity
+  motion/                         → animações, interações, Framer Motion
+memory/                           → estado e decisões do projeto
+directives/                       → planos detalhados de construção de páginas
+agents/                           → alma e configuração dos agentes
+dev-squad/                        → skills e referências técnicas
+audiovisual-squad/                → creators, memória audiovisual
+hubia-app/                        → código da aplicação Next.js
+hubia-app/prisma/                 → schema, seed, migrations
 ```

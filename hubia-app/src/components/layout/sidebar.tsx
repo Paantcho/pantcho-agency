@@ -17,11 +17,14 @@ import {
   Brain,
   Network,
   Settings,
+  Building2,
   ChevronDown,
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import { setCurrentOrganization } from "@/app/(dashboard)/actions";
 import type { OrgOption } from "./app-shell";
+import type { MemberRole } from "@prisma/client";
+import type { Feature } from "@/lib/feature-flags";
 
 interface MenuItem {
   label: string;
@@ -29,6 +32,8 @@ interface MenuItem {
   href: string;
   badge?: number;
   iconClass?: string;
+  /** Feature necessária para exibir este item. Undefined = sempre visível. */
+  feature?: Feature;
 }
 
 const menuSections: (MenuItem[] | "separator")[] = [
@@ -50,6 +55,10 @@ const menuSections: (MenuItem[] | "separator")[] = [
     { label: "Agentes", icon: Bot, href: "/agentes", iconClass: "icon-nod" },
     { label: "Memoria", icon: Brain, href: "/memoria", iconClass: "icon-pulse-double" },
     { label: "Arquitetura", icon: Network, href: "/arquitetura", iconClass: "icon-nod" },
+  ],
+  "separator",
+  [
+    { label: "Organization", icon: Building2, href: "/organization", iconClass: "icon-pulse" },
     { label: "Config", icon: Settings, href: "/config", iconClass: "icon-spin-partial" },
   ],
 ];
@@ -57,10 +66,17 @@ const menuSections: (MenuItem[] | "separator")[] = [
 export function Sidebar({
   organizations,
   currentOrganizationId,
+  userRole,
+  planSlug: _planSlug,
+  enabledFeatures,
 }: {
   organizations: OrgOption[];
   currentOrganizationId: string | null;
+  userRole?: MemberRole | null;
+  planSlug?: string;
+  enabledFeatures?: Feature[];
 }) {
+  const isOwner = userRole === "owner";
   const pathname = usePathname();
   const router = useRouter();
   const [orgOpen, setOrgOpen] = useState(false);
@@ -72,7 +88,17 @@ export function Sidebar({
   const [pillTop, setPillTop] = useState(0);
   const [pillHeight, setPillHeight] = useState(44);
 
-  const allItems = menuSections
+  // Filtra itens por feature flag. Owner vê tudo. Itens sem `feature` são sempre visíveis.
+  const visibleSections: (MenuItem[] | "separator")[] = menuSections.map((section) => {
+    if (section === "separator") return section;
+    return section.filter((item) => {
+      if (!item.feature) return true;
+      if (isOwner) return true;
+      return enabledFeatures?.includes(item.feature) ?? false;
+    });
+  });
+
+  const allItems = visibleSections
     .filter((s): s is MenuItem[] => s !== "separator")
     .flat();
 
@@ -139,7 +165,7 @@ export function Sidebar({
           }}
         />
 
-        {menuSections.map((section, sectionIdx) => {
+        {visibleSections.map((section, sectionIdx) => {
           if (section === "separator") {
             return (
               <div

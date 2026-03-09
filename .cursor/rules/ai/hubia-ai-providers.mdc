@@ -1,0 +1,278 @@
+# HUBIA — SISTEMA DE PROVIDERS DE INTELIGÊNCIA ARTIFICIAL
+
+Versão: 1.0  
+Tipo: Documento de arquitetura de integração de IA  
+Objetivo: Definir como a Hubia gerencia provedores de IA, chaves de API e modelos disponíveis.
+
+Este documento define como a plataforma deve integrar múltiplos provedores de inteligência artificial e como os agentes devem utilizar esses modelos.
+
+
+--------------------------------------------------
+
+PRINCÍPIO FUNDAMENTAL
+
+A Hubia deve suportar múltiplos provedores de IA simultaneamente.
+
+A plataforma não deve depender de apenas um provider.
+
+Exemplos de providers suportados:
+
+OpenAI  
+Anthropic  
+Google Gemini  
+
+
+Cada organização pode conectar seus próprios provedores de IA.
+
+
+--------------------------------------------------
+
+CONFIGURAÇÃO DE PROVIDERS
+
+Os provedores são configurados no nível da organização.
+
+Local da interface:
+
+Organization → Integrations
+
+
+Cada provider pode ser conectado através de uma API Key.
+
+
+Exemplo:
+
+OpenAI  
+Anthropic  
+Gemini
+
+
+Campos necessários:
+
+provider  
+api_key_encrypted  
+status  
+
+
+A API Key deve ser armazenada criptografada.
+
+
+--------------------------------------------------
+
+MODELO DE DADOS
+
+
+OrganizationIntegration
+
+Campos sugeridos:
+
+id  
+organization_id  
+provider  
+api_key_encrypted  
+status  
+created_at  
+
+
+provider pode ser:
+
+openai  
+anthropic  
+gemini  
+
+
+--------------------------------------------------
+
+LISTA DE MODELOS DISPONÍVEIS
+
+
+A plataforma deve manter uma lista de modelos disponíveis.
+
+Tabela sugerida:
+
+AIModel
+
+
+Campos:
+
+id  
+provider  
+model_key  
+display_name  
+context_window  
+
+
+Exemplos:
+
+provider: openai  
+model_key: gpt-4o  
+
+provider: openai  
+model_key: gpt-4o-mini  
+
+provider: anthropic  
+model_key: claude-3-opus  
+
+provider: anthropic  
+model_key: claude-3-sonnet  
+
+
+--------------------------------------------------
+
+MODELO PADRÃO DA ORGANIZAÇÃO
+
+Cada organização pode definir um modelo padrão.
+
+Esse modelo será usado quando um agente não especificar modelo próprio.
+
+
+Campos na organização:
+
+default_ai_provider  
+default_ai_model
+
+
+Exemplo:
+
+default_ai_provider = openai  
+default_ai_model = gpt-4o
+
+
+--------------------------------------------------
+
+CONFIGURAÇÃO DE MODELO POR AGENTE
+
+Agentes podem possuir modelo próprio.
+
+Isso permite que diferentes agentes utilizem diferentes provedores.
+
+Tabela sugerida:
+
+AgentModel
+
+
+Campos:
+
+agent_id  
+model_id  
+
+
+Se um agente possuir model_id configurado, ele deve utilizar esse modelo.
+
+
+Caso contrário deve utilizar o modelo padrão da organização.
+
+
+--------------------------------------------------
+
+FLUXO DE EXECUÇÃO DE AGENTES
+
+
+Quando um agente for executado o sistema deve seguir o seguinte fluxo:
+
+
+1  
+verificar se o agente possui modelo configurado
+
+
+2  
+se possuir modelo configurado  
+usar esse modelo
+
+
+3  
+se não possuir  
+usar modelo padrão da organização
+
+
+4  
+executar chamada no provider correspondente
+
+
+--------------------------------------------------
+
+SEGURANÇA
+
+As API Keys nunca devem ser armazenadas em texto simples.
+
+Elas devem ser armazenadas criptografadas.
+
+Campo recomendado:
+
+api_key_encrypted
+
+
+A descriptografia deve ocorrer apenas no momento de executar a chamada da API.
+
+
+--------------------------------------------------
+
+PERMISSÕES
+
+Somente usuários com papel:
+
+owner  
+admin
+
+
+podem adicionar ou modificar providers de IA.
+
+
+Usuários editor ou viewer não devem acessar essas configurações.
+
+
+--------------------------------------------------
+
+INTERFACE ESPERADA
+
+Organization → Integrations
+
+
+Lista de providers:
+
+OpenAI  
+Anthropic  
+Gemini
+
+
+Cada provider deve permitir:
+
+Conectar  
+Atualizar chave  
+Remover chave
+
+
+--------------------------------------------------
+
+CONFIGURAÇÃO DE MODELO PADRÃO
+
+Local:
+
+Organization → AI Settings
+
+
+Campos:
+
+Default Provider  
+Default Model
+
+
+Esse modelo será usado por todos os agentes que não possuírem configuração específica.
+
+
+--------------------------------------------------
+
+OBJETIVO DA ARQUITETURA
+
+Essa arquitetura permite que a Hubia:
+
+suporte múltiplos provedores de IA  
+permita que organizações usem suas próprias chaves  
+permita que agentes utilizem modelos diferentes  
+
+
+Isso garante flexibilidade e escalabilidade futura da plataforma.
+
+
+--------------------------------------------------
+
+FIM DO DOCUMENTO

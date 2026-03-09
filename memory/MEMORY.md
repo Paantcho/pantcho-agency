@@ -145,15 +145,15 @@ O componente `UploadResultado` em `/pedidos/[id]` deve:
 
 ## Motion e Interação (Hubia) — SISTEMA COMPLETO E ENFORCEMENT ATIVO
 
-- **Lei de motion:** `.cursor/rules/hubia-motion-enforcement.mdc` (`alwaysApply: true`) — documento definitivo e inviolável
-- **Padrões detalhados:** `.cursor/rules/motion-interactions.mdc` (`alwaysApply: true`)
+- **Lei de motion:** `.cursor/rules/motion/hubia-motion-enforcement.mdc` (`alwaysApply: true`) — documento definitivo e inviolável
+- **Padrões detalhados:** `.cursor/rules/motion/motion-interactions.mdc` (`alwaysApply: true`)
 - **Regra global:** Framer Motion obrigatório para todos os componentes React animados. CSS keyframes apenas em `globals.css` para ícones SVG via `group-hover`.
-- **Regras de cursor ativas:** `.cursor/rules/` contém 5 arquivos todos com `alwaysApply: true`:
-  - `00-hubia-master.mdc` — índice mestre, lido primeiro
-  - `hubia-design-system.mdc` — tokens, tipografia, cores, componentes, proibições
-  - `motion-interactions.mdc` — motion system completo
-  - `figma-fidelity-supreme.mdc` — regra suprema pixel-perfect ao Figma
-  - `hubia-motion-enforcement.mdc` — **LEI DE MOTION**: checklist pré-entrega, 10 proibições, padrões exatos de código
+- **Regras de cursor ativas:** `.cursor/rules/` organizado por domínio, todos com `alwaysApply: true`:
+  - `00-hubia-master.mdc` — índice mestre, lido primeiro (raiz)
+  - `design/hubia-design-system.mdc` — tokens, tipografia, cores, componentes, proibições
+  - `motion/motion-interactions.mdc` — motion system completo
+  - `design/figma-fidelity-supreme.mdc` — regra suprema pixel-perfect ao Figma
+  - `motion/hubia-motion-enforcement.mdc` — **LEI DE MOTION**: checklist pré-entrega, 10 proibições, padrões exatos de código
 
 ### Padrões definitivos de motion (nunca mudar sem atualizar regra)
 
@@ -372,7 +372,7 @@ Todas as páginas de rota dinâmica devem usar `getCurrentOrganizationId()` de `
 - **Dados estruturados:** cidade, estado, idade e plataformas ficam em `metadata` (JSON) — nunca parsear do `bio`.
 
 ## Fidelidade ao Figma — Regra Suprema
-- **Regra em `.cursor/rules/figma-fidelity-supreme.mdc`** (`alwaysApply: true`): quando o usuário anexar imagem ou indicar node Figma, implementar pixel a pixel — zero invenção, zero suposição, zero simplificação sem autorização.
+- **Regra em `.cursor/rules/design/figma-fidelity-supreme.mdc`** (`alwaysApply: true`): quando o usuário anexar imagem ou indicar node Figma, implementar pixel a pixel — zero invenção, zero suposição, zero simplificação sem autorização.
 - **Checklist obrigatório:** tipografia, cores (hex exato), espaçamentos, border-radius, hierarquia, estados, layout, conteúdo, interações — tudo extraído da referência antes de codificar.
 - **Hex direto > tokens Tailwind** quando necessário para pixel-perfect.
 

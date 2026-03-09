@@ -1,0 +1,469 @@
+---
+alwaysApply: true
+---
+
+# HUBIA — GOVERNANÇA E REGRAS ESTRUTURAIS DA PLATAFORMA
+
+Versão: 1.0  
+Status: Documento permanente de governança técnica  
+Escopo: Definir regras globais da arquitetura, sidebar, permissões, planos e comportamento estrutural da plataforma Hubia.
+
+Este documento define as regras estruturais que **não devem ser quebradas** durante o desenvolvimento da plataforma.
+
+Todos os agentes, desenvolvedores e automações que atuarem no código devem respeitar este documento.
+
+---
+
+# 1. PRINCÍPIO FUNDAMENTAL DA PLATAFORMA
+
+A Hubia é uma plataforma multi-organização.
+
+Isso significa que a estrutura do sistema possui três níveis:
+
+Plataforma  
+Organização  
+Usuário
+
+Cada nível possui responsabilidades diferentes.
+
+---
+
+# 2. NÍVEIS DA ARQUITETURA
+
+## Plataforma
+
+A plataforma controla:
+
+arquitetura do sistema  
+orquestrador  
+squads  
+memória estrutural  
+regras de execução  
+governança do sistema
+
+Esses elementos são **proprietários da Hubia**.
+
+Eles não pertencem às organizações.
+
+Eles não podem ser exportados.
+
+---
+
+## Organização
+
+A organização representa uma empresa ou workspace dentro da plataforma.
+
+Cada organização possui:
+
+usuários  
+creators  
+projetos  
+memória da organização  
+integrações  
+configurações  
+branding
+
+Todos os dados operacionais pertencem a uma organização.
+
+---
+
+## Usuário
+
+Usuários pertencem a uma organização.
+
+Usuários controlam apenas:
+
+perfil  
+preferências  
+modo visual  
+notificações
+
+Usuários não controlam arquitetura da plataforma.
+
+---
+
+# 3. REGRA OBRIGATÓRIA DE ORGANIZATION_ID
+
+Toda entidade de dados deve possuir referência a:
+
+organization_id
+
+Isso inclui:
+
+users  
+creators  
+projects  
+agents  
+memory  
+integrations  
+exports  
+logs
+
+Nenhum dado pode existir fora de uma organização.
+
+---
+
+# 4. ESTRUTURA OFICIAL DA SIDEBAR
+
+A sidebar da plataforma possui estrutura fixa.
+
+Ela não deve ser alterada sem decisão arquitetural.
+
+Estrutura oficial:
+
+Dashboard  
+Pedidos  
+Calendário  
+Gerador  
+Projetos  
+Creators  
+Relatório  
+Conhecimento  
+Agentes  
+Memória  
+Arquitetura  
+
+Organization  
+Config
+
+---
+
+# 5. RESPONSABILIDADE DOS MÓDULOS
+
+Cada módulo da sidebar possui responsabilidade específica.
+
+---
+
+## Dashboard
+
+Visão geral da atividade da organização.
+
+Exibe métricas, atividade recente e status geral.
+
+---
+
+## Pedidos
+
+Gerenciamento de solicitações de produção.
+
+---
+
+## Calendário
+
+Planejamento e organização de atividades.
+
+---
+
+## Gerador
+
+Ferramentas de geração automatizada de conteúdo.
+
+---
+
+## Projetos
+
+Gestão de projetos e produção.
+
+---
+
+## Creators
+
+Gestão de criadores e perfis.
+
+---
+
+## Relatório
+
+Análise e métricas de desempenho.
+
+---
+
+## Conhecimento
+
+Base de conhecimento e documentação da organização.
+
+---
+
+## Agentes
+
+Controle e execução de agentes inteligentes.
+
+---
+
+## Memória
+
+Sistema de memória persistente da organização.
+
+---
+
+## Arquitetura
+
+Visualização estrutural do funcionamento da plataforma.
+
+Inclui:
+
+fluxo do sistema  
+orquestrador  
+squads  
+regras estruturais
+
+---
+
+## Organization
+
+Gestão da organização.
+
+Responsável por:
+
+plano  
+branding  
+domínio  
+equipe  
+identidade da empresa
+
+---
+
+## Config
+
+Configurações pessoais do usuário.
+
+Responsável por:
+
+perfil  
+preferências  
+modo visual  
+notificações
+
+---
+
+# 6. SISTEMA DE PLANOS DA PLATAFORMA
+
+A plataforma possui quatro níveis de plano.
+
+Starter  
+Profissional  
+Avançado  
+Enterprise
+
+Cada plano controla acesso a módulos.
+
+---
+
+## Plano Starter
+
+Acesso:
+
+Creators
+
+Sem personalização de branding.
+
+---
+
+## Plano Profissional
+
+Acesso:
+
+Creators  
+Projetos  
+Calendário
+
+Sem personalização de branding.
+
+---
+
+## Plano Avançado
+
+Acesso:
+
+Creators  
+Projetos  
+Calendário  
+Automação  
+Agentes  
+Memória  
+Arquitetura
+
+Sem personalização de branding.
+
+---
+
+## Plano Enterprise
+
+Acesso completo.
+
+Inclui:
+
+Creators  
+Projetos  
+Calendário  
+Automação  
+Agentes  
+Memória  
+Arquitetura  
+Branding personalizado  
+Domínio customizado  
+Gestão de equipe
+
+---
+
+# 7. CONTROLE DE FEATURES
+
+Funcionalidades devem ser controladas por feature flags.
+
+Não devem ser controladas diretamente no frontend.
+
+Cada organização possui um conjunto de features habilitadas baseado no plano.
+
+Exemplo:
+
+creators  
+projects  
+planner  
+agents  
+memory  
+branding  
+custom_domain  
+team_management
+
+Sempre que um módulo for acessado o sistema deve verificar:
+
+a organização possui essa feature habilitada?
+
+---
+
+# 8. REGRAS DE BRANDING
+
+Branding pertence à organização.
+
+Usuários não podem alterar branding.
+
+Branding só pode ser alterado no plano Enterprise.
+
+Branding inclui:
+
+logo  
+favicon  
+cor primária da interface
+
+A plataforma gera automaticamente variações da cor primária.
+
+---
+
+# 9. DOMÍNIO CUSTOMIZADO
+
+Domínio customizado é funcionalidade exclusiva do plano Enterprise.
+
+Exemplo de uso:
+
+hub.empresa.com  
+workspace.marca.com
+
+A infraestrutura da plataforma continua pertencendo à Hubia.
+
+O domínio apenas aponta para a aplicação.
+
+---
+
+# 10. SISTEMA DE INTEGRAÇÕES
+
+Integrações pertencem à organização.
+
+As integrações devem ser classificadas em categorias:
+
+Inteligência Artificial  
+Desenvolvimento  
+Comunicação  
+Infraestrutura
+
+Exemplos:
+
+OpenAI  
+Anthropic  
+Google AI  
+Github  
+Vercel  
+Telegram
+
+---
+
+# 11. REGRAS DE EXPORTAÇÃO
+
+A plataforma permite exportação parcial de dados.
+
+Exportações permitidas:
+
+Creators  
+Projetos  
+Relatórios  
+Configurações da organização
+
+Exportações proibidas:
+
+memória estrutural da plataforma  
+agentes do sistema  
+squads  
+arquitetura
+
+Esses elementos são proprietários da plataforma.
+
+---
+
+# 12. SEGURANÇA DE CHAVES DE API
+
+Chaves de API nunca devem ser armazenadas em texto puro.
+
+Todas as chaves devem ser armazenadas como:
+
+api_key_encrypted
+
+O sistema deve descriptografar apenas em tempo de execução.
+
+---
+
+# 13. GOVERNANÇA DE ROTAS
+
+Nenhuma rota existente pode ser removida sem análise de impacto.
+
+Mudanças de rota devem seguir:
+
+criação de nova rota  
+redirecionamento automático da rota antiga  
+remoção apenas após estabilização
+
+---
+
+# 14. REGRAS PARA AGENTES DE DESENVOLVIMENTO
+
+Agentes que atuarem no código da plataforma devem respeitar:
+
+estrutura da sidebar  
+arquitetura multi-organização  
+controle de planos  
+controle de permissões  
+regras de exportação
+
+Nenhum agente deve alterar essas estruturas sem validação arquitetural.
+
+---
+
+# 15. GOVERNANÇA FUTURA
+
+Este documento funciona como constituição técnica da plataforma.
+
+Toda evolução estrutural da Hubia deve respeitar estas regras.
+
+Mudanças estruturais devem gerar nova versão deste documento.
+
+---
+
+# 16. OBJETIVO FINAL
+
+Garantir que a Hubia possa evoluir para:
+
+plataforma SaaS multi-empresa  
+suporte a clientes enterprise  
+white label controlado  
+arquitetura escalável  
+governança técnica estável
+
+Este documento estabelece as bases dessa evolução.

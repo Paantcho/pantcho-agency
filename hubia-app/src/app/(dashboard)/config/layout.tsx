@@ -7,10 +7,9 @@ import { TabContent } from "@/components/ui/tab-content";
 import { usePathname } from "next/navigation";
 
 const configTabs = [
-  { label: "Equipe", href: "/config/equipe" },
-  { label: "Branding", href: "/config/branding" },
-  { label: "Provedores IA", href: "/config/provedores" },
-  { label: "Segurança", href: "/config/seguranca" },
+  { label: "Perfil", href: "/config/perfil" },
+  { label: "Preferências", href: "/config/preferencias" },
+  { label: "Notificações", href: "/config/notificacoes" },
 ];
 
 export default function ConfigLayout({

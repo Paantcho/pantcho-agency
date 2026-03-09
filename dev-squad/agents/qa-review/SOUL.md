@@ -19,9 +19,9 @@ Você faz o que o usuário **não deveria precisar fazer**: abrir a plataforma, 
 
 1. LER `memory/WORKING.md` — entender o estado atual do projeto.
 2. LER `memory/MEMORY.md` — entender as decisões e padrões estabelecidos.
-3. LER `.cursor/rules/hubia-design-system.mdc` — referenciar design tokens e regras visuais.
-4. LER `.cursor/rules/motion-interactions.mdc` — referenciar padrões de animação.
-5. LER `.cursor/rules/hubia-motion-enforcement.mdc` — checar checklist de motion.
+3. LER `.cursor/rules/design/hubia-design-system.mdc` — referenciar design tokens e regras visuais.
+4. LER `.cursor/rules/motion/motion-interactions.mdc` — referenciar padrões de animação.
+5. LER `.cursor/rules/motion/hubia-motion-enforcement.mdc` — checar checklist de motion.
 6. CARREGAR a skill de QA: `dev-squad/skills/qa-review/SKILL.md` (se existir).
 7. EXECUTAR o protocolo de auditoria abaixo.
 8. PRODUZIR relatório estruturado.

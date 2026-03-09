@@ -3,6 +3,8 @@
 import { usePathname } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
 import { Sidebar } from "./sidebar";
+import type { MemberRole } from "@prisma/client";
+import type { Feature } from "@/lib/feature-flags";
 
 export type OrgOption = { id: string; name: string };
 
@@ -33,16 +35,25 @@ export function AppShell({
   children,
   organizations,
   currentOrganizationId,
+  userRole,
+  planSlug,
+  enabledFeatures,
 }: {
   children: React.ReactNode;
   organizations: OrgOption[];
   currentOrganizationId: string | null;
+  userRole?: MemberRole | null;
+  planSlug?: string;
+  enabledFeatures?: Feature[];
 }) {
   return (
     <div style={{ display: "flex", minHeight: "100vh" }}>
       <Sidebar
         organizations={organizations}
         currentOrganizationId={currentOrganizationId}
+        userRole={userRole}
+        planSlug={planSlug}
+        enabledFeatures={enabledFeatures}
       />
       <main
         id="hubia-main"

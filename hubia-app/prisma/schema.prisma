@@ -119,6 +119,24 @@ enum KnowledgeSourceType {
 }
 
 // ============================================================
+// USER PROFILES (espelho do auth.users do Supabase)
+// ============================================================
+
+model UserProfile {
+  id           String    @id @db.Uuid // mesmo UUID do auth.users do Supabase
+  email        String    @unique
+  name         String?
+  avatarUrl    String?   @map("avatar_url")
+  timezone     String    @default("America/Sao_Paulo")
+  locale       String    @default("pt-BR")
+  lastActiveAt DateTime? @map("last_active_at") @db.Timestamptz
+  createdAt    DateTime  @default(now()) @map("created_at") @db.Timestamptz
+  updatedAt    DateTime  @updatedAt @map("updated_at") @db.Timestamptz
+
+  @@map("user_profiles")
+}
+
+// ============================================================
 // GLOBAL (sem organization_id)
 // ============================================================
 
@@ -175,6 +193,7 @@ model Organization {
   plan Plan @relation(fields: [planId], references: [id])
 
   members          OrganizationMember[]
+  invites          Invite[]
   branding         OrganizationBranding?
   featureOverrides OrganizationFeatureOverride[]
   aiProviders      AiProvider[]
@@ -190,6 +209,26 @@ model Organization {
   promptOutputs    PromptOutput[]
 
   @@map("organizations")
+}
+
+model Invite {
+  id             String     @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  organizationId String     @map("organization_id") @db.Uuid
+  email          String
+  role           MemberRole @default(viewer)
+  token          String     @unique
+  invitedBy      String     @map("invited_by") @db.Uuid
+  expiresAt      DateTime   @map("expires_at") @db.Timestamptz
+  acceptedAt     DateTime?  @map("accepted_at") @db.Timestamptz
+  revokedAt      DateTime?  @map("revoked_at") @db.Timestamptz
+  createdAt      DateTime   @default(now()) @map("created_at") @db.Timestamptz
+
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  @@index([email])
+  @@index([token])
+  @@index([organizationId])
+  @@map("invites")
 }
 
 model OrganizationMember {
