@@ -5,14 +5,88 @@ Atualizado DEPOIS de cada ação.
 
 ---
 
-**Status:** Sprint "Rules reorganizadas por domínio + Gestão de Usuários completa" — COMPLETO. Build limpo. Zero erros TypeScript.
+**Status:** Sprint "Relatório v3 — Gráficos, Ordem e Filtros" — COMPLETO. Build limpo. Zero erros TypeScript.
 
 ## Projeto Atual
-HUBIA — Governança técnica estabilizada. Rules organizadas por domínio (`architecture/`, `ai/`, `design/`, `motion/`). Sistema completo de usuários: UserProfile, Invite, Team page com nomes reais, modal de convite. Módulo Organization com 5 tabs estável.
+HUBIA — Tela de Relatório completamente refatorada em 3 iterações. Gráficos sem corte nas bordas, blocos reordenados por hierarquia executiva, tabs de view em 3 blocos-chave, LIVE sem layout shift.
 
 ---
 
-## Última sessão (2026-03-08 — Sprints: Governança + Usuários + Rules)
+## Última sessão (2026-03-09 — Sprint: Relatório v3)
+
+### 1. Resumo em uma frase
+Relatório transformado em cockpit operacional: gráfico principal sem corte nas bordas (margem left:8 + right:40 + padding:28), nova ordem de blocos por importância estratégica, 3 tabs no gráfico de produção (Volume/Por Squad/Eficiência), tabs de filtro em Pedidos recentes (Todos/Em revisão/Atrasados), 2 views na Orquestração de agentes (Carga atual/Histórico).
+
+### 2. Arquivos modificados — Sprint: Relatório v3
+
+| Arquivo | O que foi feito |
+|--------|-----------------|
+| `app/(dashboard)/relatorio/relatorio-client.tsx` | Refatoração completa: gráficos sem corte, nova ordem de rows, MiniTabBar, 3 chart views, tabs de filtro em Pedidos, 2 views em Orquestração |
+
+### 3. Decisões técnicas relevantes
+
+**Fix de corte nos gráficos:**
+- Causa: `margin={{ left: -16 }}` + clipPath do recharts cortava overshoot das curvas B-spline
+- Solução: `margin={{ top:10, right:40, left:8, bottom:4 }}` + `XAxis padding={{ left:28, right:28 }}`
+- Aplicado em: ProducaoVolumeChart
+
+**MiniTabBar customizado:**
+- Não usamos `SlidingTabs` dentro de cards brancos (background:#FFFFFF hardcoded = invisível)
+- Criamos `MiniTabBar` com container `#EEEFE9` + pill ativo `#FFFFFF` — contrasta bem dentro de cards
+- Usado em: ProducaoChartContainer, OrquestradorMonitor, PedidosRecentes, seletor de período
+
+**Nova hierarquia de rows:**
+1. KPIs hero (4 cards variados: dark/limão/branco)
+2. Saúde Operacional (300px) + Atividade LIVE (1fr) — urgência imediata
+3. Produção ao longo do tempo (full width + 3 tabs)
+4. Status + Por tipo + Orquestração (3 cols)
+5. Uso de IA (320px) + Pedidos recentes (1fr)
+6. Squad Performance (1fr) + Tendências (280px)
+
+**3 chart views — Produção:**
+- Volume: AreaChart existente (Pedidos vs. Entregues), `type="basis"`, animado
+- Por Squad: BarChart agrupado SERIE_SQUAD_BASE (Audiovisual + Dev Squad)
+- Eficiência: LineChart com SERIE_EFICIENCIA_BASE (% de entrega mês a mês)
+- TabContent direcional + MiniTabBar com direção rastreada por índice
+
+**Atrasados em Pedidos recentes:**
+- Critério: `p.dias > 7` = 4 pedidos atrasados (8d, 12d, 15d, 18d)
+- Dias acima de 7d ficam em laranja `#FB8C00`
+
+**LIVE sem layout shift:**
+- Container height fixa: `ACTIVITY_H * MAX_ACTIVITIES = 58 * 5 = 290px`
+- Itens `position: absolute`, animam apenas `opacity` e `y`
+- Log da Orquestração: `LOG_H * MAX_LOGS = 27 * 4 = 108px`
+
+### 4. O que está funcionando e aprovado
+
+- ✅ **Gráfico hero** — curvas sem corte nas bordas, respiro real nas extremidades
+- ✅ **MiniTabBar** — tabs pill dentro de cards brancos, contraste correto
+- ✅ **3 views de Produção** — Volume/Por Squad/Eficiência com TabContent direcional
+- ✅ **Tabs Pedidos recentes** — Todos/Em revisão/Atrasados com contadores e filtro funcional
+- ✅ **2 views Orquestração** — Carga atual (grid+log LIVE) / Histórico (sparklines por agente)
+- ✅ **LIVE sem layout shift** — altura fixa, posicionamento absoluto, sem reflow
+- ✅ **Nova ordem de blocos** — hierarquia executiva implementada
+- ✅ **TypeScript** — zero erros de compilação
+
+### 5. O que está incompleto ou pendente
+
+- [ ] Exportações de dados — mover para um lugar definitivo
+- [ ] HubiaDatePicker: extrair para `components/ui/`
+- [ ] Conectar Preferências/Notificações ao banco
+- [ ] Conectar Domain ao banco
+- [ ] Branding upload: conectar ao Supabase Storage
+- [ ] Conhecimento — página pendente
+- [ ] Memória — página pendente
+
+### 6. Próxima ação exata
+
+→ Verificar visualmente no browser (Relatório v3)
+→ Avançar para Conhecimento ou Memória conforme direção do usuário
+
+---
+
+## Sessão anterior (2026-03-08 — Sprints: Governança + Usuários + Rules)
 
 ### 1. Resumo em uma frase
 Sistema completo de gestão de usuários implementado: UserProfile + Invite no Prisma, admin client Supabase, auth callback atualizado, Team page com nomes reais, modal de convite, convites pendentes, ações de remover/revogar/reenviar.
