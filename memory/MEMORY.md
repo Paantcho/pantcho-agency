@@ -46,6 +46,8 @@ Next.js 15+ / TypeScript / Tailwind / Shadcn / Supabase / Prisma / Vercel / Figm
 - O white box (`rounded-[20px] bg-white p-5 min-h-[400px]`) envolve APENAS o conteúdo
 - Cards dentro do white box usam `#F7F7F5` (não branco puro) para criar hierarquia sem sombra
 
+**⚠️ EXCEÇÃO PROJETOS:** A listagem de Projetos **NÃO tem white box wrapper** — os cards flutuam diretamente sobre `#EEEFE9`. Isso é intencional e definitivo para dar mais destaque individual a cada projeto. NÃO reverter.
+
 ---
 
 ## PALETA DE STATUS — TRAVADA GLOBALMENTE
@@ -297,22 +299,55 @@ conteudo, campanha, branding, mockup, documentacao, operacao, outro
 - **Criação & Visual**: branding, mockup
 - **Outros**: documentacao, operacao, outro
 
-### Abas universais (aparecem em TODOS os tipos)
-Visão Geral · Contexto · Tarefas · Pedidos · Memória · Rules · Log
+### Sistema de cores por tipo — DEFINITIVO (pillBg + pillText)
 
-### Abas específicas por tipo
+Cada tipo tem `pillBg` (fundo da tag) e `pillText` (texto legível). Tag sempre `rounded-full`.
+NUNCA usar `${cor}12` ou `${cor}18` para fundo de tag — usar sempre `pillBg`/`pillText`.
+
+| Tipo | pillBg | pillText | cor (barra/acento) |
+|---|---|---|---|
+| creator | `#EEEAFF` | `#4B3FC7` | `#7C6AF7` índigo |
+| conteudo | `#E0F5F3` | `#00695C` | `#00897B` teal |
+| campanha | `#FCE4F3` | `#AD1570` | `#E91E8C` rosa |
+| landing_page / hotsite / microsite | `#E1F4FE` | `#01579B` | `#0288D1` azul |
+| app / saas / sistema | `#E3EEFF` | `#0D47A1` | `#1565C0` azul navy |
+| ferramenta | `#ECEFF1` | `#263238` | `#37474F` ardósia |
+| branding | `#FFF0E2` | `#BF360C` | `#FF6D00` laranja |
+| mockup | `#F3ECE9` | `#5D4037` | `#8D6E63` marrom |
+| documentacao | `#EEF2F4` | `#37474F` | `#546E7A` azul-cinza |
+| operacao | `#EEEAFF` | `#4B3FC7` | `#7C6AF7` índigo |
+| outro | `#EEEFE9` | `#5E5E5F` | `#A9AAA5` neutro |
+
+### Barra de progresso — paleta definitiva
+```
+>= 75% → #D7FF00 (Limão-500 — cor primária)
+40-74% → #A8C800 (Limão-600)
+< 40%  → #FB8C00 (Laranja — alerta)
+Fundo da barra: #EEEFE9 (bg-base da app)
+```
+
+### Subprojetos — via metadata
+Projetos podem ter subprojetos armazenados em `metadata.subprojetos`.
+Estrutura: `{ id, nome, tipo, status, descricao?, progresso? }`.
+Tab "Subprojetos" na página interna com criar/remover/status/barra de progresso.
+**Não requer migração de schema** — tudo fica no campo JSON `metadata`.
+
+### Abas universais (aparecem em TODOS os tipos — com ícones)
+Visão Geral (LayoutGrid) · Contexto (AlignLeft) · Módulos (Boxes) · Tarefas (ListChecks) · Subprojetos (FolderOpen) · Itens Vinculados (Link2) · Memória (Brain) · Rules (ShieldCheck) · Log (History) · Conectores (Wifi)
+
+### Abas específicas por tipo (com ícones semânticos)
 | Tipo | Abas extras |
 |------|------------|
-| creator | Identidade · Aparência · Tom de Voz |
-| saas / app / sistema | PRD · Arquitetura · Deploy · Banco · Integrações |
-| landing_page / hotsite / microsite | PRD · Design · Deploy |
-| ferramenta | PRD · Arquitetura |
-| conteudo / campanha | Conceito |
-| branding / mockup | Conceito |
+| creator | Identidade (User) · Aparência (Palette) · Tom de Voz (Mic) · Ambientes (MapPin) · Plataformas (Monitor) · Conteúdo (FileText) · Operação (Settings) · Assets (Package) |
+| saas / app | PRD (FileText) · Fluxos (GitMerge) · Arquitetura (Cpu) · Design (Palette) · Banco (Database) · Integrações (Link2) · Deploy (Rocket) |
+| landing_page / hotsite / microsite | PRD (FileText) · Copy (PenTool) · Design (Palette) · Arquitetura (GitMerge) · Deploy (Rocket) · Analytics (BarChart2) |
+| branding | Diagnóstico (FlaskConical) · Estratégia (Target) · Moodboard (Palette) · Marca (Tag) · Sistema Visual (Globe2) · Assets (Package) · Handoff (Zap) |
+| conteudo | Estratégia (Target) · Pilares (Layers) · Calendário (CalendarDays) · Roteiros (PenTool) · Peças (Package) |
+| campanha | Conceito (Lightbulb) · Público (Users) · Peças (Package) |
 
 ### Modal de criação — 2 passos (inviolável)
-1. **Passo 1:** Galeria de tipos agrupada → usuário seleciona
-2. **Passo 2:** Formulário → nome, objetivo, prazo. Squad preenchido automaticamente pelo tipo.
+1. **Passo 1:** Galeria de tipos agrupada → fundo `pillBg` + ícone + label. Borda do tipo ativo com `cor`.
+2. **Passo 2:** Formulário → nome, objetivo, cliente/org, prazo. Squad preenchido automaticamente.
 
 ### getCurrentOrganizationId() — OBRIGATÓRIO em páginas
 Todas as páginas de rota dinâmica devem usar `getCurrentOrganizationId()` de `lib/auth-organization.ts`.

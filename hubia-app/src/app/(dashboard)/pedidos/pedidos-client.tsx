@@ -11,7 +11,9 @@ import {
   Plus, List, Columns, Calendar, ClipboardList, X, Flame, AlertTriangle,
   ExternalLink, Zap, ChevronLeft, ChevronRight, CheckSquare, Square,
   Lightbulb, Rocket, TrendingUp, FileText, CheckCircle2, Search, SlidersHorizontal,
+  Layers, Palette, Code2,
 } from "lucide-react";
+import { SlidingTabs } from "@/components/ui/sliding-tabs";
 import { HubiaPortal } from "@/components/ui/hubia-portal";
 import { HubiaSelect } from "@/components/ui/hubia-select";
 import { toast } from "@/components/ui/hubia-toast";
@@ -408,29 +410,16 @@ export default function PedidosClient({
 
       {/* ─── Linha 2: Tab-navbar — fora do box, estilo pill animada ────────── */}
       <div className="flex items-center justify-between gap-3 flex-wrap">
-        {/* Esquerda: filtros de squad como tabs com pill */}
-        <div className="flex items-center gap-1 rounded-[14px] bg-white p-1 relative">
-          {(["todos", "AUDIOVISUAL", "DEV"] as const).map((squad) => {
-            const isActive = filtroSquad === squad;
-            return (
-              <motion.button
-                key={squad}
-                onClick={() => setFiltroSquad(squad)}
-                className="relative rounded-[10px] px-3.5 py-2 text-[12px] font-bold z-10"
-                animate={{
-                  backgroundColor: isActive ? "#0E0F10" : "transparent",
-                  color: isActive ? "#D7FF00" : "#A9AAA5",
-                }}
-                initial={false}
-                whileHover={!isActive ? { backgroundColor: "rgba(213,210,201,0.3)", color: "#0E0F10" } : {}}
-                whileTap={{ scale: 0.96 }}
-                transition={{ type: "spring", stiffness: 420, damping: 30, mass: 0.8 }}
-              >
-                {squad === "todos" ? "Todos" : squad}
-              </motion.button>
-            );
-          })}
-        </div>
+        {/* Esquerda: filtros de squad como SlidingTabs padrão do sistema */}
+        <SlidingTabs
+          tabs={[
+            { id: "todos",       label: "Todos",       icon: Layers },
+            { id: "AUDIOVISUAL", label: "Audiovisual", icon: Palette },
+            { id: "DEV",         label: "Dev",         icon: Code2 },
+          ]}
+          activeId={filtroSquad}
+          onChange={(id) => setFiltroSquad(id as "todos" | "AUDIOVISUAL" | "DEV")}
+        />
 
         {/* Direita: busca + filtro urgência + views */}
         <div className="flex items-center gap-2">

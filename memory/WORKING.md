@@ -5,80 +5,62 @@ Atualizado DEPOIS de cada ação.
 
 ---
 
-**Status:** Sprint "Projetos v2 + Seed v3" — COMPLETO. Build limpo. Zero erros TypeScript.
+**Status:** Sprint "Projetos v3 — UI/UX + Pills de Tipo + Subprojetos" — COMPLETO. Build limpo. Zero erros TypeScript.
 
 ## Projeto Atual
-HUBIA — Página Projetos reconstruída como hub inteligente com estrutura adaptativa por tipo. 7 tipos de projeto com abas, módulos, memória, rules e log dinâmicos. Seed v3 com 7 projetos mockados, todos com conteúdo rico em todas as abas.
+HUBIA — Feature Projetos refinada com sistema de cores definitivo por tipo (pills `rounded-full`), remoção do white box wrapper na listagem, redesign dos cards (título maior, tag proeminente, barra paleta correta), subprojetos via metadata, tabs com ícones em toda a página de detalhe, e padronização do `SlidingTabs` em Pedidos e Projetos.
 
 ---
 
-## Última sessão (2026-03-08 — Sprint Projetos v2 + Seed v3)
+## Última sessão (2026-03-08 — Sprint Projetos v3.1 — UI/UX)
 
 ### 1. Resumo em uma frase
-Projetos virou hub inteligente com 15 tipos, abas adaptativas por tipo, modal de criação em 2 passos com prévia de módulos, seed v3 com 7 projetos totalmente preenchidos (SaaS, Conteúdo, Landing Page, Creator, Branding, App, Campanha), e fix do bug de org_id null que impedia a lista de aparecer.
+Projetos agora tem cards flutuando sobre o fundo base (sem white box), pills de tipo arredondadas com cores definitivas da paleta Hubia, título do projeto em 22px bold, barra de progresso com limão/verde/laranja, subprojetos por metadata, tabs com ícones, e filtros Pedidos + Projetos padronizados com SlidingTabs.
 
-### 2. Arquivos criados ou modificados
+### 2. Arquivos modificados (sprint v3.1)
 
 | Arquivo | O que foi feito |
 |--------|-----------------|
-| `prisma/schema.prisma` | enum `ProjetoTipo` com 15 valores adicionado; campo `tipo` no model `Projeto` |
-| `prisma/seed.ts` | **v3 completo.** 7 projetos com metadata rica: contexto, PRD, arquitetura, identidade, tom de voz, aparência, conceito, tarefas, decisões, memória, rules, log |
-| `src/app/(dashboard)/projetos/page.tsx` | **Fix crítico.** Substituído padrão antigo (member lookup) por `getCurrentOrganizationId()` — projetos agora aparecem sem membership ativo |
-| `src/app/(dashboard)/projetos/[id]/page.tsx` | Mesmo fix — usa `getCurrentOrganizationId()` |
-| `src/app/(dashboard)/projetos/actions.ts` | `ProjetoTipo` adicionado; `createProjeto` aceita tipo obrigatório; `updateProjeto`; `updateProjetoMetadata` (seção específica); `deleteProjeto` — todos com logActivity |
-| `src/app/(dashboard)/projetos/projetos-client.tsx` | **REESCRITO.** Layout padrão (título + tab-navbar + white box). Filtros por grupo com pill spring. Cards com tipo, status, módulos preview, progresso. Modal 2 passos: galeria de tipos → formulário com squad automático |
-| `src/app/(dashboard)/projetos/[id]/projeto-detail-client.tsx` | **REESCRITO.** Tabs adaptativas por tipo (14 tipos × N abas). Abas editáveis inline. Tarefas com toggle. Memória com entradas. Rules com remoção. Log timeline. |
-| `src/lib/activity-log.ts` | Adicionado `"projeto.editado"` ao enum LogAction |
-| `memory/WORKING.md` | Este arquivo |
-| `memory/MEMORY.md` | Decisões e regras consolidadas |
+| `src/app/(dashboard)/projetos/projetos-client.tsx` | Remoção do white box wrapper; cards redesenhados (22px título, pill rounded-full, barra cor paleta); sistema de cores `pillBg`/`pillText` por tipo; modal com fundo por tipo; views rápidas com SlidingTabs + ícones. |
+| `src/app/(dashboard)/projetos/[id]/projeto-detail-client.tsx` | `pillBg`/`pillText` em todo TIPO_CONFIG; tag de tipo como `rounded-full` no header e sidebar; tabs com ícones semânticos (LayoutGrid, AlignLeft, Boxes, ListChecks, etc.); tab Subprojetos nova; KPIs em 28px. |
+| `src/app/(dashboard)/pedidos/pedidos-client.tsx` | Filtros de squad substituídos por SlidingTabs padrão (Todos/Audiovisual/Dev) com ícones. |
+| `src/components/ui/sliding-tabs.tsx` | Tipo `icon` alterado de `LucideIcon` para `React.ElementType` — aceita qualquer ícone. |
+| `memory/WORKING.md` | Este arquivo. |
+| `memory/MEMORY.md` | Atualizado com regras de pills, padrão de cards Projetos, subprojetos. |
 
 ### 3. O que está funcionando e aprovado
 
-- ✅ Lista de Projetos: 7 projetos visíveis com tipo, status, módulos, progresso
-- ✅ Filtros por grupo: Todos / Creator / Dev / Conteúdo / Visual com pill spring
-- ✅ Modal criação em 2 passos: galeria de tipos → formulário
-- ✅ Cards com cor do tipo, módulos preview em badges, progresso animado
-- ✅ Detalhe de projeto com tabs adaptativas por tipo
-- ✅ Abas editáveis inline (Contexto, PRD, Arquitetura, Design, etc.)
-- ✅ Aba Tarefas: toggle de conclusão + adicionar nova
-- ✅ Aba Memória: adicionar entradas com data automática
-- ✅ Aba Rules: adicionar + remover restrições
-- ✅ Aba Log: timeline de eventos
-- ✅ Seed v3: 7 projetos com conteúdo em TODAS as abas
-- ✅ Fix org_id: `getCurrentOrganizationId()` em ambas as páginas
+- ✅ **White box removida da listagem de Projetos** — cards flutuam sobre `#EEEFE9` diretamente
+- ✅ **Tag de tipo pill `rounded-full`** com cor definitiva por tipo (15 tipos com cores únicas da paleta Hubia)
+- ✅ **Título do projeto em 22px bold** — hierarquia visual forte nos cards
+- ✅ **Barra de progresso com paleta correta:** `#D7FF00` (≥75%), `#A8C800` (40-74%), `#FB8C00` (<40%)
+- ✅ **Subprojetos:** tab "Subprojetos" na página interna, criação/remoção/status/progresso por metadata
+- ✅ **Tabs internas com ícones semânticos** (Visão Geral=LayoutGrid, Contexto=AlignLeft, Módulos=Boxes, etc.)
+- ✅ **KPI cards com número 28px** — leitura imediata
+- ✅ **Pedidos filtros** padronizados com SlidingTabs (Todos=Layers, Audiovisual=Palette, Dev=Code2)
+- ✅ **SlidingTabs** atualizado para aceitar `React.ElementType` em vez de `LucideIcon`
+- ✅ **Modal de criação** de projeto com fundos `pillBg` por tipo e bordas no selecionado
 
-### 4. 7 projetos mockados disponíveis
+### 4. Nota importante — Modal de criação e tipos
+O modal de criação de projeto mostra os tipos com as cores corretas (`pillBg` + ícone + label).
+Porém, como os projetos no banco foram criados com `tipo = "outro"` (antes do sistema de tipos estar completamente definido), os cards exibem "Outro" com cor neutra.
+**Para ver as pills coloridas:** criar novos projetos via o modal já atualizado. Os projetos mockados existentes precisam ter o tipo atualizado no banco via seed ou edição.
+O sistema de tipos está correto e definitivo — é questão de dados, não de código.
 
-| Nome | Tipo | Status | Progresso | Abas com conteúdo |
-|------|------|--------|-----------|-------------------|
-| Pantcho Agency Hub | saas | ativo | 38% | Contexto, PRD, Arquitetura, Deploy, Tarefas, Memória, Rules, Log |
-| Conteúdo Ninaah — Março | conteudo | ativo | 60% | Contexto, Conceito, Tarefas, Memória, Rules, Log |
-| Landing Page Privacy | landing_page | ativo | 45% | Contexto, PRD, Arquitetura, Design, Deploy, Tarefas, Memória, Rules |
-| Creator Ninaah Dornfeld | creator | ativo | 78% | Identidade, Aparência, Tom de Voz, Tarefas, Memória, Rules, Log |
-| Branding Pantcho Agency | branding | pausado | 32% | Conceito, Tarefas, Memória, Rules, Log |
-| Hubia Mobile — App Creator | app | ativo | 12% | Contexto, PRD, Arquitetura, Tarefas, Memória, Rules, Log |
-| Lançamento Sofia Alves | campanha | ativo | 20% | Conceito, Tarefas, Memória, Rules, Log |
+### 5. O que está incompleto ou pendente
 
-### 5. Bug corrigido
-
-- **Bug:** `projetos/page.tsx` usava padrão antigo (lookup por `organizationMember`) → retornava `null` em dev → lista vazia
-- **Fix:** Substituído por `getCurrentOrganizationId()` que tem fallback para primeira org em desenvolvimento
-- **Mesma correção:** `projetos/[id]/page.tsx`
-
-### 6. O que está incompleto ou pendente
-
-- [ ] HubiaDatePicker: extrair de `pedidos-client.tsx` para `components/ui/hubia-date-picker.tsx` (reutilizar em outras páginas)
-- [ ] Aplicar layout padrão (título + tab-navbar + white box) nas demais páginas que ainda usam padrão antigo
+- [ ] Atualizar seed para criar projetos com tipos corretos (não "outro") e ver pills coloridas
+- [ ] HubiaDatePicker: extrair de `pedidos-client.tsx` para `components/ui/hubia-date-picker.tsx`
+- [ ] Aplicar layout padrão (título + tab-navbar) nas demais páginas que ainda usam padrão antigo
 - [ ] Calendário: visualização semanal além da mensal
 - [ ] Relatório — dashboard de métricas
 - [ ] Conhecimento — biblioteca de documentos
 - [ ] Memória — sistema de contexto de plataforma
 - [ ] Verificar e corrigir bug de org_id nas demais páginas (Conhecimento, Memória, Relatório, Calendário)
 
-### 7. Próxima ação exata
+### 6. Próxima ação exata
 
-→ Verificar todas as demais páginas com o mesmo bug de org_id (getCurrentOrganizationId em vez de member lookup)
-→ Construir Relatório com métricas reais dos dados mockados
+→ Atualizar seed com tipos corretos nos projetos mockados (para ver as pills coloridas funcionando)
 → Ou avançar para outra página conforme direção do usuário
 
 ---
@@ -118,10 +100,10 @@ Projetos virou hub inteligente com 15 tipos, abas adaptativas por tipo, modal de
 ### Motion System — COMPLETO
 - [x] Lei de motion (`alwaysApply: true`)
 - [x] Sidebar: pill spring + hover areia + ícones semânticos
-- [x] Tabs: pill spring + hover areia + whileTap
+- [x] Tabs: pill spring + hover areia + whileTap + ícones propagados
 - [x] Modais: 3 camadas com AnimatePresence + `HubiaPortal`
 - [x] Botões: variantes propagadas com animate
-- [x] Cards: stagger + whileHover + flat design
+- [x] Cards: stagger + whileHover + flat design (sem sombra exceto hover card)
 - [x] Dropdowns: AnimatePresence fade+scale
 - [x] Transição de página: Shared Axis vertical
 - [x] DnD Kanban: @dnd-kit, colunas destacadas, drop zone adaptativa
@@ -140,7 +122,7 @@ Projetos virou hub inteligente com 15 tipos, abas adaptativas por tipo, modal de
 - [x] `HubiaSelect` — dropdown customizado
 - [x] `HubiaToastProvider` + `toast.*` — limão (success/info) + ink (error/warning)
 - [x] `HubiaPortal` — createPortal para modais
-- [x] `SlidingTabs` com variantes propagadas
+- [x] `SlidingTabs` com variantes propagadas + `React.ElementType` para ícones
 - [x] `HubiaModal` — modal base com 3 camadas
 - [x] `HubiaDatePicker` — calendário customizado (inline em pedidos-client, extrair pendente)
 
@@ -149,18 +131,20 @@ Projetos virou hub inteligente com 15 tipos, abas adaptativas por tipo, modal de
 - [x] Calendário mensal + Lista
 - [x] Modal Novo Pedido: 2 colunas, sem scroll, criar projeto inline
 - [x] Página /pedidos/[id]: cadeia de produção, prompt final, upload resultado
+- [x] Filtros squad: SlidingTabs padrão (Todos/Audiovisual/Dev + ícones)
 
-### Projetos (COMPLETO v2)
-- [x] 15 tipos com ícone, cor, squad, módulos e documentos previstos
-- [x] Lista com filtros por grupo + busca + pill spring
-- [x] Modal 2 passos: galeria de tipos → formulário com squad automático
-- [x] Detalhe com tabs adaptativas por tipo
-- [x] Abas editáveis inline: Contexto, PRD, Arquitetura, Design, Deploy, etc.
-- [x] Aba Tarefas: toggle + adicionar
-- [x] Aba Memória: adicionar entradas
-- [x] Aba Rules: adicionar + remover
-- [x] Aba Log: timeline
-- [x] `updateProjetoMetadata` server action
+### Projetos (COMPLETO v3.1)
+- [x] 15 tipos com pillBg/pillText definitivos + ícone + squad + módulos
+- [x] Cards flutuam sobre #EEEFE9 (sem white box wrapper)
+- [x] Título do projeto em 22px bold
+- [x] Tag de tipo `rounded-full` com cor por tipo
+- [x] Barra de progresso: #D7FF00 / #A8C800 / #FB8C00 por faixa
+- [x] Views rápidas como SlidingTabs com ícones semânticos (7 views)
+- [x] Modal de criação: 2 passos com fundos pillBg + borda ativa ao selecionar tipo
+- [x] Detalhe com tabs adaptativas por tipo + ícones semânticos
+- [x] Tab Subprojetos: criar/remover/status/progresso por metadata
+- [x] KPI cards com número 28px
+- [x] Sidebar executiva: health, alertas, próximas ações, módulos, stack
 
 ### Agentes (COMPLETO)
 - [x] Dev Squad + Audiovisual Squad, 9 agentes, 17 skills
@@ -174,6 +158,7 @@ Projetos virou hub inteligente com 15 tipos, abas adaptativas por tipo, modal de
 ---
 
 ## Próximas Páginas (por ordem de prioridade)
+- [ ] **Seed update** — projetos mockados com tipos corretos (não "outro")
 - [ ] **Fix org_id** — verificar demais páginas (Calendário, Relatório, Conhecimento, Memória)
 - [ ] **Relatório** — dashboard com métricas dos dados mockados
 - [ ] **Conhecimento** — biblioteca de documentos

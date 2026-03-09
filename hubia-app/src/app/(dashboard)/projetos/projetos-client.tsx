@@ -1,14 +1,18 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useRouter } from "next/navigation";
 import {
   Plus, X, ArrowRight, Search, FolderKanban,
-  User, Globe, Cpu, FileText, Megaphone, Brush,
-  ChevronRight, TrendingUp, Layers,
+  User, Globe, Cpu, FileText, Megaphone,
+  Layers, Zap, CalendarDays, Tag,
+  Activity, AlertTriangle, Clock, Eye, Wrench,
+  CheckSquare, ClipboardList, Link2,
+  ListFilter, Pause, ShieldAlert, BookOpen, Timer,
 } from "lucide-react";
 import { HubiaPortal } from "@/components/ui/hubia-portal";
+import { SlidingTabs } from "@/components/ui/sliding-tabs";
 import { toast } from "@/components/ui/hubia-toast";
 import { createProjeto } from "./actions";
 import type { ProjetoCard } from "./actions";
@@ -20,133 +24,185 @@ type TipoConfig = {
   label: string;
   descricao: string;
   icone: React.ElementType;
-  cor: string;
+  cor: string;        // cor da barra de progresso e acentos
+  pillBg: string;     // fundo da tag pill
+  pillText: string;   // texto da tag pill
   squad: string;
-  modulos: string[];
-  documentos: string[];
-  integracoes: string[];
+  modulosBase: string[];
+  conectoresBase: string[];
 };
 
+// Paleta de cores por tipo — extraída e derivada do Design System Hubia
+// Regra: tons dentro da mesma família de saturação, legíveis, flat
 const TIPO_CONFIG: Record<ProjetoTipo, TipoConfig> = {
+  // ── Creators & Conteúdo ─────────────────────────────────────────────────
   creator: {
-    label: "Creator", descricao: "Identidade, conteúdo e consistência de creator",
-    icone: User, cor: "#7C6AF7",
+    label: "Creator",
+    descricao: "Identidade, conteúdo e consistência de creator",
+    icone: User,
+    cor: "#7C6AF7",         // índigo suave
+    pillBg: "#EEEAFF",      // índigo 8%
+    pillText: "#4B3FC7",    // índigo escuro legível
     squad: "Audiovisual Squad",
-    modulos: ["Identidade", "Aparência", "Tom de Voz", "Ambientes", "Regras", "Conteúdo", "Assets", "Memória"],
-    documentos: ["Perfil da Creator", "Diretrizes de Imagem", "Tom de Voz", "Looks", "Regras de Consistência"],
-    integracoes: ["Figma", "Storage de Assets"],
-  },
-  landing_page: {
-    label: "Landing Page", descricao: "Página de conversão com design, copy e deploy",
-    icone: Globe, cor: "#0E0F10",
-    squad: "Dev Squad",
-    modulos: ["Briefing", "Arquitetura", "Design", "Conteúdo", "Desenvolvimento", "Deploy", "Analytics"],
-    documentos: ["Briefing do Cliente", "Estrutura de Seções", "Copy Base", "Requisitos Técnicos"],
-    integracoes: ["Figma", "GitHub", "Vercel", "Analytics"],
-  },
-  hotsite: {
-    label: "Hotsite", descricao: "Site temporário de campanha ou lançamento",
-    icone: Globe, cor: "#0E0F10",
-    squad: "Dev Squad",
-    modulos: ["Briefing", "Design", "Conteúdo", "Desenvolvimento", "Deploy"],
-    documentos: ["Briefing", "Copy", "Requisitos"],
-    integracoes: ["Figma", "Vercel"],
-  },
-  microsite: {
-    label: "Microsite", descricao: "Site temático com escopo reduzido",
-    icone: Globe, cor: "#0E0F10",
-    squad: "Dev Squad",
-    modulos: ["Briefing", "Design", "Conteúdo", "Desenvolvimento", "Deploy"],
-    documentos: ["Briefing", "Arquitetura", "Copy"],
-    integracoes: ["Figma", "Vercel"],
-  },
-  app: {
-    label: "App", descricao: "Aplicativo mobile ou web progressivo",
-    icone: Cpu, cor: "#1565C0",
-    squad: "Dev Squad",
-    modulos: ["Contexto", "PRD", "Arquitetura", "Design System", "UX Flows", "Frontend", "Backend", "Deploy", "Observabilidade"],
-    documentos: ["PRD", "Arquitetura Técnica", "Requisitos Funcionais", "Stack Oficial"],
-    integracoes: ["Figma", "GitHub", "Supabase", "Vercel"],
-  },
-  saas: {
-    label: "SaaS", descricao: "Software as a Service completo e escalável",
-    icone: Cpu, cor: "#1565C0",
-    squad: "Dev Squad",
-    modulos: ["Contexto", "PRD", "Arquitetura", "Banco de Dados", "Auth", "Frontend", "Backend", "Integrações", "Deploy", "Observabilidade", "Rules"],
-    documentos: ["Visão do Produto", "PRD", "Arquitetura Técnica", "Stack", "Critérios de Aceite"],
-    integracoes: ["Figma", "GitHub", "Supabase", "Vercel", "Stripe", "Analytics"],
-  },
-  sistema: {
-    label: "Sistema Web", descricao: "Sistema interno ou plataforma web customizada",
-    icone: Cpu, cor: "#1565C0",
-    squad: "Dev Squad",
-    modulos: ["PRD", "Arquitetura", "Banco", "Frontend", "Backend", "Deploy"],
-    documentos: ["PRD", "Requisitos", "Arquitetura"],
-    integracoes: ["GitHub", "Supabase", "Vercel"],
-  },
-  ferramenta: {
-    label: "Ferramenta Interna", descricao: "Automação, script ou ferramenta de uso interno",
-    icone: Cpu, cor: "#5E5E5F",
-    squad: "Dev Squad",
-    modulos: ["Contexto", "Requisitos", "Desenvolvimento", "Documentação"],
-    documentos: ["Objetivo", "Requisitos", "Documentação Técnica"],
-    integracoes: ["GitHub"],
+    modulosBase: ["Identidade", "Aparência", "Tom de Voz", "Rules", "Operação"],
+    conectoresBase: ["Figma", "Storage"],
   },
   conteudo: {
-    label: "Grade de Conteúdo", descricao: "Planejamento mensal ou trimestral de conteúdo",
-    icone: Megaphone, cor: "#43A047",
+    label: "Grade de Conteúdo",
+    descricao: "Planejamento mensal ou trimestral de conteúdo",
+    icone: CalendarDays,
+    cor: "#00897B",         // verde-azulado (teal)
+    pillBg: "#E0F5F3",      // teal 10%
+    pillText: "#00695C",    // teal escuro
     squad: "Audiovisual Squad",
-    modulos: ["Briefing", "Calendário", "Peças", "Copies", "Referências", "Aprovações"],
-    documentos: ["Briefing", "Calendário", "Pilares de Conteúdo", "Formatos", "Tom de Voz"],
-    integracoes: ["Figma", "Calendário"],
+    modulosBase: ["Estratégia", "Calendário", "Peças", "Aprovações"],
+    conectoresBase: ["Figma"],
   },
   campanha: {
-    label: "Campanha Criativa", descricao: "Campanha com conceito criativo e múltiplas peças",
-    icone: Megaphone, cor: "#43A047",
+    label: "Campanha",
+    descricao: "Campanha com conceito criativo e múltiplas peças",
+    icone: Megaphone,
+    cor: "#E91E8C",         // rosa quente
+    pillBg: "#FCE4F3",      // rosa 10%
+    pillText: "#AD1570",    // rosa escuro
     squad: "Audiovisual Squad",
-    modulos: ["Briefing", "Conceito", "Público", "Peças", "Copies", "Aprovações"],
-    documentos: ["Briefing", "Conceito Criativo", "Defesa Conceitual", "Benchmark"],
-    integracoes: ["Figma", "Storage"],
+    modulosBase: ["Conceito", "Público", "Peças", "Aprovações"],
+    conectoresBase: ["Figma", "Storage"],
   },
+  // ── Web & Dev ────────────────────────────────────────────────────────────
+  landing_page: {
+    label: "Landing Page",
+    descricao: "Página de conversão com design, copy e deploy",
+    icone: Globe,
+    cor: "#0288D1",         // azul digital
+    pillBg: "#E1F4FE",      // azul 10%
+    pillText: "#01579B",    // azul escuro
+    squad: "Dev Squad",
+    modulosBase: ["PRD", "Design", "Dev", "Deploy", "Analytics"],
+    conectoresBase: ["Figma", "GitHub", "Vercel"],
+  },
+  hotsite: {
+    label: "Hotsite",
+    descricao: "Site temporário de campanha ou lançamento",
+    icone: Globe,
+    cor: "#0288D1",
+    pillBg: "#E1F4FE",
+    pillText: "#01579B",
+    squad: "Dev Squad",
+    modulosBase: ["Design", "Dev", "Deploy"],
+    conectoresBase: ["Figma", "Vercel"],
+  },
+  microsite: {
+    label: "Microsite",
+    descricao: "Site temático com escopo reduzido",
+    icone: Globe,
+    cor: "#0288D1",
+    pillBg: "#E1F4FE",
+    pillText: "#01579B",
+    squad: "Dev Squad",
+    modulosBase: ["Arquitetura", "Dev", "Deploy"],
+    conectoresBase: ["Figma", "Vercel"],
+  },
+  app: {
+    label: "App",
+    descricao: "Aplicativo mobile ou web progressivo",
+    icone: Cpu,
+    cor: "#1565C0",         // azul profundo
+    pillBg: "#E3EEFF",      // azul profundo 10%
+    pillText: "#0D47A1",    // azul navy
+    squad: "Dev Squad",
+    modulosBase: ["PRD", "Arquitetura", "Design", "Frontend", "Backend", "Deploy"],
+    conectoresBase: ["Figma", "GitHub", "Supabase", "Vercel"],
+  },
+  saas: {
+    label: "SaaS",
+    descricao: "Software as a Service completo e escalável",
+    icone: Zap,
+    cor: "#1565C0",
+    pillBg: "#E3EEFF",
+    pillText: "#0D47A1",
+    squad: "Dev Squad",
+    modulosBase: ["PRD", "Arquitetura", "Banco", "Frontend", "Backend", "Deploy"],
+    conectoresBase: ["Figma", "GitHub", "Supabase", "Vercel", "Stripe"],
+  },
+  sistema: {
+    label: "Sistema Web",
+    descricao: "Sistema interno ou plataforma web customizada",
+    icone: Cpu,
+    cor: "#1565C0",
+    pillBg: "#E3EEFF",
+    pillText: "#0D47A1",
+    squad: "Dev Squad",
+    modulosBase: ["PRD", "Arquitetura", "Frontend", "Backend", "Deploy"],
+    conectoresBase: ["GitHub", "Supabase", "Vercel"],
+  },
+  ferramenta: {
+    label: "Ferramenta",
+    descricao: "Automação, script ou ferramenta de uso interno",
+    icone: Wrench,
+    cor: "#37474F",         // cinza-ardósia escuro
+    pillBg: "#ECEFF1",      // cinza-ardósia 10%
+    pillText: "#263238",    // cinza-ardósia profundo
+    squad: "Dev Squad",
+    modulosBase: ["Contexto", "Requisitos", "Dev"],
+    conectoresBase: ["GitHub"],
+  },
+  // ── Criação & Visual ─────────────────────────────────────────────────────
   branding: {
-    label: "Branding", descricao: "Identidade visual e diretrizes de marca",
-    icone: Brush, cor: "#FB8C00",
+    label: "Branding",
+    descricao: "Identidade visual e diretrizes de marca",
+    icone: Tag,
+    cor: "#FF6D00",         // laranja vibrante
+    pillBg: "#FFF0E2",      // laranja 10%
+    pillText: "#BF360C",    // laranja escuro
     squad: "Audiovisual Squad",
-    modulos: ["Contexto", "Conceito", "Referências", "Exploração Visual", "Assets", "Apresentações"],
-    documentos: ["Brand Core", "Diretrizes Visuais", "Moodboard", "Rationale Criativo"],
-    integracoes: ["Figma", "Storage"],
+    modulosBase: ["Diagnóstico", "Estratégia", "Moodboard", "Marca", "Sistema Visual"],
+    conectoresBase: ["Figma", "Storage"],
   },
   mockup: {
-    label: "Mockup / Exploração", descricao: "Exploração visual ou prototipação de produto",
-    icone: Brush, cor: "#FB8C00",
+    label: "Visual / Assets",
+    descricao: "Exploração visual ou prototipação de produto",
+    icone: Eye,
+    cor: "#8D6E63",         // marrom suave
+    pillBg: "#F3ECE9",      // marrom 8%
+    pillText: "#5D4037",    // marrom escuro
     squad: "Audiovisual Squad",
-    modulos: ["Contexto", "Referências", "Exploração", "Assets", "Apresentações"],
-    documentos: ["Objetivos Visuais", "Moodboard", "Mockups"],
-    integracoes: ["Figma", "Storage"],
+    modulosBase: ["Contexto", "Exploração", "Assets"],
+    conectoresBase: ["Figma", "Storage"],
   },
+  // ── Operação & Outros ────────────────────────────────────────────────────
   documentacao: {
-    label: "Documentação", descricao: "Criação ou estruturação de documentação estratégica",
-    icone: FileText, cor: "#5E5E5F",
+    label: "Documentação",
+    descricao: "Criação ou estruturação de documentação estratégica",
+    icone: FileText,
+    cor: "#546E7A",         // azul-cinza
+    pillBg: "#EEF2F4",      // azul-cinza 8%
+    pillText: "#37474F",    // azul-cinza escuro
     squad: "Dev Squad",
-    modulos: ["Contexto", "Estrutura", "Documentos", "Versionamento"],
-    documentos: ["Sumário", "Estrutura", "Specs"],
-    integracoes: [],
+    modulosBase: ["Contexto", "Estrutura", "Documentos"],
+    conectoresBase: [],
   },
   operacao: {
-    label: "Operação Multi-Equipe", descricao: "Iniciativa que envolve múltiplos squads simultaneamente",
-    icone: Layers, cor: "#7C6AF7",
+    label: "Multi-Squad",
+    descricao: "Iniciativa que envolve múltiplos squads simultaneamente",
+    icone: Layers,
+    cor: "#7C6AF7",         // índigo (mesma família creator mas diferente)
+    pillBg: "#EEEAFF",
+    pillText: "#4B3FC7",
     squad: "Multi-Squad",
-    modulos: ["Contexto", "Estrutura", "Tarefas", "Times", "Aprovações", "Memória", "Log"],
-    documentos: ["Briefing Geral", "Responsabilidades", "Milestones"],
-    integracoes: [],
+    modulosBase: ["Contexto", "Times", "Tarefas", "Memória"],
+    conectoresBase: [],
   },
   outro: {
-    label: "Outro", descricao: "Projeto com natureza ainda a definir",
-    icone: FolderKanban, cor: "#A9AAA5",
+    label: "Outro",
+    descricao: "Projeto com natureza ainda a definir",
+    icone: FolderKanban,
+    cor: "#A9AAA5",         // base-700 — neutro da paleta
+    pillBg: "#EEEFE9",      // bg-base-500 — fundo da app
+    pillText: "#5E5E5F",    // ink-300
     squad: "A definir",
-    modulos: ["Visão Geral", "Tarefas", "Memória", "Log"],
-    documentos: ["Briefing Inicial"],
-    integracoes: [],
+    modulosBase: ["Visão Geral", "Tarefas"],
+    conectoresBase: [],
   },
 };
 
@@ -164,13 +220,41 @@ const STATUS_PALETTE: Record<ProjetoStatus, { bg: string; text: string; dot: str
   cancelado: { bg: "#FDECEA", text: "#C62828", dot: "#E53935", label: "Cancelado" },
 };
 
-const FILTROS_TIPO: { label: string; value: string }[] = [
-  { label: "Todos", value: "todos" },
-  { label: "Creator", value: "creator" },
-  { label: "Dev", value: "dev" },
-  { label: "Conteúdo", value: "conteudo" },
-  { label: "Visual", value: "visual" },
+// ─── Views rápidas ────────────────────────────────────────────────────────────
+
+type ViewRapida = "todos" | "ativos" | "pausados" | "em_risco" | "sem_prd" | "sem_rules" | "com_prazo";
+
+const VIEWS_RAPIDAS: { id: ViewRapida; label: string; icon: React.ElementType }[] = [
+  { id: "todos",     label: "Todos",      icon: ListFilter },
+  { id: "ativos",    label: "Ativos",     icon: Activity },
+  { id: "pausados",  label: "Pausados",   icon: Pause },
+  { id: "em_risco",  label: "Em risco",   icon: ShieldAlert },
+  { id: "sem_prd",   label: "Sem PRD",    icon: BookOpen },
+  { id: "sem_rules", label: "Sem rules",  icon: AlertTriangle },
+  { id: "com_prazo", label: "Com prazo",  icon: Timer },
 ];
+
+function aplicarView(projetos: ProjetoCard[], view: ViewRapida): ProjetoCard[] {
+  switch (view) {
+    case "ativos":    return projetos.filter(p => p.status === "ativo");
+    case "pausados":  return projetos.filter(p => p.status === "pausado");
+    case "em_risco":  return projetos.filter(p => {
+      const h = p.metadata?.health as string | undefined;
+      return h === "risco" || h === "critico";
+    });
+    case "sem_prd":   return projetos.filter(p => {
+      const tipo = p.tipo as ProjetoTipo;
+      const precisaPrd = ["app","saas","sistema","landing_page","hotsite","microsite","ferramenta"].includes(tipo);
+      return precisaPrd && !p.metadata?.prd;
+    });
+    case "sem_rules": return projetos.filter(p => {
+      const rules = p.metadata?.rules;
+      return !Array.isArray(rules) || (rules as unknown[]).length === 0;
+    });
+    case "com_prazo": return projetos.filter(p => !!p.metadata?.prazo);
+    default:          return projetos;
+  }
+}
 
 function tipoParaGrupo(tipo: ProjetoTipo): string {
   if (tipo === "creator" || tipo === "conteudo" || tipo === "campanha") return "conteudo";
@@ -194,40 +278,25 @@ export default function ProjetosClient({
   const [projetos, setProjetos] = useState(initialProjetos);
   const [modalOpen, setModalOpen] = useState(false);
   const [busca, setBusca] = useState("");
-  const [filtroAtivo, setFiltroAtivo] = useState("todos");
+  const [viewAtiva, setViewAtiva] = useState<ViewRapida>("todos");
 
-  // Pill dos filtros
-  const filtroRefs = useRef<(HTMLButtonElement | null)[]>([]);
-  const filtroContainerRef = useRef<HTMLDivElement>(null);
-  const [pillLeft, setPillLeft] = useState(0);
-  const [pillWidth, setPillWidth] = useState(0);
-
-  useEffect(() => {
-    const idx = FILTROS_TIPO.findIndex((f) => f.value === filtroAtivo);
-    const el = filtroRefs.current[idx];
-    const container = filtroContainerRef.current;
-    if (!el || !container) return;
-    const cRect = container.getBoundingClientRect();
-    const eRect = el.getBoundingClientRect();
-    setPillLeft(eRect.left - cRect.left);
-    setPillWidth(eRect.width);
-  }, [filtroAtivo]);
-
-  const projetosFiltrados = projetos.filter((p) => {
-    const matchBusca = !busca.trim() || p.nome.toLowerCase().includes(busca.toLowerCase());
-    const grupo = tipoParaGrupo(p.tipo);
-    const matchFiltro = filtroAtivo === "todos" || grupo === filtroAtivo;
-    return matchBusca && matchFiltro;
-  });
+  const projetosFiltrados = (() => {
+    let lista = projetos;
+    lista = aplicarView(lista, viewAtiva);
+    if (busca.trim()) {
+      lista = lista.filter(p => p.nome.toLowerCase().includes(busca.toLowerCase()));
+    }
+    return lista;
+  })();
 
   return (
     <div className="flex flex-col gap-4">
-      {/* Linha 1: título + botão — soltos sobre #EEEFE9 */}
+      {/* Linha 1: título + botão */}
       <div className="flex items-center justify-between gap-3">
         <div>
           <h1 className="text-[28px] font-bold text-[#0E0F10]">Projetos</h1>
           <p className="text-[13px] text-[#A9AAA5] mt-0.5">
-            {projetos.length} projeto{projetos.length !== 1 ? "s" : ""} · estruturas vivas por tipo
+            {projetos.length} projeto{projetos.length !== 1 ? "s" : ""} · workspaces vivos por tipo
           </p>
         </div>
         <motion.button
@@ -244,32 +313,15 @@ export default function ProjetosClient({
         </motion.button>
       </div>
 
-      {/* Linha 2: tab-navbar + busca — soltos sobre #EEEFE9 */}
+      {/* Linha 2: views rápidas + busca */}
       <div className="flex items-center justify-between gap-3 flex-wrap">
-        {/* Filtros por grupo com pill spring */}
-        <div
-          ref={filtroContainerRef}
-          className="relative flex items-center gap-0.5 rounded-[14px] bg-white p-1"
-        >
-          <motion.div
-            className="pointer-events-none absolute rounded-[10px] bg-[#0E0F10]"
-            animate={{ left: pillLeft, width: pillWidth }}
-            transition={{ type: "spring", stiffness: 420, damping: 30, mass: 0.8 }}
-            style={{ top: 4, bottom: 4 }}
+        {/* Views rápidas — SlidingTabs padrão do sistema */}
+        <div className="overflow-x-auto">
+          <SlidingTabs
+            tabs={VIEWS_RAPIDAS.map(v => ({ id: v.id, label: v.label, icon: v.icon }))}
+            activeId={viewAtiva}
+            onChange={(id) => setViewAtiva(id as ViewRapida)}
           />
-          {FILTROS_TIPO.map((f, i) => (
-            <motion.button
-              key={f.value}
-              ref={(el) => { filtroRefs.current[i] = el; }}
-              onClick={() => setFiltroAtivo(f.value)}
-              className="relative z-10 rounded-[10px] px-3.5 py-1.5 text-[12px] font-semibold transition-colors duration-150"
-              animate={{ color: filtroAtivo === f.value ? "#D7FF00" : "#A9AAA5" }}
-              initial={false}
-              whileTap={{ scale: 0.97 }}
-            >
-              {f.label}
-            </motion.button>
-          ))}
         </div>
 
         {/* Busca */}
@@ -284,61 +336,59 @@ export default function ProjetosClient({
         </div>
       </div>
 
-      {/* White box: grid de projetos */}
-      <div className="rounded-[20px] bg-white p-5 min-h-[300px]">
-        <AnimatePresence mode="wait">
-          {projetosFiltrados.length === 0 ? (
-            <motion.div
-              key="empty"
-              initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-              className="flex flex-col items-center justify-center py-16 gap-3"
-            >
-              <FolderKanban size={32} color="#D5D2C9" />
-              <p className="text-[13px] text-[#A9AAA5]">
-                {busca || filtroAtivo !== "todos" ? "Nenhum projeto encontrado com este filtro." : "Nenhum projeto ainda."}
-              </p>
-              {!busca && filtroAtivo === "todos" && (
-                <motion.button
-                  onClick={() => setModalOpen(true)}
-                  className="mt-1 rounded-[14px] border-2 border-dashed border-[#D5D2C9] px-5 py-2.5 text-[13px] font-semibold text-[#A9AAA5]"
-                  whileHover={{ borderColor: "#A9AAA5", color: "#0E0F10", backgroundColor: "rgba(213,210,201,0.08)" }}
-                  whileTap={{ scale: 0.98 }}
-                >
-                  + Criar primeiro projeto
-                </motion.button>
-              )}
-            </motion.div>
-          ) : (
-            <motion.div
-              key="grid"
-              initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-              className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3"
-            >
-              {projetosFiltrados.map((p, i) => (
-                <ProjetoCardItem
-                  key={p.id}
-                  projeto={p}
-                  index={i}
-                  onClick={() => router.push(`/projetos/${p.id}`)}
-                />
-              ))}
-              {/* Card fantasma: novo projeto */}
+      {/* Grid de projetos — sem white box, cards flutuam sobre o fundo base */}
+      <AnimatePresence mode="wait">
+        {projetosFiltrados.length === 0 ? (
+          <motion.div
+            key="empty"
+            initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+            className="flex flex-col items-center justify-center py-20 gap-3"
+          >
+            <FolderKanban size={32} color="#D5D2C9" />
+            <p className="text-[13px] text-[#A9AAA5]">
+              {busca || viewAtiva !== "todos" ? "Nenhum projeto nesta view." : "Nenhum projeto ainda."}
+            </p>
+            {!busca && viewAtiva === "todos" && (
               <motion.button
                 onClick={() => setModalOpen(true)}
-                className="rounded-[20px] border-2 border-dashed border-[#D5D2C9] p-6 flex flex-col items-center justify-center gap-2 min-h-[180px]"
-                whileHover={{ borderColor: "#A9AAA5", backgroundColor: "rgba(213,210,201,0.08)" }}
+                className="mt-1 rounded-[14px] border-2 border-dashed border-[#D5D2C9] px-5 py-2.5 text-[13px] font-semibold text-[#A9AAA5]"
+                whileHover={{ borderColor: "#A9AAA5", color: "#0E0F10", backgroundColor: "rgba(213,210,201,0.08)" }}
                 whileTap={{ scale: 0.98 }}
-                transition={{ duration: 0.15 }}
-                initial={{ opacity: 0, y: 16 }}
-                animate={{ opacity: 1, y: 0, transition: { delay: Math.min(projetosFiltrados.length * 0.06, 0.3) } }}
               >
-                <Plus size={20} color="#A9AAA5" />
-                <span className="text-[13px] font-semibold text-[#A9AAA5]">Novo Projeto</span>
+                + Criar primeiro projeto
               </motion.button>
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </div>
+            )}
+          </motion.div>
+        ) : (
+          <motion.div
+            key={`grid-${viewAtiva}`}
+            initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+            className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3"
+          >
+            {projetosFiltrados.map((p, i) => (
+              <ProjetoCardItem
+                key={p.id}
+                projeto={p}
+                index={i}
+                onClick={() => router.push(`/projetos/${p.id}`)}
+              />
+            ))}
+            {/* Card fantasma */}
+            <motion.button
+              onClick={() => setModalOpen(true)}
+              className="rounded-[20px] border-2 border-dashed border-[#D5D2C9] p-6 flex flex-col items-center justify-center gap-2 min-h-[220px]"
+              whileHover={{ borderColor: "#A9AAA5", backgroundColor: "rgba(213,210,201,0.08)" }}
+              whileTap={{ scale: 0.98 }}
+              transition={{ duration: 0.15 }}
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0, transition: { delay: Math.min(projetosFiltrados.length * 0.06, 0.3) } }}
+            >
+              <Plus size={20} color="#A9AAA5" />
+              <span className="text-[13px] font-semibold text-[#A9AAA5]">Novo Projeto</span>
+            </motion.button>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* Modal */}
       <NovoProjetoModal
@@ -354,7 +404,7 @@ export default function ProjetosClient({
   );
 }
 
-// ─── Card de projeto ──────────────────────────────────────────────────────────
+// ─── Card de projeto inteligente ──────────────────────────────────────────────
 
 function ProjetoCardItem({ projeto: p, index: i, onClick }: {
   projeto: ProjetoCard;
@@ -363,90 +413,162 @@ function ProjetoCardItem({ projeto: p, index: i, onClick }: {
 }) {
   const meta = p.metadata ?? {};
   const progresso = typeof meta.progresso === "number" ? meta.progresso : null;
-  const objetivo = (meta.objetivo as string) ?? p.descricao ?? null;
   const tipoConfig = TIPO_CONFIG[p.tipo] ?? TIPO_CONFIG.outro;
-  const statusPalette = STATUS_PALETTE[p.status];
   const TipoIcon = tipoConfig.icone;
+  const statusPalette = STATUS_PALETTE[p.status];
+
+  // Inteligência operacional
+  const tarefas = Array.isArray(meta.tarefas) ? meta.tarefas as { concluido: boolean }[] : [];
+  const tarefasAbertas = tarefas.filter(t => !t.concluido).length;
+  const rules = Array.isArray(meta.rules) ? meta.rules as { bloqueante?: boolean }[] : [];
+  const rulesBlockers = rules.filter(r => r.bloqueante).length;
+  const subprojetos = Array.isArray(meta.subprojetos) ? meta.subprojetos as { nome: string; status: string }[] : [];
+  const health = meta.health as string | undefined;
+
+  // Cores de progresso — paleta Hubia correta
+  const corBarra = progresso !== null
+    ? progresso >= 75 ? "#D7FF00"   // limão-500 — acima de 75%
+    : progresso >= 40 ? "#A8C800"   // limão-600 — entre 40-74%
+    : "#FB8C00"                      // laranja — abaixo de 40%
+    : tipoConfig.cor;
+
+  const corBarraTexto = progresso !== null
+    ? progresso >= 75 ? "#5A6600"
+    : progresso >= 40 ? "#4A5C00"
+    : "#A05500"
+    : "#5E5E5F";
 
   return (
     <motion.div
-      className="cursor-pointer rounded-[20px] bg-[#F7F7F5] p-5 flex flex-col gap-3.5"
+      className="cursor-pointer rounded-[20px] bg-white p-5 flex flex-col"
       initial={{ opacity: 0, y: 16 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.3, ease: [0, 0, 0.2, 1], delay: Math.min(i * 0.06, 0.3) }}
-      whileHover={{ y: -4, backgroundColor: "#F3F3F0" }}
-      whileTap={{ scale: 0.98 }}
+      whileHover={{ y: -4, boxShadow: "0 8px 32px rgba(14,15,16,0.07)" }}
+      whileTap={{ scale: 0.985 }}
       onClick={onClick}
+      style={{ minHeight: 220 }}
     >
-      {/* Linha 1: ícone de tipo + status */}
-      <div className="flex items-center justify-between">
+      {/* Linha 1: tag de tipo — pill 100% arredondada + status */}
+      <div className="flex items-center justify-between mb-4">
+        {/* Tag de tipo — pill definitiva com cor por tipo */}
         <div
-          className="flex items-center gap-1.5 rounded-[8px] px-2 py-1"
-          style={{ backgroundColor: `${tipoConfig.cor}12` }}
+          className="flex items-center gap-1.5 rounded-full px-3 py-1"
+          style={{ backgroundColor: tipoConfig.pillBg }}
         >
-          <TipoIcon size={12} style={{ color: tipoConfig.cor }} />
-          <span className="text-[10px] font-bold uppercase tracking-wide" style={{ color: tipoConfig.cor }}>
+          <TipoIcon size={12} style={{ color: tipoConfig.pillText }} />
+          <span className="text-[11px] font-bold" style={{ color: tipoConfig.pillText }}>
             {tipoConfig.label}
           </span>
         </div>
-        <span
-          className="inline-flex items-center gap-1 rounded-[6px] px-2 py-0.5 text-[9px] font-bold uppercase tracking-wide"
-          style={{ backgroundColor: statusPalette.bg, color: statusPalette.text }}
-        >
-          <span className="h-1.5 w-1.5 rounded-full" style={{ backgroundColor: statusPalette.dot }} />
-          {statusPalette.label}
-        </span>
-      </div>
 
-      {/* Nome + objetivo */}
-      <div>
-        <h3 className="text-[17px] font-bold text-[#0E0F10] leading-snug">{p.nome}</h3>
-        {objetivo && (
-          <p className="text-[12px] text-[#A9AAA5] mt-1 line-clamp-2 leading-relaxed">{objetivo}</p>
-        )}
-      </div>
-
-      {/* Módulos preview (badge discretos) */}
-      <div className="flex flex-wrap gap-1">
-        {tipoConfig.modulos.slice(0, 4).map((m) => (
-          <span key={m} className="rounded-[5px] bg-white px-1.5 py-0.5 text-[9px] font-semibold text-[#A9AAA5]">
-            {m}
-          </span>
-        ))}
-        {tipoConfig.modulos.length > 4 && (
-          <span className="rounded-[5px] bg-white px-1.5 py-0.5 text-[9px] font-semibold text-[#D5D2C9]">
-            +{tipoConfig.modulos.length - 4}
-          </span>
-        )}
-      </div>
-
-      {/* Barra de progresso */}
-      {progresso !== null && (
-        <div>
-          <div className="flex items-center justify-between mb-1">
-            <span className="text-[10px] text-[#A9AAA5]">Progresso</span>
-            <span className="text-[11px] font-bold text-[#0E0F10]">{progresso}%</span>
+        {/* Status */}
+        <div className="flex items-center gap-1.5">
+          {(health === "risco" || health === "critico") && (
+            <span className="text-[9px] font-bold text-[#C62828] bg-[#FDECEA] px-1.5 py-0.5 rounded-[5px]">
+              EM RISCO
+            </span>
+          )}
+          <div className="flex items-center gap-1">
+            <span className="h-1.5 w-1.5 rounded-full" style={{ backgroundColor: statusPalette.dot }} />
+            <span className="text-[11px] font-semibold" style={{ color: statusPalette.text }}>
+              {statusPalette.label}
+            </span>
           </div>
-          <div className="h-1.5 w-full rounded-full bg-white overflow-hidden">
+        </div>
+      </div>
+
+      {/* Título — grande e dominante */}
+      <h3 className="text-[22px] font-bold text-[#0E0F10] leading-tight tracking-tight mb-1.5">
+        {p.nome}
+      </h3>
+
+      {/* Descrição / objetivo */}
+      {!!meta.objetivo ? (
+        <p className="text-[12px] text-[#A9AAA5] leading-relaxed line-clamp-2 mb-4">
+          {String(meta.objetivo)}
+        </p>
+      ) : (
+        <div className="mb-4" />
+      )}
+
+      {/* Subprojetos — se existirem */}
+      {subprojetos.length > 0 && (
+        <div className="flex flex-wrap gap-1 mb-3">
+          {subprojetos.slice(0, 3).map((s, idx) => (
+            <span
+              key={idx}
+              className="flex items-center gap-1 rounded-[6px] bg-[#F5F5F3] px-2 py-0.5 text-[10px] font-semibold text-[#5E5E5F]"
+            >
+              <FolderKanban size={9} color="#A9AAA5" />
+              {s.nome}
+            </span>
+          ))}
+          {subprojetos.length > 3 && (
+            <span className="rounded-[6px] bg-[#F0F0EE] px-2 py-0.5 text-[10px] font-semibold text-[#A9AAA5]">
+              +{subprojetos.length - 3}
+            </span>
+          )}
+        </div>
+      )}
+
+      {/* Espaço flexível */}
+      <div className="flex-1" />
+
+      {/* Barra de progresso com cor paleta correta */}
+      {progresso !== null && (
+        <div className="mb-3">
+          <div className="h-1.5 w-full rounded-full bg-[#EEEFE9] overflow-hidden">
             <motion.div
-              className="h-full rounded-full bg-[#A8C800]"
+              className="h-full rounded-full"
+              style={{ backgroundColor: corBarra }}
               initial={{ width: 0 }}
               animate={{ width: `${progresso}%` }}
-              transition={{ duration: 0.8, ease: [0, 0, 0.2, 1], delay: i * 0.06 }}
+              transition={{ duration: 0.9, ease: [0, 0, 0.2, 1], delay: i * 0.06 + 0.1 }}
             />
           </div>
         </div>
       )}
 
       {/* Rodapé */}
-      <div className="flex items-center justify-between pt-2.5 border-t border-white mt-auto">
-        <span className="text-[11px] font-semibold text-[#5E5E5F]">
-          {p.pedidosCount} pedido{p.pedidosCount !== 1 ? "s" : ""}
-        </span>
-        <div className="flex items-center gap-1 text-[#A9AAA5]">
-          <span className="text-[10px]">{tipoConfig.squad}</span>
-          <ChevronRight size={11} />
+      <div className="flex items-center justify-between pt-2.5 border-t border-[#F0F0EE]">
+        <div className="flex items-center gap-3">
+          {tarefasAbertas > 0 && (
+            <div className="flex items-center gap-1">
+              <CheckSquare size={11} color="#A9AAA5" />
+              <span className="text-[11px] text-[#A9AAA5]">{tarefasAbertas}</span>
+            </div>
+          )}
+          {p.pedidosCount > 0 && (
+            <div className="flex items-center gap-1">
+              <ClipboardList size={11} color="#A9AAA5" />
+              <span className="text-[11px] text-[#A9AAA5]">{p.pedidosCount}</span>
+            </div>
+          )}
+          {rulesBlockers > 0 && (
+            <div className="flex items-center gap-1">
+              <AlertTriangle size={11} color="#FB8C00" />
+              <span className="text-[11px] font-semibold text-[#A05500]">{rulesBlockers}</span>
+            </div>
+          )}
+          {subprojetos.length > 0 && (
+            <div className="flex items-center gap-1">
+              <Layers size={11} color="#A9AAA5" />
+              <span className="text-[11px] text-[#A9AAA5]">{subprojetos.length}</span>
+            </div>
+          )}
+          {!!meta.prazo && (
+            <div className="flex items-center gap-1">
+              <Clock size={11} color="#A9AAA5" />
+              <span className="text-[11px] text-[#A9AAA5]">{String(meta.prazo)}</span>
+            </div>
+          )}
         </div>
+        {progresso !== null && (
+          <span className="text-[13px] font-bold" style={{ color: corBarraTexto }}>
+            {progresso}%
+          </span>
+        )}
       </div>
     </motion.div>
   );
@@ -465,6 +587,7 @@ function NovoProjetoModal({ open, onClose, organizationId, onCreated }: {
   const [nome, setNome] = useState("");
   const [objetivo, setObjetivo] = useState("");
   const [prazo, setPrazo] = useState("");
+  const [cliente, setCliente] = useState("");
   const [loading, setLoading] = useState(false);
 
   // Restaurar rascunho
@@ -476,16 +599,16 @@ function NovoProjetoModal({ open, onClose, organizationId, onCreated }: {
       if (saved.objetivo) setObjetivo(saved.objetivo);
       if (saved.tipo) setTipoSelecionado(saved.tipo as ProjetoTipo);
       if (saved.prazo) setPrazo(saved.prazo);
-    } catch {}
+      if (saved.cliente) setCliente(saved.cliente);
+    } catch { /* silencioso */ }
   }, [open]);
 
   const handleClose = () => {
     if (nome.trim() && typeof window !== "undefined") {
-      localStorage.setItem(DRAFT_KEY, JSON.stringify({ nome, objetivo, tipo: tipoSelecionado, prazo }));
+      localStorage.setItem(DRAFT_KEY, JSON.stringify({ nome, objetivo, tipo: tipoSelecionado, prazo, cliente }));
     }
     onClose();
-    // Reset state após fechar
-    setTimeout(() => { setStep("tipo"); setTipoSelecionado(null); setNome(""); setObjetivo(""); setPrazo(""); }, 350);
+    setTimeout(() => { setStep("tipo"); setTipoSelecionado(null); setNome(""); setObjetivo(""); setPrazo(""); setCliente(""); }, 350);
   };
 
   const handleSelecionarTipo = (tipo: ProjetoTipo) => {
@@ -507,14 +630,19 @@ function NovoProjetoModal({ open, onClose, organizationId, onCreated }: {
         squad: config.squad,
         objetivo: objetivo || null,
         prazo: prazo || null,
+        cliente: cliente || null,
         progresso: 0,
-        modulos_ativos: config.modulos,
-        integracoes: config.integracoes,
+        modulos_status: config.modulosBase.map(nome => ({ nome, status: "vazio", obrigatorio: true })),
+        conectores: config.conectoresBase.map(nome => ({ nome, tipo: "default", status: "pendente" })),
         memoria: [],
         rules: [],
-        log: [],
-        decisoes: [],
+        log: [{
+          id: Date.now(),
+          acao: "Projeto criado",
+          data: new Date().toLocaleDateString("pt-BR"),
+        }],
         tarefas: [],
+        proximas_acoes: [],
       },
     });
 
@@ -540,14 +668,14 @@ function NovoProjetoModal({ open, onClose, organizationId, onCreated }: {
             onClick={(e) => e.target === e.currentTarget && handleClose()}
           >
             <motion.div
-              className="w-full max-w-[600px] rounded-[20px] bg-white overflow-hidden"
+              className="w-full max-w-[620px] rounded-[20px] bg-white overflow-hidden"
               initial={{ scale: 0.88, y: 20, opacity: 0 }}
               animate={{ scale: 1, y: 0, opacity: 1 }}
               exit={{ scale: 0.92, y: 10, opacity: 0 }}
               transition={{ duration: 0.28, ease: [0, 0, 0.2, 1] }}
               onClick={(e) => e.stopPropagation()}
             >
-              {/* Header do modal */}
+              {/* Header */}
               <div className="flex items-center justify-between px-7 pt-7 pb-4">
                 <div>
                   <div className="flex items-center gap-2 mb-1">
@@ -555,8 +683,7 @@ function NovoProjetoModal({ open, onClose, organizationId, onCreated }: {
                       <motion.button
                         onClick={() => setStep("tipo")}
                         className="text-[11px] font-semibold text-[#A9AAA5] flex items-center gap-1"
-                        whileHover={{ color: "#0E0F10" }} whileTap={{ scale: 0.97 }}
-                      >
+                        whileHover={{ color: "#0E0F10" }} whileTap={{ scale: 0.97 }}>
                         ← Tipos
                       </motion.button>
                     )}
@@ -578,7 +705,7 @@ function NovoProjetoModal({ open, onClose, organizationId, onCreated }: {
                 </motion.button>
               </div>
 
-              {/* Corpo animado por step */}
+              {/* Corpo animado */}
               <AnimatePresence mode="wait">
                 {step === "tipo" && (
                   <motion.div
@@ -598,15 +725,18 @@ function NovoProjetoModal({ open, onClose, organizationId, onCreated }: {
                               <motion.button
                                 key={tipo}
                                 onClick={() => handleSelecionarTipo(tipo)}
-                                className="text-left rounded-[14px] p-3.5 flex items-start gap-3 border-2 border-transparent"
-                                style={{ backgroundColor: `${cfg.cor}08` }}
-                                whileHover={{ backgroundColor: `${cfg.cor}14`, borderColor: `${cfg.cor}30`, scale: 1.01 }}
+                                className="text-left rounded-[14px] p-3.5 flex items-start gap-3 border-2"
+                                style={{
+                                  backgroundColor: cfg.pillBg,
+                                  borderColor: tipoSelecionado === tipo ? cfg.cor : "transparent",
+                                }}
+                                whileHover={{ borderColor: cfg.cor, scale: 1.01 }}
                                 whileTap={{ scale: 0.98 }}
                                 transition={{ duration: 0.15 }}
                               >
                                 <div
-                                  className="flex-shrink-0 h-8 w-8 rounded-[10px] flex items-center justify-center mt-0.5"
-                                  style={{ backgroundColor: `${cfg.cor}20`, color: cfg.cor }}
+                                  className="flex-shrink-0 h-8 w-8 rounded-full flex items-center justify-center mt-0.5"
+                                  style={{ backgroundColor: `${cfg.cor}20`, color: cfg.pillText }}
                                 >
                                   <Icon size={15} />
                                 </div>
@@ -630,7 +760,7 @@ function NovoProjetoModal({ open, onClose, organizationId, onCreated }: {
                     transition={{ duration: 0.2, ease: [0, 0, 0.2, 1] }}
                     className="px-7 pb-7"
                   >
-                    {/* Preview do tipo selecionado */}
+                    {/* Preview do tipo */}
                     <div
                       className="rounded-[14px] p-4 mb-5 flex items-start gap-3"
                       style={{ backgroundColor: `${tipoConfig.cor}10` }}
@@ -645,7 +775,7 @@ function NovoProjetoModal({ open, onClose, organizationId, onCreated }: {
                         <p className="text-[13px] font-bold text-[#0E0F10]">{tipoConfig.label}</p>
                         <p className="text-[11px] text-[#5E5E5F] mt-0.5">{tipoConfig.descricao}</p>
                         <div className="flex flex-wrap gap-1 mt-2.5">
-                          {tipoConfig.modulos.map((m) => (
+                          {tipoConfig.modulosBase.map((m) => (
                             <span key={m} className="rounded-[5px] bg-white px-1.5 py-0.5 text-[9px] font-semibold" style={{ color: tipoConfig.cor }}>
                               {m}
                             </span>
@@ -664,22 +794,32 @@ function NovoProjetoModal({ open, onClose, organizationId, onCreated }: {
                         />
                       </div>
 
+                      <div className="grid grid-cols-2 gap-3">
+                        <div>
+                          <label className="mb-1.5 block text-[11px] font-bold uppercase tracking-wide text-[#A9AAA5]">Cliente / Organização</label>
+                          <input
+                            value={cliente} onChange={(e) => setCliente(e.target.value)}
+                            placeholder="Ex: Pantcho Agency"
+                            className="h-11 w-full rounded-[10px] border border-transparent bg-[#EEEFE9] px-3.5 text-[14px] text-[#0E0F10] outline-none placeholder:text-[#A9AAA5] hover:border-[#D4D5D6] focus:border-[#0E0F10] focus:shadow-[0_0_0_3px_rgba(14,15,16,0.08)] transition-[border-color,box-shadow] duration-150"
+                          />
+                        </div>
+                        <div>
+                          <label className="mb-1.5 block text-[11px] font-bold uppercase tracking-wide text-[#A9AAA5]">Prazo estimado</label>
+                          <input
+                            value={prazo} onChange={(e) => setPrazo(e.target.value)}
+                            placeholder="Ex: Março 2026"
+                            className="h-11 w-full rounded-[10px] border border-transparent bg-[#EEEFE9] px-3.5 text-[14px] text-[#0E0F10] outline-none placeholder:text-[#A9AAA5] hover:border-[#D4D5D6] focus:border-[#0E0F10] focus:shadow-[0_0_0_3px_rgba(14,15,16,0.08)] transition-[border-color,box-shadow] duration-150"
+                          />
+                        </div>
+                      </div>
+
                       <div>
                         <label className="mb-1.5 block text-[11px] font-bold uppercase tracking-wide text-[#A9AAA5]">Objetivo Principal</label>
                         <textarea
                           value={objetivo} onChange={(e) => setObjetivo(e.target.value)}
                           placeholder="O que esse projeto precisa entregar?"
-                          rows={3}
+                          rows={2}
                           className="w-full rounded-[10px] border border-transparent bg-[#EEEFE9] px-3.5 py-2.5 text-[14px] text-[#0E0F10] outline-none placeholder:text-[#A9AAA5] resize-none hover:border-[#D4D5D6] focus:border-[#0E0F10] focus:shadow-[0_0_0_3px_rgba(14,15,16,0.08)] transition-[border-color,box-shadow] duration-150"
-                        />
-                      </div>
-
-                      <div>
-                        <label className="mb-1.5 block text-[11px] font-bold uppercase tracking-wide text-[#A9AAA5]">Prazo estimado (opcional)</label>
-                        <input
-                          value={prazo} onChange={(e) => setPrazo(e.target.value)}
-                          placeholder="Ex: Março 2026, Q2 2026..."
-                          className="h-11 w-full rounded-[10px] border border-transparent bg-[#EEEFE9] px-3.5 text-[14px] text-[#0E0F10] outline-none placeholder:text-[#A9AAA5] hover:border-[#D4D5D6] focus:border-[#0E0F10] focus:shadow-[0_0_0_3px_rgba(14,15,16,0.08)] transition-[border-color,box-shadow] duration-150"
                         />
                       </div>
 

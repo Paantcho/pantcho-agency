@@ -2,12 +2,11 @@
 
 import { useRef, useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import type { LucideIcon } from "lucide-react";
 
 export interface SlideTab {
   id: string;
   label: string;
-  icon?: LucideIcon;
+  icon?: React.ElementType;
   iconClass?: string;
 }
 

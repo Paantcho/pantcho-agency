@@ -8,80 +8,438 @@ import {
   CheckSquare, FileText, Rocket, CheckCircle2, Square, Lightbulb,
   BarChart3, Code2, Globe, GitBranch, Users, Brain, ShieldCheck,
   History, Puzzle, Zap, Eye, Edit3, Save, X, Plus,
-  CalendarDays, Tag, Star,
+  CalendarDays, Tag, Star, AlertTriangle, Activity, Layers,
+  Database, Link2, Settings, Package, ChevronDown,
+  Bot, User, Clock, Hash, Flag, Lock, AlertCircle, BookOpen,
+  Wrench, Target, Megaphone,
+  // ícones para tabs
+  LayoutGrid, AlignLeft, Boxes, ListChecks, FolderOpen, Cpu,
+  StickyNote, Cog, Wifi, MapPin, Palette, Mic, Monitor,
+  BarChart2, GitMerge, FlaskConical, PenTool, Globe2, Flame,
 } from "lucide-react";
 import { HubiaSelect } from "@/components/ui/hubia-select";
+import { SlidingTabs } from "@/components/ui/sliding-tabs";
 import { toast } from "@/components/ui/hubia-toast";
 import { updateProjetoStatus, updateProjetoMetadata } from "../actions";
 import type { ProjetoDetail } from "../actions";
 import type { ProjetoStatus, ProjetoTipo } from "@prisma/client";
 
-// ─── Tipo Config (duplicado do client para uso standalone) ───────────────────
+// ─── Tipos de dado internos ───────────────────────────────────────────────────
+
+type Tarefa = { id: number; titulo: string; concluido: boolean; prioridade?: "baixa" | "media" | "alta" };
+type MemoriaEntry = {
+  id: number;
+  tipo: "working" | "longterm" | "decision" | "lesson";
+  texto: string;
+  data?: string;
+  autor?: string;
+};
+type Rule = {
+  id: number;
+  titulo: string;
+  descricao?: string;
+  categoria: "branding" | "linguagem" | "tecnica" | "escopo" | "seguranca" | "entrega" | "juridico" | "operacional";
+  prioridade: "critica" | "alta" | "media" | "baixa";
+  bloqueante: boolean;
+  origem?: string;
+  data?: string;
+};
+type LogEntry = {
+  id: number;
+  acao: string;
+  modulo?: string;
+  agente?: string;
+  squad?: string;
+  autor?: string;
+  data?: string;
+  versao?: string;
+  impacto?: string;
+};
+type Modulo = { nome: string; status: "completo" | "andamento" | "bloqueado" | "vazio"; obrigatorio: boolean };
+type Conector = { nome: string; tipo: string; url?: string; status: "ativo" | "inativo" | "pendente" };
+
+// ─── Tipo Config completo ─────────────────────────────────────────────────────
 
 type TipoConfig = {
-  label: string; cor: string; squad: string;
-  modulos: string[]; icone: React.ElementType;
+  label: string;
+  cor: string;
+  pillBg: string;
+  pillText: string;
+  squad: string;
+  icone: React.ElementType;
+  modulosBase: Omit<Modulo, "status">[];
+  conectoresBase: Omit<Conector, "status">[];
+  progressoPesos: string[];
 };
 
 const TIPO_CONFIG: Record<ProjetoTipo, TipoConfig> = {
-  creator:      { label: "Creator",            cor: "#7C6AF7", squad: "Audiovisual Squad", icone: Users,       modulos: ["Identidade","Aparência","Tom de Voz","Ambientes","Regras","Conteúdo","Assets","Memória"] },
-  landing_page: { label: "Landing Page",       cor: "#0E0F10", squad: "Dev Squad",         icone: Globe,       modulos: ["Briefing","Arquitetura","Design","Conteúdo","Dev","Deploy","Analytics"] },
-  hotsite:      { label: "Hotsite",            cor: "#0E0F10", squad: "Dev Squad",         icone: Globe,       modulos: ["Briefing","Design","Conteúdo","Dev","Deploy"] },
-  microsite:    { label: "Microsite",          cor: "#0E0F10", squad: "Dev Squad",         icone: Globe,       modulos: ["Briefing","Arquitetura","Conteúdo","Dev","Deploy"] },
-  app:          { label: "App",                cor: "#1565C0", squad: "Dev Squad",         icone: Puzzle,      modulos: ["Contexto","PRD","Arquitetura","Design","Frontend","Backend","Deploy","Observabilidade"] },
-  saas:         { label: "SaaS",               cor: "#1565C0", squad: "Dev Squad",         icone: Zap,         modulos: ["Contexto","PRD","Arquitetura","Banco","Auth","Frontend","Backend","Integrações","Deploy","Observabilidade","Rules"] },
-  sistema:      { label: "Sistema Web",        cor: "#1565C0", squad: "Dev Squad",         icone: Code2,       modulos: ["PRD","Arquitetura","Banco","Frontend","Backend","Deploy"] },
-  ferramenta:   { label: "Ferramenta Interna", cor: "#5E5E5F", squad: "Dev Squad",         icone: Code2,       modulos: ["Contexto","Requisitos","Dev","Docs"] },
-  conteudo:     { label: "Grade de Conteúdo",  cor: "#43A047", squad: "Audiovisual Squad", icone: CalendarDays,modulos: ["Briefing","Calendário","Peças","Copies","Referências","Aprovações"] },
-  campanha:     { label: "Campanha",           cor: "#43A047", squad: "Audiovisual Squad", icone: Star,        modulos: ["Briefing","Conceito","Público","Peças","Copies","Aprovações"] },
-  branding:     { label: "Branding",           cor: "#FB8C00", squad: "Audiovisual Squad", icone: Tag,         modulos: ["Contexto","Conceito","Referências","Exploração","Assets","Apresentações"] },
-  mockup:       { label: "Mockup",             cor: "#FB8C00", squad: "Audiovisual Squad", icone: Eye,         modulos: ["Contexto","Referências","Exploração","Assets"] },
-  documentacao: { label: "Documentação",       cor: "#5E5E5F", squad: "Dev Squad",         icone: FileText,    modulos: ["Contexto","Estrutura","Documentos","Versionamento"] },
-  operacao:     { label: "Operação",           cor: "#7C6AF7", squad: "Multi-Squad",       icone: Users,       modulos: ["Contexto","Tarefas","Times","Aprovações","Memória","Log"] },
-  outro:        { label: "Outro",              cor: "#A9AAA5", squad: "A definir",         icone: FolderKanban,modulos: ["Visão Geral","Tarefas","Memória","Log"] },
+  creator: {
+    label: "Creator", cor: "#7C6AF7", pillBg: "#EEEAFF", pillText: "#4B3FC7",
+    squad: "Audiovisual Squad", icone: User,
+    modulosBase: [
+      { nome: "Identidade", obrigatorio: true },
+      { nome: "Aparência", obrigatorio: true },
+      { nome: "Tom de Voz", obrigatorio: true },
+      { nome: "Ambientes", obrigatorio: false },
+      { nome: "Rules de Linguagem", obrigatorio: true },
+      { nome: "Plataformas", obrigatorio: false },
+      { nome: "Conteúdo Vinculado", obrigatorio: false },
+      { nome: "Operação", obrigatorio: false },
+      { nome: "Assets", obrigatorio: false },
+    ],
+    conectoresBase: [
+      { nome: "Figma", tipo: "design" },
+      { nome: "Storage de Assets", tipo: "storage" },
+    ],
+    progressoPesos: ["identidade", "aparencia", "tom_de_voz", "ambientes", "rules", "operacao", "calendario", "conteudo"],
+  },
+  landing_page: {
+    label: "Landing Page", cor: "#0288D1", pillBg: "#E1F4FE", pillText: "#01579B",
+    squad: "Dev Squad", icone: Globe,
+    modulosBase: [
+      { nome: "Brief", obrigatorio: true },
+      { nome: "PRD", obrigatorio: true },
+      { nome: "Brand", obrigatorio: false },
+      { nome: "Copy", obrigatorio: true },
+      { nome: "Wireframe", obrigatorio: false },
+      { nome: "Design", obrigatorio: true },
+      { nome: "Dev", obrigatorio: true },
+      { nome: "QA", obrigatorio: false },
+      { nome: "Deploy", obrigatorio: true },
+    ],
+    conectoresBase: [
+      { nome: "Figma", tipo: "design" },
+      { nome: "GitHub", tipo: "repositorio" },
+      { nome: "Vercel", tipo: "deploy" },
+      { nome: "Analytics", tipo: "monitoring" },
+    ],
+    progressoPesos: ["contexto", "prd", "design", "dev", "deploy"],
+  },
+  hotsite: {
+    label: "Hotsite", cor: "#0288D1", pillBg: "#E1F4FE", pillText: "#01579B",
+    squad: "Dev Squad", icone: Globe,
+    modulosBase: [
+      { nome: "Brief", obrigatorio: true },
+      { nome: "Design", obrigatorio: true },
+      { nome: "Dev", obrigatorio: true },
+      { nome: "Deploy", obrigatorio: true },
+    ],
+    conectoresBase: [{ nome: "Figma", tipo: "design" }, { nome: "Vercel", tipo: "deploy" }],
+    progressoPesos: ["contexto", "design", "dev", "deploy"],
+  },
+  microsite: {
+    label: "Microsite", cor: "#0288D1", pillBg: "#E1F4FE", pillText: "#01579B",
+    squad: "Dev Squad", icone: Globe,
+    modulosBase: [
+      { nome: "Brief", obrigatorio: true },
+      { nome: "Arquitetura", obrigatorio: true },
+      { nome: "Dev", obrigatorio: true },
+      { nome: "Deploy", obrigatorio: true },
+    ],
+    conectoresBase: [{ nome: "Figma", tipo: "design" }, { nome: "Vercel", tipo: "deploy" }],
+    progressoPesos: ["contexto", "arquitetura", "dev", "deploy"],
+  },
+  app: {
+    label: "App", cor: "#1565C0", pillBg: "#E3EEFF", pillText: "#0D47A1",
+    squad: "Dev Squad", icone: Puzzle,
+    modulosBase: [
+      { nome: "Descoberta", obrigatorio: true },
+      { nome: "PRD", obrigatorio: true },
+      { nome: "Fluxos UX", obrigatorio: true },
+      { nome: "Arquitetura", obrigatorio: true },
+      { nome: "Design", obrigatorio: true },
+      { nome: "Frontend", obrigatorio: true },
+      { nome: "Backend", obrigatorio: true },
+      { nome: "QA", obrigatorio: true },
+      { nome: "Deploy", obrigatorio: true },
+    ],
+    conectoresBase: [
+      { nome: "Figma", tipo: "design" },
+      { nome: "GitHub", tipo: "repositorio" },
+      { nome: "Supabase", tipo: "banco" },
+      { nome: "Vercel", tipo: "deploy" },
+    ],
+    progressoPesos: ["contexto", "prd", "arquitetura", "design", "dev", "qa", "deploy"],
+  },
+  saas: {
+    label: "SaaS", cor: "#1565C0", pillBg: "#E3EEFF", pillText: "#0D47A1",
+    squad: "Dev Squad", icone: Zap,
+    modulosBase: [
+      { nome: "Contexto", obrigatorio: true },
+      { nome: "PRD", obrigatorio: true },
+      { nome: "Fluxos", obrigatorio: true },
+      { nome: "Arquitetura", obrigatorio: true },
+      { nome: "Design", obrigatorio: true },
+      { nome: "Banco de Dados", obrigatorio: true },
+      { nome: "Auth", obrigatorio: true },
+      { nome: "Frontend", obrigatorio: true },
+      { nome: "Backend", obrigatorio: true },
+      { nome: "Integrações", obrigatorio: false },
+      { nome: "Deploy", obrigatorio: true },
+      { nome: "Observabilidade", obrigatorio: false },
+    ],
+    conectoresBase: [
+      { nome: "Figma", tipo: "design" },
+      { nome: "GitHub", tipo: "repositorio" },
+      { nome: "Supabase", tipo: "banco" },
+      { nome: "Vercel", tipo: "deploy" },
+      { nome: "Stripe", tipo: "pagamento" },
+      { nome: "Analytics", tipo: "monitoring" },
+    ],
+    progressoPesos: ["contexto", "prd", "arquitetura", "design", "banco_notas", "dev", "deploy"],
+  },
+  sistema: {
+    label: "Sistema Web", cor: "#1565C0", pillBg: "#E3EEFF", pillText: "#0D47A1",
+    squad: "Dev Squad", icone: Code2,
+    modulosBase: [
+      { nome: "PRD", obrigatorio: true },
+      { nome: "Arquitetura", obrigatorio: true },
+      { nome: "Banco", obrigatorio: true },
+      { nome: "Frontend", obrigatorio: true },
+      { nome: "Backend", obrigatorio: true },
+      { nome: "Deploy", obrigatorio: true },
+    ],
+    conectoresBase: [
+      { nome: "GitHub", tipo: "repositorio" },
+      { nome: "Supabase", tipo: "banco" },
+      { nome: "Vercel", tipo: "deploy" },
+    ],
+    progressoPesos: ["prd", "arquitetura", "dev", "deploy"],
+  },
+  ferramenta: {
+    label: "Ferramenta", cor: "#37474F", pillBg: "#ECEFF1", pillText: "#263238",
+    squad: "Dev Squad", icone: Wrench,
+    modulosBase: [
+      { nome: "Contexto", obrigatorio: true },
+      { nome: "Requisitos", obrigatorio: true },
+      { nome: "Desenvolvimento", obrigatorio: true },
+      { nome: "Documentação", obrigatorio: true },
+    ],
+    conectoresBase: [{ nome: "GitHub", tipo: "repositorio" }],
+    progressoPesos: ["contexto", "requisitos"],
+  },
+  conteudo: {
+    label: "Grade de Conteúdo", cor: "#00897B", pillBg: "#E0F5F3", pillText: "#00695C",
+    squad: "Audiovisual Squad", icone: CalendarDays,
+    modulosBase: [
+      { nome: "Estratégia", obrigatorio: true },
+      { nome: "Pilares", obrigatorio: true },
+      { nome: "Calendário", obrigatorio: true },
+      { nome: "Roteiros", obrigatorio: false },
+      { nome: "Assets", obrigatorio: false },
+      { nome: "Aprovações", obrigatorio: false },
+      { nome: "Publicações", obrigatorio: false },
+      { nome: "Performance", obrigatorio: false },
+    ],
+    conectoresBase: [
+      { nome: "Figma", tipo: "design" },
+      { nome: "Storage", tipo: "storage" },
+    ],
+    progressoPesos: ["conceito", "calendario", "pecas"],
+  },
+  campanha: {
+    label: "Campanha", cor: "#E91E8C", pillBg: "#FCE4F3", pillText: "#AD1570",
+    squad: "Audiovisual Squad", icone: Megaphone,
+    modulosBase: [
+      { nome: "Brief", obrigatorio: true },
+      { nome: "Conceito", obrigatorio: true },
+      { nome: "Público", obrigatorio: true },
+      { nome: "Peças", obrigatorio: true },
+      { nome: "Copies", obrigatorio: true },
+      { nome: "Aprovações", obrigatorio: false },
+    ],
+    conectoresBase: [
+      { nome: "Figma", tipo: "design" },
+      { nome: "Storage", tipo: "storage" },
+    ],
+    progressoPesos: ["conceito", "pecas"],
+  },
+  branding: {
+    label: "Branding", cor: "#FF6D00", pillBg: "#FFF0E2", pillText: "#BF360C",
+    squad: "Audiovisual Squad", icone: Tag,
+    modulosBase: [
+      { nome: "Diagnóstico", obrigatorio: true },
+      { nome: "Estratégia", obrigatorio: true },
+      { nome: "Moodboard", obrigatorio: true },
+      { nome: "Marca", obrigatorio: true },
+      { nome: "Sistema Visual", obrigatorio: true },
+      { nome: "Aplicações", obrigatorio: false },
+      { nome: "Assets", obrigatorio: false },
+      { nome: "Handoff", obrigatorio: false },
+    ],
+    conectoresBase: [
+      { nome: "Figma", tipo: "design" },
+      { nome: "Storage", tipo: "storage" },
+    ],
+    progressoPesos: ["conceito", "exploracao", "assets"],
+  },
+  mockup: {
+    label: "Visual / Assets", cor: "#8D6E63", pillBg: "#F3ECE9", pillText: "#5D4037",
+    squad: "Audiovisual Squad", icone: Eye,
+    modulosBase: [
+      { nome: "Contexto", obrigatorio: true },
+      { nome: "Referências", obrigatorio: false },
+      { nome: "Exploração", obrigatorio: true },
+      { nome: "Assets", obrigatorio: false },
+    ],
+    conectoresBase: [
+      { nome: "Figma", tipo: "design" },
+      { nome: "Storage", tipo: "storage" },
+    ],
+    progressoPesos: ["contexto", "exploracao", "assets"],
+  },
+  documentacao: {
+    label: "Documentação", cor: "#546E7A", pillBg: "#EEF2F4", pillText: "#37474F",
+    squad: "Dev Squad", icone: FileText,
+    modulosBase: [
+      { nome: "Contexto", obrigatorio: true },
+      { nome: "Estrutura", obrigatorio: true },
+      { nome: "Documentos", obrigatorio: true },
+      { nome: "Versionamento", obrigatorio: false },
+    ],
+    conectoresBase: [],
+    progressoPesos: ["contexto", "estrutura"],
+  },
+  operacao: {
+    label: "Multi-Squad", cor: "#7C6AF7", pillBg: "#EEEAFF", pillText: "#4B3FC7",
+    squad: "Multi-Squad", icone: Layers,
+    modulosBase: [
+      { nome: "Contexto", obrigatorio: true },
+      { nome: "Estrutura", obrigatorio: true },
+      { nome: "Tarefas", obrigatorio: true },
+      { nome: "Times", obrigatorio: true },
+      { nome: "Aprovações", obrigatorio: false },
+      { nome: "Memória", obrigatorio: true },
+      { nome: "Log", obrigatorio: true },
+    ],
+    conectoresBase: [],
+    progressoPesos: ["contexto", "tarefas"],
+  },
+  outro: {
+    label: "Outro", cor: "#A9AAA5", pillBg: "#EEEFE9", pillText: "#5E5E5F",
+    squad: "A definir", icone: FolderKanban,
+    modulosBase: [
+      { nome: "Visão Geral", obrigatorio: true },
+      { nome: "Tarefas", obrigatorio: false },
+      { nome: "Memória", obrigatorio: false },
+      { nome: "Log", obrigatorio: false },
+    ],
+    conectoresBase: [],
+    progressoPesos: ["contexto", "tarefas"],
+  },
 };
 
-// Tabs por tipo
-function getTabsParaTipo(tipo: ProjetoTipo): { id: string; label: string }[] {
-  const base = [
-    { id: "geral",    label: "Visão Geral" },
-    { id: "contexto", label: "Contexto" },
-    { id: "tarefas",  label: "Tarefas" },
-    { id: "pedidos",  label: "Pedidos" },
-    { id: "memoria",  label: "Memória" },
-    { id: "rules",    label: "Rules" },
-    { id: "log",      label: "Log" },
-  ];
+// ─── Tabs por tipo ────────────────────────────────────────────────────────────
 
-  const extras: Record<ProjetoTipo, { id: string; label: string }[]> = {
-    creator:      [{ id: "identidade", label: "Identidade" }, { id: "aparencia", label: "Aparência" }, { id: "voz", label: "Tom de Voz" }],
-    landing_page: [{ id: "arquitetura", label: "Arquitetura" }, { id: "design", label: "Design" }, { id: "deploy", label: "Deploy" }],
-    hotsite:      [{ id: "design", label: "Design" }, { id: "deploy", label: "Deploy" }],
-    microsite:    [{ id: "arquitetura", label: "Arquitetura" }, { id: "deploy", label: "Deploy" }],
-    app:          [{ id: "prd", label: "PRD" }, { id: "arquitetura", label: "Arquitetura" }, { id: "design", label: "Design" }, { id: "deploy", label: "Deploy" }],
-    saas:         [{ id: "prd", label: "PRD" }, { id: "arquitetura", label: "Arquitetura" }, { id: "banco", label: "Banco" }, { id: "integracoes", label: "Integrações" }, { id: "deploy", label: "Deploy" }],
-    sistema:      [{ id: "prd", label: "PRD" }, { id: "arquitetura", label: "Arquitetura" }, { id: "deploy", label: "Deploy" }],
-    ferramenta:   [{ id: "requisitos", label: "Requisitos" }],
-    conteudo:     [{ id: "calendario", label: "Calendário" }, { id: "pecas", label: "Peças" }],
-    campanha:     [{ id: "conceito", label: "Conceito" }, { id: "pecas", label: "Peças" }],
-    branding:     [{ id: "conceito", label: "Conceito" }, { id: "assets", label: "Assets" }],
-    mockup:       [{ id: "exploracao", label: "Exploração" }],
-    documentacao: [{ id: "estrutura", label: "Estrutura" }],
-    operacao:     [{ id: "times", label: "Times" }, { id: "aprovacoes", label: "Aprovações" }],
-    outro:        [],
-  };
+const TABS_FIXAS: { id: string; label: string; icon: React.ElementType }[] = [
+  { id: "geral",        label: "Visão Geral",     icon: LayoutGrid },
+  { id: "contexto",     label: "Contexto",         icon: AlignLeft },
+  { id: "modulos",      label: "Módulos",          icon: Boxes },
+  { id: "tarefas",      label: "Tarefas",          icon: ListChecks },
+  { id: "subprojetos",  label: "Subprojetos",      icon: FolderOpen },
+  { id: "itens",        label: "Itens Vinculados", icon: Link2 },
+  { id: "memoria",      label: "Memória",          icon: Brain },
+  { id: "rules",        label: "Rules",            icon: ShieldCheck },
+  { id: "log",          label: "Log",              icon: History },
+  { id: "conectores",   label: "Conectores",       icon: Wifi },
+];
 
-  // Montar array: base + extras intercalados
-  const result = [base[0]]; // Visão Geral
-  const extrasTipo = extras[tipo] ?? [];
-  if (extrasTipo.length > 0) result.push(...extrasTipo);
-  result.push(base[1]); // Contexto
-  result.push(base[2]); // Tarefas
-  result.push(base[3]); // Pedidos
-  result.push(base[4]); // Memória
-  result.push(base[5]); // Rules
-  result.push(base[6]); // Log
-  return result;
+const TABS_DINAMICAS: Record<ProjetoTipo, { id: string; label: string; icon: React.ElementType }[]> = {
+  creator: [
+    { id: "identidade",   label: "Identidade",  icon: User },
+    { id: "aparencia",    label: "Aparência",   icon: Palette },
+    { id: "voz",          label: "Tom de Voz",  icon: Mic },
+    { id: "ambientes",    label: "Ambientes",   icon: MapPin },
+    { id: "plataformas",  label: "Plataformas", icon: Monitor },
+    { id: "conteudo_tab", label: "Conteúdo",    icon: FileText },
+    { id: "operacao_tab", label: "Operação",    icon: Settings },
+    { id: "assets_tab",   label: "Assets",      icon: Package },
+  ],
+  landing_page: [
+    { id: "prd",         label: "PRD",         icon: FileText },
+    { id: "copy",        label: "Copy",        icon: PenTool },
+    { id: "design",      label: "Design",      icon: Palette },
+    { id: "arquitetura", label: "Arquitetura", icon: GitMerge },
+    { id: "deploy",      label: "Deploy",      icon: Rocket },
+    { id: "analytics",   label: "Analytics",   icon: BarChart2 },
+  ],
+  hotsite: [
+    { id: "design", label: "Design", icon: Palette },
+    { id: "deploy", label: "Deploy", icon: Rocket },
+  ],
+  microsite: [
+    { id: "arquitetura", label: "Arquitetura", icon: GitMerge },
+    { id: "design",      label: "Design",      icon: Palette },
+    { id: "deploy",      label: "Deploy",      icon: Rocket },
+  ],
+  app: [
+    { id: "prd",         label: "PRD",         icon: FileText },
+    { id: "fluxos",      label: "Fluxos",      icon: GitMerge },
+    { id: "arquitetura", label: "Arquitetura", icon: Cpu },
+    { id: "design",      label: "Design",      icon: Palette },
+    { id: "banco",       label: "Banco",       icon: Database },
+    { id: "deploy",      label: "Deploy",      icon: Rocket },
+  ],
+  saas: [
+    { id: "prd",         label: "PRD",         icon: FileText },
+    { id: "fluxos",      label: "Fluxos",      icon: GitMerge },
+    { id: "arquitetura", label: "Arquitetura", icon: Cpu },
+    { id: "design",      label: "Design",      icon: Palette },
+    { id: "banco",       label: "Banco",       icon: Database },
+    { id: "integracoes", label: "Integrações", icon: Link2 },
+    { id: "deploy",      label: "Deploy",      icon: Rocket },
+  ],
+  sistema: [
+    { id: "prd",         label: "PRD",         icon: FileText },
+    { id: "arquitetura", label: "Arquitetura", icon: Cpu },
+    { id: "banco",       label: "Banco",       icon: Database },
+    { id: "deploy",      label: "Deploy",      icon: Rocket },
+  ],
+  ferramenta: [
+    { id: "requisitos",  label: "Requisitos",  icon: ListChecks },
+    { id: "arquitetura", label: "Arquitetura", icon: Cpu },
+  ],
+  conteudo: [
+    { id: "estrategia", label: "Estratégia", icon: Target },
+    { id: "pilares",    label: "Pilares",    icon: Layers },
+    { id: "calendario", label: "Calendário", icon: CalendarDays },
+    { id: "roteiros",   label: "Roteiros",   icon: PenTool },
+    { id: "pecas",      label: "Peças",      icon: Package },
+  ],
+  campanha: [
+    { id: "conceito", label: "Conceito", icon: Lightbulb },
+    { id: "publico",  label: "Público",  icon: Users },
+    { id: "pecas",    label: "Peças",    icon: Package },
+  ],
+  branding: [
+    { id: "diagnostico",    label: "Diagnóstico",    icon: FlaskConical },
+    { id: "estrategia",     label: "Estratégia",     icon: Target },
+    { id: "conceito",       label: "Moodboard",      icon: Palette },
+    { id: "marca",          label: "Marca",          icon: Tag },
+    { id: "sistema_visual", label: "Sistema Visual", icon: Globe2 },
+    { id: "assets_tab",     label: "Assets",         icon: Package },
+    { id: "handoff",        label: "Handoff",        icon: Zap },
+  ],
+  mockup: [
+    { id: "conceito",   label: "Conceito",   icon: Lightbulb },
+    { id: "exploracao", label: "Exploração", icon: Eye },
+    { id: "assets_tab", label: "Assets",     icon: Package },
+  ],
+  documentacao: [
+    { id: "estrutura",      label: "Estrutura",  icon: AlignLeft },
+    { id: "documentos_tab", label: "Documentos", icon: FileText },
+  ],
+  operacao: [
+    { id: "times",      label: "Times",      icon: Users },
+    { id: "aprovacoes", label: "Aprovações", icon: ShieldCheck },
+    { id: "milestones", label: "Milestones", icon: Flag },
+  ],
+  outro: [],
+};
+
+function getTabsParaTipo(tipo: ProjetoTipo) {
+  const dinamicas = TABS_DINAMICAS[tipo] ?? [];
+  return [TABS_FIXAS[0], ...dinamicas, ...TABS_FIXAS.slice(1)];
 }
 
 // ─── Paletas ──────────────────────────────────────────────────────────────────
@@ -108,6 +466,35 @@ const PEDIDO_STATUS_LABELS: Record<string, string> = {
   revisao: "Revisão", aprovado: "Aprovado", entregue: "Concluído", cancelado: "Cancelado",
 };
 
+const RULE_CATEGORIAS: Record<Rule["categoria"], { label: string; cor: string; bg: string }> = {
+  branding:     { label: "Branding",      cor: "#FB8C00", bg: "#FFF3E0" },
+  linguagem:    { label: "Linguagem",     cor: "#7C6AF7", bg: "#F0EFFF" },
+  tecnica:      { label: "Técnica",       cor: "#1565C0", bg: "#E3F2FD" },
+  escopo:       { label: "Escopo",        cor: "#5E5E5F", bg: "#EEEFE9" },
+  seguranca:    { label: "Segurança",     cor: "#C62828", bg: "#FDECEA" },
+  entrega:      { label: "Entrega",       cor: "#43A047", bg: "#E6F4EA" },
+  juridico:     { label: "Jurídico",      cor: "#0E0F10", bg: "#F5F5F5" },
+  operacional:  { label: "Operacional",   cor: "#A05500", bg: "#FFF0E0" },
+};
+
+const MEMORIA_TIPOS: Record<MemoriaEntry["tipo"], { label: string; cor: string; bg: string; icone: React.ElementType }> = {
+  working:  { label: "Working Memory",  cor: "#1565C0", bg: "#E3F2FD", icone: Activity },
+  longterm: { label: "Long-term",       cor: "#7C6AF7", bg: "#F0EFFF", icone: Brain },
+  decision: { label: "Decisão",         cor: "#FB8C00", bg: "#FFF3E0", icone: Lightbulb },
+  lesson:   { label: "Aprendizado",     cor: "#43A047", bg: "#E6F4EA", icone: BookOpen },
+};
+
+const CONECTOR_ICONS: Record<string, React.ElementType> = {
+  design:      Globe,
+  repositorio: GitBranch,
+  deploy:      Rocket,
+  banco:       Database,
+  storage:     Package,
+  monitoring:  Activity,
+  pagamento:   Star,
+  default:     Link2,
+};
+
 // ─── Main Component ───────────────────────────────────────────────────────────
 
 export default function ProjetoDetailClient({
@@ -126,23 +513,12 @@ export default function ProjetoDetailClient({
   const tabs = getTabsParaTipo(tipo);
 
   const [activeTab, setActiveTab] = useState(tabs[0].id);
-  const tabRefs = useRef<(HTMLButtonElement | null)[]>([]);
-  const tabContainerRef = useRef<HTMLDivElement>(null);
-  const [tabPillLeft, setTabPillLeft] = useState(0);
-  const [tabPillWidth, setTabPillWidth] = useState(100);
 
+  // Garantir que activeTab seja válida se tabs mudarem
   useEffect(() => {
-    const idx = tabs.findIndex((t) => t.id === activeTab);
-    if (idx === -1) return;
-    const el = tabRefs.current[idx];
-    const container = tabContainerRef.current;
-    if (!el || !container) return;
-    const cRect = container.getBoundingClientRect();
-    const eRect = el.getBoundingClientRect();
-    setTabPillLeft(eRect.left - cRect.left);
-    setTabPillWidth(eRect.width);
+    if (!tabs.find(t => t.id === activeTab)) setActiveTab(tabs[0].id);
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [activeTab, tabs.length]);
+  }, [tipo]);
 
   const handleStatus = async (status: ProjetoStatus) => {
     const result = await updateProjetoStatus(organizationId, projeto.id, status);
@@ -158,21 +534,44 @@ export default function ProjetoDetailClient({
   };
 
   // Dados derivados
-  const tarefas = Array.isArray(meta.tarefas) ? meta.tarefas as { id: number; titulo: string; concluido: boolean }[] : [];
+  const tarefas: Tarefa[] = Array.isArray(meta.tarefas) ? meta.tarefas as Tarefa[] : [];
   const tarefasConcluidas = tarefas.filter((t) => t.concluido).length;
-  const progresso = Number(meta.progresso ?? (tarefas.length > 0 ? Math.round((tarefasConcluidas / tarefas.length) * 100) : 0));
-  const decisoes = Array.isArray(meta.decisoes) ? meta.decisoes as { titulo: string; desc?: string; data?: string }[] : [];
-  const stack = Array.isArray(meta.stack) ? meta.stack as string[] : [];
-  const memoria = Array.isArray(meta.memoria) ? meta.memoria as { texto: string; data?: string }[] : [];
-  const rules = Array.isArray(meta.rules) ? meta.rules as { regra: string }[] : [];
-  const log = Array.isArray(meta.log) ? meta.log as { acao: string; data?: string }[] : [];
-  const integracoes = Array.isArray(meta.integracoes) ? meta.integracoes as string[] : tipoConfig.modulos;
+  const memoria: MemoriaEntry[] = Array.isArray(meta.memoria) ? meta.memoria as MemoriaEntry[] : [];
+  const rules: Rule[] = Array.isArray(meta.rules) ? meta.rules as Rule[] : [];
+  const log: LogEntry[] = Array.isArray(meta.log) ? meta.log as LogEntry[] : [];
+  const modulosData: Modulo[] = Array.isArray(meta.modulos_status)
+    ? meta.modulos_status as Modulo[]
+    : tipoConfig.modulosBase.map(m => ({ ...m, status: "vazio" as const }));
+  const conectores: Conector[] = Array.isArray(meta.conectores)
+    ? meta.conectores as Conector[]
+    : tipoConfig.conectoresBase.map(c => ({ ...c, status: "pendente" as const }));
+  const stack: string[] = Array.isArray(meta.stack) ? meta.stack as string[] : [];
+
+  // Subprojetos — armazenados em metadata.subprojetos
+  type Subprojeto = { id: string; nome: string; tipo: string; status: string; descricao?: string; progresso?: number };
+  const subprojetos: Subprojeto[] = Array.isArray(meta.subprojetos) ? meta.subprojetos as Subprojeto[] : [];
+
+  const progresso = typeof meta.progresso === "number"
+    ? meta.progresso
+    : tarefas.length > 0
+    ? Math.round((tarefasConcluidas / tarefas.length) * 100)
+    : 0;
+
+  const healthStatus: "ok" | "risco" | "critico" | "indefinido" = (() => {
+    if (meta.health === "critico") return "critico";
+    if (meta.health === "risco") return "risco";
+    if (meta.health === "ok") return "ok";
+    return "indefinido";
+  })();
+
+  const rulesBlockers = rules.filter(r => r.bloqueante).length;
+  const modulosCompletos = modulosData.filter(m => m.status === "completo").length;
 
   const kpis = [
-    { label: "Progresso",  value: `${progresso}%`,                             icon: TrendingUp,  bg: "#F5FFB8", cor: "#5A6600" },
-    { label: "Tarefas",    value: `${tarefasConcluidas}/${tarefas.length||"?"}`,icon: CheckSquare, bg: "#E6F4EA", cor: "#2E7D32" },
-    { label: "Pedidos",    value: String(projeto.pedidosCount),                 icon: ClipboardList,bg: "#F3F0FF",cor: "#5B52C7" },
-    { label: "Módulos",    value: String(tipoConfig.modulos.length),            icon: Puzzle,      bg: "#E3F2FD", cor: "#0277BD" },
+    { label: "Progresso",  value: `${progresso}%`,                              icon: TrendingUp,   bg: "#F5FFB8", cor: "#5A6600" },
+    { label: "Tarefas",    value: `${tarefasConcluidas}/${tarefas.length || "?"}`,icon: CheckSquare, bg: "#E6F4EA", cor: "#2E7D32" },
+    { label: "Pedidos",    value: String(projeto.pedidosCount),                  icon: ClipboardList, bg: "#F3F0FF", cor: "#5B52C7" },
+    { label: "Módulos",    value: `${modulosCompletos}/${modulosData.length}`,   icon: Layers,       bg: "#E3F2FD", cor: "#0277BD" },
   ];
 
   return (
@@ -198,16 +597,15 @@ export default function ProjetoDetailClient({
             <div className="flex items-start gap-4 mb-5">
               <div
                 className="flex-shrink-0 h-12 w-12 rounded-[16px] flex items-center justify-center"
-                style={{ backgroundColor: `${tipoConfig.cor}18`, color: tipoConfig.cor }}
+                style={{ backgroundColor: tipoConfig.pillBg, color: tipoConfig.pillText }}
               >
                 <tipoConfig.icone size={22} />
               </div>
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-2 mb-1 flex-wrap">
-                  <span
-                    className="rounded-[5px] px-1.5 py-0.5 text-[9px] font-bold uppercase tracking-wide"
-                    style={{ backgroundColor: `${tipoConfig.cor}18`, color: tipoConfig.cor }}
-                  >
+                  <span className="inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-[10px] font-bold"
+                    style={{ backgroundColor: tipoConfig.pillBg, color: tipoConfig.pillText }}>
+                    <tipoConfig.icone size={10} />
                     {tipoConfig.label}
                   </span>
                   <span className="text-[11px] text-[#A9AAA5]">· {tipoConfig.squad}</span>
@@ -216,31 +614,40 @@ export default function ProjetoDetailClient({
                       · <CalendarDays size={10} /> {String(meta.prazo)}
                     </span>
                   )}
+                  {rulesBlockers > 0 && (
+                    <span className="inline-flex items-center gap-1 rounded-[5px] bg-[#FDECEA] px-1.5 py-0.5 text-[9px] font-bold text-[#C62828]">
+                      <Lock size={8} /> {rulesBlockers} bloqueio{rulesBlockers !== 1 ? "s" : ""}
+                    </span>
+                  )}
                 </div>
                 <h1 className="text-[24px] font-bold text-[#0E0F10] leading-tight">{projeto.nome}</h1>
                 {projeto.descricao && (
                   <p className="mt-0.5 text-[13px] text-[#5E5E5F] leading-relaxed">{projeto.descricao}</p>
                 )}
               </div>
-              <StatusBadge status={projeto.status} />
+              <div className="flex flex-col items-end gap-2 flex-shrink-0">
+                <StatusBadge status={projeto.status} />
+                <HealthBadge health={healthStatus} />
+              </div>
             </div>
 
             {/* KPIs */}
-            <div className="grid grid-cols-2 gap-2.5 lg:grid-cols-4">
+            <div className="grid grid-cols-2 gap-2 lg:grid-cols-4">
               {kpis.map((kpi, i) => (
                 <motion.div key={kpi.label}
-                  className="rounded-[14px] p-3.5"
+                  className="rounded-[16px] p-4"
                   style={{ backgroundColor: kpi.bg }}
                   initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: i * 0.06 }}>
-                  <div className="flex items-center gap-1.5 mb-1.5">
-                    <kpi.icon size={12} style={{ color: kpi.cor }} />
-                    <span className="text-[9px] font-bold uppercase tracking-wide" style={{ color: kpi.cor }}>{kpi.label}</span>
+                  <div className="flex items-center gap-1.5 mb-2">
+                    <kpi.icon size={13} style={{ color: kpi.cor }} />
+                    <span className="text-[10px] font-bold uppercase tracking-wider" style={{ color: kpi.cor }}>{kpi.label}</span>
                   </div>
-                  <span className="text-[26px] font-bold text-[#0E0F10]">{kpi.value}</span>
+                  <span className="text-[28px] font-bold leading-none text-[#0E0F10]">{kpi.value}</span>
                   {kpi.label === "Progresso" && (
-                    <div className="mt-2 h-1.5 rounded-full bg-white/60 overflow-hidden">
-                      <motion.div className="h-full rounded-full bg-[#A8C800]"
+                    <div className="mt-2.5 h-1.5 rounded-full bg-white/60 overflow-hidden">
+                      <motion.div className="h-full rounded-full"
+                        style={{ backgroundColor: progresso >= 80 ? "#43A047" : progresso >= 40 ? "#A8C800" : "#FB8C00" }}
                         initial={{ width: 0 }} animate={{ width: `${progresso}%` }}
                         transition={{ duration: 0.9, ease: [0, 0, 0.2, 1], delay: 0.4 }} />
                     </div>
@@ -250,34 +657,14 @@ export default function ProjetoDetailClient({
             </div>
           </div>
 
-          {/* Tabs card */}
+          {/* Tabs — usando SlidingTabs padrão do sistema */}
           <div className="rounded-[20px] bg-white overflow-hidden">
-            <div ref={tabContainerRef} className="relative flex overflow-x-auto border-b border-[#EEEFE9] scrollbar-none">
-              <motion.div aria-hidden
-                className="pointer-events-none absolute bottom-0 h-[2px] rounded-t-[2px] bg-[#0E0F10]"
-                animate={{ left: tabPillLeft, width: tabPillWidth }}
-                transition={{ type: "spring", stiffness: 420, damping: 30, mass: 0.8 }}
+            <div className="px-4 pt-4 pb-0 overflow-x-auto scrollbar-none">
+              <SlidingTabs
+                tabs={tabs.map(t => ({ id: t.id, label: t.label, icon: t.icon }))}
+                activeId={activeTab}
+                onChange={setActiveTab}
               />
-              {tabs.map((tab, i) => (
-                <motion.button key={tab.id}
-                  ref={(el) => { tabRefs.current[i] = el; }}
-                  onClick={() => setActiveTab(tab.id)}
-                  className="relative flex-shrink-0 px-5 py-3.5 text-[13px] font-semibold whitespace-nowrap"
-                  animate={{ color: activeTab === tab.id ? "#0E0F10" : "#A9AAA5" }}
-                  initial={false} whileTap={{ scale: 0.97 }}>
-                  {tab.label}
-                  {tab.id === "pedidos" && projeto.pedidosCount > 0 && (
-                    <span className="ml-1.5 rounded-full bg-[#EEEFE9] px-1.5 py-0.5 text-[9px] font-bold text-[#5E5E5F]">
-                      {projeto.pedidosCount}
-                    </span>
-                  )}
-                  {tab.id === "tarefas" && tarefas.length > 0 && (
-                    <span className="ml-1.5 rounded-full bg-[#EEEFE9] px-1.5 py-0.5 text-[9px] font-bold text-[#5E5E5F]">
-                      {tarefasConcluidas}/{tarefas.length}
-                    </span>
-                  )}
-                </motion.button>
-              ))}
             </div>
             <div className="p-6">
               <AnimatePresence mode="wait">
@@ -287,7 +674,9 @@ export default function ProjetoDetailClient({
                   <TabConteudo
                     tab={activeTab} tipo={tipo} projeto={projeto} meta={meta}
                     tarefas={tarefas} tarefasConcluidas={tarefasConcluidas}
-                    decisoes={decisoes} stack={stack} memoria={memoria} rules={rules} log={log}
+                    stack={stack} memoria={memoria} rules={rules} log={log}
+                    modulosData={modulosData} conectores={conectores}
+                    subprojetos={subprojetos}
                     progresso={progresso}
                     onNavigatePedido={(id) => router.push(`/pedidos/${id}`)}
                     onMetaUpdate={handleMetaUpdate}
@@ -298,102 +687,243 @@ export default function ProjetoDetailClient({
           </div>
         </div>
 
-        {/* ─── Coluna lateral ───────────────────────────────────────────── */}
-        <div className="flex flex-col gap-3">
-          {/* Status */}
-          <div className="rounded-[16px] bg-white p-5 flex flex-col gap-3">
-            <p className="text-[11px] font-bold text-[#A9AAA5] uppercase tracking-wide">Status</p>
-            <HubiaSelect
-              value={projeto.status}
-              onChange={(v) => handleStatus(v as ProjetoStatus)}
-              options={Object.entries(STATUS_PALETTE).map(([v, p]) => ({ value: v, label: p.label }))}
-            />
+        {/* ─── Sidebar lateral direita ───────────────────────────────── */}
+        <Sidebar
+          projeto={projeto}
+          tipoConfig={tipoConfig}
+          meta={meta}
+          progresso={progresso}
+          tarefas={tarefas}
+          tarefasConcluidas={tarefasConcluidas}
+          modulosData={modulosData}
+          conectores={conectores}
+          rules={rules}
+          log={log}
+          stack={stack}
+          healthStatus={healthStatus}
+          onStatusChange={handleStatus}
+        />
+      </div>
+    </div>
+  );
+}
+
+// ─── Sidebar ──────────────────────────────────────────────────────────────────
+
+function Sidebar({
+  projeto, tipoConfig, meta, progresso, tarefas, tarefasConcluidas,
+  modulosData, conectores, rules, log, stack, healthStatus, onStatusChange,
+}: {
+  projeto: ProjetoDetail;
+  tipoConfig: TipoConfig;
+  meta: Record<string, unknown>;
+  progresso: number;
+  tarefas: Tarefa[];
+  tarefasConcluidas: number;
+  modulosData: Modulo[];
+  conectores: Conector[];
+  rules: Rule[];
+  log: LogEntry[];
+  stack: string[];
+  healthStatus: "ok" | "risco" | "critico" | "indefinido";
+  onStatusChange: (s: ProjetoStatus) => Promise<void>;
+}) {
+  const tipo = projeto.tipo as ProjetoTipo;
+  const rulesBlockers = rules.filter(r => r.bloqueante).length;
+  const alertas = [
+    ...(rulesBlockers > 0 ? [`${rulesBlockers} rule bloqueante`] : []),
+    ...((meta.health === "risco" || meta.health === "critico") ? ["Projeto em risco"] : []),
+  ];
+  const ultimoLog = log[log.length - 1];
+  const proxAcoes: string[] = Array.isArray(meta.proximas_acoes) ? meta.proximas_acoes as string[] : [];
+
+  const conectorAtivos = conectores.filter(c => c.status === "ativo").length;
+
+  return (
+    <div className="flex flex-col gap-3">
+      {/* Status */}
+      <div className="rounded-[16px] bg-white p-5 flex flex-col gap-3">
+        <p className="text-[11px] font-bold text-[#A9AAA5] uppercase tracking-wide">Status</p>
+        <HubiaSelect
+          value={projeto.status}
+          onChange={(v) => onStatusChange(v as ProjetoStatus)}
+          options={Object.entries(STATUS_PALETTE).map(([v, p]) => ({ value: v, label: p.label }))}
+        />
+      </div>
+
+      {/* Resumo executivo */}
+      <div className="rounded-[16px] bg-white p-5 flex flex-col gap-3.5">
+        <p className="text-[11px] font-bold text-[#A9AAA5] uppercase tracking-wide">Resumo Executivo</p>
+
+        <MetaRow label="Tipo" value={
+          <span className="inline-flex items-center gap-1 text-[11px] font-bold px-2.5 py-0.5 rounded-full"
+            style={{ backgroundColor: tipoConfig.pillBg, color: tipoConfig.pillText }}>
+            <tipoConfig.icone size={10} />
+            {tipoConfig.label}
+          </span>
+        } />
+        <MetaRow label="Squad" value={<span className="text-[13px] font-semibold text-[#0E0F10]">{tipoConfig.squad}</span>} />
+        <MetaRow label="Health" value={<HealthBadge health={healthStatus} size="sm" />} />
+        {!!meta.prazo && <MetaRow label="Prazo" value={String(meta.prazo)} />}
+        {!!meta.objetivo && (
+          <div>
+            <p className="text-[11px] text-[#A9AAA5] mb-1">Objetivo</p>
+            <p className="text-[12px] text-[#0E0F10] leading-relaxed">{String(meta.objetivo)}</p>
           </div>
+        )}
+        {!!meta.cliente && <MetaRow label="Cliente" value={String(meta.cliente)} />}
+        {!!meta.owner && <MetaRow label="Owner" value={String(meta.owner)} />}
+        <MetaRow label="Criado em" value={new Date(projeto.createdAt).toLocaleDateString("pt-BR")} />
+        {ultimoLog && (
+          <MetaRow label="Última ação" value={
+            <span className="text-[11px] text-right text-[#A9AAA5] max-w-[140px] truncate">{ultimoLog.acao}</span>
+          } />
+        )}
+      </div>
 
-          {/* Detalhes */}
-          <div className="rounded-[16px] bg-white p-5 flex flex-col gap-3.5">
-            <p className="text-[11px] font-bold text-[#A9AAA5] uppercase tracking-wide">Detalhes</p>
-            <MetaRow label="Tipo" value={
-              <span className="text-[12px] font-bold px-2 py-0.5 rounded-[5px]"
-                style={{ backgroundColor: `${tipoConfig.cor}15`, color: tipoConfig.cor }}>
-                {tipoConfig.label}
-              </span>
-            } />
-            <MetaRow label="Squad" value={<span className="text-[13px] font-semibold text-[#0E0F10]">{tipoConfig.squad}</span>} />
-            {!!meta.prazo && <MetaRow label="Prazo" value={String(meta.prazo)} />}
-            {!!meta.objetivo ? (
-              <div>
-                <p className="text-[11px] text-[#A9AAA5] mb-1">Objetivo</p>
-                <p className="text-[12px] text-[#0E0F10] leading-relaxed">{String(meta.objetivo)}</p>
-              </div>
-            ) : null}
-            <MetaRow label="Criado em" value={new Date(projeto.createdAt).toLocaleDateString("pt-BR")} />
-          </div>
-
-          {/* Progresso */}
-          <div className="rounded-[16px] bg-white p-5 flex flex-col gap-3">
-            <div className="flex items-center justify-between">
-              <p className="text-[11px] font-bold text-[#A9AAA5] uppercase tracking-wide flex items-center gap-1.5">
-                <BarChart3 size={11} /> Progresso
-              </p>
-              <span className="text-[13px] font-bold text-[#0E0F10]">{progresso}%</span>
-            </div>
-            <div className="h-2 rounded-full bg-[#EEEFE9] overflow-hidden">
-              <motion.div className="h-full rounded-full bg-[#A8C800]"
-                initial={{ width: 0 }} animate={{ width: `${progresso}%` }}
-                transition={{ duration: 0.9, ease: [0, 0, 0.2, 1] }} />
-            </div>
-            {tarefas.length > 0 ? (
-              <p className="text-[11px] text-[#A9AAA5]">{tarefasConcluidas} de {tarefas.length} tarefas</p>
-            ) : null}
-          </div>
-
-          {/* Stack (se Dev) */}
-          {stack.length > 0 && (
-            <div className="rounded-[16px] bg-white p-5 flex flex-col gap-3">
-              <p className="text-[11px] font-bold text-[#A9AAA5] uppercase tracking-wide flex items-center gap-1.5">
-                <Code2 size={11} /> Stack
-              </p>
-              <div className="flex flex-wrap gap-1.5">
-                {stack.map((tech) => (
-                  <span key={tech} className="rounded-[7px] bg-[#0E0F10] px-2.5 py-1 text-[11px] font-bold text-[#D7FF00]">{tech}</span>
-                ))}
-              </div>
-            </div>
-          )}
-
-          {/* Módulos ativos */}
-          <div className="rounded-[16px] bg-white p-5 flex flex-col gap-3">
-            <p className="text-[11px] font-bold text-[#A9AAA5] uppercase tracking-wide flex items-center gap-1.5">
-              <Puzzle size={11} /> Módulos
-            </p>
-            <div className="flex flex-wrap gap-1.5">
-              {tipoConfig.modulos.map((m) => (
-                <span key={m} className="rounded-[6px] px-2 py-0.5 text-[10px] font-semibold"
-                  style={{ backgroundColor: `${tipoConfig.cor}10`, color: tipoConfig.cor }}>
-                  {m}
-                </span>
-              ))}
-            </div>
-          </div>
-
-          {/* Figma link */}
-          {!!meta.figmaUrl ? (
-            <motion.a href={String(meta.figmaUrl)} target="_blank" rel="noopener noreferrer"
-              className="rounded-[16px] bg-white p-4 flex items-center gap-3"
-              whileHover={{ backgroundColor: "#EEEFE9" }} whileTap={{ scale: 0.99 }}>
-              <div className="h-8 w-8 rounded-[10px] bg-[#1E1E1E] flex items-center justify-center flex-shrink-0">
-                <Globe size={15} color="#FFFFFF" />
-              </div>
-              <div className="flex-1 min-w-0">
-                <p className="text-[12px] font-bold text-[#0E0F10]">Figma</p>
-                <p className="text-[10px] text-[#A9AAA5] truncate">Abrir design</p>
-              </div>
-              <ExternalLink size={12} color="#A9AAA5" />
-            </motion.a>
-          ) : null}
+      {/* Progresso */}
+      <div className="rounded-[16px] bg-white p-5 flex flex-col gap-3">
+        <div className="flex items-center justify-between">
+          <p className="text-[11px] font-bold text-[#A9AAA5] uppercase tracking-wide flex items-center gap-1.5">
+            <BarChart3 size={11} /> Progresso
+          </p>
+          <span className="text-[13px] font-bold text-[#0E0F10]">{progresso}%</span>
+        </div>
+        <div className="h-2 rounded-full bg-[#EEEFE9] overflow-hidden">
+          <motion.div className="h-full rounded-full"
+            style={{ backgroundColor: progresso >= 80 ? "#43A047" : progresso >= 40 ? "#A8C800" : "#FB8C00" }}
+            initial={{ width: 0 }} animate={{ width: `${progresso}%` }}
+            transition={{ duration: 0.9, ease: [0, 0, 0.2, 1] }} />
+        </div>
+        <div className="flex items-center justify-between">
+          {tarefas.length > 0 ? (
+            <p className="text-[11px] text-[#A9AAA5]">{tarefasConcluidas}/{tarefas.length} tarefas</p>
+          ) : <span />}
+          <p className="text-[11px] text-[#A9AAA5]">{modulosData.filter(m => m.status === "completo").length}/{modulosData.length} módulos</p>
         </div>
       </div>
+
+      {/* Alertas */}
+      {alertas.length > 0 && (
+        <div className="rounded-[16px] bg-[#FDECEA] p-4 flex flex-col gap-2">
+          <p className="text-[11px] font-bold text-[#C62828] uppercase tracking-wide flex items-center gap-1.5">
+            <AlertTriangle size={11} /> Alertas
+          </p>
+          {alertas.map((a, i) => (
+            <p key={i} className="text-[12px] text-[#C62828]">· {a}</p>
+          ))}
+        </div>
+      )}
+
+      {/* Próximas ações */}
+      {proxAcoes.length > 0 && (
+        <div className="rounded-[16px] bg-white p-5 flex flex-col gap-2.5">
+          <p className="text-[11px] font-bold text-[#A9AAA5] uppercase tracking-wide flex items-center gap-1.5">
+            <Target size={11} /> Próximas Ações
+          </p>
+          {proxAcoes.map((a, i) => (
+            <div key={i} className="flex items-start gap-2">
+              <span className="mt-1 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-[#D7FF00]" />
+              <p className="text-[12px] text-[#0E0F10]">{a}</p>
+            </div>
+          ))}
+        </div>
+      )}
+
+      {/* Conectores */}
+      {conectores.length > 0 && (
+        <div className="rounded-[16px] bg-white p-5 flex flex-col gap-3">
+          <div className="flex items-center justify-between">
+            <p className="text-[11px] font-bold text-[#A9AAA5] uppercase tracking-wide flex items-center gap-1.5">
+              <Link2 size={11} /> Conectores
+            </p>
+            <span className="text-[10px] font-bold text-[#5E5E5F]">{conectorAtivos} ativo{conectorAtivos !== 1 ? "s" : ""}</span>
+          </div>
+          <div className="flex flex-col gap-1.5">
+            {conectores.map((c, i) => {
+              const Icon = CONECTOR_ICONS[c.tipo] ?? CONECTOR_ICONS.default;
+              const statusCor = c.status === "ativo" ? "#43A047" : c.status === "inativo" ? "#C62828" : "#FB8C00";
+              return (
+                <div key={i} className="flex items-center justify-between rounded-[10px] bg-[#FAFAFA] px-3 py-2">
+                  <div className="flex items-center gap-2">
+                    <Icon size={13} color="#5E5E5F" />
+                    <span className="text-[12px] font-semibold text-[#0E0F10]">{c.nome}</span>
+                  </div>
+                  <div className="flex items-center gap-1.5">
+                    {c.url && (
+                      <motion.a href={c.url} target="_blank" rel="noopener noreferrer"
+                        className="text-[#A9AAA5]"
+                        whileHover={{ color: "#0E0F10", scale: 1.1 }} whileTap={{ scale: 0.9 }}>
+                        <ExternalLink size={10} />
+                      </motion.a>
+                    )}
+                    <span className="h-2 w-2 rounded-full" style={{ backgroundColor: statusCor }} />
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      )}
+
+      {/* Stack (se dev) */}
+      {stack.length > 0 && (
+        <div className="rounded-[16px] bg-white p-5 flex flex-col gap-3">
+          <p className="text-[11px] font-bold text-[#A9AAA5] uppercase tracking-wide flex items-center gap-1.5">
+            <Code2 size={11} /> Stack
+          </p>
+          <div className="flex flex-wrap gap-1.5">
+            {stack.map((tech) => (
+              <span key={tech} className="rounded-[7px] bg-[#0E0F10] px-2.5 py-1 text-[11px] font-bold text-[#D7FF00]">{tech}</span>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* Módulos resumo */}
+      <div className="rounded-[16px] bg-white p-5 flex flex-col gap-3">
+        <p className="text-[11px] font-bold text-[#A9AAA5] uppercase tracking-wide flex items-center gap-1.5">
+          <Puzzle size={11} /> Módulos
+        </p>
+        <div className="flex flex-col gap-1.5">
+          {modulosData.map((m, i) => {
+            const statusInfo = {
+              completo:  { cor: "#43A047", label: "✓" },
+              andamento: { cor: "#A8C800", label: "…" },
+              bloqueado: { cor: "#E53935", label: "!" },
+              vazio:     { cor: "#D5D2C9", label: "·" },
+            }[m.status];
+            return (
+              <div key={i} className="flex items-center justify-between gap-2">
+                <div className="flex items-center gap-2 min-w-0">
+                  <span className="text-[12px] font-bold w-4 text-center flex-shrink-0"
+                    style={{ color: statusInfo.cor }}>{statusInfo.label}</span>
+                  <span className="text-[12px] font-semibold text-[#0E0F10] truncate">{m.nome}</span>
+                </div>
+                {m.obrigatorio && (
+                  <span className="text-[8px] font-bold text-[#A9AAA5] uppercase flex-shrink-0">req</span>
+                )}
+              </div>
+            );
+          })}
+        </div>
+      </div>
+
+      {/* Figma link */}
+      {!!meta.figmaUrl ? (
+        <motion.a href={String(meta.figmaUrl)} target="_blank" rel="noopener noreferrer"
+          className="rounded-[16px] bg-white p-4 flex items-center gap-3"
+          whileHover={{ backgroundColor: "#EEEFE9" }} whileTap={{ scale: 0.99 }}>
+          <div className="h-8 w-8 rounded-[10px] bg-[#1E1E1E] flex items-center justify-center flex-shrink-0">
+            <Globe size={15} color="#FFFFFF" />
+          </div>
+          <div className="flex-1 min-w-0">
+            <p className="text-[12px] font-bold text-[#0E0F10]">Figma</p>
+            <p className="text-[10px] text-[#A9AAA5] truncate">Abrir design</p>
+          </div>
+          <ExternalLink size={12} color="#A9AAA5" />
+        </motion.a>
+      ) : null}
     </div>
   );
 }
@@ -401,31 +931,61 @@ export default function ProjetoDetailClient({
 // ─── TabConteudo Adaptativo ───────────────────────────────────────────────────
 
 function TabConteudo({
-  tab, tipo, projeto, meta, tarefas, tarefasConcluidas, decisoes, stack, memoria, rules, log, progresso,
+  tab, tipo, projeto, meta, tarefas, tarefasConcluidas, stack,
+  memoria, rules, log, modulosData, conectores, subprojetos, progresso,
   onNavigatePedido, onMetaUpdate,
 }: {
   tab: string; tipo: ProjetoTipo; projeto: ProjetoDetail; meta: Record<string, unknown>;
-  tarefas: { id: number; titulo: string; concluido: boolean }[];
-  tarefasConcluidas: number; decisoes: { titulo: string; desc?: string; data?: string }[];
-  stack: string[]; memoria: { texto: string; data?: string }[];
-  rules: { regra: string }[]; log: { acao: string; data?: string }[];
+  tarefas: Tarefa[]; tarefasConcluidas: number; stack: string[];
+  memoria: MemoriaEntry[]; rules: Rule[]; log: LogEntry[];
+  modulosData: Modulo[]; conectores: Conector[];
+  subprojetos: { id: string; nome: string; tipo: string; status: string; descricao?: string; progresso?: number }[];
   progresso: number;
   onNavigatePedido: (id: string) => void;
   onMetaUpdate: (section: string, value: unknown) => Promise<void>;
 }) {
+  const tipoConfig = TIPO_CONFIG[tipo] ?? TIPO_CONFIG.outro;
+
   // ── Visão Geral ──────────────────────────────────────────────────────────
   if (tab === "geral") {
+    const decisoes = memoria.filter(m => m.tipo === "decision");
     return (
-      <div className="flex flex-col gap-5">
+      <div className="flex flex-col gap-6">
         {!!meta.objetivo && (
           <div>
-            <p className="text-[11px] font-bold uppercase tracking-wide text-[#A9AAA5] mb-2">Objetivo Principal</p>
+            <SectionLabel>Objetivo Principal</SectionLabel>
             <p className="text-[14px] text-[#0E0F10] leading-relaxed">{String(meta.objetivo)}</p>
           </div>
         )}
+
+        {/* Progresso por módulos */}
+        <div>
+          <SectionLabel>Progresso dos Módulos</SectionLabel>
+          <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
+            {modulosData.map((m, i) => {
+              const statusCfg = {
+                completo:  { bg: "#E6F4EA", text: "#2E7D32", label: "Completo" },
+                andamento: { bg: "#F0FF80", text: "#5A6600", label: "Em andamento" },
+                bloqueado: { bg: "#FDECEA", text: "#C62828", label: "Bloqueado" },
+                vazio:     { bg: "#F7F7F5", text: "#A9AAA5", label: "Não iniciado" },
+              }[m.status];
+              return (
+                <motion.div key={i}
+                  className="rounded-[12px] px-3 py-2.5"
+                  style={{ backgroundColor: statusCfg.bg }}
+                  initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: i * 0.04 }}>
+                  <p className="text-[12px] font-semibold" style={{ color: statusCfg.text }}>{m.nome}</p>
+                  <p className="text-[10px] mt-0.5" style={{ color: statusCfg.text, opacity: 0.75 }}>{statusCfg.label}</p>
+                </motion.div>
+              );
+            })}
+          </div>
+        </div>
+
         {stack.length > 0 && (
           <div>
-            <p className="text-[11px] font-bold uppercase tracking-wide text-[#A9AAA5] mb-2">Stack</p>
+            <SectionLabel>Stack</SectionLabel>
             <div className="flex flex-wrap gap-1.5">
               {stack.map((tech) => (
                 <span key={tech} className="rounded-[8px] bg-[#0E0F10] px-3 py-1.5 text-[12px] font-bold text-[#D7FF00]">{tech}</span>
@@ -433,29 +993,27 @@ function TabConteudo({
             </div>
           </div>
         )}
+
         {decisoes.length > 0 && (
           <div>
-            <p className="text-[11px] font-bold uppercase tracking-wide text-[#A9AAA5] mb-2">Decisões recentes</p>
+            <SectionLabel>Decisões recentes</SectionLabel>
             <div className="flex flex-col gap-2">
               {decisoes.slice(0, 3).map((dec, i) => (
-                <motion.div key={i} className="rounded-[12px] bg-[#FFFDE7] p-3.5"
+                <motion.div key={i}
+                  className="rounded-[12px] bg-[#FFF3E0] p-3.5 flex items-start gap-2"
                   initial={{ opacity: 0, x: -8 }} animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: i * 0.06 }}>
-                  <div className="flex items-start gap-2">
-                    <Lightbulb size={13} color="#FB8C00" className="mt-0.5 flex-shrink-0" />
-                    <div>
-                      <p className="text-[13px] font-semibold text-[#0E0F10]">{dec.titulo}</p>
-                      {dec.desc && <p className="text-[12px] text-[#5E5E5F] mt-0.5">{dec.desc}</p>}
-                    </div>
-                  </div>
+                  <Lightbulb size={13} color="#FB8C00" className="mt-0.5 flex-shrink-0" />
+                  <p className="text-[13px] text-[#0E0F10] leading-relaxed">{dec.texto}</p>
                 </motion.div>
               ))}
             </div>
           </div>
         )}
+
         {projeto.pedidosCount > 0 && (
           <div>
-            <p className="text-[11px] font-bold uppercase tracking-wide text-[#A9AAA5] mb-2">Pedidos por status</p>
+            <SectionLabel>Pedidos por status</SectionLabel>
             <div className="flex flex-wrap gap-2">
               {Object.entries(projeto.pedidosPorStatus).map(([s, c]) => {
                 const p = PEDIDO_STATUS_PALETTE[s] ?? { bg: "#EEEFE9", text: "#5E5E5F", dot: "#A9AAA5" };
@@ -470,11 +1028,21 @@ function TabConteudo({
             </div>
           </div>
         )}
-        {/* Se não há nada ainda */}
-        {!meta.objetivo && decisoes.length === 0 && stack.length === 0 && projeto.pedidosCount === 0 && (
+
+        {!meta.objetivo && modulosData.every(m => m.status === "vazio") && (
           <EmptyState icon={FolderKanban} text="Configure o contexto e adicione tarefas para começar." />
         )}
       </div>
+    );
+  }
+
+  // ── Subprojetos ──────────────────────────────────────────────────────────
+  if (tab === "subprojetos") {
+    return (
+      <SubprojetosTab
+        subprojetos={subprojetos}
+        onSave={(updated) => onMetaUpdate("subprojetos", updated)}
+      />
     );
   }
 
@@ -485,293 +1053,20 @@ function TabConteudo({
         title="Contexto do Projeto"
         fieldKey="contexto"
         value={meta.contexto as string ?? ""}
-        placeholder="Descreva o contexto: o que é, por que existe, objetivo de negócio, público alvo, riscos, restrições..."
+        placeholder="O que é, por que existe, objetivo de negócio, público-alvo, riscos, restrições..."
         onSave={onMetaUpdate}
       />
     );
   }
 
-  // ── PRD ──────────────────────────────────────────────────────────────────
-  if (tab === "prd") {
+  // ── Módulos ───────────────────────────────────────────────────────────────
+  if (tab === "modulos") {
     return (
-      <EditableTextSection
-        title="Documento de Requisitos (PRD)"
-        fieldKey="prd"
-        value={meta.prd as string ?? ""}
-        placeholder="Visão do produto, casos de uso, requisitos funcionais e não funcionais, critérios de aceite..."
-        onSave={onMetaUpdate}
+      <ModulosTab
+        modulosData={modulosData}
+        tipoConfig={tipoConfig}
+        onSave={(m) => onMetaUpdate("modulos_status", m)}
       />
-    );
-  }
-
-  // ── Arquitetura ──────────────────────────────────────────────────────────
-  if (tab === "arquitetura") {
-    return (
-      <div className="flex flex-col gap-5">
-        {!!meta.figmaUrl && (
-          <div>
-            <p className="text-[11px] font-bold uppercase tracking-wide text-[#A9AAA5] mb-2">Design</p>
-            <motion.a href={String(meta.figmaUrl)} target="_blank" rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 rounded-[12px] bg-[#1E1E1E] px-4 py-2.5 text-[13px] font-semibold text-white"
-              whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.97 }}>
-              <Globe size={14} /> Abrir no Figma <ExternalLink size={11} />
-            </motion.a>
-          </div>
-        )}
-        {stack.length > 0 && (
-          <div>
-            <p className="text-[11px] font-bold uppercase tracking-wide text-[#A9AAA5] mb-2">Stack técnica</p>
-            <div className="grid grid-cols-2 gap-2">
-              {stack.map((tech) => (
-                <div key={tech} className="rounded-[10px] bg-[#EEEFE9] px-3 py-2.5 flex items-center gap-2">
-                  <Code2 size={14} color="#5E5E5F" />
-                  <span className="text-[13px] font-semibold text-[#0E0F10]">{tech}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
-        <EditableTextSection
-          title="Notas de Arquitetura"
-          fieldKey="arquitetura_notas"
-          value={meta.arquitetura_notas as string ?? ""}
-          placeholder="Decisões de arquitetura, diagramas (URL), padrões, serviços, fluxos de dados..."
-          onSave={onMetaUpdate}
-        />
-      </div>
-    );
-  }
-
-  // ── Design ───────────────────────────────────────────────────────────────
-  if (tab === "design") {
-    return (
-      <div className="flex flex-col gap-4">
-        {meta.figmaUrl ? (
-          <motion.a href={String(meta.figmaUrl)} target="_blank" rel="noopener noreferrer"
-            className="flex items-center gap-3 rounded-[14px] bg-[#1E1E1E] px-5 py-4"
-            whileHover={{ scale: 1.01 }} whileTap={{ scale: 0.99 }}>
-            <div className="h-9 w-9 rounded-[10px] bg-white/10 flex items-center justify-center">
-              <Globe size={16} color="white" />
-            </div>
-            <div className="flex-1">
-              <p className="text-[13px] font-bold text-white">Figma</p>
-              <p className="text-[11px] text-white/50">Abrir arquivo de design</p>
-            </div>
-            <ExternalLink size={14} color="white" />
-          </motion.a>
-        ) : (
-          <EmptyState icon={Globe} text="Nenhum link de Figma adicionado ainda. Configure nos detalhes do projeto." />
-        )}
-        <EditableTextSection
-          title="Notas de Design"
-          fieldKey="design_notas"
-          value={meta.design_notas as string ?? ""}
-          placeholder="Decisões visuais, componentes, guidelines de UI, referências..."
-          onSave={onMetaUpdate}
-        />
-      </div>
-    );
-  }
-
-  // ── Deploy ───────────────────────────────────────────────────────────────
-  if (tab === "deploy") {
-    return (
-      <div className="flex flex-col gap-4">
-        {[
-          { label: "URL de produção", key: "deploy_url" },
-          { label: "URL de staging", key: "staging_url" },
-          { label: "Repositório GitHub", key: "github_url" },
-        ].map(({ label, key }) => meta[key] ? (
-          <div key={key}>
-            <p className="text-[11px] font-bold text-[#A9AAA5] uppercase tracking-wide mb-1.5">{label}</p>
-            <motion.a href={String(meta[key])} target="_blank" rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 text-[13px] font-semibold text-[#0E0F10] rounded-[8px] bg-[#EEEFE9] px-3 py-1.5"
-              whileHover={{ backgroundColor: "#D9D9D4" }}>
-              {String(meta[key])} <ExternalLink size={11} />
-            </motion.a>
-          </div>
-        ) : null)}
-        <EditableTextSection
-          title="Notas de Deploy"
-          fieldKey="deploy_notas"
-          value={meta.deploy_notas as string ?? ""}
-          placeholder="Plataforma de deploy, variáveis de ambiente, domínio, CI/CD, processo de release..."
-          onSave={onMetaUpdate}
-        />
-      </div>
-    );
-  }
-
-  // ── Banco ────────────────────────────────────────────────────────────────
-  if (tab === "banco") {
-    return (
-      <EditableTextSection
-        title="Banco de Dados"
-        fieldKey="banco_notas"
-        value={meta.banco_notas as string ?? ""}
-        placeholder="Entidades, relações, regras de RLS, migrations, estratégia de dados..."
-        onSave={onMetaUpdate}
-      />
-    );
-  }
-
-  // ── Integrações ──────────────────────────────────────────────────────────
-  if (tab === "integracoes") {
-    return (
-      <div className="flex flex-col gap-4">
-        {typeof meta.integracoes_config === "object" && meta.integracoes_config !== null ? (
-          <div className="flex flex-col gap-2">
-            {Object.entries(meta.integracoes_config as Record<string, string>).map(([nome, url]) => (
-              <div key={nome} className="flex items-center justify-between rounded-[12px] bg-[#FAFAFA] px-4 py-3">
-                <span className="text-[13px] font-semibold text-[#0E0F10]">{nome}</span>
-                <motion.a href={url} target="_blank" rel="noopener noreferrer"
-                  className="text-[11px] text-[#A9AAA5] flex items-center gap-1"
-                  whileHover={{ color: "#0E0F10" }}>
-                  Abrir <ExternalLink size={10} />
-                </motion.a>
-              </div>
-            ))}
-          </div>
-        ) : (
-          <div>
-            <p className="text-[11px] font-bold text-[#A9AAA5] uppercase tracking-wide mb-2">Integrações previstas</p>
-            <div className="flex flex-wrap gap-2">
-              {TIPO_CONFIG[tipo].modulos.filter((m) => ["Figma","GitHub","Vercel","Supabase","Analytics","Stripe"].includes(m)).concat(
-                (meta.integracoes as string[] | undefined) ?? []
-              ).map((int) => (
-                <span key={int} className="rounded-[8px] bg-[#EEEFE9] px-2.5 py-1 text-[12px] font-semibold text-[#5E5E5F]">{int}</span>
-              ))}
-            </div>
-          </div>
-        )}
-        <EditableTextSection
-          title="Notas de Integrações"
-          fieldKey="integracoes_notas"
-          value={meta.integracoes_notas as string ?? ""}
-          placeholder="Como cada integração se conecta, status, credenciais necessárias..."
-          onSave={onMetaUpdate}
-        />
-      </div>
-    );
-  }
-
-  // ── Identidade (creator) ─────────────────────────────────────────────────
-  if (tab === "identidade") {
-    return (
-      <EditableTextSection
-        title="Identidade da Creator"
-        fieldKey="identidade"
-        value={meta.identidade as string ?? ""}
-        placeholder="Quem é, personalidade, valores, história, missão narrativa, forma de ser..."
-        onSave={onMetaUpdate}
-      />
-    );
-  }
-
-  // ── Aparência (creator) ──────────────────────────────────────────────────
-  if (tab === "aparencia") {
-    return (
-      <EditableTextSection
-        title="Aparência e Diretrizes Visuais"
-        fieldKey="aparencia"
-        value={meta.aparencia as string ?? ""}
-        placeholder="Características físicas, estilo, looks recorrentes, paleta de cores, diretrizes de imagem..."
-        onSave={onMetaUpdate}
-      />
-    );
-  }
-
-  // ── Tom de Voz (creator) ─────────────────────────────────────────────────
-  if (tab === "voz") {
-    return (
-      <EditableTextSection
-        title="Tom de Voz"
-        fieldKey="tom_de_voz"
-        value={meta.tom_de_voz as string ?? ""}
-        placeholder="Como fala, linguagem usada, expressões recorrentes, o que nunca diz, estilo narrativo..."
-        onSave={onMetaUpdate}
-      />
-    );
-  }
-
-  // ── Conceito (campanha/branding) ─────────────────────────────────────────
-  if (tab === "conceito") {
-    return (
-      <EditableTextSection
-        title="Conceito Criativo"
-        fieldKey="conceito"
-        value={meta.conceito as string ?? ""}
-        placeholder="Ideia central, defesa conceitual, moodboard, referências criativas..."
-        onSave={onMetaUpdate}
-      />
-    );
-  }
-
-  // ── Exploração (branding/mockup) ─────────────────────────────────────────
-  if (tab === "exploracao") {
-    return (
-      <EmptyState icon={Eye} text="Área de exploração visual. Vincule assets e referências nos arquivos do projeto." />
-    );
-  }
-
-  // ── Assets ───────────────────────────────────────────────────────────────
-  if (tab === "assets") {
-    return (
-      <EmptyState icon={FileText} text="Assets do projeto. Use o Supabase Storage para uploads (configuração pendente)." />
-    );
-  }
-
-  // ── Calendário (conteúdo) ────────────────────────────────────────────────
-  if (tab === "calendario") {
-    return (
-      <EmptyState icon={CalendarDays} text="Calendário de conteúdo. Será alimentado pelos pedidos vinculados a este projeto." />
-    );
-  }
-
-  // ── Peças (conteúdo/campanha) ────────────────────────────────────────────
-  if (tab === "pecas") {
-    return (
-      <EmptyState icon={Lightbulb} text="Lista de peças do projeto. Criadas automaticamente a partir dos pedidos vinculados." />
-    );
-  }
-
-  // ── Requisitos (ferramenta) ──────────────────────────────────────────────
-  if (tab === "requisitos") {
-    return (
-      <EditableTextSection
-        title="Requisitos"
-        fieldKey="requisitos"
-        value={meta.requisitos as string ?? ""}
-        placeholder="O que a ferramenta precisa fazer, entradas e saídas, casos de uso, limitações..."
-        onSave={onMetaUpdate}
-      />
-    );
-  }
-
-  // ── Estrutura (documentação) ─────────────────────────────────────────────
-  if (tab === "estrutura") {
-    return (
-      <EditableTextSection
-        title="Estrutura da Documentação"
-        fieldKey="estrutura"
-        value={meta.estrutura as string ?? ""}
-        placeholder="Sumário, hierarquia de seções, público alvo, formato de entrega..."
-        onSave={onMetaUpdate}
-      />
-    );
-  }
-
-  // ── Times (operação) ────────────────────────────────────────────────────
-  if (tab === "times") {
-    return (
-      <EmptyState icon={Users} text="Times e squads envolvidos serão listados automaticamente ao vincular pedidos." />
-    );
-  }
-
-  // ── Aprovações (operação/campanha) ───────────────────────────────────────
-  if (tab === "aprovacoes") {
-    return (
-      <EmptyState icon={ShieldCheck} text="Fluxo de aprovação será gerado conforme os pedidos avançam para o status 'Revisão'." />
     );
   }
 
@@ -781,18 +1076,22 @@ function TabConteudo({
       <TarefasTab
         tarefas={tarefas}
         tarefasConcluidas={tarefasConcluidas}
-        onSave={(novasTarefas) => onMetaUpdate("tarefas", novasTarefas)}
+        onSave={(t) => onMetaUpdate("tarefas", t)}
       />
     );
   }
 
-  // ── Pedidos vinculados ───────────────────────────────────────────────────
-  if (tab === "pedidos") {
+  // ── Itens Vinculados ─────────────────────────────────────────────────────
+  if (tab === "itens") {
     if (projeto.pedidos.length === 0) {
-      return <EmptyState icon={ClipboardList} text="Nenhum pedido vinculado a este projeto ainda." />;
+      return <EmptyState icon={ClipboardList} text="Nenhum item vinculado a este projeto ainda. Pedidos vinculados aparecem aqui automaticamente." />;
     }
     return (
       <div className="flex flex-col gap-1.5">
+        <div className="flex items-center justify-between mb-3">
+          <SectionLabel>Pedidos vinculados</SectionLabel>
+          <span className="text-[11px] text-[#A9AAA5]">{projeto.pedidos.length} no total</span>
+        </div>
         {projeto.pedidos.map((p, i) => {
           const palette = PEDIDO_STATUS_PALETTE[p.status] ?? { bg: "#EEEFE9", text: "#5E5E5F", dot: "#A9AAA5" };
           return (
@@ -829,7 +1128,7 @@ function TabConteudo({
     return (
       <MemoriaTab
         memoria={memoria}
-        onSave={(novaMemoria) => onMetaUpdate("memoria", novaMemoria)}
+        onSave={(m) => onMetaUpdate("memoria", m)}
       />
     );
   }
@@ -839,7 +1138,7 @@ function TabConteudo({
     return (
       <RulesTab
         rules={rules}
-        onSave={(novasRules) => onMetaUpdate("rules", novasRules)}
+        onSave={(r) => onMetaUpdate("rules", r)}
       />
     );
   }
@@ -847,34 +1146,1110 @@ function TabConteudo({
   // ── Log ──────────────────────────────────────────────────────────────────
   if (tab === "log") {
     return (
-      <div className="flex flex-col gap-2">
-        {log.length === 0 ? (
-          <EmptyState icon={History} text="O histórico de eventos será registrado automaticamente." />
-        ) : (
-          log.map((entry, i) => (
-            <motion.div key={i}
-              className="flex items-start gap-3 rounded-[12px] bg-[#FAFAFA] px-4 py-3"
-              initial={{ opacity: 0, x: -8 }} animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: i * 0.04 }}>
-              <div className="h-6 w-6 rounded-full bg-[#EEEFE9] flex items-center justify-center flex-shrink-0 mt-0.5">
-                <History size={11} color="#A9AAA5" />
-              </div>
-              <div className="flex-1">
-                <p className="text-[13px] text-[#0E0F10]">{entry.acao}</p>
-                {entry.data && <p className="text-[11px] text-[#A9AAA5] mt-0.5">{entry.data}</p>}
-              </div>
-            </motion.div>
-          ))
-        )}
-      </div>
+      <LogTab log={log} />
     );
   }
 
-  // Fallback para abas não mapeadas
+  // ── Conectores ───────────────────────────────────────────────────────────
+  if (tab === "conectores") {
+    return (
+      <ConectoresTab
+        conectores={conectores}
+        tipoConfig={tipoConfig}
+        meta={meta}
+        onSave={(c) => onMetaUpdate("conectores", c)}
+      />
+    );
+  }
+
+  // ── Abas dinâmicas (texto editável padrão) ───────────────────────────────
+  const dynamicTabsMap: Record<string, { title: string; fieldKey: string; placeholder: string }> = {
+    prd:           { title: "Documento de Requisitos (PRD)",       fieldKey: "prd",           placeholder: "Visão do produto, casos de uso, requisitos funcionais e não funcionais, critérios de aceite..." },
+    arquitetura:   { title: "Notas de Arquitetura",                fieldKey: "arquitetura_notas", placeholder: "Decisões de arquitetura, diagramas, padrões, serviços, fluxos..." },
+    design:        { title: "Notas de Design",                     fieldKey: "design_notas",  placeholder: "Decisões visuais, componentes, guidelines, referências..." },
+    identidade:    { title: "Identidade da Creator",               fieldKey: "identidade",    placeholder: "Quem é, personalidade, valores, história, missão narrativa..." },
+    aparencia:     { title: "Aparência e Diretrizes Visuais",      fieldKey: "aparencia",     placeholder: "Características físicas, estilo, looks, paleta de cores, diretrizes..." },
+    voz:           { title: "Tom de Voz",                          fieldKey: "tom_de_voz",    placeholder: "Como fala, linguagem, expressões, o que nunca diz, estilo narrativo..." },
+    ambientes:     { title: "Ambientes Visuais",                   fieldKey: "ambientes",     placeholder: "Cenários, locações, estética de fundo, contextos visuais recorrentes..." },
+    plataformas:   { title: "Plataformas",                         fieldKey: "plataformas",   placeholder: "Quais plataformas, frequência, tipo de conteúdo por plataforma..." },
+    conceito:      { title: "Conceito Criativo",                   fieldKey: "conceito",      placeholder: "Ideia central, defesa conceitual, moodboard, referências criativas..." },
+    fluxos:        { title: "Fluxos de Usuário",                   fieldKey: "fluxos",        placeholder: "Jornadas, fluxos de navegação, estados, edge cases..." },
+    banco:         { title: "Banco de Dados",                      fieldKey: "banco_notas",   placeholder: "Entidades, relações, RLS, migrations, estratégia de dados..." },
+    integracoes:   { title: "Integrações",                         fieldKey: "integracoes_notas", placeholder: "APIs externas, webhooks, credenciais, status de cada integração..." },
+    deploy:        { title: "Notas de Deploy",                     fieldKey: "deploy_notas",  placeholder: "Plataforma, variáveis de ambiente, domínio, CI/CD, processo de release..." },
+    analytics:     { title: "Analytics e Métricas",                fieldKey: "analytics",     placeholder: "KPIs, ferramentas de tracking, eventos, metas de conversão..." },
+    copy:          { title: "Copy",                                fieldKey: "copy",          placeholder: "Headlines, CTAs, textos das seções, tom editorial..." },
+    estrategia:    { title: "Estratégia de Conteúdo",              fieldKey: "estrategia",    placeholder: "Posicionamento, objetivos, métricas, canais prioritários..." },
+    pilares:       { title: "Pilares de Conteúdo",                 fieldKey: "pilares",       placeholder: "Temas, categorias, proporção de cada tipo de conteúdo..." },
+    roteiros:      { title: "Roteiros",                            fieldKey: "roteiros",      placeholder: "Templates, roteiros base, estrutura de vídeo, storytelling..." },
+    diagnostico:   { title: "Diagnóstico de Marca",                fieldKey: "diagnostico",   placeholder: "Análise da marca atual, percepção, pontos de melhoria, benchmark..." },
+    marca:         { title: "Marca",                               fieldKey: "marca",         placeholder: "Nome, símbolo, tipografia, cores, slogan, manifesto..." },
+    sistema_visual:{ title: "Sistema Visual",                      fieldKey: "sistema_visual", placeholder: "Grid, espaçamento, hierarquia tipográfica, uso de elementos, tom visual..." },
+    handoff:       { title: "Handoff",                             fieldKey: "handoff",       placeholder: "O que foi entregue, formatos, como usar, contato para dúvidas..." },
+    requisitos:    { title: "Requisitos",                          fieldKey: "requisitos",    placeholder: "O que precisa fazer, entradas/saídas, casos de uso, limitações..." },
+    estrutura:     { title: "Estrutura",                           fieldKey: "estrutura",     placeholder: "Sumário, hierarquia, público-alvo, formato de entrega..." },
+    publico:       { title: "Público-Alvo",                        fieldKey: "publico",       placeholder: "Perfil demográfico, dores, desejos, comportamento, persona..." },
+    milestones:    { title: "Milestones",                          fieldKey: "milestones",    placeholder: "Marcos do projeto, datas, entregáveis por fase, responsáveis..." },
+  };
+
+  // Abas que precisam de tratamento especial como empty state
+  const emptyStateMap: Record<string, { icon: React.ElementType; text: string }> = {
+    calendario:    { icon: CalendarDays, text: "Calendário de conteúdo. Alimentado pelos pedidos vinculados." },
+    pecas:         { icon: Package, text: "Peças do projeto. Criadas a partir dos pedidos vinculados." },
+    conteudo_tab:  { icon: FileText, text: "Conteúdo vinculado. Aparece aqui conforme pedidos são criados." },
+    operacao_tab:  { icon: Settings, text: "Configuração de operação do creator — frequência, processos, responsáveis." },
+    assets_tab:    { icon: Package, text: "Assets do projeto. Use o Supabase Storage para uploads (configuração pendente)." },
+    documentos_tab:{ icon: FileText, text: "Documentos estruturados. Será implementado com o módulo Conhecimento." },
+    exploracao:    { icon: Eye, text: "Área de exploração visual. Vincule assets e referências nos arquivos." },
+    times:         { icon: Users, text: "Times e squads envolvidos, listados conforme pedidos são vinculados." },
+    aprovacoes:    { icon: ShieldCheck, text: "Fluxo de aprovação gerado conforme pedidos avançam para Revisão." },
+  };
+
+  if (emptyStateMap[tab]) {
+    const em = emptyStateMap[tab];
+    return <EmptyState icon={em.icon} text={em.text} />;
+  }
+
+  if (dynamicTabsMap[tab]) {
+    const cfg = dynamicTabsMap[tab];
+    return (
+      <EditableTextSection
+        title={cfg.title}
+        fieldKey={cfg.fieldKey}
+        value={meta[cfg.fieldKey] as string ?? ""}
+        placeholder={cfg.placeholder}
+        onSave={onMetaUpdate}
+      />
+    );
+  }
+
   return <EmptyState icon={Rocket} text="Esta etapa será preenchida conforme o projeto avança." />;
 }
 
-// ─── Sub-componentes de edição ────────────────────────────────────────────────
+// ─── SubprojetosTab ─────────────────────────────────────────────────────────
+
+type SubprojetoItem = { id: string; nome: string; tipo: string; status: string; descricao?: string; progresso?: number };
+
+const STATUS_SUBPROJETO: Record<string, { dot: string; text: string; label: string; bg: string }> = {
+  ativo:     { dot: "#A8C800", text: "#5A6600", label: "Ativo",     bg: "#F0FF80" },
+  pausado:   { dot: "#FB8C00", text: "#A05500", label: "Pausado",   bg: "#FFF0E0" },
+  concluido: { dot: "#43A047", text: "#2E7D32", label: "Concluído", bg: "#E6F4EA" },
+  cancelado: { dot: "#E53935", text: "#C62828", label: "Cancelado", bg: "#FDECEA" },
+};
+
+function SubprojetosTab({ subprojetos, onSave }: {
+  subprojetos: SubprojetoItem[];
+  onSave: (updated: SubprojetoItem[]) => Promise<void>;
+}) {
+  const [lista, setLista] = useState<SubprojetoItem[]>(subprojetos);
+  const [criando, setCriando] = useState(false);
+  const [novoNome, setNovoNome] = useState("");
+  const [novoTipo, setNovoTipo] = useState<ProjetoTipo>("outro");
+  const [novaDesc, setNovaDesc] = useState("");
+  const [saving, setSaving] = useState(false);
+
+  async function adicionar() {
+    if (!novoNome.trim()) return;
+    const novo: SubprojetoItem = {
+      id: Date.now().toString(),
+      nome: novoNome.trim(),
+      tipo: novoTipo,
+      status: "ativo",
+      descricao: novaDesc.trim() || undefined,
+      progresso: 0,
+    };
+    const atualizado = [...lista, novo];
+    setSaving(true);
+    await onSave(atualizado);
+    setLista(atualizado);
+    setNovoNome("");
+    setNovaDesc("");
+    setNovoTipo("outro");
+    setCriando(false);
+    setSaving(false);
+  }
+
+  async function remover(id: string) {
+    const atualizado = lista.filter(s => s.id !== id);
+    await onSave(atualizado);
+    setLista(atualizado);
+  }
+
+  async function mudarStatus(id: string, status: string) {
+    const atualizado = lista.map(s => s.id === id ? { ...s, status } : s);
+    await onSave(atualizado);
+    setLista(atualizado);
+  }
+
+  return (
+    <div className="flex flex-col gap-4">
+      {/* Header */}
+      <div className="flex items-center justify-between">
+        <div>
+          <h3 className="text-[16px] font-bold text-[#0E0F10]">Subprojetos</h3>
+          <p className="text-[12px] text-[#A9AAA5] mt-0.5">
+            Projetos filhos contidos dentro deste projeto principal.
+          </p>
+        </div>
+        <motion.button
+          onClick={() => setCriando(true)}
+          className="flex items-center gap-1.5 rounded-[14px] px-3.5 py-2 text-[13px] font-semibold text-[#0E0F10]"
+          initial="rest" animate="rest" whileHover="hovered" whileTap={{ scale: 0.96 }}
+          variants={{ rest: { backgroundColor: "#D7FF00" }, hovered: { backgroundColor: "#DFFF33" } }}
+          transition={{ duration: 0.15 }}
+        >
+          <motion.span variants={{ rest: { scale: 1 }, hovered: { scale: 1.2 } }}><Plus size={14} /></motion.span>
+          Novo subprojeto
+        </motion.button>
+      </div>
+
+      {/* Form de criação */}
+      <AnimatePresence>
+        {criando && (
+          <motion.div
+            className="rounded-[16px] border border-[#D7FF00] bg-[#FAFFF0] p-4 flex flex-col gap-3"
+            initial={{ opacity: 0, y: -8 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -8 }}
+            transition={{ duration: 0.2 }}
+          >
+            <div className="grid grid-cols-2 gap-3">
+              <div className="col-span-2">
+                <label className="block text-[11px] font-semibold text-[#5E5E5F] mb-1 uppercase tracking-wide">Nome</label>
+                <input
+                  value={novoNome}
+                  onChange={e => setNovoNome(e.target.value)}
+                  placeholder="Ex: Módulo de Pagamentos"
+                  className="w-full h-10 rounded-[10px] bg-white border border-transparent px-3 text-[14px] text-[#0E0F10] outline-none focus:border-[#0E0F10] focus:shadow-[0_0_0_3px_rgba(14,15,16,0.08)] transition-[border-color,box-shadow] duration-150"
+                />
+              </div>
+              <div>
+                <label className="block text-[11px] font-semibold text-[#5E5E5F] mb-1 uppercase tracking-wide">Tipo</label>
+                <select
+                  value={novoTipo}
+                  onChange={e => setNovoTipo(e.target.value as ProjetoTipo)}
+                  className="w-full h-10 rounded-[10px] bg-white border border-transparent px-3 text-[13px] text-[#0E0F10] outline-none focus:border-[#0E0F10] transition-[border-color] duration-150"
+                >
+                  {Object.entries(TIPO_CONFIG).map(([k, v]) => (
+                    <option key={k} value={k}>{v.label}</option>
+                  ))}
+                </select>
+              </div>
+              <div>
+                <label className="block text-[11px] font-semibold text-[#5E5E5F] mb-1 uppercase tracking-wide">Descrição curta</label>
+                <input
+                  value={novaDesc}
+                  onChange={e => setNovaDesc(e.target.value)}
+                  placeholder="Opcional"
+                  className="w-full h-10 rounded-[10px] bg-white border border-transparent px-3 text-[13px] text-[#0E0F10] outline-none focus:border-[#0E0F10] transition-[border-color] duration-150"
+                />
+              </div>
+            </div>
+            <div className="flex items-center gap-2 justify-end">
+              <motion.button
+                onClick={() => setCriando(false)}
+                className="h-9 rounded-[10px] bg-[#F0F0EE] px-4 text-[13px] font-semibold text-[#5E5E5F]"
+                whileHover={{ backgroundColor: "#E5E5E2" }} whileTap={{ scale: 0.97 }}
+              >
+                Cancelar
+              </motion.button>
+              <motion.button
+                onClick={adicionar}
+                disabled={!novoNome.trim() || saving}
+                className="h-9 rounded-[10px] bg-[#0E0F10] px-4 text-[13px] font-semibold text-white disabled:opacity-40"
+                whileHover={{ backgroundColor: "#2A2B2C" }} whileTap={{ scale: 0.97 }}
+              >
+                {saving ? "Salvando..." : "Adicionar"}
+              </motion.button>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Lista de subprojetos */}
+      {lista.length === 0 && !criando && (
+        <EmptyState
+          icon={FolderKanban}
+          text="Nenhum subprojeto ainda. Subprojetos são projetos filhos contidos dentro deste projeto."
+        />
+      )}
+
+      <div className="flex flex-col gap-2">
+        {lista.map((s, idx) => {
+          const sp = STATUS_SUBPROJETO[s.status] ?? STATUS_SUBPROJETO.ativo;
+          const tipoLabel = TIPO_CONFIG[s.tipo as ProjetoTipo]?.label ?? s.tipo;
+          const tipoCor = TIPO_CONFIG[s.tipo as ProjetoTipo]?.cor ?? "#5E5E5F";
+          const progresso = s.progresso ?? 0;
+          const corBarra = progresso >= 75 ? "#D7FF00" : progresso >= 40 ? "#A8C800" : "#FB8C00";
+
+          return (
+            <motion.div
+              key={s.id}
+              className="rounded-[16px] bg-[#FAFAFA] border border-[#F0F0EE] p-4"
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: idx * 0.05 }}
+              whileHover={{ borderColor: "#E0E0DC" }}
+            >
+              <div className="flex items-start justify-between gap-3">
+                <div className="flex-1 min-w-0">
+                  {/* Nome + tipo */}
+                  <div className="flex items-center gap-2 mb-1">
+                    <FolderOpen size={14} color="#A9AAA5" />
+                    <h4 className="text-[15px] font-bold text-[#0E0F10] truncate">{s.nome}</h4>
+                  </div>
+                  {s.descricao && (
+                    <p className="text-[12px] text-[#A9AAA5] mb-2 line-clamp-1">{s.descricao}</p>
+                  )}
+                  {/* Meta */}
+                  <div className="flex items-center gap-2 flex-wrap">
+                    <span className="text-[10px] font-bold px-2 py-0.5 rounded-[5px]"
+                      style={{ backgroundColor: `${tipoCor}12`, color: tipoCor }}>
+                      {tipoLabel}
+                    </span>
+                    <select
+                      value={s.status}
+                      onChange={e => mudarStatus(s.id, e.target.value)}
+                      className="text-[10px] font-bold rounded-[5px] px-2 py-0.5 outline-none border-none cursor-pointer"
+                      style={{ backgroundColor: sp.bg, color: sp.text }}
+                    >
+                      {Object.entries(STATUS_SUBPROJETO).map(([k, v]) => (
+                        <option key={k} value={k}>{v.label}</option>
+                      ))}
+                    </select>
+                  </div>
+                  {/* Barra de progresso */}
+                  {progresso > 0 && (
+                    <div className="mt-2.5">
+                      <div className="h-1 w-full rounded-full bg-[#EEEFE9] overflow-hidden">
+                        <motion.div
+                          className="h-full rounded-full"
+                          style={{ backgroundColor: corBarra }}
+                          initial={{ width: 0 }}
+                          animate={{ width: `${progresso}%` }}
+                          transition={{ duration: 0.7, ease: [0, 0, 0.2, 1] }}
+                        />
+                      </div>
+                    </div>
+                  )}
+                </div>
+                {/* Ações */}
+                <motion.button
+                  onClick={() => remover(s.id)}
+                  className="flex-shrink-0 rounded-[8px] p-1.5 text-[#A9AAA5]"
+                  whileHover={{ backgroundColor: "#FDECEA", color: "#C62828", scale: 1.1 }}
+                  whileTap={{ scale: 0.9 }}
+                  transition={{ duration: 0.15 }}
+                >
+                  <X size={13} />
+                </motion.button>
+              </div>
+            </motion.div>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
+function ModulosTab({ modulosData, tipoConfig, onSave }: {
+  modulosData: Modulo[];
+  tipoConfig: TipoConfig;
+  onSave: (m: Modulo[]) => Promise<void>;
+}) {
+  const [lista, setLista] = useState<Modulo[]>(modulosData);
+  const [saving, setSaving] = useState(false);
+
+  const updateStatus = async (idx: number, novoStatus: Modulo["status"]) => {
+    const novaLista = lista.map((m, i) => i === idx ? { ...m, status: novoStatus } : m);
+    setLista(novaLista);
+    setSaving(true);
+    await onSave(novaLista);
+    setSaving(false);
+  };
+
+  const statusOpts: Modulo["status"][] = ["vazio", "andamento", "bloqueado", "completo"];
+  const statusConfig: Record<Modulo["status"], { label: string; cor: string; bg: string }> = {
+    completo:  { label: "Completo",       cor: "#2E7D32", bg: "#E6F4EA" },
+    andamento: { label: "Em andamento",   cor: "#5A6600", bg: "#F0FF80" },
+    bloqueado: { label: "Bloqueado",      cor: "#C62828", bg: "#FDECEA" },
+    vazio:     { label: "Não iniciado",   cor: "#A9AAA5", bg: "#F7F7F5" },
+  };
+
+  return (
+    <div className="flex flex-col gap-4">
+      <div className="flex items-center justify-between">
+        <SectionLabel>Módulos do Projeto</SectionLabel>
+        <div className="flex items-center gap-3">
+          {saving && <span className="text-[11px] text-[#A9AAA5]">Salvando...</span>}
+          <span className="text-[12px] text-[#A9AAA5]">
+            {lista.filter(m => m.status === "completo").length}/{lista.length} completos
+          </span>
+        </div>
+      </div>
+
+      <p className="text-[12px] text-[#A9AAA5] leading-relaxed">
+        Estes são os módulos estruturais deste projeto. Módulos marcados como <strong>req</strong> são obrigatórios pelo tipo.
+      </p>
+
+      <div className="flex flex-col gap-2">
+        {lista.map((m, i) => {
+          const sCfg = statusConfig[m.status];
+          return (
+            <motion.div key={i}
+              className="flex items-center gap-3 rounded-[14px] border border-[#EEEFE9] bg-white px-4 py-3"
+              initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: i * 0.03 }}>
+              <div className="flex-1 min-w-0">
+                <div className="flex items-center gap-2">
+                  <p className="text-[13px] font-semibold text-[#0E0F10]">{m.nome}</p>
+                  {m.obrigatorio && (
+                    <span className="text-[8px] font-bold text-white bg-[#0E0F10] px-1.5 py-0.5 rounded-[4px] uppercase">req</span>
+                  )}
+                </div>
+              </div>
+              <div className="flex gap-1">
+                {statusOpts.map((s) => (
+                  <motion.button key={s}
+                    onClick={() => updateStatus(i, s)}
+                    className="rounded-[8px] px-2 py-1 text-[10px] font-bold"
+                    animate={{
+                      backgroundColor: m.status === s ? statusConfig[s].bg : "#FAFAFA",
+                      color: m.status === s ? statusConfig[s].cor : "#A9AAA5",
+                    }}
+                    whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}
+                    transition={{ duration: 0.15 }}>
+                    {statusConfig[s].label === "Não iniciado" ? "Vazio" : statusConfig[s].label.split(" ")[0]}
+                  </motion.button>
+                ))}
+              </div>
+            </motion.div>
+          );
+        })}
+      </div>
+
+      {/* Adicionar módulo extra */}
+      <AdicionarModulo onAdd={async (nome) => {
+        const novaLista = [...lista, { nome, status: "vazio" as const, obrigatorio: false }];
+        setLista(novaLista);
+        setSaving(true);
+        await onSave(novaLista);
+        setSaving(false);
+      }} />
+    </div>
+  );
+}
+
+function AdicionarModulo({ onAdd }: { onAdd: (nome: string) => Promise<void> }) {
+  const [novo, setNovo] = useState("");
+  return (
+    <div className="flex gap-2 pt-2 border-t border-[#EEEFE9]">
+      <input
+        value={novo} onChange={(e) => setNovo(e.target.value)}
+        onKeyDown={(e) => { if (e.key === "Enter" && novo.trim()) { onAdd(novo.trim()); setNovo(""); } }}
+        placeholder="Adicionar módulo extra..."
+        className="flex-1 h-9 rounded-[10px] border border-transparent bg-[#EEEFE9] px-3 text-[13px] text-[#0E0F10] outline-none placeholder:text-[#A9AAA5] focus:border-[#0E0F10] focus:shadow-[0_0_0_3px_rgba(14,15,16,0.08)] transition-[border-color,box-shadow] duration-150"
+      />
+      <motion.button onClick={() => { if (novo.trim()) { onAdd(novo.trim()); setNovo(""); } }} disabled={!novo.trim()}
+        className="h-9 w-9 rounded-[10px] bg-[#0E0F10] flex items-center justify-center disabled:opacity-40"
+        whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
+        <Plus size={14} color="#D7FF00" />
+      </motion.button>
+    </div>
+  );
+}
+
+// ─── MemoriaTab estruturada ───────────────────────────────────────────────────
+
+function MemoriaTab({ memoria, onSave }: {
+  memoria: MemoriaEntry[];
+  onSave: (m: MemoriaEntry[]) => Promise<void>;
+}) {
+  const [lista, setLista] = useState<MemoriaEntry[]>(memoria);
+  const [novo, setNovo] = useState("");
+  const [novoTipo, setNovoTipo] = useState<MemoriaEntry["tipo"]>("working");
+  const [saving, setSaving] = useState(false);
+  const [filtroTipo, setFiltroTipo] = useState<MemoriaEntry["tipo"] | "todos">("todos");
+
+  const adicionar = async () => {
+    if (!novo.trim()) return;
+    const entry: MemoriaEntry = {
+      id: Date.now(),
+      tipo: novoTipo,
+      texto: novo.trim(),
+      data: new Date().toLocaleDateString("pt-BR"),
+    };
+    const novaLista = [entry, ...lista];
+    setLista(novaLista);
+    setNovo("");
+    setSaving(true);
+    await onSave(novaLista);
+    setSaving(false);
+    toast.success("Adicionado à memória.");
+  };
+
+  const remover = async (id: number) => {
+    const novaLista = lista.filter(m => m.id !== id);
+    setLista(novaLista);
+    setSaving(true);
+    await onSave(novaLista);
+    setSaving(false);
+  };
+
+  const listaFiltrada = filtroTipo === "todos" ? lista : lista.filter(m => m.tipo === filtroTipo);
+
+  return (
+    <div className="flex flex-col gap-5">
+      <div className="rounded-[14px] bg-[#F0EFFF] p-4">
+        <p className="text-[12px] text-[#5B52C7] leading-relaxed font-semibold mb-1">Camadas de Memória</p>
+        <p className="text-[12px] text-[#5B52C7] leading-relaxed">
+          Working Memory → contexto da sessão atual. Long-term → memória permanente do projeto.
+          Decisões → escolhas importantes registradas. Aprendizados → lições que não podem se perder.
+        </p>
+      </div>
+
+      {/* Adicionar */}
+      <div className="flex flex-col gap-2">
+        <div className="flex gap-2">
+          {(["working", "longterm", "decision", "lesson"] as const).map((t) => {
+            const cfg = MEMORIA_TIPOS[t];
+            return (
+              <motion.button key={t}
+                onClick={() => setNovoTipo(t)}
+                className="flex-1 rounded-[10px] py-1.5 text-[11px] font-bold"
+                animate={{
+                  backgroundColor: novoTipo === t ? cfg.bg : "#FAFAFA",
+                  color: novoTipo === t ? cfg.cor : "#A9AAA5",
+                }}
+                whileTap={{ scale: 0.97 }}
+                transition={{ duration: 0.15 }}>
+                {cfg.label}
+              </motion.button>
+            );
+          })}
+        </div>
+        <div className="flex gap-2">
+          <input
+            value={novo} onChange={(e) => setNovo(e.target.value)}
+            onKeyDown={(e) => e.key === "Enter" && adicionar()}
+            placeholder={`Adicionar à ${MEMORIA_TIPOS[novoTipo].label}...`}
+            className="flex-1 h-9 rounded-[10px] border border-transparent bg-[#EEEFE9] px-3 text-[13px] text-[#0E0F10] outline-none placeholder:text-[#A9AAA5] focus:border-[#0E0F10] focus:shadow-[0_0_0_3px_rgba(14,15,16,0.08)] transition-[border-color,box-shadow] duration-150"
+          />
+          <motion.button onClick={adicionar} disabled={!novo.trim() || saving}
+            className="h-9 px-4 rounded-[10px] bg-[#0E0F10] text-[12px] font-semibold text-[#D7FF00] disabled:opacity-40"
+            whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.96 }}>
+            {saving ? "…" : <Plus size={13} />}
+          </motion.button>
+        </div>
+      </div>
+
+      {/* Filtro por tipo */}
+      {lista.length > 0 && (
+        <div className="flex gap-1.5 flex-wrap">
+          {(["todos", "working", "longterm", "decision", "lesson"] as const).map((t) => (
+            <motion.button key={t}
+              onClick={() => setFiltroTipo(t)}
+              className="rounded-[8px] px-2.5 py-1 text-[11px] font-semibold"
+              animate={{
+                backgroundColor: filtroTipo === t ? "#0E0F10" : "#EEEFE9",
+                color: filtroTipo === t ? "#D7FF00" : "#A9AAA5",
+              }}
+              whileTap={{ scale: 0.97 }}
+              transition={{ duration: 0.15 }}>
+              {t === "todos" ? "Todos" : MEMORIA_TIPOS[t].label}
+            </motion.button>
+          ))}
+        </div>
+      )}
+
+      {/* Lista */}
+      <div className="flex flex-col gap-2">
+        {listaFiltrada.length === 0 ? (
+          <EmptyState icon={Brain} text="Nenhuma memória registrada. Adicione contexto que os agentes devem lembrar." />
+        ) : listaFiltrada.map((m) => {
+          const cfg = MEMORIA_TIPOS[m.tipo];
+          const Icon = cfg.icone;
+          return (
+            <motion.div key={m.id}
+              className="rounded-[12px] p-3.5 flex items-start gap-3"
+              style={{ backgroundColor: cfg.bg }}
+              initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.2 }}>
+              <Icon size={13} style={{ color: cfg.cor }} className="mt-0.5 flex-shrink-0" />
+              <div className="flex-1 min-w-0">
+                <div className="flex items-center gap-2 mb-0.5">
+                  <span className="text-[9px] font-bold uppercase tracking-wide" style={{ color: cfg.cor }}>{cfg.label}</span>
+                  {m.data && <span className="text-[10px] text-[#A9AAA5]">{m.data}</span>}
+                </div>
+                <p className="text-[13px] text-[#0E0F10] leading-relaxed">{m.texto}</p>
+              </div>
+              <motion.button onClick={() => remover(m.id)}
+                className="flex-shrink-0 h-5 w-5 rounded-full flex items-center justify-center"
+                style={{ backgroundColor: `${cfg.cor}20` }}
+                whileHover={{ scale: 1.1, backgroundColor: `${cfg.cor}35` }} whileTap={{ scale: 0.9 }}>
+                <X size={9} style={{ color: cfg.cor }} />
+              </motion.button>
+            </motion.div>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
+// ─── RulesTab estruturado ─────────────────────────────────────────────────────
+
+function RulesTab({ rules, onSave }: {
+  rules: Rule[];
+  onSave: (r: Rule[]) => Promise<void>;
+}) {
+  const [lista, setLista] = useState<Rule[]>(rules);
+  const [saving, setSaving] = useState(false);
+  const [expandido, setExpandido] = useState<number | null>(null);
+  const [adicionando, setAdicionando] = useState(false);
+
+  // Form nova rule
+  const [novaTitulo, setNovaTitulo] = useState("");
+  const [novaDesc, setNovaDesc] = useState("");
+  const [novaCateg, setNovaCateg] = useState<Rule["categoria"]>("branding");
+  const [novaPrio, setNovaPrio] = useState<Rule["prioridade"]>("media");
+  const [novaBloq, setNovaBloq] = useState(false);
+
+  const adicionar = async () => {
+    if (!novaTitulo.trim()) return;
+    const rule: Rule = {
+      id: Date.now(),
+      titulo: novaTitulo.trim(),
+      descricao: novaDesc.trim() || undefined,
+      categoria: novaCateg,
+      prioridade: novaPrio,
+      bloqueante: novaBloq,
+      data: new Date().toLocaleDateString("pt-BR"),
+    };
+    const novaLista = [...lista, rule];
+    setLista(novaLista);
+    setNovaTitulo(""); setNovaDesc(""); setAdicionando(false);
+    setSaving(true);
+    await onSave(novaLista);
+    setSaving(false);
+    toast.success("Rule adicionada.");
+  };
+
+  const remover = async (id: number) => {
+    const novaLista = lista.filter(r => r.id !== id);
+    setLista(novaLista);
+    setSaving(true);
+    await onSave(novaLista);
+    setSaving(false);
+  };
+
+  const prioConfig: Record<Rule["prioridade"], { cor: string; label: string }> = {
+    critica: { cor: "#C62828", label: "Crítica" },
+    alta:    { cor: "#E53935", label: "Alta" },
+    media:   { cor: "#FB8C00", label: "Média" },
+    baixa:   { cor: "#A9AAA5", label: "Baixa" },
+  };
+
+  // Agrupar por categoria
+  const categorias = Object.keys(RULE_CATEGORIAS) as Rule["categoria"][];
+  const porCategoria = categorias.reduce<Record<Rule["categoria"], Rule[]>>((acc, cat) => {
+    acc[cat] = lista.filter(r => r.categoria === cat);
+    return acc;
+  }, {} as Record<Rule["categoria"], Rule[]>);
+
+  return (
+    <div className="flex flex-col gap-5">
+      <div className="flex items-center justify-between">
+        <div>
+          <SectionLabel>Rules do Projeto</SectionLabel>
+          <p className="text-[12px] text-[#A9AAA5] mt-0.5">
+            Restrições e diretrizes invioláveis. {lista.filter(r => r.bloqueante).length} bloqueante{lista.filter(r => r.bloqueante).length !== 1 ? "s" : ""}.
+          </p>
+        </div>
+        <div className="flex items-center gap-2">
+          {saving && <span className="text-[11px] text-[#A9AAA5]">Salvando...</span>}
+          <motion.button onClick={() => setAdicionando(v => !v)}
+            className="flex items-center gap-1.5 rounded-[10px] bg-[#0E0F10] px-3 py-1.5 text-[12px] font-semibold text-[#D7FF00]"
+            whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.96 }}>
+            <Plus size={12} /> Nova Rule
+          </motion.button>
+        </div>
+      </div>
+
+      {/* Formulário de nova rule */}
+      <AnimatePresence>
+        {adicionando && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: "auto" }} exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.25, ease: [0, 0, 0.2, 1] }}
+            className="overflow-hidden">
+            <div className="rounded-[16px] border-2 border-[#D7FF00] bg-[#FFFDE7] p-5 flex flex-col gap-3">
+              <p className="text-[11px] font-bold text-[#5A6600] uppercase tracking-wide">Nova Rule</p>
+              <input
+                autoFocus value={novaTitulo} onChange={(e) => setNovaTitulo(e.target.value)}
+                placeholder="Título da rule *"
+                className="h-10 w-full rounded-[10px] border border-transparent bg-white px-3 text-[13px] text-[#0E0F10] outline-none placeholder:text-[#A9AAA5] focus:border-[#0E0F10] focus:shadow-[0_0_0_3px_rgba(14,15,16,0.08)] transition-[border-color,box-shadow] duration-150"
+              />
+              <textarea
+                value={novaDesc} onChange={(e) => setNovaDesc(e.target.value)}
+                placeholder="Descrição (opcional)"
+                rows={2}
+                className="w-full rounded-[10px] border border-transparent bg-white px-3 py-2 text-[13px] text-[#0E0F10] outline-none placeholder:text-[#A9AAA5] resize-none focus:border-[#0E0F10] focus:shadow-[0_0_0_3px_rgba(14,15,16,0.08)] transition-[border-color,box-shadow] duration-150"
+              />
+              <div className="grid grid-cols-2 gap-3">
+                <div>
+                  <label className="mb-1 block text-[10px] font-bold uppercase text-[#A9AAA5]">Categoria</label>
+                  <select
+                    value={novaCateg} onChange={(e) => setNovaCateg(e.target.value as Rule["categoria"])}
+                    className="h-9 w-full rounded-[10px] border border-transparent bg-white px-2 text-[12px] text-[#0E0F10] outline-none focus:border-[#0E0F10] transition-[border-color] duration-150">
+                    {Object.entries(RULE_CATEGORIAS).map(([k, v]) => (
+                      <option key={k} value={k}>{v.label}</option>
+                    ))}
+                  </select>
+                </div>
+                <div>
+                  <label className="mb-1 block text-[10px] font-bold uppercase text-[#A9AAA5]">Prioridade</label>
+                  <select
+                    value={novaPrio} onChange={(e) => setNovaPrio(e.target.value as Rule["prioridade"])}
+                    className="h-9 w-full rounded-[10px] border border-transparent bg-white px-2 text-[12px] text-[#0E0F10] outline-none focus:border-[#0E0F10] transition-[border-color] duration-150">
+                    {Object.entries(prioConfig).map(([k, v]) => (
+                      <option key={k} value={k}>{v.label}</option>
+                    ))}
+                  </select>
+                </div>
+              </div>
+              <label className="flex items-center gap-2 cursor-pointer">
+                <input type="checkbox" checked={novaBloq} onChange={(e) => setNovaBloq(e.target.checked)}
+                  className="h-4 w-4 rounded border-[#D4D5D6] accent-[#E53935]" />
+                <span className="text-[12px] font-semibold text-[#C62828]">Esta rule é bloqueante</span>
+              </label>
+              <div className="flex gap-2">
+                <motion.button onClick={() => setAdicionando(false)}
+                  className="flex-1 rounded-[10px] bg-white py-2 text-[13px] font-semibold text-[#5E5E5F]"
+                  whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.97 }}>Cancelar</motion.button>
+                <motion.button onClick={adicionar} disabled={!novaTitulo.trim()}
+                  className="flex-1 rounded-[10px] bg-[#0E0F10] py-2 text-[13px] font-semibold text-[#D7FF00] disabled:opacity-40"
+                  whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.96 }}>Salvar Rule</motion.button>
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Rules agrupadas por categoria */}
+      {lista.length === 0 ? (
+        <EmptyState icon={ShieldCheck} text="Nenhuma rule definida. Adicione restrições obrigatórias para este projeto." />
+      ) : (
+        <div className="flex flex-col gap-4">
+          {categorias.map((cat) => {
+            const catRules = porCategoria[cat];
+            if (catRules.length === 0) return null;
+            const catCfg = RULE_CATEGORIAS[cat];
+            return (
+              <div key={cat}>
+                <div className="flex items-center gap-2 mb-2">
+                  <span className="text-[9px] font-bold uppercase tracking-wide px-2 py-0.5 rounded-[5px]"
+                    style={{ backgroundColor: catCfg.bg, color: catCfg.cor }}>{catCfg.label}</span>
+                  <span className="text-[11px] text-[#A9AAA5]">{catRules.length} rule{catRules.length !== 1 ? "s" : ""}</span>
+                </div>
+                <div className="flex flex-col gap-1.5">
+                  {catRules.map((r) => {
+                    const pCfg = prioConfig[r.prioridade ?? "media"];
+                    return (
+                      <motion.div key={r.id}
+                        className="rounded-[12px] border border-[#F0F0EE] bg-white overflow-hidden"
+                        initial={{ opacity: 0, y: 4 }} animate={{ opacity: 1, y: 0 }}>
+                        <div
+                          className="flex items-start gap-3 px-4 py-3 cursor-pointer"
+                          onClick={() => setExpandido(expandido === r.id ? null : r.id)}>
+                          <div className="flex-1 min-w-0">
+                            <div className="flex items-center gap-2 flex-wrap">
+                              {r.bloqueante && (
+                                <span className="inline-flex items-center gap-1 rounded-[4px] bg-[#FDECEA] px-1.5 py-0.5 text-[8px] font-bold text-[#C62828]">
+                                  <Lock size={7} /> BLOQUEANTE
+                                </span>
+                              )}
+                              <span className="text-[13px] font-semibold text-[#0E0F10]">{r.titulo}</span>
+                            </div>
+                            {r.descricao && expandido !== r.id && (
+                              <p className="text-[12px] text-[#A9AAA5] mt-0.5 truncate">{r.descricao}</p>
+                            )}
+                          </div>
+                          <div className="flex items-center gap-2 flex-shrink-0">
+                            <span className="text-[9px] font-bold" style={{ color: pCfg.cor }}>{pCfg.label}</span>
+                            <motion.div animate={{ rotate: expandido === r.id ? 180 : 0 }} transition={{ duration: 0.2 }}>
+                              <ChevronDown size={12} color="#A9AAA5" />
+                            </motion.div>
+                          </div>
+                        </div>
+
+                        <AnimatePresence>
+                          {expandido === r.id && (
+                            <motion.div
+                              initial={{ height: 0, opacity: 0 }} animate={{ height: "auto", opacity: 1 }}
+                              exit={{ height: 0, opacity: 0 }}
+                              transition={{ duration: 0.2, ease: [0, 0, 0.2, 1] }}
+                              className="overflow-hidden">
+                              <div className="px-4 pb-3 flex flex-col gap-2 border-t border-[#F0F0EE] pt-3">
+                                {r.descricao && (
+                                  <p className="text-[13px] text-[#5E5E5F] leading-relaxed">{r.descricao}</p>
+                                )}
+                                <div className="flex items-center justify-between">
+                                  <div className="flex items-center gap-3">
+                                    {r.data && <span className="text-[11px] text-[#A9AAA5]">{r.data}</span>}
+                                    {r.origem && <span className="text-[11px] text-[#A9AAA5]">· {r.origem}</span>}
+                                  </div>
+                                  <motion.button onClick={() => remover(r.id)}
+                                    className="flex items-center gap-1 rounded-[8px] bg-[#FDECEA] px-2.5 py-1 text-[11px] font-semibold text-[#C62828]"
+                                    whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.96 }}>
+                                    <X size={10} /> Remover
+                                  </motion.button>
+                                </div>
+                              </div>
+                            </motion.div>
+                          )}
+                        </AnimatePresence>
+                      </motion.div>
+                    );
+                  })}
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      )}
+    </div>
+  );
+}
+
+// ─── LogTab forense ───────────────────────────────────────────────────────────
+
+function LogTab({ log }: { log: LogEntry[] }) {
+  const [filtroAgente, setFiltroAgente] = useState<boolean>(false);
+  const agentes = [...new Set(log.filter(l => l.agente).map(l => l.agente!))];
+  const listaFiltrada = filtroAgente ? log.filter(l => !!l.agente) : log;
+
+  if (log.length === 0) {
+    return <EmptyState icon={History} text="O histórico de eventos será registrado automaticamente conforme o projeto evolui." />;
+  }
+
+  return (
+    <div className="flex flex-col gap-4">
+      <div className="flex items-center justify-between">
+        <SectionLabel>Histórico de Eventos</SectionLabel>
+        <div className="flex items-center gap-2">
+          {agentes.length > 0 && (
+            <motion.button onClick={() => setFiltroAgente(v => !v)}
+              className="rounded-[8px] px-2.5 py-1 text-[11px] font-semibold"
+              animate={{
+                backgroundColor: filtroAgente ? "#0E0F10" : "#EEEFE9",
+                color: filtroAgente ? "#D7FF00" : "#A9AAA5",
+              }}
+              whileTap={{ scale: 0.97 }}
+              transition={{ duration: 0.15 }}>
+              <Bot size={11} className="inline mr-1" />
+              Só agentes
+            </motion.button>
+          )}
+          <span className="text-[11px] text-[#A9AAA5]">{listaFiltrada.length} evento{listaFiltrada.length !== 1 ? "s" : ""}</span>
+        </div>
+      </div>
+
+      <div className="flex flex-col gap-1.5">
+        {listaFiltrada.map((entry, i) => (
+          <motion.div key={entry.id ?? i}
+            className="flex items-start gap-3 rounded-[14px] bg-[#FAFAFA] px-4 py-3"
+            initial={{ opacity: 0, x: -8 }} animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: i * 0.03 }}>
+            <div className="h-7 w-7 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5"
+              style={{ backgroundColor: entry.agente ? "#F0EFFF" : "#EEEFE9" }}>
+              {entry.agente ? <Bot size={12} color="#7C6AF7" /> : <History size={12} color="#A9AAA5" />}
+            </div>
+            <div className="flex-1 min-w-0">
+              <p className="text-[13px] font-semibold text-[#0E0F10]">{entry.acao}</p>
+              <div className="flex items-center gap-2 mt-0.5 flex-wrap">
+                {entry.agente && (
+                  <span className="text-[10px] font-bold text-[#7C6AF7] bg-[#F0EFFF] px-1.5 py-0.5 rounded-[4px]">
+                    {entry.agente}
+                  </span>
+                )}
+                {entry.squad && (
+                  <span className="text-[10px] text-[#A9AAA5]">{entry.squad}</span>
+                )}
+                {entry.modulo && (
+                  <span className="text-[10px] text-[#A9AAA5]">· {entry.modulo}</span>
+                )}
+                {entry.versao && (
+                  <span className="text-[10px] font-bold text-[#5E5E5F] bg-[#EEEFE9] px-1.5 py-0.5 rounded-[4px]">
+                    v{entry.versao}
+                  </span>
+                )}
+                {entry.data && (
+                  <span className="text-[10px] text-[#A9AAA5]">{entry.data}</span>
+                )}
+              </div>
+              {entry.impacto && (
+                <p className="text-[11px] text-[#5E5E5F] mt-1 italic">{entry.impacto}</p>
+              )}
+            </div>
+          </motion.div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+// ─── ConectoresTab ────────────────────────────────────────────────────────────
+
+function ConectoresTab({ conectores, tipoConfig, meta, onSave }: {
+  conectores: Conector[];
+  tipoConfig: TipoConfig;
+  meta: Record<string, unknown>;
+  onSave: (c: Conector[]) => Promise<void>;
+}) {
+  const [lista, setLista] = useState<Conector[]>(conectores);
+  const [saving, setSaving] = useState(false);
+
+  const updateStatus = async (idx: number, status: Conector["status"]) => {
+    const novaLista = lista.map((c, i) => i === idx ? { ...c, status } : c);
+    setLista(novaLista);
+    setSaving(true);
+    await onSave(novaLista);
+    setSaving(false);
+  };
+
+  const updateUrl = async (idx: number, url: string) => {
+    const novaLista = lista.map((c, i) => i === idx ? { ...c, url } : c);
+    setLista(novaLista);
+    setSaving(true);
+    await onSave(novaLista);
+    setSaving(false);
+  };
+
+  const statusConfig: Record<Conector["status"], { cor: string; label: string; bg: string }> = {
+    ativo:    { cor: "#43A047", label: "Ativo",    bg: "#E6F4EA" },
+    inativo:  { cor: "#C62828", label: "Inativo",  bg: "#FDECEA" },
+    pendente: { cor: "#FB8C00", label: "Pendente", bg: "#FFF0E0" },
+  };
+
+  // Campos de infraestrutura rápida
+  const infraFields: { label: string; key: string; placeholder: string }[] = [
+    { label: "URL de Produção",  key: "deploy_url",   placeholder: "https://..." },
+    { label: "URL de Staging",   key: "staging_url",  placeholder: "https://staging..." },
+    { label: "Repositório",      key: "github_url",   placeholder: "https://github.com/..." },
+    { label: "Figma",            key: "figmaUrl",     placeholder: "https://figma.com/..." },
+    { label: "Domínio",          key: "dominio",      placeholder: "meusite.com" },
+  ];
+
+  return (
+    <div className="flex flex-col gap-6">
+      {/* Infraestrutura rápida */}
+      <div>
+        <SectionLabel>Infraestrutura</SectionLabel>
+        <div className="flex flex-col gap-2 mt-2">
+          {infraFields.map(({ label, key, placeholder }) => {
+            const val = (meta[key] as string) ?? "";
+            return (
+              <div key={key} className="flex items-center gap-3 rounded-[12px] bg-[#FAFAFA] px-4 py-2.5">
+                <span className="text-[12px] text-[#A9AAA5] w-[120px] flex-shrink-0">{label}</span>
+                {val ? (
+                  <div className="flex items-center gap-2 flex-1 min-w-0">
+                    <a href={val.startsWith("http") ? val : `https://${val}`} target="_blank" rel="noopener noreferrer"
+                      className="text-[12px] font-semibold text-[#0E0F10] hover:underline truncate">{val}</a>
+                    <ExternalLink size={11} color="#A9AAA5" className="flex-shrink-0" />
+                  </div>
+                ) : (
+                  <span className="text-[12px] text-[#D5D2C9] italic">{placeholder}</span>
+                )}
+              </div>
+            );
+          })}
+        </div>
+      </div>
+
+      {/* Conectores */}
+      <div>
+        <div className="flex items-center justify-between mb-3">
+          <SectionLabel>Conectores ativos</SectionLabel>
+          {saving && <span className="text-[11px] text-[#A9AAA5]">Salvando...</span>}
+        </div>
+        <div className="flex flex-col gap-2">
+          {lista.map((c, i) => {
+            const Icon = CONECTOR_ICONS[c.tipo] ?? CONECTOR_ICONS.default;
+            const sCfg = statusConfig[c.status];
+            return (
+              <motion.div key={i}
+                className="rounded-[14px] border border-[#F0F0EE] bg-white p-4"
+                initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: i * 0.04 }}>
+                <div className="flex items-center gap-3 mb-3">
+                  <div className="h-8 w-8 rounded-[10px] bg-[#EEEFE9] flex items-center justify-center flex-shrink-0">
+                    <Icon size={15} color="#5E5E5F" />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <p className="text-[13px] font-bold text-[#0E0F10]">{c.nome}</p>
+                    <span className="text-[10px] text-[#A9AAA5] uppercase">{c.tipo}</span>
+                  </div>
+                  <div className="flex gap-1">
+                    {(["ativo", "pendente", "inativo"] as const).map((s) => (
+                      <motion.button key={s}
+                        onClick={() => updateStatus(i, s)}
+                        className="rounded-[7px] px-2 py-0.5 text-[10px] font-bold"
+                        animate={{
+                          backgroundColor: c.status === s ? statusConfig[s].bg : "#FAFAFA",
+                          color: c.status === s ? statusConfig[s].cor : "#A9AAA5",
+                        }}
+                        whileTap={{ scale: 0.97 }}
+                        transition={{ duration: 0.15 }}>
+                        {statusConfig[s].label}
+                      </motion.button>
+                    ))}
+                  </div>
+                </div>
+                <input
+                  value={c.url ?? ""}
+                  onChange={(e) => updateUrl(i, e.target.value)}
+                  placeholder="URL ou identificador..."
+                  className="h-8 w-full rounded-[8px] border border-transparent bg-[#FAFAFA] px-3 text-[12px] text-[#0E0F10] outline-none placeholder:text-[#D5D2C9] focus:border-[#D9D9D4] transition-[border-color] duration-150"
+                />
+              </motion.div>
+            );
+          })}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ─── TarefasTab ────────────────────────────────────────────────────────────────
+
+function TarefasTab({ tarefas, tarefasConcluidas, onSave }: {
+  tarefas: Tarefa[];
+  tarefasConcluidas: number;
+  onSave: (tarefas: unknown) => Promise<void>;
+}) {
+  const [lista, setLista] = useState<Tarefa[]>(tarefas);
+  const [novaTarefa, setNovaTarefa] = useState("");
+  const [novaPrio, setNovaPrio] = useState<Tarefa["prioridade"]>("media");
+  const [saving, setSaving] = useState(false);
+
+  const toggleTarefa = async (id: number) => {
+    const novaLista = lista.map((t) => t.id === id ? { ...t, concluido: !t.concluido } : t);
+    setLista(novaLista);
+    setSaving(true);
+    await onSave(novaLista);
+    setSaving(false);
+  };
+
+  const adicionarTarefa = async () => {
+    if (!novaTarefa.trim()) return;
+    const novaLista = [...lista, { id: Date.now(), titulo: novaTarefa.trim(), concluido: false, prioridade: novaPrio }];
+    setLista(novaLista);
+    setNovaTarefa("");
+    setSaving(true);
+    await onSave(novaLista);
+    setSaving(false);
+  };
+
+  const prioConfig: Record<NonNullable<Tarefa["prioridade"]>, { cor: string; label: string }> = {
+    alta:  { cor: "#E53935", label: "Alta" },
+    media: { cor: "#FB8C00", label: "Média" },
+    baixa: { cor: "#A9AAA5", label: "Baixa" },
+  };
+
+  const pendentes = lista.filter(t => !t.concluido);
+  const concluidas = lista.filter(t => t.concluido);
+
+  return (
+    <div>
+      <div className="flex items-center justify-between mb-4">
+        <div>
+          <SectionLabel>Tarefas</SectionLabel>
+          {lista.length > 0 && (
+            <p className="text-[12px] text-[#A9AAA5] mt-0.5">{tarefasConcluidas} de {lista.length} concluídas</p>
+          )}
+        </div>
+        {saving && <span className="text-[11px] text-[#A9AAA5]">Salvando...</span>}
+      </div>
+
+      {/* Pendentes */}
+      {pendentes.length > 0 && (
+        <div className="flex flex-col gap-1.5 mb-4">
+          {pendentes.map((t, i) => {
+            const pCfg = t.prioridade ? prioConfig[t.prioridade] : null;
+            return (
+              <motion.div key={t.id}
+                className="flex items-center gap-3 rounded-[10px] bg-[#FAFAFA] px-3 py-2.5 cursor-pointer"
+                initial={{ opacity: 0, x: -8 }} animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: i * 0.04 }}
+                whileHover={{ backgroundColor: "#F3F3F1" }}
+                whileTap={{ scale: 0.99 }}
+                onClick={() => toggleTarefa(t.id)}>
+                <Square size={16} color="#A9AAA5" className="flex-shrink-0" />
+                <span className="text-[13px] font-semibold text-[#0E0F10] flex-1">{t.titulo}</span>
+                {pCfg && (
+                  <span className="text-[9px] font-bold" style={{ color: pCfg.cor }}>{pCfg.label}</span>
+                )}
+              </motion.div>
+            );
+          })}
+        </div>
+      )}
+
+      {/* Concluídas */}
+      {concluidas.length > 0 && (
+        <div className="flex flex-col gap-1.5 mb-4">
+          <p className="text-[10px] font-bold uppercase text-[#A9AAA5] mb-1">Concluídas</p>
+          {concluidas.map((t, i) => (
+            <motion.div key={t.id}
+              className="flex items-center gap-3 rounded-[10px] bg-[#E6F4EA] px-3 py-2.5 cursor-pointer"
+              initial={{ opacity: 0, x: -8 }} animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: i * 0.04 }}
+              whileHover={{ backgroundColor: "#DDF0E0" }}
+              whileTap={{ scale: 0.99 }}
+              onClick={() => toggleTarefa(t.id)}>
+              <CheckCircle2 size={16} color="#43A047" className="flex-shrink-0" />
+              <span className="text-[13px] font-semibold text-[#2E7D32] flex-1 line-through">{t.titulo}</span>
+            </motion.div>
+          ))}
+        </div>
+      )}
+
+      {/* Input nova tarefa */}
+      <div className="flex gap-2 items-center mt-2">
+        <div className="flex gap-1">
+          {(["alta", "media", "baixa"] as const).map((p) => (
+            <motion.button key={p}
+              onClick={() => setNovaPrio(p)}
+              className="rounded-[7px] px-2 py-1 text-[10px] font-bold"
+              animate={{
+                backgroundColor: novaPrio === p ? prioConfig[p].cor + "20" : "#FAFAFA",
+                color: novaPrio === p ? prioConfig[p].cor : "#A9AAA5",
+              }}
+              whileTap={{ scale: 0.97 }}
+              transition={{ duration: 0.15 }}>
+              {prioConfig[p].label}
+            </motion.button>
+          ))}
+        </div>
+        <input
+          value={novaTarefa}
+          onChange={(e) => setNovaTarefa(e.target.value)}
+          onKeyDown={(e) => e.key === "Enter" && adicionarTarefa()}
+          placeholder="Nova tarefa..."
+          className="flex-1 h-9 rounded-[10px] border border-transparent bg-[#EEEFE9] px-3 text-[13px] text-[#0E0F10] outline-none placeholder:text-[#A9AAA5] focus:border-[#0E0F10] focus:shadow-[0_0_0_3px_rgba(14,15,16,0.08)] transition-[border-color,box-shadow] duration-150"
+        />
+        <motion.button onClick={adicionarTarefa} disabled={!novaTarefa.trim()}
+          className="h-9 w-9 rounded-[10px] bg-[#0E0F10] flex items-center justify-center disabled:opacity-40"
+          whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
+          <Plus size={14} color="#D7FF00" />
+        </motion.button>
+      </div>
+    </div>
+  );
+}
+
+// ─── EditableTextSection ──────────────────────────────────────────────────────
 
 function EditableTextSection({ title, fieldKey, value, placeholder, onSave }: {
   title: string; fieldKey: string; value: string; placeholder: string;
@@ -895,7 +2270,7 @@ function EditableTextSection({ title, fieldKey, value, placeholder, onSave }: {
   return (
     <div>
       <div className="flex items-center justify-between mb-3">
-        <p className="text-[11px] font-bold uppercase tracking-wide text-[#A9AAA5]">{title}</p>
+        <SectionLabel>{title}</SectionLabel>
         {!editing ? (
           <motion.button onClick={() => setEditing(true)}
             className="flex items-center gap-1 rounded-[8px] bg-[#EEEFE9] px-2.5 py-1 text-[11px] font-semibold text-[#5E5E5F]"
@@ -945,215 +2320,11 @@ function EditableTextSection({ title, fieldKey, value, placeholder, onSave }: {
   );
 }
 
-function TarefasTab({ tarefas, tarefasConcluidas, onSave }: {
-  tarefas: { id: number; titulo: string; concluido: boolean }[];
-  tarefasConcluidas: number;
-  onSave: (tarefas: unknown) => Promise<void>;
-}) {
-  const [lista, setLista] = useState(tarefas);
-  const [novaTarefa, setNovaTarefa] = useState("");
-  const [saving, setSaving] = useState(false);
-
-  const toggleTarefa = async (id: number) => {
-    const novaLista = lista.map((t) => t.id === id ? { ...t, concluido: !t.concluido } : t);
-    setLista(novaLista);
-    setSaving(true);
-    await onSave(novaLista);
-    setSaving(false);
-  };
-
-  const adicionarTarefa = async () => {
-    if (!novaTarefa.trim()) return;
-    const novaLista = [...lista, { id: Date.now(), titulo: novaTarefa.trim(), concluido: false }];
-    setLista(novaLista);
-    setNovaTarefa("");
-    setSaving(true);
-    await onSave(novaLista);
-    setSaving(false);
-  };
-
-  return (
-    <div>
-      <div className="flex items-center justify-between mb-4">
-        <p className="text-[11px] font-bold uppercase tracking-wide text-[#A9AAA5]">
-          {lista.length > 0 ? `${tarefasConcluidas} de ${lista.length} concluídas` : "Sem tarefas"}
-        </p>
-        {saving && <span className="text-[11px] text-[#A9AAA5]">Salvando...</span>}
-      </div>
-
-      {lista.length > 0 && (
-        <div className="flex flex-col gap-1.5 mb-4">
-          {lista.map((t, i) => (
-            <motion.div key={t.id}
-              className="flex items-center gap-3 rounded-[10px] px-3 py-2.5 cursor-pointer"
-              style={{ backgroundColor: t.concluido ? "#E6F4EA" : "#FAFAFA" }}
-              initial={{ opacity: 0, x: -8 }} animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: i * 0.04 }}
-              whileHover={{ backgroundColor: t.concluido ? "#DDF0E0" : "#F3F3F1" }}
-              whileTap={{ scale: 0.99 }}
-              onClick={() => toggleTarefa(t.id)}>
-              {t.concluido
-                ? <CheckCircle2 size={16} color="#43A047" />
-                : <Square size={16} color="#A9AAA5" />
-              }
-              <span className="text-[13px] font-semibold flex-1"
-                style={{ color: t.concluido ? "#2E7D32" : "#0E0F10", textDecoration: t.concluido ? "line-through" : "none" }}>
-                {t.titulo}
-              </span>
-            </motion.div>
-          ))}
-        </div>
-      )}
-
-      <div className="flex gap-2">
-        <input
-          value={novaTarefa}
-          onChange={(e) => setNovaTarefa(e.target.value)}
-          onKeyDown={(e) => e.key === "Enter" && adicionarTarefa()}
-          placeholder="Nova tarefa..."
-          className="flex-1 h-9 rounded-[10px] border border-transparent bg-[#EEEFE9] px-3 text-[13px] text-[#0E0F10] outline-none placeholder:text-[#A9AAA5] focus:border-[#0E0F10] focus:shadow-[0_0_0_3px_rgba(14,15,16,0.08)] transition-[border-color,box-shadow] duration-150"
-        />
-        <motion.button onClick={adicionarTarefa} disabled={!novaTarefa.trim()}
-          className="h-9 w-9 rounded-[10px] bg-[#0E0F10] flex items-center justify-center disabled:opacity-40"
-          whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
-          <Plus size={14} color="#D7FF00" />
-        </motion.button>
-      </div>
-    </div>
-  );
-}
-
-function MemoriaTab({ memoria, onSave }: {
-  memoria: { texto: string; data?: string }[];
-  onSave: (memoria: unknown) => Promise<void>;
-}) {
-  const [lista, setLista] = useState(memoria);
-  const [novo, setNovo] = useState("");
-  const [saving, setSaving] = useState(false);
-
-  const adicionar = async () => {
-    if (!novo.trim()) return;
-    const novaLista = [{ texto: novo.trim(), data: new Date().toLocaleDateString("pt-BR") }, ...lista];
-    setLista(novaLista);
-    setNovo("");
-    setSaving(true);
-    await onSave(novaLista);
-    setSaving(false);
-    toast.success("Adicionado à memória.");
-  };
-
-  return (
-    <div className="flex flex-col gap-4">
-      <p className="text-[12px] text-[#A9AAA5] leading-relaxed">
-        A memória registra contexto útil acumulado — decisões, aprendizados, observações que os agentes precisam considerar.
-      </p>
-
-      <div className="flex gap-2">
-        <input
-          value={novo} onChange={(e) => setNovo(e.target.value)}
-          onKeyDown={(e) => e.key === "Enter" && adicionar()}
-          placeholder="Adicionar à memória do projeto..."
-          className="flex-1 h-9 rounded-[10px] border border-transparent bg-[#EEEFE9] px-3 text-[13px] text-[#0E0F10] outline-none placeholder:text-[#A9AAA5] focus:border-[#0E0F10] focus:shadow-[0_0_0_3px_rgba(14,15,16,0.08)] transition-[border-color,box-shadow] duration-150"
-        />
-        <motion.button onClick={adicionar} disabled={!novo.trim() || saving}
-          className="h-9 px-4 rounded-[10px] bg-[#0E0F10] text-[12px] font-semibold text-[#D7FF00] disabled:opacity-40"
-          whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.96 }}>
-          <Plus size={13} />
-        </motion.button>
-      </div>
-
-      <div className="flex flex-col gap-2">
-        {lista.length === 0 ? (
-          <EmptyState icon={Brain} text="Nenhuma memória registrada. Adicione contexto que os agentes devem lembrar." />
-        ) : lista.map((m, i) => (
-          <motion.div key={i}
-            className="rounded-[12px] bg-[#F0EFFF] p-3.5 flex items-start gap-3"
-            initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: i * 0.04 }}>
-            <Brain size={13} color="#7C6AF7" className="mt-0.5 flex-shrink-0" />
-            <div>
-              <p className="text-[13px] text-[#0E0F10] leading-relaxed">{m.texto}</p>
-              {m.data && <p className="text-[10px] text-[#A9AAA5] mt-1">{m.data}</p>}
-            </div>
-          </motion.div>
-        ))}
-      </div>
-    </div>
-  );
-}
-
-function RulesTab({ rules, onSave }: {
-  rules: { regra: string }[];
-  onSave: (rules: unknown) => Promise<void>;
-}) {
-  const [lista, setLista] = useState(rules);
-  const [nova, setNova] = useState("");
-  const [saving, setSaving] = useState(false);
-
-  const adicionar = async () => {
-    if (!nova.trim()) return;
-    const novaLista = [...lista, { regra: nova.trim() }];
-    setLista(novaLista);
-    setNova("");
-    setSaving(true);
-    await onSave(novaLista);
-    setSaving(false);
-    toast.success("Rule adicionada.");
-  };
-
-  const remover = async (i: number) => {
-    const novaLista = lista.filter((_, idx) => idx !== i);
-    setLista(novaLista);
-    setSaving(true);
-    await onSave(novaLista);
-    setSaving(false);
-  };
-
-  return (
-    <div className="flex flex-col gap-4">
-      <p className="text-[12px] text-[#A9AAA5] leading-relaxed">
-        Rules são restrições que não podem ser quebradas neste projeto — branding, técnicas, tom de voz, escopo, exigências.
-      </p>
-
-      <div className="flex gap-2">
-        <input
-          value={nova} onChange={(e) => setNova(e.target.value)}
-          onKeyDown={(e) => e.key === "Enter" && adicionar()}
-          placeholder="Ex: Nunca usar cores fora do brand..."
-          className="flex-1 h-9 rounded-[10px] border border-transparent bg-[#EEEFE9] px-3 text-[13px] text-[#0E0F10] outline-none placeholder:text-[#A9AAA5] focus:border-[#0E0F10] focus:shadow-[0_0_0_3px_rgba(14,15,16,0.08)] transition-[border-color,box-shadow] duration-150"
-        />
-        <motion.button onClick={adicionar} disabled={!nova.trim() || saving}
-          className="h-9 px-4 rounded-[10px] bg-[#0E0F10] text-[12px] font-semibold text-[#D7FF00] disabled:opacity-40"
-          whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.96 }}>
-          <Plus size={13} />
-        </motion.button>
-      </div>
-
-      <div className="flex flex-col gap-2">
-        {lista.length === 0 ? (
-          <EmptyState icon={ShieldCheck} text="Nenhuma rule definida. Adicione restrições obrigatórias para este projeto." />
-        ) : lista.map((r, i) => (
-          <motion.div key={i}
-            className="rounded-[12px] bg-[#FFF8E1] p-3.5 flex items-start justify-between gap-3"
-            initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: i * 0.04 }}>
-            <div className="flex items-start gap-2.5">
-              <ShieldCheck size={13} color="#FB8C00" className="mt-0.5 flex-shrink-0" />
-              <p className="text-[13px] text-[#0E0F10] leading-relaxed">{r.regra}</p>
-            </div>
-            <motion.button onClick={() => remover(i)}
-              className="flex-shrink-0 h-6 w-6 rounded-full bg-[#FFE0B2] flex items-center justify-center"
-              whileHover={{ backgroundColor: "#FFCC80", scale: 1.1 }} whileTap={{ scale: 0.9 }}>
-              <X size={10} color="#E65100" />
-            </motion.button>
-          </motion.div>
-        ))}
-      </div>
-    </div>
-  );
-}
-
 // ─── Helpers ──────────────────────────────────────────────────────────────────
+
+function SectionLabel({ children }: { children: React.ReactNode }) {
+  return <p className="text-[11px] font-bold uppercase tracking-wide text-[#A9AAA5]">{children}</p>;
+}
 
 function StatusBadge({ status }: { status: ProjetoStatus }) {
   const p = STATUS_PALETTE[status];
@@ -1162,6 +2333,30 @@ function StatusBadge({ status }: { status: ProjetoStatus }) {
       style={{ backgroundColor: p.bg, color: p.text, fontSize: 10, padding: "3px 9px" }}>
       <span className="h-1.5 w-1.5 rounded-full" style={{ backgroundColor: p.dot }} />
       {p.label}
+    </span>
+  );
+}
+
+function HealthBadge({ health, size = "default" }: {
+  health: "ok" | "risco" | "critico" | "indefinido";
+  size?: "default" | "sm";
+}) {
+  const cfg: Record<string, { bg: string; text: string; label: string; icon: React.ElementType }> = {
+    ok:         { bg: "#E6F4EA", text: "#2E7D32",  label: "Saudável",   icon: Activity },
+    risco:      { bg: "#FFF0E0", text: "#A05500",  label: "Em risco",   icon: AlertTriangle },
+    critico:    { bg: "#FDECEA", text: "#C62828",  label: "Crítico",    icon: AlertCircle },
+    indefinido: { bg: "#F7F7F5", text: "#A9AAA5",  label: "Indefinido", icon: Hash },
+  };
+  const c = cfg[health];
+  const Icon = c.icon;
+  const fs = size === "sm" ? 9 : 10;
+  const iconSize = size === "sm" ? 9 : 10;
+  const pad = size === "sm" ? "2px 7px" : "3px 9px";
+  return (
+    <span className="inline-flex items-center gap-1 rounded-[6px] font-bold uppercase tracking-wide"
+      style={{ backgroundColor: c.bg, color: c.text, fontSize: fs, padding: pad }}>
+      <Icon size={iconSize} />
+      {c.label}
     </span>
   );
 }
@@ -1182,7 +2377,7 @@ function EmptyState({ icon: Icon, text }: { icon: React.ElementType; text: strin
   return (
     <div className="flex flex-col items-center gap-3 py-12 text-center">
       <Icon size={24} color="#A9AAA5" />
-      <p className="text-[13px] text-[#A9AAA5] max-w-[260px] leading-relaxed">{text}</p>
+      <p className="text-[13px] text-[#A9AAA5] max-w-[280px] leading-relaxed">{text}</p>
     </div>
   );
 }
