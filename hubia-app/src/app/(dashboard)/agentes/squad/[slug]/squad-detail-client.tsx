@@ -56,7 +56,7 @@ function StatusBadge({ status }: { status: string }) {
     inativo: { label: "Inativo", bg: "#EEEFE9", color: "var(--hubia-bg-base-700)" },
     rascunho: { label: "Rascunho", bg: "#EEEFE9", color: "var(--hubia-bg-base-700)" },
   };
-  const cfg = map[status] ?? { label: status, bg: "#EEEFE9", color: "#5E5E5F" };
+  const cfg = map[status] ?? { label: status, bg: "#EEEFE9", color: "var(--hubia-ink-400)" };
   return (
     <span
       className="rounded-[9999px] px-2.5 py-0.5 text-[10px] font-bold tracking-[0.3px]"
@@ -144,7 +144,7 @@ function AddAgentModal({
                 type="button"
                 onClick={handleClose}
                 className="absolute right-5 top-5 flex h-8 w-8 items-center justify-center rounded-full"
-                style={{ background: "var(--hubia-bg-base-500)", color: "#5E5E5F" }}
+                style={{ background: "var(--hubia-bg-base-500)", color: "var(--hubia-ink-400)" }}
                 whileHover={{ rotate: 90, scale: 1.1, backgroundColor: "#D5D2C9" }}
                 whileTap={{ rotate: 90, scale: 0.9 }}
                 transition={{ duration: 0.15, ease: [0.34, 1.56, 0.64, 1] }}
@@ -420,7 +420,7 @@ function NovoAgenteModal({
                 type="button"
                 onClick={handleClose}
                 className="absolute right-5 top-5 flex h-8 w-8 items-center justify-center rounded-full"
-                style={{ background: "var(--hubia-bg-base-500)", color: "#5E5E5F" }}
+                style={{ background: "var(--hubia-bg-base-500)", color: "var(--hubia-ink-400)" }}
                 whileHover={{ rotate: 90, scale: 1.1, backgroundColor: "#D5D2C9" }}
                 whileTap={{ rotate: 90, scale: 0.9 }}
                 transition={{ duration: 0.15, ease: [0.34, 1.56, 0.64, 1] }}
@@ -704,7 +704,7 @@ export default function SquadDetailClient({
             </h2>
             <span
               className="rounded-[9999px] px-2 py-0.5 text-[11px] font-bold"
-              style={{ background: "var(--hubia-bg-base-500)", color: "#5E5E5F" }}
+              style={{ background: "var(--hubia-bg-base-500)", color: "var(--hubia-ink-400)" }}
             >
               {agents.length}
             </span>
@@ -807,7 +807,7 @@ export default function SquadDetailClient({
                           <span
                             key={tag}
                             className="rounded-[6px] px-1.5 py-0.5 text-[10px] font-semibold"
-                            style={{ background: "#D9D9D4", color: "#5E5E5F" }}
+                            style={{ background: "#D9D9D4", color: "var(--hubia-ink-400)" }}
                           >
                             {tag}
                           </span>

@@ -299,7 +299,7 @@ function MiniTabBar({ tabs, active, onChange }: {
   onChange: (id: string) => void;
 }) {
   return (
-    <div className="flex items-center rounded-[12px] p-1 gap-0.5" style={{ backgroundColor: "#EEEFE9" }}>
+    <div className="flex items-center rounded-[12px] p-1 gap-0.5" style={{ backgroundColor: "var(--hubia-bg-base-500)" }}>
       {tabs.map((t) => (
         <motion.button
           key={t.id}
@@ -427,7 +427,7 @@ function ProducaoVolumeChart({ periodo }: { periodo: string }) {
           type="monotone"
           dataKey="pedidos"
           name="Pedidos"
-          stroke="#D7FF00"
+          stroke="var(--hubia-limao-500)"
           strokeWidth={4}
           fill="url(#gradVolPedidos)"
           dot={false}
@@ -521,7 +521,7 @@ function ProducaoEficienciaChart() {
           type="monotone"
           dataKey="eficiencia"
           name="Eficiência"
-          stroke="#D7FF00"
+          stroke="var(--hubia-limao-500)"
           strokeWidth={4}
           dot={{ r: 5, fill: "#D7FF00", strokeWidth: 0 }}
           activeDot={{ r: 8, fill: "#D7FF00", strokeWidth: 3, stroke: "#FFFFFF" }}

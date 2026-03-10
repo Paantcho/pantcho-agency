@@ -213,10 +213,10 @@ export default function CreatorLooksTab({
                 </div>
 
                 {/* Gradiente overlay + texto */}
-                <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-[#0E0F10]/95 via-[#0E0F10]/50 to-transparent p-3 pt-12">
+                <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-ink-500/95 via-ink-500/50 to-transparent p-3 pt-12">
                   <p
                     className="font-bold leading-tight"
-                    style={{ fontSize: "15px", color: "#D7FF00" }}
+                    style={{ fontSize: "15px", color: "var(--hubia-limao-500)" }}
                   >
                     {look.name}
                   </p>

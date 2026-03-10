@@ -823,7 +823,7 @@ function Sidebar({
           </p>
           {proxAcoes.map((a, i) => (
             <div key={i} className="flex items-start gap-2">
-              <span className="mt-1 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-[#D7FF00]" />
+              <span className="mt-1 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-limao-500" />
               <p className="text-[12px] text-ink-500">{a}</p>
             </div>
           ))}

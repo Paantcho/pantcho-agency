@@ -375,7 +375,7 @@ export default function PedidoDetailClient({
 
           {/* Tabs + conteúdo */}
           <div className="rounded-[30px] bg-white overflow-hidden">
-            <div ref={tabContainerRef} className="relative flex overflow-x-auto border-b border-[#EEEFE9]">
+            <div ref={tabContainerRef} className="relative flex overflow-x-auto border-b border-base-500">
               <motion.div aria-hidden
                 className="pointer-events-none absolute bottom-0 h-[2px] rounded-t-[2px] bg-[#0E0F10]"
                 animate={{ left: tabPillLeft, width: tabPillWidth }}
@@ -755,7 +755,7 @@ function TabConteudo({
                 value={editValue}
                 onChange={(e) => setEditValue(e.target.value)}
                 rows={10}
-                className="w-full rounded-[12px] border border-[#EEEFE9] bg-base-500 px-4 py-3 text-[12px] text-ink-500 font-mono outline-none resize-vertical focus:border-[#0E0F10] focus:ring-2 focus:ring-ink-500/10 transition-[border-color] duration-150"
+                className="w-full rounded-[12px] border border-base-500 bg-base-500 px-4 py-3 text-[12px] text-ink-500 font-mono outline-none resize-vertical focus:border-[#0E0F10] focus:ring-2 focus:ring-ink-500/10 transition-[border-color] duration-150"
                 placeholder='{"squad": "AUDIOVISUAL", "mood": "elegante"}'
               />
               <div className="flex gap-2">
