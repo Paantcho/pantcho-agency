@@ -675,7 +675,7 @@ function NotasCard({ pedidoId, organizationId }: { pedidoId: string; organizatio
             autoFocus value={nota} onChange={(e) => setNota(e.target.value)}
             placeholder="Adicionar nota..."
             rows={3}
-            className="w-full rounded-[12px] border border-transparent bg-base-500 px-3 py-2 text-[13px] text-ink-500 outline-none placeholder:text-base-700 resize-none focus:border-[#0E0F10] focus:ring-2 focus:ring-ink-500/10 transition-[border-color] duration-150"
+            className="w-full rounded-[12px] border border-transparent bg-base-500 px-3 py-2 text-[13px] text-ink-500 outline-none placeholder:text-base-700 resize-none focus:border-ink-500 focus:ring-2 focus:ring-ink-500/10 transition-[border-color] duration-150"
           />
           <div className="flex gap-2">
             <motion.button onClick={() => setEditing(false)}
@@ -755,7 +755,7 @@ function TabConteudo({
                 value={editValue}
                 onChange={(e) => setEditValue(e.target.value)}
                 rows={10}
-                className="w-full rounded-[12px] border border-base-500 bg-base-500 px-4 py-3 text-[12px] text-ink-500 font-mono outline-none resize-vertical focus:border-[#0E0F10] focus:ring-2 focus:ring-ink-500/10 transition-[border-color] duration-150"
+                className="w-full rounded-[12px] border border-base-500 bg-base-500 px-4 py-3 text-[12px] text-ink-500 font-mono outline-none resize-vertical focus:border-ink-500 focus:ring-2 focus:ring-ink-500/10 transition-[border-color] duration-150"
                 placeholder='{"squad": "AUDIOVISUAL", "mood": "elegante"}'
               />
               <div className="flex gap-2">

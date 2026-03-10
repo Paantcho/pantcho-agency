@@ -319,7 +319,7 @@ function MiniTabBar({ tabs, active, onChange }: {
             <motion.span
               className="text-[10px] font-bold px-1.5 py-0.5 rounded-full"
               animate={{
-                backgroundColor: active === t.id ? "#EEEFE9" : "rgba(169,170,165,0.15)",
+                backgroundColor: active === t.id ? "var(--hubia-bg-base-500)" : "rgba(169,170,165,0.15)",
                 color: active === t.id ? "var(--hubia-ink-500)" : "var(--hubia-bg-base-700)",
               }}
               initial={false}

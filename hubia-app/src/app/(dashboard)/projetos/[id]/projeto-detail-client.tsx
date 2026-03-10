@@ -874,7 +874,7 @@ function Sidebar({
           </p>
           <div className="flex flex-wrap gap-1.5">
             {stack.map((tech) => (
-              <span key={tech} className="rounded-[7px] bg-[#0E0F10] px-2.5 py-1 text-[11px] font-bold text-[#D7FF00]">{tech}</span>
+              <span key={tech} className="rounded-[7px] bg-[#0E0F10] px-2.5 py-1 text-[11px] font-bold text-limao-500">{tech}</span>
             ))}
           </div>
         </div>
@@ -988,7 +988,7 @@ function TabConteudo({
             <SectionLabel>Stack</SectionLabel>
             <div className="flex flex-wrap gap-1.5">
               {stack.map((tech) => (
-                <span key={tech} className="rounded-[8px] bg-[#0E0F10] px-3 py-1.5 text-[12px] font-bold text-[#D7FF00]">{tech}</span>
+                <span key={tech} className="rounded-[8px] bg-[#0E0F10] px-3 py-1.5 text-[12px] font-bold text-limao-500">{tech}</span>
               ))}
             </div>
           </div>
@@ -1636,7 +1636,7 @@ function MemoriaTab({ memoria, onSave }: {
             className="flex-1 h-9 rounded-[12px] border border-transparent bg-base-500 px-3 text-[13px] text-ink-500 outline-none placeholder:text-base-700 focus:border-[#0E0F10] focus:ring-2 focus:ring-ink-500/10 transition-[border-color] duration-150"
           />
           <motion.button onClick={adicionar} disabled={!novo.trim() || saving}
-            className="h-9 px-4 rounded-[12px] bg-[#0E0F10] text-[12px] font-semibold text-[#D7FF00] disabled:opacity-40"
+            className="h-9 px-4 rounded-[12px] bg-[#0E0F10] text-[12px] font-semibold text-limao-500 disabled:opacity-40"
             whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.96 }}>
             {saving ? "…" : <Plus size={13} />}
           </motion.button>
@@ -1769,7 +1769,7 @@ function RulesTab({ rules, onSave }: {
         <div className="flex items-center gap-2">
           {saving && <span className="text-[11px] text-base-700">Salvando...</span>}
           <motion.button onClick={() => setAdicionando(v => !v)}
-            className="flex items-center gap-1.5 rounded-[12px] bg-[#0E0F10] px-3 py-1.5 text-[12px] font-semibold text-[#D7FF00]"
+            className="flex items-center gap-1.5 rounded-[12px] bg-[#0E0F10] px-3 py-1.5 text-[12px] font-semibold text-limao-500"
             whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.96 }}>
             <Plus size={12} /> Nova Rule
           </motion.button>
@@ -1828,7 +1828,7 @@ function RulesTab({ rules, onSave }: {
                   className="flex-1 rounded-[12px] bg-white py-2 text-[13px] font-semibold text-[#5E5E5F]"
                   whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.97 }}>Cancelar</motion.button>
                 <motion.button onClick={adicionar} disabled={!novaTitulo.trim()}
-                  className="flex-1 rounded-[12px] bg-[#0E0F10] py-2 text-[13px] font-semibold text-[#D7FF00] disabled:opacity-40"
+                  className="flex-1 rounded-[12px] bg-[#0E0F10] py-2 text-[13px] font-semibold text-limao-500 disabled:opacity-40"
                   whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.96 }}>Salvar Rule</motion.button>
               </div>
             </div>
