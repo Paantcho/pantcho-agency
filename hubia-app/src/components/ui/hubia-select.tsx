@@ -72,8 +72,8 @@ export function HubiaSelect({
         }
         animate={
           open
-            ? { boxShadow: "0 0 0 3px rgba(14,15,16,0.08)", borderColor: "#0E0F10" }
-            : { boxShadow: "none", borderColor: "transparent" }
+            ? { borderColor: "#0E0F10" }
+            : { borderColor: "transparent" }
         }
         transition={{ duration: 0.15 }}
       >
@@ -97,7 +97,7 @@ export function HubiaSelect({
             transition={{ duration: 0.15, ease: [0, 0, 0.2, 1] }}
             className="absolute left-0 right-0 top-[calc(100%+6px)] z-50 overflow-hidden rounded-[12px] bg-white py-1.5"
             style={{
-              boxShadow: "0 8px 32px rgba(14,15,16,0.14), 0 2px 8px rgba(14,15,16,0.06)",
+              border: "1px solid #EEEFE9",
             }}
           >
             {options.map((option, idx) => {

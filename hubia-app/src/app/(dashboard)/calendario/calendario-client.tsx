@@ -190,7 +190,7 @@ export default function CalendarioClient({
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              style={{ backgroundColor: "rgba(14,15,16,0.25)" }}
+              style={{ backgroundColor: "rgba(14,15,16,0.70)", backdropFilter: "blur(12px)", WebkitBackdropFilter: "blur(12px)" }}
               onClick={() => setDrawerPedido(null)}
             />
             <motion.div

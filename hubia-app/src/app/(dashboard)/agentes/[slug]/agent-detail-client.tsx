@@ -153,9 +153,7 @@ export default function AgentDetailClient({
               style={{
                 background: isActive ? "#FFFFFF" : "transparent",
                 color: isActive ? "#0E0F10" : "#A9AAA5",
-                boxShadow: isActive
-                  ? "0 1px 3px rgba(0,0,0,0.08)"
-                  : "none",
+                borderBottom: isActive ? "2px solid #0E0F10" : "2px solid transparent",
               }}
             >
               <TabIcon size={16} />

@@ -251,7 +251,7 @@ export function Sidebar({
                 exit={{ opacity: 0, y: -6, scale: 0.97 }}
                 transition={{ duration: 0.15, ease: [0, 0, 0.2, 1] }}
                 className="mt-1 overflow-hidden rounded-[12px] bg-white py-1.5"
-                style={{ boxShadow: "0 8px 24px rgba(14,15,16,0.12)" }}
+                style={{}}
               >
                 {organizations.map((org) => (
                   <motion.button

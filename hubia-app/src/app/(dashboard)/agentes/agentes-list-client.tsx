@@ -67,7 +67,7 @@ function AgentCard({ agent }: { agent: AgentRow }) {
   return (
     <Link
       href={`/agentes/${agent.slug}`}
-      className="group flex flex-col gap-4 rounded-[20px] border border-transparent bg-white p-6 transition-all duration-300 hover:border-[#D7FF00]/30 hover:shadow-lg"
+      className="group flex flex-col gap-4 rounded-[20px] border border-transparent bg-white p-6 transition-all duration-300 hover:border-[#D7FF00]/30"
     >
       {/* Ícone + Status */}
       <div className="flex items-start justify-between">

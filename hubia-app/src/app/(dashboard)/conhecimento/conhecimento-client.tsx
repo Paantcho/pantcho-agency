@@ -264,7 +264,7 @@ export default function ConhecimentoClient({
           return (
             <div
               key={entry.id}
-              className="rounded-[16px] bg-white transition-shadow hover:shadow-sm"
+              className="rounded-[16px] bg-white"
             >
               {/* Header row */}
               <button

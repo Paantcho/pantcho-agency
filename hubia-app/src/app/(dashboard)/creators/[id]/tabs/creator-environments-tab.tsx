@@ -174,7 +174,7 @@ export default function CreatorEnvironmentsTab({
           {environments.map((env) => (
             <div
               key={env.id}
-              className="flex flex-col gap-4 rounded-[24px] p-5 transition-shadow hover:shadow-md"
+              className="flex flex-col gap-4 rounded-[24px] p-5"
               style={{ background: "#FFFFFF" }}
             >
               {/* Nome */}

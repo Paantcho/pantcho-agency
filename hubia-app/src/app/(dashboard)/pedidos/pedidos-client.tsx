@@ -367,7 +367,7 @@ export default function PedidosClient({
           return (
             <div
               key={pedido.id}
-              className="group flex items-center gap-4 rounded-[16px] bg-white px-5 py-4 transition-shadow hover:shadow-sm"
+              className="group flex items-center gap-4 rounded-[16px] bg-white px-5 py-4"
             >
               {/* Tipo icon */}
               <div
@@ -436,7 +436,7 @@ export default function PedidosClient({
                 {/* Status dropdown */}
                 {menuOpen === pedido.id && (
                   <div
-                    className="absolute right-0 top-full z-20 mt-1 min-w-[160px] rounded-xl border bg-white p-1 shadow-lg"
+                    className="absolute right-0 top-full z-20 mt-1 min-w-[160px] rounded-xl border bg-white p-1"
                     style={{ borderColor: "#EEEFE9" }}
                   >
                     {Object.entries(STATUS_CONFIG).map(

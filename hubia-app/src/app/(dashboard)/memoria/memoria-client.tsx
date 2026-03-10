@@ -91,7 +91,7 @@ export default function MemoriaClient({
           return (
             <div
               key={file.id}
-              className="rounded-[20px] bg-white overflow-hidden transition-shadow hover:shadow-sm"
+              className="rounded-[20px] bg-white overflow-hidden"
             >
               {/* Header */}
               <button
