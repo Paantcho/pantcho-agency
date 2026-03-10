@@ -12,7 +12,7 @@ const MESES = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho",
 const DIAS_SEMANA = ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb"];
 
 const URGENCIA_COLORS: Record<string, string> = {
-  baixa: "#A9AAA5", media: "#5E5E5F", alta: "#FB8C00", critica: "#E53935",
+  baixa: "var(--hubia-bg-base-700)", media: "var(--hubia-ink-400)", alta: "#FB8C00", critica: "#E53935",
 };
 const STATUS_COLORS: Record<string, string> = {
   rascunho: "#A9AAA5", aguardando: "#5E5E5F", em_andamento: "#D7FF00",

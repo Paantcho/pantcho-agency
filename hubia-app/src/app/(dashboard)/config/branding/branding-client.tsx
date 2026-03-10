@@ -83,7 +83,7 @@ function PaletaPreview({ cor }: { cor: string }) {
             className="rounded-[6px]"
             style={{ width: 32, height: label === "500" ? 44 : 32, backgroundColor: hex }}
           />
-          <span className="text-[9px] text-[#A9AAA5]">{label}</span>
+          <span className="text-[9px] text-base-700">{label}</span>
         </div>
       ))}
     </div>
@@ -92,8 +92,8 @@ function PaletaPreview({ cor }: { cor: string }) {
 
 function InterfacePreview({ cor }: { cor: string }) {
   return (
-    <div className="rounded-[14px] bg-[#EEEFE9] p-4 flex flex-col gap-3">
-      <p className="text-[11px] font-bold text-[#A9AAA5] uppercase tracking-wide flex items-center gap-1.5">
+    <div className="rounded-[14px] bg-base-500 p-4 flex flex-col gap-3">
+      <p className="text-[11px] font-bold text-base-700 uppercase tracking-wide flex items-center gap-1.5">
         <Eye size={11} />
         Preview da interface
       </p>
@@ -106,7 +106,7 @@ function InterfacePreview({ cor }: { cor: string }) {
         >
           Botão primário
         </div>
-        <div className="rounded-[18px] border border-[#D9D9D4] bg-white px-5 py-2.5 text-[13px] font-semibold text-[#0E0F10]">
+        <div className="rounded-[18px] border border-[#D9D9D4] bg-white px-5 py-2.5 text-[13px] font-semibold text-ink-500">
           Secundário
         </div>
       </div>
@@ -218,7 +218,7 @@ export default function BrandingClient({
             </p>
           </div>
           <motion.button
-            className="flex items-center gap-2 rounded-[14px] bg-[#D7FF00] px-6 py-3 text-[14px] font-bold text-[#0E0F10]"
+            className="flex items-center gap-2 rounded-[14px] bg-[#D7FF00] px-6 py-3 text-[14px] font-bold text-ink-500"
             whileHover={{ scale: 1.03, backgroundColor: "#DFFF33" }}
             whileTap={{ scale: 0.96 }}
             transition={{ duration: 0.15 }}
@@ -230,8 +230,8 @@ export default function BrandingClient({
 
         <div className="rounded-[30px] bg-white p-6">
           <div className="mb-4 flex items-center gap-2">
-            <Globe size={15} className="text-[#A9AAA5]" />
-            <h2 className="text-[14px] font-semibold text-[#A9AAA5]">
+            <Globe size={15} className="text-base-700" />
+            <h2 className="text-[14px] font-semibold text-base-700">
               Identidade visual atual (Hubia padrão)
             </h2>
           </div>
@@ -249,7 +249,7 @@ export default function BrandingClient({
           <div className="flex h-8 w-8 items-center justify-center rounded-[12px] bg-[#0E0F10]">
             <Palette size={15} color="#D7FF00" />
           </div>
-          <h2 className="text-[15px] font-bold text-[#0E0F10]">
+          <h2 className="text-[15px] font-bold text-ink-500">
             Cor primária da marca
           </h2>
         </div>
@@ -286,13 +286,13 @@ export default function BrandingClient({
                   onChange={(e) => handleHexChange(e.target.value)}
                   placeholder="#D7FF00"
                   maxLength={7}
-                  className="h-11 w-36 rounded-[12px] border border-transparent bg-[#EEEFE9] px-3.5 font-mono text-[15px] text-[#0E0F10] outline-none transition-[border-color] duration-150 hover:border-[#D4D5D6] focus:border-[#0E0F10] focus:ring-2 focus:ring-ink-500/10"
+                  className="h-11 w-36 rounded-[12px] border border-transparent bg-base-500 px-3.5 font-mono text-[15px] text-ink-500 outline-none transition-[border-color] duration-150 hover:border-[#D4D5D6] focus:border-[#0E0F10] focus:ring-2 focus:ring-ink-500/10"
                   style={isValidHex(hexInput) ? {} : { borderColor: "#E53935" }}
                 />
                 <motion.button
                   type="button"
                   onClick={() => { setCor(initialColor); setHexInput(initialColor); }}
-                  className="flex h-11 w-11 items-center justify-center rounded-[12px] bg-[#EEEFE9] text-[#A9AAA5]"
+                  className="flex h-11 w-11 items-center justify-center rounded-[12px] bg-base-500 text-base-700"
                   whileHover={{ backgroundColor: "rgba(213,210,201,0.5)", color: "#0E0F10", scale: 1.05 }}
                   whileTap={{ scale: 0.90 }}
                   title="Restaurar padrão"
@@ -331,7 +331,7 @@ export default function BrandingClient({
           <div className="flex h-8 w-8 items-center justify-center rounded-[12px] bg-[#0E0F10]">
             <Upload size={15} color="#D7FF00" />
           </div>
-          <h2 className="text-[15px] font-bold text-[#0E0F10]">
+          <h2 className="text-[15px] font-bold text-ink-500">
             Logotipo e Favicon
           </h2>
         </div>
@@ -341,23 +341,23 @@ export default function BrandingClient({
             <p className="text-[13px] font-semibold text-[#5E5E5F]">
               Logotipo principal
             </p>
-            <p className="text-[11px] text-[#A9AAA5]">
+            <p className="text-[11px] text-base-700">
               Usado na barra lateral e nas áreas institucionais
             </p>
             <input ref={fileInputRef} type="file" accept=".png,.svg,.webp" className="hidden" />
             <motion.button
               type="button"
               onClick={() => fileInputRef.current?.click()}
-              className="flex flex-col items-center justify-center gap-2 rounded-[14px] border-2 border-dashed border-[#D5D2C9] bg-[#EEEFE9] px-6 py-8"
+              className="flex flex-col items-center justify-center gap-2 rounded-[14px] border-2 border-dashed border-[#D5D2C9] bg-base-500 px-6 py-8"
               whileHover={{ borderColor: "#0E0F10", backgroundColor: "rgba(238,239,233,0.6)" }}
               whileTap={{ scale: 0.98 }}
               transition={{ duration: 0.15 }}
             >
-              <Upload size={20} className="text-[#A9AAA5]" />
-              <p className="text-[13px] font-semibold text-[#0E0F10]">
+              <Upload size={20} className="text-base-700" />
+              <p className="text-[13px] font-semibold text-ink-500">
                 Clique para fazer upload
               </p>
-              <p className="text-[11px] text-[#A9AAA5]">PNG, SVG, WebP — máx. 2 MB</p>
+              <p className="text-[11px] text-base-700">PNG, SVG, WebP — máx. 2 MB</p>
             </motion.button>
           </div>
 
@@ -365,23 +365,23 @@ export default function BrandingClient({
             <p className="text-[13px] font-semibold text-[#5E5E5F]">
               Favicon
             </p>
-            <p className="text-[11px] text-[#A9AAA5]">
+            <p className="text-[11px] text-base-700">
               Usado na aba do navegador
             </p>
             <input ref={faviconInputRef} type="file" accept=".png,.ico,.svg" className="hidden" />
             <motion.button
               type="button"
               onClick={() => faviconInputRef.current?.click()}
-              className="flex flex-col items-center justify-center gap-2 rounded-[14px] border-2 border-dashed border-[#D5D2C9] bg-[#EEEFE9] px-6 py-8"
+              className="flex flex-col items-center justify-center gap-2 rounded-[14px] border-2 border-dashed border-[#D5D2C9] bg-base-500 px-6 py-8"
               whileHover={{ borderColor: "#0E0F10", backgroundColor: "rgba(238,239,233,0.6)" }}
               whileTap={{ scale: 0.98 }}
               transition={{ duration: 0.15 }}
             >
-              <Globe size={20} className="text-[#A9AAA5]" />
-              <p className="text-[13px] font-semibold text-[#0E0F10]">
+              <Globe size={20} className="text-base-700" />
+              <p className="text-[13px] font-semibold text-ink-500">
                 Clique para fazer upload
               </p>
-              <p className="text-[11px] text-[#A9AAA5]">PNG, ICO, SVG — máx. 512 KB</p>
+              <p className="text-[11px] text-base-700">PNG, ICO, SVG — máx. 512 KB</p>
             </motion.button>
           </div>
         </div>
@@ -418,7 +418,7 @@ export default function BrandingClient({
           type="button"
           onClick={handleSave}
           disabled={loading || !isValidHex(cor)}
-          className="rounded-[18px] bg-[#D7FF00] px-6 py-3 text-[15px] font-semibold text-[#0E0F10] disabled:opacity-50"
+          className="rounded-[18px] bg-[#D7FF00] px-6 py-3 text-[15px] font-semibold text-ink-500 disabled:opacity-50"
           whileHover={{ scale: 1.03, backgroundColor: "#DFFF33" }}
           whileTap={{ scale: 0.96 }}
           transition={{ duration: 0.15, ease: [0.34, 1.56, 0.64, 1] }}

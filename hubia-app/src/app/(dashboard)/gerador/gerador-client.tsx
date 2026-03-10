@@ -215,7 +215,7 @@ function BriefingOutputSection({
             placeholder="Ex: Ninaah está no beiro da piscina, sentada na espreguiçadeira..."
             rows={4}
             className="w-full resize-none rounded-[12px] border border-transparent px-3.5 py-2.5 text-[14px] text-ink-500 outline-none placeholder:text-base-700 transition-[border-color] duration-150 focus:border-ink-500 focus:ring-2 focus:ring-ink-500/10"
-            style={{ background: "#EEEFE9" }}
+            style={{ background: "var(--hubia-bg-base-500)" }}
           />
         </div>
 
@@ -248,7 +248,7 @@ function BriefingOutputSection({
           <motion.div
             key={output ? "with-output" : "empty"}
             className="rounded-[30px] p-6"
-            style={{ background: "#0E0F10", minHeight: "200px" }}
+            style={{ background: "var(--hubia-ink-500)", minHeight: "200px" }}
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3, ease: [0, 0, 0.2, 1] }}
@@ -319,7 +319,7 @@ function BriefingOutputSection({
           >
             Parâmetros Técnicos
           </h3>
-          <div className="grid grid-cols-4 gap-3 rounded-[12px] p-3" style={{ background: "#EEEFE9" }}>
+          <div className="grid grid-cols-4 gap-3 rounded-[12px] p-3" style={{ background: "var(--hubia-bg-base-500)" }}>
             <ParamCell label="Câmera" value={output?.parametros.camera ?? form.camera} />
             <ParamCell label="Lente" value={output?.parametros.lente ?? (form.lente ? `${form.lente} f/1.4` : "")} />
             <ParamCell label="Abertura" value={output?.parametros.abertura ?? ""} />
@@ -486,7 +486,7 @@ function TabPhotoCloner({
   return (
     <div className="flex flex-col gap-5">
       {/* Bloco preto full-width */}
-      <div className="rounded-[30px] p-6" style={{ background: "#0E0F10" }}>
+      <div className="rounded-[30px] p-6" style={{ background: "var(--hubia-ink-500)" }}>
         <div className="grid gap-5" style={{ gridTemplateColumns: "340px 1fr" }}>
           {/* Área de upload */}
           <div className="flex flex-col gap-3">
@@ -669,7 +669,7 @@ function ModalVerCompleto({
       {/* Caixa preta com prompt */}
       <div
         className="rounded-[16px] p-5 overflow-y-auto"
-        style={{ background: "#0E0F10", maxHeight: "360px" }}
+        style={{ background: "var(--hubia-ink-500)", maxHeight: "360px" }}
       >
         <p
           className="whitespace-pre-wrap text-[13px] leading-relaxed"

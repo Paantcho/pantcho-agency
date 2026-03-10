@@ -128,8 +128,8 @@ export default function NotificacoesClient({
           className="rounded-[12px] px-4 py-2 text-[12px] font-bold"
           initial={false}
           animate={{
-            backgroundColor: ativos < total ? "#D7FF00" : "rgba(255,255,255,0.1)",
-            color: ativos < total ? "#0E0F10" : "#FFFFFF",
+            backgroundColor: ativos < total ? "var(--hubia-limao-500)" : "rgba(255,255,255,0.1)",
+            color: ativos < total ? "var(--hubia-ink-500)" : "#FFFFFF",
           }}
           whileHover={{ scale: 1.03 }}
           whileTap={{ scale: 0.97 }}

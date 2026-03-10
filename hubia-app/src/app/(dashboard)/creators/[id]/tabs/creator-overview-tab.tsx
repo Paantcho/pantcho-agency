@@ -101,7 +101,7 @@ export default function CreatorOverviewTab({
             </p>
             <p
               className="font-bold leading-none mt-1"
-              style={{ fontSize: "32px", color: "#D7FF00" }}
+              style={{ fontSize: "32px", color: "var(--hubia-limao-500)" }}
             >
               {kpi.value}
             </p>
@@ -126,7 +126,7 @@ export default function CreatorOverviewTab({
         >
           <h3
             className="font-bold"
-            style={{ fontSize: "17px", color: "#0E0F10" }}
+            style={{ fontSize: "17px", color: "var(--hubia-ink-500)" }}
           >
             Marcadores de Identidade
           </h3>
@@ -212,7 +212,7 @@ export default function CreatorOverviewTab({
         >
           <h3
             className="font-bold"
-            style={{ fontSize: "17px", color: "#0E0F10" }}
+            style={{ fontSize: "17px", color: "var(--hubia-ink-500)" }}
           >
             Veículo Fixo
           </h3>
