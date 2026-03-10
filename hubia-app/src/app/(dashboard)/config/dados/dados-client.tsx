@@ -150,7 +150,7 @@ export default function DadosClient() {
       {/* Gerar snapshot */}
       <div className="rounded-[30px] bg-white p-6">
         <div className="mb-5 flex items-center gap-2.5">
-          <div className="flex h-8 w-8 items-center justify-center rounded-[12px] bg-[#0E0F10]">
+          <div className="flex h-8 w-8 items-center justify-center rounded-[12px] bg-ink-500">
             <Download size={15} color="#D7FF00" />
           </div>
           <h2 className="text-[15px] font-bold text-[#0E0F10]">
@@ -208,7 +208,7 @@ export default function DadosClient() {
           </div>
 
           {/* O que está incluído */}
-          <div className="rounded-[12px] bg-[#EEEFE9] p-4">
+          <div className="rounded-[12px] bg-base-500 p-4">
             <p className="mb-2 text-[12px] font-bold text-[#5E5E5F] uppercase tracking-wide">
               Inclui
             </p>
@@ -266,7 +266,7 @@ export default function DadosClient() {
       {/* Histórico de backups */}
       <div className="rounded-[30px] bg-white p-6">
         <div className="mb-4 flex items-center gap-2.5">
-          <div className="flex h-8 w-8 items-center justify-center rounded-[12px] bg-[#0E0F10]">
+          <div className="flex h-8 w-8 items-center justify-center rounded-[12px] bg-ink-500">
             <Clock size={15} color="#D7FF00" />
           </div>
           <h2 className="text-[15px] font-bold text-[#0E0F10]">
@@ -287,9 +287,9 @@ export default function DadosClient() {
                 initial={{ opacity: 0, y: 6 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: Math.min(i * 0.05, 0.3) }}
-                className="flex items-center gap-4 rounded-[12px] bg-[#EEEFE9] px-4 py-3"
+                className="flex items-center gap-4 rounded-[12px] bg-base-500 px-4 py-3"
               >
-                <div className="flex h-9 w-9 items-center justify-center rounded-[12px] bg-[#0E0F10]">
+                <div className="flex h-9 w-9 items-center justify-center rounded-[12px] bg-ink-500">
                   <Database size={14} color="#D7FF00" />
                 </div>
                 <div className="flex-1">
@@ -301,7 +301,7 @@ export default function DadosClient() {
                   </p>
                 </div>
                 <motion.button
-                  className="flex items-center gap-1.5 rounded-[8px] bg-[#0E0F10] px-3 py-1.5 text-[11px] font-bold text-white"
+                  className="flex items-center gap-1.5 rounded-[8px] bg-ink-500 px-3 py-1.5 text-[11px] font-bold text-white"
                   whileHover={{ backgroundColor: "#2a2b2c", scale: 1.04 }}
                   whileTap={{ scale: 0.96 }}
                   transition={{ duration: 0.12 }}
@@ -318,7 +318,7 @@ export default function DadosClient() {
       {/* Informações do sistema */}
       <div className="rounded-[30px] bg-white p-6">
         <div className="mb-4 flex items-center gap-2.5">
-          <div className="flex h-8 w-8 items-center justify-center rounded-[12px] bg-[#0E0F10]">
+          <div className="flex h-8 w-8 items-center justify-center rounded-[12px] bg-ink-500">
             <Server size={15} color="#D7FF00" />
           </div>
           <h2 className="text-[15px] font-bold text-[#0E0F10]">
@@ -340,7 +340,7 @@ export default function DadosClient() {
               initial={{ opacity: 0, x: -6 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: Math.min(i * 0.05, 0.3) }}
-              className="flex items-center justify-between rounded-[12px] bg-[#EEEFE9] px-4 py-3"
+              className="flex items-center justify-between rounded-[12px] bg-base-500 px-4 py-3"
             >
               <div className="flex items-center gap-2">
                 <Info size={13} className="text-[#A9AAA5]" />

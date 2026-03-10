@@ -225,8 +225,8 @@ export default function PlanoClient({
                     className="text-[11px] font-semibold"
                     style={{
                       color: p.branding
-                        ? isAtual ? "#D7FF00" : "#0E0F10"
-                        : isAtual ? "#555" : "#A9AAA5",
+                        ? isAtual ? "var(--hubia-limao-500)" : "var(--hubia-ink-500)"
+                        : isAtual ? "#555" : "var(--hubia-bg-base-700)",
                     }}
                   >
                     {p.branding ? "Branding próprio liberado" : "Branding Hubia padrão"}

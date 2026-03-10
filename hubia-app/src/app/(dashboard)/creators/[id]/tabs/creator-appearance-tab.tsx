@@ -89,12 +89,12 @@ function TableRow({
       <span className="font-semibold" style={{ fontSize: "12px", color: "var(--hubia-ink-500)" }}>
         {elemento}
       </span>
-      <span className="font-semibold" style={{ fontSize: "12px", color: "#A9AAA5" }}>
+      <span className="font-semibold" style={{ fontSize: "12px", color: "var(--hubia-bg-base-700)" }}>
         {definicao}
       </span>
       <span
         className="font-semibold"
-        style={{ fontSize: "12px", color: alert ? "#FF576D" : "#A9AAA5" }}
+        style={{ fontSize: "12px", color: alert ? "var(--hubia-red-500)" : "var(--hubia-bg-base-700)" }}
       >
         {tolerancia}
       </span>

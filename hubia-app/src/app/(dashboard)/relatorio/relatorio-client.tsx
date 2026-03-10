@@ -307,10 +307,10 @@ function MiniTabBar({ tabs, active, onChange }: {
           className="flex items-center gap-1.5 rounded-[8px] px-3 py-1.5 text-[12px] font-semibold"
           animate={{
             backgroundColor: active === t.id ? "#FFFFFF" : "transparent",
-            color: active === t.id ? "#0E0F10" : "#A9AAA5",
+            color: active === t.id ? "var(--hubia-ink-500)" : "var(--hubia-bg-base-700)",
           }}
           initial={false}
-          whileHover={active !== t.id ? { backgroundColor: "rgba(255,255,255,0.55)", color: "#0E0F10" } : {}}
+          whileHover={active !== t.id ? { backgroundColor: "rgba(255,255,255,0.55)", color: "var(--hubia-ink-500)" } : {}}
           whileTap={{ scale: 0.96 }}
           transition={{ duration: 0.15, ease: [0.4, 0, 0.2, 1] }}
         >
@@ -320,7 +320,7 @@ function MiniTabBar({ tabs, active, onChange }: {
               className="text-[10px] font-bold px-1.5 py-0.5 rounded-full"
               animate={{
                 backgroundColor: active === t.id ? "#EEEFE9" : "rgba(169,170,165,0.15)",
-                color: active === t.id ? "#0E0F10" : "#A9AAA5",
+                color: active === t.id ? "var(--hubia-ink-500)" : "var(--hubia-bg-base-700)",
               }}
               initial={false}
               transition={{ duration: 0.15 }}

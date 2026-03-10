@@ -92,7 +92,7 @@ export default function AgentDetailClient({
       <Link
         href="/agentes"
         className="flex items-center gap-2 font-semibold transition-colors hover:opacity-70"
-        style={{ fontSize: "13px", color: "#A9AAA5" }}
+        style={{ fontSize: "13px", color: "var(--hubia-bg-base-700)" }}
       >
         <ArrowLeft size={16} />
         Agentes
@@ -115,7 +115,7 @@ export default function AgentDetailClient({
           </h1>
           <p
             className="font-semibold"
-            style={{ fontSize: "14px", color: "#A9AAA5" }}
+            style={{ fontSize: "14px", color: "var(--hubia-bg-base-700)" }}
           >
             {agent.description}
           </p>
@@ -131,7 +131,7 @@ export default function AgentDetailClient({
             </span>
             <span
               className="text-[11px] font-semibold"
-              style={{ color: "#A9AAA5" }}
+              style={{ color: "var(--hubia-bg-base-700)" }}
             >
               {SQUAD_LABELS[squad] || squad}
             </span>
@@ -336,7 +336,7 @@ function ChatTab({
           </p>
           <p
             className="mt-1 font-semibold"
-            style={{ fontSize: "13px", color: "#A9AAA5" }}
+            style={{ fontSize: "13px", color: "var(--hubia-bg-base-700)" }}
           >
             Adicione a chave da API (Anthropic ou OpenAI) para conversar com
             os agentes.
@@ -346,7 +346,7 @@ function ChatTab({
           href="/organization/provedores"
           className="rounded-full font-bold transition-opacity hover:opacity-90"
           style={{
-            background: "#D7FF00",
+            background: "var(--hubia-limao-500)",
             color: "var(--hubia-ink-500)",
             fontSize: "13px",
             padding: "10px 22px",
@@ -370,7 +370,7 @@ function ChatTab({
             <Bot size={40} style={{ color: "#EEEFE9" }} />
             <p
               className="font-semibold"
-              style={{ fontSize: "14px", color: "#A9AAA5" }}
+              style={{ fontSize: "14px", color: "var(--hubia-bg-base-700)" }}
             >
               Envie uma mensagem para conversar com{" "}
               <strong style={{ color: "var(--hubia-ink-500)" }}>{agent.name}</strong>
@@ -524,7 +524,7 @@ function ConfigTab({ agent }: { agent: AgentData }) {
                   {skill.description && (
                     <p
                       className="mt-0.5 font-semibold"
-                      style={{ fontSize: "12px", color: "#A9AAA5" }}
+                      style={{ fontSize: "12px", color: "var(--hubia-bg-base-700)" }}
                     >
                       {skill.description}
                     </p>
