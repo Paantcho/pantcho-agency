@@ -50,7 +50,7 @@ export default function PerfilClient({
               {initials || "HU"}
             </div>
             <motion.button
-              className="absolute -bottom-1 -right-1 flex h-7 w-7 items-center justify-center rounded-full bg-[#D7FF00]"
+              className="absolute -bottom-1 -right-1 flex h-7 w-7 items-center justify-center rounded-full bg-limao-500"
               whileHover={{ scale: 1.12 }}
               whileTap={{ scale: 0.90 }}
               transition={{ duration: 0.15, ease: [0.34, 1.56, 0.64, 1] }}
@@ -71,7 +71,7 @@ export default function PerfilClient({
       <div className="rounded-[30px] bg-white p-6">
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
           <div className="flex flex-col gap-1.5">
-            <label className="text-[13px] font-semibold text-[#5E5E5F]">
+            <label className="text-[13px] font-semibold text-ink-400">
               Nome completo
             </label>
             <input
@@ -84,7 +84,7 @@ export default function PerfilClient({
           </div>
 
           <div className="flex flex-col gap-1.5">
-            <label className="text-[13px] font-semibold text-[#5E5E5F] flex items-center gap-1.5">
+            <label className="text-[13px] font-semibold text-ink-400 flex items-center gap-1.5">
               <Mail size={13} />
               E-mail
             </label>
@@ -121,7 +121,7 @@ export default function PerfilClient({
           type="button"
           onClick={handleSave}
           disabled={loading}
-          className="rounded-[18px] bg-[#D7FF00] px-6 py-3 text-[15px] font-semibold text-ink-500 disabled:opacity-50"
+          className="rounded-[18px] bg-limao-500 px-6 py-3 text-[15px] font-semibold text-ink-500 disabled:opacity-50"
           whileHover={{ scale: 1.03, backgroundColor: "#DFFF33" }}
           whileTap={{ scale: 0.96 }}
           transition={{ duration: 0.15, ease: [0.34, 1.56, 0.64, 1] }}

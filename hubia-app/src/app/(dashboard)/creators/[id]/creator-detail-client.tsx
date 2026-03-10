@@ -95,7 +95,7 @@ export default function CreatorDetailClient({
           className="flex flex-wrap items-center justify-between gap-4 rounded-2xl border p-4"
           style={{ borderColor: "var(--hubia-sand-600)", background: "#FFFFFF" }}
         >
-          <p className="font-semibold" style={{ fontSize: "14px", color: "#0E0F10" }}>
+          <p className="font-semibold" style={{ fontSize: "14px", color: "var(--hubia-ink-500)" }}>
             Creator inativa
           </p>
           <motion.button
@@ -103,7 +103,7 @@ export default function CreatorDetailClient({
             onClick={handleReativar}
             disabled={reactivating}
             className="rounded-full font-bold disabled:opacity-50"
-            style={{ background: "#D7FF00", color: "#0E0F10", fontSize: "13px", padding: "8px 20px" }}
+            style={{ background: "var(--hubia-limao-500)", color: "var(--hubia-ink-500)", fontSize: "13px", padding: "8px 20px" }}
             whileHover={{ scale: 1.03, backgroundColor: "#DFFF33" }}
             whileTap={{ scale: 0.96 }}
             transition={{ duration: 0.15, ease: [0.34, 1.56, 0.64, 1] }}

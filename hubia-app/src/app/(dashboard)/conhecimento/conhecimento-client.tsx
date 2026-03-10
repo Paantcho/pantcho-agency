@@ -246,7 +246,7 @@ export default function ConhecimentoClient({
                     ? getCategoryColor(cat)
                     : "var(--hubia-bg-base-500)",
                 color:
-                  categoryFilter === cat ? "#FFFFFF" : "#A9AAA5",
+                  categoryFilter === cat ? "#FFFFFF" : "var(--hubia-bg-base-700)",
               }}
             >
               {cat}

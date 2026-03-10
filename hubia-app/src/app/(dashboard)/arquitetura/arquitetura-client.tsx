@@ -248,7 +248,7 @@ export default function ArquiteturaClient() {
               className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl"
               style={{ background: "#D7FF0030" }}
             >
-              <Brain size={28} style={{ color: "#0E0F10" }} />
+              <Brain size={28} style={{ color: "var(--hubia-ink-500)" }} />
             </div>
             <div>
               <div className="flex items-center gap-2">
@@ -260,7 +260,7 @@ export default function ArquiteturaClient() {
                 </h2>
                 <span
                   className="rounded-full px-2 py-0.5 text-[9px] font-bold uppercase tracking-wider"
-                  style={{ background: "#0E0F10", color: "#D7FF00" }}
+                  style={{ background: "var(--hubia-ink-500)", color: "var(--hubia-limao-500)" }}
                 >
                   CEO
                 </span>

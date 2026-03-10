@@ -38,7 +38,7 @@ const STATUS_CONFIG: Record<
   rascunho: {
     label: "Rascunho",
     color: "var(--hubia-bg-base-700)",
-    bg: "#EEEFE9",
+    bg: "var(--hubia-bg-base-500)",
     icon: Circle,
   },
   aguardando: {

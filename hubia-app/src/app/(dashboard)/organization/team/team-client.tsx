@@ -234,7 +234,7 @@ export default function TeamClient({
           <motion.button
             type="button"
             onClick={() => setShowInviteModal(true)}
-            className="flex items-center gap-2 rounded-[14px] bg-[#D7FF00] px-5 py-2.5 text-[13px] font-bold text-ink-500"
+            className="flex items-center gap-2 rounded-[14px] bg-limao-500 px-5 py-2.5 text-[13px] font-bold text-ink-500"
             whileHover={{ scale: 1.03, backgroundColor: "#DFFF33" }}
             whileTap={{ scale: 0.96 }}
             transition={{ duration: 0.15, ease: [0.34, 1.56, 0.64, 1] }}
@@ -418,7 +418,7 @@ export default function TeamClient({
               >
                 {roleBadge[role].label}
               </span>
-              <p className="text-[11px] text-[#5E5E5F] leading-relaxed">{roleDesc[role]}</p>
+              <p className="text-[11px] text-ink-400 leading-relaxed">{roleDesc[role]}</p>
             </div>
           ))}
         </div>

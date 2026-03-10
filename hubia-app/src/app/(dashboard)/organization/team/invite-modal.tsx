@@ -84,7 +84,7 @@ export default function InviteModal({
             <form onSubmit={handleSubmit} className="mt-6 flex flex-col gap-4">
               {/* Email */}
               <div className="flex flex-col gap-1.5">
-                <label className="text-[12px] font-semibold text-[#5E5E5F] uppercase tracking-wide">
+                <label className="text-[12px] font-semibold text-ink-400 uppercase tracking-wide">
                   Email
                 </label>
                 <div className="relative">
@@ -106,7 +106,7 @@ export default function InviteModal({
 
               {/* Role */}
               <div className="flex flex-col gap-1.5">
-                <label className="text-[12px] font-semibold text-[#5E5E5F] uppercase tracking-wide">
+                <label className="text-[12px] font-semibold text-ink-400 uppercase tracking-wide">
                   Permissão
                 </label>
                 <HubiaSelect
@@ -120,17 +120,17 @@ export default function InviteModal({
               {/* Info de permissão */}
               <div className="rounded-[12px] bg-base-500 p-3.5">
                 {role === "admin" && (
-                  <p className="text-[12px] text-[#5E5E5F] leading-relaxed">
+                  <p className="text-[12px] text-ink-400 leading-relaxed">
                     <strong className="text-ink-500">Admin</strong> pode alterar plano, branding, domínio e gerenciar outros membros. Não pode alterar o proprietário.
                   </p>
                 )}
                 {role === "editor" && (
-                  <p className="text-[12px] text-[#5E5E5F] leading-relaxed">
+                  <p className="text-[12px] text-ink-400 leading-relaxed">
                     <strong className="text-ink-500">Editor</strong> tem acesso completo às funcionalidades operacionais: projetos, pedidos, creators, gerador e agentes.
                   </p>
                 )}
                 {role === "viewer" && (
-                  <p className="text-[12px] text-[#5E5E5F] leading-relaxed">
+                  <p className="text-[12px] text-ink-400 leading-relaxed">
                     <strong className="text-ink-500">Visualizador</strong> pode ver tudo mas não pode criar, editar ou deletar nada. Ideal para stakeholders externos.
                   </p>
                 )}
@@ -142,7 +142,7 @@ export default function InviteModal({
                   type="button"
                   onClick={onClose}
                   disabled={loading}
-                  className="rounded-[14px] px-5 py-2.5 text-[13px] font-semibold text-[#5E5E5F] disabled:opacity-50"
+                  className="rounded-[14px] px-5 py-2.5 text-[13px] font-semibold text-ink-400 disabled:opacity-50"
                   whileHover={{ backgroundColor: "rgba(14,15,16,0.04)", scale: 1.02 }}
                   whileTap={{ scale: 0.97 }}
                   transition={{ duration: 0.15 }}
@@ -152,7 +152,7 @@ export default function InviteModal({
                 <motion.button
                   type="submit"
                   disabled={loading || !email.trim()}
-                  className="flex items-center gap-2 rounded-[14px] bg-[#D7FF00] px-5 py-2.5 text-[13px] font-bold text-ink-500 disabled:opacity-50"
+                  className="flex items-center gap-2 rounded-[14px] bg-limao-500 px-5 py-2.5 text-[13px] font-bold text-ink-500 disabled:opacity-50"
                   whileHover={{ scale: 1.03, backgroundColor: "#DFFF33" }}
                   whileTap={{ scale: 0.96 }}
                   transition={{ duration: 0.15, ease: [0.34, 1.56, 0.64, 1] }}
