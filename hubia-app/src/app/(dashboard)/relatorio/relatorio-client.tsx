@@ -826,7 +826,7 @@ function DistribuicaoTipo() {
                     {d.value}%
                   </span>
                   {isFirst && (
-                    <span className="text-[9px] font-bold px-1.5 py-0.5 rounded-full" style={{ backgroundColor: "#D7FF00", color: "#0E0F10" }}>
+                    <span className="text-[9px] font-bold px-1.5 py-0.5 rounded-full" style={{ backgroundColor: "var(--hubia-limao-500)", color: "var(--hubia-ink-500)" }}>
                       #1
                     </span>
                   )}
@@ -1070,7 +1070,7 @@ function ActivityFeed() {
         style={{ borderBottom: "1px solid #F2F3EE" }}
       >
         <div className="flex items-center gap-2.5 flex-1">
-          <div className="flex h-8 w-8 items-center justify-center rounded-[12px]" style={{ backgroundColor: "#0E0F10" }}>
+          <div className="flex h-8 w-8 items-center justify-center rounded-[12px]" style={{ backgroundColor: "var(--hubia-ink-500)" }}>
             <Activity size={14} color="#D7FF00" />
           </div>
           <div>

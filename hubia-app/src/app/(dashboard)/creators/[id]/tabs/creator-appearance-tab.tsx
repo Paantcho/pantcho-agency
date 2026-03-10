@@ -263,7 +263,7 @@ export default function CreatorAppearanceTab({
         <form
           onSubmit={handleSubmit}
           className="rounded-[30px] border p-5"
-          style={{ borderColor: "#D9D9D4", background: "#FFFFFF" }}
+          style={{ borderColor: "var(--hubia-sand-600)", background: "#FFFFFF" }}
         >
           <label htmlFor="ap-base" className="font-semibold" style={{ fontSize: "13px", color: "#0E0F10" }}>
             Prompt base (edição)

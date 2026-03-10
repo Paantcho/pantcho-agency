@@ -352,7 +352,7 @@ export default function ProjetosClient({
               <motion.button
                 onClick={() => setModalOpen(true)}
                 className="mt-1 rounded-[14px] border-2 border-dashed border-sand-600 px-5 py-2.5 text-[13px] font-semibold text-base-700"
-                whileHover={{ borderColor: "var(--hubia-bg-base-700)", color: "#0E0F10", backgroundColor: "rgba(213,210,201,0.08)" }}
+                whileHover={{ borderColor: "var(--hubia-bg-base-700)", color: "var(--hubia-ink-500)", backgroundColor: "rgba(213,210,201,0.08)" }}
                 whileTap={{ scale: 0.98 }}
               >
                 + Criar primeiro projeto
@@ -683,7 +683,7 @@ function NovoProjetoModal({ open, onClose, organizationId, onCreated }: {
                       <motion.button
                         onClick={() => setStep("tipo")}
                         className="text-[11px] font-semibold text-base-700 flex items-center gap-1"
-                        whileHover={{ color: "#0E0F10" }} whileTap={{ scale: 0.97 }}>
+                        whileHover={{ color: "var(--hubia-ink-500)" }} whileTap={{ scale: 0.97 }}>
                         ← Tipos
                       </motion.button>
                     )}
@@ -697,7 +697,7 @@ function NovoProjetoModal({ open, onClose, organizationId, onCreated }: {
                 <motion.button
                   onClick={handleClose}
                   className="flex h-8 w-8 items-center justify-center rounded-full bg-base-500 flex-shrink-0"
-                  whileHover={{ rotate: 90, scale: 1.1, backgroundColor: "#0E0F10" }}
+                  whileHover={{ rotate: 90, scale: 1.1, backgroundColor: "var(--hubia-ink-500)" }}
                   whileTap={{ rotate: 90, scale: 0.9 }}
                   transition={{ duration: 0.15, ease: [0.34, 1.56, 0.64, 1] }}
                 >
