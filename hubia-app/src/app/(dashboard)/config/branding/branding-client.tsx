@@ -206,9 +206,9 @@ export default function BrandingClient({
   if (!planoEnterprise) {
     return (
       <div className="flex flex-col gap-6">
-        <div className="rounded-[30px] bg-[#0E0F10] p-8 flex flex-col items-center justify-center gap-4 text-center">
-          <div className="flex h-14 w-14 items-center justify-center rounded-full bg-[#D7FF00]">
-            <Lock size={22} color="#0E0F10" />
+        <div className="rounded-[30px] bg-ink-500 p-8 flex flex-col items-center justify-center gap-4 text-center">
+          <div className="flex h-14 w-14 items-center justify-center rounded-full bg-limao-500">
+            <Lock size={22} color="var(--hubia-ink-500)" />
           </div>
           <div>
             <p className="text-[18px] font-bold text-white">Branding personalizado</p>
@@ -218,7 +218,7 @@ export default function BrandingClient({
             </p>
           </div>
           <motion.button
-            className="flex items-center gap-2 rounded-[14px] bg-[#D7FF00] px-6 py-3 text-[14px] font-bold text-ink-500"
+            className="flex items-center gap-2 rounded-[14px] bg-limao-500 px-6 py-3 text-[14px] font-bold text-ink-500"
             whileHover={{ scale: 1.03, backgroundColor: "#DFFF33" }}
             whileTap={{ scale: 0.96 }}
             transition={{ duration: 0.15 }}
@@ -246,8 +246,8 @@ export default function BrandingClient({
       {/* Cor primária */}
       <div className="rounded-[30px] bg-white p-6">
         <div className="mb-5 flex items-center gap-2.5">
-          <div className="flex h-8 w-8 items-center justify-center rounded-[12px] bg-[#0E0F10]">
-            <Palette size={15} color="#D7FF00" />
+          <div className="flex h-8 w-8 items-center justify-center rounded-[12px] bg-ink-500">
+            <Palette size={15} color="var(--hubia-limao-500)" />
           </div>
           <h2 className="text-[15px] font-bold text-ink-500">
             Cor primária da marca
@@ -258,7 +258,7 @@ export default function BrandingClient({
           <div className="flex flex-wrap items-start gap-6">
             {/* Color picker + hex */}
             <div className="flex flex-col gap-3">
-              <label className="text-[13px] font-semibold text-[#5E5E5F]">
+              <label className="text-[13px] font-semibold text-ink-400">
                 Selecionar cor
               </label>
               <div className="relative">
@@ -276,7 +276,7 @@ export default function BrandingClient({
             </div>
 
             <div className="flex flex-col gap-3">
-              <label className="text-[13px] font-semibold text-[#5E5E5F]">
+              <label className="text-[13px] font-semibold text-ink-400">
                 Código HEX
               </label>
               <div className="flex items-center gap-2">
@@ -286,7 +286,7 @@ export default function BrandingClient({
                   onChange={(e) => handleHexChange(e.target.value)}
                   placeholder="#D7FF00"
                   maxLength={7}
-                  className="h-11 w-36 rounded-[12px] border border-transparent bg-base-500 px-3.5 font-mono text-[15px] text-ink-500 outline-none transition-[border-color] duration-150 hover:border-[#D4D5D6] focus:border-[#0E0F10] focus:ring-2 focus:ring-ink-500/10"
+                  className="h-11 w-36 rounded-[12px] border border-transparent bg-base-500 px-3.5 font-mono text-[15px] text-ink-500 outline-none transition-[border-color] duration-150 hover:border-base-600 focus:border-ink-500 focus:ring-2 focus:ring-ink-500/10"
                   style={isValidHex(hexInput) ? {} : { borderColor: "#E53935" }}
                 />
                 <motion.button
@@ -309,7 +309,7 @@ export default function BrandingClient({
 
           {/* Paleta derivada */}
           <div>
-            <p className="mb-3 text-[13px] font-semibold text-[#5E5E5F]">
+            <p className="mb-3 text-[13px] font-semibold text-ink-400">
               Paleta derivada (gerada automaticamente)
             </p>
             <PaletaPreview cor={cor} />
@@ -317,7 +317,7 @@ export default function BrandingClient({
 
           {/* Preview da interface */}
           <div>
-            <p className="mb-3 text-[13px] font-semibold text-[#5E5E5F]">
+            <p className="mb-3 text-[13px] font-semibold text-ink-400">
               Como ficará na interface
             </p>
             <InterfacePreview cor={cor} />
@@ -328,8 +328,8 @@ export default function BrandingClient({
       {/* Logotipo */}
       <div className="rounded-[30px] bg-white p-6">
         <div className="mb-5 flex items-center gap-2.5">
-          <div className="flex h-8 w-8 items-center justify-center rounded-[12px] bg-[#0E0F10]">
-            <Upload size={15} color="#D7FF00" />
+          <div className="flex h-8 w-8 items-center justify-center rounded-[12px] bg-ink-500">
+            <Upload size={15} color="var(--hubia-limao-500)" />
           </div>
           <h2 className="text-[15px] font-bold text-ink-500">
             Logotipo e Favicon
@@ -338,7 +338,7 @@ export default function BrandingClient({
 
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
           <div className="flex flex-col gap-2">
-            <p className="text-[13px] font-semibold text-[#5E5E5F]">
+            <p className="text-[13px] font-semibold text-ink-400">
               Logotipo principal
             </p>
             <p className="text-[11px] text-base-700">
@@ -348,7 +348,7 @@ export default function BrandingClient({
             <motion.button
               type="button"
               onClick={() => fileInputRef.current?.click()}
-              className="flex flex-col items-center justify-center gap-2 rounded-[14px] border-2 border-dashed border-[#D5D2C9] bg-base-500 px-6 py-8"
+              className="flex flex-col items-center justify-center gap-2 rounded-[14px] border-2 border-dashed border-sand-600 bg-base-500 px-6 py-8"
               whileHover={{ borderColor: "#0E0F10", backgroundColor: "rgba(238,239,233,0.6)" }}
               whileTap={{ scale: 0.98 }}
               transition={{ duration: 0.15 }}
@@ -362,7 +362,7 @@ export default function BrandingClient({
           </div>
 
           <div className="flex flex-col gap-2">
-            <p className="text-[13px] font-semibold text-[#5E5E5F]">
+            <p className="text-[13px] font-semibold text-ink-400">
               Favicon
             </p>
             <p className="text-[11px] text-base-700">
@@ -372,7 +372,7 @@ export default function BrandingClient({
             <motion.button
               type="button"
               onClick={() => faviconInputRef.current?.click()}
-              className="flex flex-col items-center justify-center gap-2 rounded-[14px] border-2 border-dashed border-[#D5D2C9] bg-base-500 px-6 py-8"
+              className="flex flex-col items-center justify-center gap-2 rounded-[14px] border-2 border-dashed border-sand-600 bg-base-500 px-6 py-8"
               whileHover={{ borderColor: "#0E0F10", backgroundColor: "rgba(238,239,233,0.6)" }}
               whileTap={{ scale: 0.98 }}
               transition={{ duration: 0.15 }}
@@ -418,7 +418,7 @@ export default function BrandingClient({
           type="button"
           onClick={handleSave}
           disabled={loading || !isValidHex(cor)}
-          className="rounded-[18px] bg-[#D7FF00] px-6 py-3 text-[15px] font-semibold text-ink-500 disabled:opacity-50"
+          className="rounded-[18px] bg-limao-500 px-6 py-3 text-[15px] font-semibold text-ink-500 disabled:opacity-50"
           whileHover={{ scale: 1.03, backgroundColor: "#DFFF33" }}
           whileTap={{ scale: 0.96 }}
           transition={{ duration: 0.15, ease: [0.34, 1.56, 0.64, 1] }}

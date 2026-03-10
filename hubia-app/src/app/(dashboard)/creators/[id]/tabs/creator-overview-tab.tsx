@@ -136,11 +136,11 @@ export default function CreatorOverviewTab({
               {(markers as { label?: string; description?: string; icon?: string }[]).map(
                 (m, i) => (
                   <li key={i} className="flex gap-2">
-                    <span style={{ color: "#A9AAA5", fontSize: "14px" }}>●</span>
+                    <span style={{ color: "var(--hubia-bg-base-700)", fontSize: "14px" }}>●</span>
                     <div>
                       <span
                         className="font-bold"
-                        style={{ fontSize: "13px", color: "#0E0F10" }}
+                        style={{ fontSize: "13px", color: "var(--hubia-ink-500)" }}
                       >
                         {typeof m === "object" && m !== null && "label" in m
                           ? (m as { label: string }).label
@@ -188,7 +188,7 @@ export default function CreatorOverviewTab({
                   <div>
                     <p
                       className="font-bold"
-                      style={{ fontSize: "13px", color: "#0E0F10" }}
+                      style={{ fontSize: "13px", color: "var(--hubia-ink-500)" }}
                     >
                       {item.label}
                     </p>

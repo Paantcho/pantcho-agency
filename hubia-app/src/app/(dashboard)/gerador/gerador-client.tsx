@@ -760,7 +760,7 @@ export function GeradorClient({ creators }: { creators: CreatorOption[] }) {
           whileTap={{ scale: 0.96 }}
           animate="rest"
           variants={{
-            rest: { scale: 1, backgroundColor: "#D7FF00" },
+            rest: { scale: 1, backgroundColor: "var(--hubia-limao-500)" },
             hovered: { scale: 1.03, backgroundColor: "#DFFF33" },
           }}
           transition={{ duration: 0.15, ease: [0.34, 1.56, 0.64, 1] }}

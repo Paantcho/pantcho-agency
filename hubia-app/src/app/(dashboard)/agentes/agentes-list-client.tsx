@@ -95,7 +95,7 @@ function AgentCard({ agent }: { agent: AgentRow }) {
       <div className="flex flex-col gap-1.5">
         <h3
           className="font-bold leading-tight"
-          style={{ fontSize: "17px", color: "#0E0F10" }}
+          style={{ fontSize: "17px", color: "var(--hubia-ink-500)" }}
         >
           {agent.name}
         </h3>
@@ -163,7 +163,7 @@ export default function AgentesListClient({
         <div className="flex items-center justify-between">
           <h1
             className="font-bold"
-            style={{ fontSize: "28px", color: "#0E0F10" }}
+            style={{ fontSize: "28px", color: "var(--hubia-ink-500)" }}
           >
             Agentes
           </h1>
@@ -182,7 +182,7 @@ export default function AgentesListClient({
           <div className="text-center">
             <p
               className="font-semibold"
-              style={{ fontSize: "16px", color: "#0E0F10" }}
+              style={{ fontSize: "16px", color: "var(--hubia-ink-500)" }}
             >
               Nenhum agente configurado
             </p>
@@ -200,7 +200,7 @@ export default function AgentesListClient({
             className="flex items-center gap-2 rounded-full font-bold transition-opacity hover:opacity-90 active:scale-95 disabled:opacity-50"
             style={{
               background: "#D7FF00",
-              color: "#0E0F10",
+              color: "var(--hubia-ink-500)",
               fontSize: "14px",
               padding: "12px 28px",
             }}
@@ -219,7 +219,7 @@ export default function AgentesListClient({
       <div className="flex flex-wrap items-center justify-between gap-4">
         <h1
           className="font-bold"
-          style={{ fontSize: "28px", color: "#0E0F10" }}
+          style={{ fontSize: "28px", color: "var(--hubia-ink-500)" }}
         >
           Agentes
         </h1>
@@ -276,13 +276,13 @@ function ProviderBanner({ hasProvider }: { hasProvider: boolean }) {
       <AlertCircle size={18} style={{ color: "#A9AAA5" }} />
       <p
         className="flex-1 font-semibold"
-        style={{ fontSize: "13px", color: "#0E0F10" }}
+        style={{ fontSize: "13px", color: "var(--hubia-ink-500)" }}
       >
         Para conversar com os agentes, configure um provedor de IA em{" "}
         <Link
           href="/organization/provedores"
           className="font-bold underline"
-          style={{ color: "#0E0F10" }}
+          style={{ color: "var(--hubia-ink-500)" }}
         >
           Config &gt; Provedores
         </Link>

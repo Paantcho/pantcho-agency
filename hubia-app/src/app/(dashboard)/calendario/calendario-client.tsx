@@ -15,8 +15,8 @@ const URGENCIA_COLORS: Record<string, string> = {
   baixa: "var(--hubia-bg-base-700)", media: "var(--hubia-ink-400)", alta: "#FB8C00", critica: "#E53935",
 };
 const STATUS_COLORS: Record<string, string> = {
-  rascunho: "#A9AAA5", aguardando: "#5E5E5F", em_andamento: "#D7FF00",
-  revisao: "#FB8C00", aprovado: "#43A047", entregue: "#0E0F10",
+  rascunho: "var(--hubia-bg-base-700)", aguardando: "var(--hubia-ink-400)", em_andamento: "var(--hubia-limao-500)",
+  revisao: "#FB8C00", aprovado: "#43A047", entregue: "var(--hubia-ink-500)",
 };
 
 function agruparPorDia(pedidos: CalendarioPedido[]): Record<number, CalendarioPedido[]> {
