@@ -418,7 +418,7 @@ export default function ArquiteturaClient() {
           <div>
             <p
               className="font-bold"
-              style={{ fontSize: "13px", color: "#D7FF00" }}
+              style={{ fontSize: "13px", color: "var(--hubia-limao-500)" }}
             >
               Ciclo: PLAN → EXECUTE → REFLECT
             </p>

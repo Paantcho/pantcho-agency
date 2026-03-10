@@ -51,7 +51,7 @@ function SelectField({
       <motion.button
         type="button"
         onClick={() => setOpen((v) => !v)}
-        className="flex h-11 w-full items-center justify-between rounded-[12px] border border-transparent bg-[#EEEFE9] px-3.5 text-[15px] text-[#0E0F10] outline-none transition-[border-color] duration-150 hover:border-[#D4D5D6]"
+        className="flex h-11 w-full items-center justify-between rounded-[12px] border border-transparent bg-base-500 px-3.5 text-[15px] text-[#0E0F10] outline-none transition-[border-color] duration-150 hover:border-[#D4D5D6]"
         whileTap={{ scale: 0.995 }}
       >
         <span>{selected?.label ?? "Selecionar"}</span>

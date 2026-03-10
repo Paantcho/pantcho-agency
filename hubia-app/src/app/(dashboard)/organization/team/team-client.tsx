@@ -25,10 +25,10 @@ import InviteModal from "./invite-modal";
 import { useRouter } from "next/navigation";
 
 const roleBadge: Record<MemberRole, { bg: string; text: string; label: string }> = {
-  owner: { bg: "#0E0F10", text: "#D7FF00", label: "Proprietário" },
-  admin: { bg: "#D7FF00", text: "#0E0F10", label: "Admin" },
-  editor: { bg: "#EEEFE9", text: "#0E0F10", label: "Editor" },
-  viewer: { bg: "#EEEFE9", text: "#A9AAA5", label: "Visualizador" },
+  owner: { bg: "var(--hubia-ink-500)", text: "var(--hubia-limao-500)", label: "Proprietário" },
+  admin: { bg: "var(--hubia-limao-500)", text: "var(--hubia-ink-500)", label: "Admin" },
+  editor: { bg: "var(--hubia-bg-base-500)", text: "var(--hubia-ink-500)", label: "Editor" },
+  viewer: { bg: "var(--hubia-bg-base-500)", text: "var(--hubia-bg-base-700)", label: "Visualizador" },
 };
 
 const roleDesc: Record<MemberRole, string> = {

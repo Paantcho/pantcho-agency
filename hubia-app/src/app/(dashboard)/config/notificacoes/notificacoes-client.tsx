@@ -151,7 +151,7 @@ export default function NotificacoesClient({
                 initial={{ opacity: 0, y: 8 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: Math.min(i * 0.06, 0.3) }}
-                className="flex items-center justify-between rounded-[12px] bg-[#EEEFE9] px-5 py-4"
+                className="flex items-center justify-between rounded-[12px] bg-base-500 px-5 py-4"
               >
                 <div className="flex items-center gap-3">
                   <div

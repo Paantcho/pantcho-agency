@@ -197,12 +197,12 @@ export default function ConhecimentoItemClient({ item }: { item: KnowledgeCard }
               {statusConf.label}
             </span>
             {item.aiProcessed && (
-              <span className="flex items-center gap-1 rounded-[7px] bg-[#D7FF00]/20 px-2.5 py-1 text-[10px] font-bold text-[#6B7C00] uppercase">
+              <span className="flex items-center gap-1 rounded-[7px] bg-limao-500/20 px-2.5 py-1 text-[10px] font-bold text-[#6B7C00] uppercase">
                 <Bot size={10} /> IA
               </span>
             )}
             {item.category && (
-              <span className="rounded-[7px] bg-[#EEEFE9] px-2.5 py-1 text-[11px] font-semibold text-ink-400">
+              <span className="rounded-[7px] bg-base-500 px-2.5 py-1 text-[11px] font-semibold text-ink-400">
                 {item.category}
               </span>
             )}
@@ -210,7 +210,7 @@ export default function ConhecimentoItemClient({ item }: { item: KnowledgeCard }
           {/* Ações compactas no canto */}
           <div className="flex items-center gap-1.5 shrink-0">
             <motion.button
-              className="flex items-center gap-1.5 rounded-[12px] bg-[#EEEFE9] px-3 py-1.5 text-[11px] font-semibold text-ink-400"
+              className="flex items-center gap-1.5 rounded-[12px] bg-base-500 px-3 py-1.5 text-[11px] font-semibold text-ink-400"
               whileHover={{ scale: 1.03, backgroundColor: "#D9D9D4" }}
               whileTap={{ scale: 0.97 }}
               transition={{ duration: 0.15 }}
@@ -221,7 +221,7 @@ export default function ConhecimentoItemClient({ item }: { item: KnowledgeCard }
               Editar
             </motion.button>
             <motion.button
-              className="flex items-center gap-1.5 rounded-[12px] bg-[#EEEFE9] px-3 py-1.5 text-[11px] font-semibold text-ink-400"
+              className="flex items-center gap-1.5 rounded-[12px] bg-base-500 px-3 py-1.5 text-[11px] font-semibold text-ink-400"
               whileHover={{ scale: 1.03, backgroundColor: "#D9D9D4" }}
               whileTap={{ scale: 0.97 }}
               transition={{ duration: 0.15 }}
@@ -519,13 +519,13 @@ function TabVisaoGeral({
         >
           <p className="text-[10px] font-bold uppercase tracking-widest text-base-700">Vínculos</p>
           {item.projetoVinculado ? (
-            <div className="flex items-center gap-2 rounded-[12px] bg-[#EEEFE9] px-3 py-2">
+            <div className="flex items-center gap-2 rounded-[12px] bg-base-500 px-3 py-2">
               <FolderKanban size={12} color="#5E5E5F" />
               <span className="text-[12px] font-semibold text-ink-500">{item.projetoVinculado}</span>
             </div>
           ) : null}
           {item.creatorVinculado ? (
-            <div className="flex items-center gap-2 rounded-[12px] bg-[#EEEFE9] px-3 py-2">
+            <div className="flex items-center gap-2 rounded-[12px] bg-base-500 px-3 py-2">
               <Users size={12} color="#5E5E5F" />
               <span className="text-[12px] font-semibold text-ink-500">{item.creatorVinculado}</span>
             </div>
@@ -545,7 +545,7 @@ function TabVisaoGeral({
             <p className="text-[10px] font-bold uppercase tracking-widest text-base-700">Tags</p>
             <div className="flex flex-wrap gap-1.5">
               {item.tags.map((tag) => (
-                <span key={tag} className="rounded-[9999px] bg-[#EEEFE9] px-2.5 py-1 text-[10px] font-semibold text-ink-400">
+                <span key={tag} className="rounded-[9999px] bg-base-500 px-2.5 py-1 text-[10px] font-semibold text-ink-400">
                   #{tag}
                 </span>
               ))}
@@ -565,7 +565,7 @@ function TabVisaoGeral({
               href={item.sourceUrl}
               target="_blank"
               rel="noreferrer"
-              className="flex items-center gap-2 rounded-[12px] bg-[#EEEFE9] px-3 py-2 hover:bg-[#D9D9D4] transition-colors duration-150"
+              className="flex items-center gap-2 rounded-[12px] bg-base-500 px-3 py-2 hover:bg-[#D9D9D4] transition-colors duration-150"
             >
               <ExternalLink size={12} color="#5E5E5F" />
               <span className="text-[11px] font-semibold text-ink-500 truncate">{item.sourceUrl}</span>
@@ -613,7 +613,7 @@ function TabConteudoFonte({ item }: { item: KnowledgeCard }) {
           transition={{ duration: 0.3, ease: [0, 0, 0.2, 1], delay: 0.1 }}
         >
           <p className="text-[10px] font-bold uppercase tracking-widest text-base-700">Arquivo Associado</p>
-          <div className="flex items-center gap-3 rounded-[12px] bg-[#EEEFE9] p-3">
+          <div className="flex items-center gap-3 rounded-[12px] bg-base-500 p-3">
             <File size={18} color="#5E5E5F" />
             <div className="flex-1">
               <p className="text-[13px] font-semibold text-ink-500">{item.fileUrl.split("/").pop()}</p>
@@ -658,7 +658,7 @@ function TabAprendizados({ aprendizados, item }: { aprendizados: string[]; item:
         </p>
         {item.itemStatus === "bruto" && (
           <motion.button
-            className="flex items-center gap-2 rounded-[14px] bg-[#D7FF00] px-4 py-2.5 text-[13px] font-semibold text-ink-500"
+            className="flex items-center gap-2 rounded-[14px] bg-limao-500 px-4 py-2.5 text-[13px] font-semibold text-ink-500"
             whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}>
             <Sparkles size={13} /> Processar com IA
           </motion.button>
@@ -861,7 +861,7 @@ function TabArquivosLinks({ item }: { item: KnowledgeCard }) {
           transition={{ duration: 0.3, ease: [0, 0, 0.2, 1] }}>
           <p className="text-[10px] font-bold uppercase tracking-widest text-base-700">Links Externos</p>
           <a href={item.sourceUrl} target="_blank" rel="noreferrer"
-            className="flex items-center gap-2 rounded-[12px] bg-[#EEEFE9] p-3 hover:bg-[#D9D9D4] transition-colors duration-150">
+            className="flex items-center gap-2 rounded-[12px] bg-base-500 p-3 hover:bg-[#D9D9D4] transition-colors duration-150">
             <ExternalLink size={14} color="#5E5E5F" />
             <span className="text-[13px] font-semibold text-ink-500 flex-1 truncate">{item.sourceUrl}</span>
           </a>
@@ -872,7 +872,7 @@ function TabArquivosLinks({ item }: { item: KnowledgeCard }) {
           initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.3, ease: [0, 0, 0.2, 1], delay: 0.05 }}>
           <p className="text-[10px] font-bold uppercase tracking-widest text-base-700">Documentos & Arquivos</p>
-          <div className="flex items-center gap-3 rounded-[12px] bg-[#EEEFE9] p-3">
+          <div className="flex items-center gap-3 rounded-[12px] bg-base-500 p-3">
             <File size={18} color="#5E5E5F" />
             <div className="flex-1">
               <p className="text-[13px] font-semibold text-ink-500">{item.fileUrl.split("/").pop()}</p>
@@ -904,7 +904,7 @@ function TabLog({ log }: { log: { data: string; evento: string; agente?: string 
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.22, ease: [0, 0, 0.2, 1], delay: i * 0.04 }}
         >
-          <div className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[#EEEFE9] mt-0.5">
+          <div className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-base-500 mt-0.5">
             <Activity size={9} color="#A9AAA5" />
           </div>
           <div className="flex-1">

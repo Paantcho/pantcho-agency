@@ -129,8 +129,8 @@ export default function CreatorDetailClient({
               onClick={() => activeTab === "voice" && setVoiceEditModalOpen(true)}
               className="flex items-center gap-2 rounded-full border font-semibold"
               style={{
-                borderColor: "#D9D9D4",
-                color: "#0E0F10",
+                borderColor: "var(--hubia-sand-600)",
+                color: "var(--hubia-ink-500)",
                 fontSize: "13px",
                 padding: "9px 18px",
                 background: "transparent",
@@ -141,7 +141,7 @@ export default function CreatorDetailClient({
               animate="rest"
               variants={{
                 rest: { backgroundColor: "transparent" },
-                hovered: { scale: 1.03, backgroundColor: "#EEEFE9" },
+                hovered: { scale: 1.03, backgroundColor: "var(--hubia-bg-base-500)" },
               }}
               transition={{ duration: 0.15, ease: [0.34, 1.56, 0.64, 1] }}
             >

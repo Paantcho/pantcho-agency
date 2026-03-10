@@ -90,7 +90,7 @@ export default function SegurancaClient({
           {checklistItems.map((item, i) => (
             <motion.div
               key={item.id}
-              className="flex items-center justify-between rounded-[12px] bg-[#EEEFE9] px-4 py-3"
+              className="flex items-center justify-between rounded-[12px] bg-base-500 px-4 py-3"
               initial={{ opacity: 0, x: -8 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: i * 0.06 }}
@@ -155,7 +155,7 @@ export default function SegurancaClient({
             {providers.map((p, i) => (
               <motion.div
                 key={p.id}
-                className="flex items-center gap-3 rounded-[12px] bg-[#EEEFE9] px-4 py-3"
+                className="flex items-center gap-3 rounded-[12px] bg-base-500 px-4 py-3"
                 initial={{ opacity: 0, y: 6 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: i * 0.05 }}
