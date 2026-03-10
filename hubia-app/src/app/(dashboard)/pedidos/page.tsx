@@ -1,15 +1,11 @@
-import { getCurrentOrganizationId } from "@/lib/auth-organization";
+import { getPedidos, getCreatorsForSelect } from "./actions";
 import PedidosClient from "./pedidos-client";
-import { getPedidos } from "./actions";
 
 export default async function PedidosPage() {
-  const organizationId = await getCurrentOrganizationId();
-  const pedidos = organizationId ? await getPedidos(organizationId) : [];
+  const [pedidos, creators] = await Promise.all([
+    getPedidos(),
+    getCreatorsForSelect(),
+  ]);
 
-  return (
-    <PedidosClient
-      organizationId={organizationId ?? ""}
-      initialPedidos={pedidos}
-    />
-  );
+  return <PedidosClient pedidos={pedidos} creators={creators} />;
 }
