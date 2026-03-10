@@ -831,12 +831,12 @@ function NovoProjetoModal({ open, onClose, organizationId, onCreated }: {
 
                       <div className="flex gap-3 mt-1">
                         <motion.button type="button" onClick={handleClose}
-                          className="rounded-[18px] border border-[#EEEFE9] bg-white px-5 py-3 text-[14px] font-semibold text-ink-400"
+                          className="rounded-[18px] border border-base-500 bg-white px-5 py-3 text-[14px] font-semibold text-ink-400"
                           whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.97 }}>
                           Cancelar
                         </motion.button>
                         <motion.button type="submit" disabled={!nome.trim() || loading}
-                          className="flex-1 flex items-center justify-center gap-2 rounded-[18px] bg-[#D7FF00] py-3 text-[14px] font-semibold text-ink-500 disabled:opacity-40"
+                          className="flex-1 flex items-center justify-center gap-2 rounded-[18px] bg-limao-500 py-3 text-[14px] font-semibold text-ink-500 disabled:opacity-40"
                           initial="rest" animate="rest"
                           whileHover={nome.trim() && !loading ? "hovered" : "rest"}
                           whileTap={{ scale: 0.96 }}

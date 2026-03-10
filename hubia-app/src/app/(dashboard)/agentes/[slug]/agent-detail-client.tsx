@@ -109,7 +109,7 @@ export default function AgentDetailClient({
         <div className="flex flex-col gap-1">
           <h1
             className="font-bold leading-tight"
-            style={{ fontSize: "28px", color: "#0E0F10" }}
+            style={{ fontSize: "28px", color: "var(--hubia-ink-500)" }}
           >
             {agent.name}
           </h1>
@@ -330,7 +330,7 @@ function ChatTab({
         <div className="text-center">
           <p
             className="font-semibold"
-            style={{ fontSize: "15px", color: "#0E0F10" }}
+            style={{ fontSize: "15px", color: "var(--hubia-ink-500)" }}
           >
             Nenhum provedor de IA configurado
           </p>
@@ -347,7 +347,7 @@ function ChatTab({
           className="rounded-full font-bold transition-opacity hover:opacity-90"
           style={{
             background: "#D7FF00",
-            color: "#0E0F10",
+            color: "var(--hubia-ink-500)",
             fontSize: "13px",
             padding: "10px 22px",
           }}
@@ -373,7 +373,7 @@ function ChatTab({
               style={{ fontSize: "14px", color: "#A9AAA5" }}
             >
               Envie uma mensagem para conversar com{" "}
-              <strong style={{ color: "#0E0F10" }}>{agent.name}</strong>
+              <strong style={{ color: "var(--hubia-ink-500)" }}>{agent.name}</strong>
             </p>
           </div>
         )}
@@ -450,7 +450,7 @@ function ChatTab({
             className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl transition-all duration-200 hover:opacity-90 active:scale-95 disabled:opacity-30"
             style={{
               background: input.trim() && !isStreaming ? "#D7FF00" : "#EEEFE9",
-              color: "#0E0F10",
+              color: "var(--hubia-ink-500)",
             }}
           >
             {isStreaming ? (
@@ -482,7 +482,7 @@ function ConfigTab({ agent }: { agent: AgentData }) {
       <div className="rounded-[30px] bg-white p-6">
         <h3
           className="mb-3 font-bold"
-          style={{ fontSize: "15px", color: "#0E0F10" }}
+          style={{ fontSize: "15px", color: "var(--hubia-ink-500)" }}
         >
           System Prompt (SOUL)
         </h3>
@@ -490,7 +490,7 @@ function ConfigTab({ agent }: { agent: AgentData }) {
           className="max-h-[500px] overflow-y-auto whitespace-pre-wrap rounded-xl p-4 text-[13px] leading-relaxed"
           style={{
             background: "#F5F5F3",
-            color: "#0E0F10",
+            color: "var(--hubia-ink-500)",
             fontFamily: "inherit",
           }}
         >
@@ -503,7 +503,7 @@ function ConfigTab({ agent }: { agent: AgentData }) {
         <div className="rounded-[30px] bg-white p-6">
           <h3
             className="mb-3 font-bold"
-            style={{ fontSize: "15px", color: "#0E0F10" }}
+            style={{ fontSize: "15px", color: "var(--hubia-ink-500)" }}
           >
             Skills ({agent.skills.length})
           </h3>
@@ -517,7 +517,7 @@ function ConfigTab({ agent }: { agent: AgentData }) {
                 <div>
                   <p
                     className="font-semibold"
-                    style={{ fontSize: "14px", color: "#0E0F10" }}
+                    style={{ fontSize: "14px", color: "var(--hubia-ink-500)" }}
                   >
                     {skill.name}
                   </p>
@@ -532,7 +532,7 @@ function ConfigTab({ agent }: { agent: AgentData }) {
                 </div>
                 <span
                   className="rounded-full px-2 py-0.5 text-[10px] font-bold"
-                  style={{ background: "#D7FF0020", color: "#0E0F10" }}
+                  style={{ background: "#D7FF0020", color: "var(--hubia-ink-500)" }}
                 >
                   {skill.slug}
                 </span>
@@ -546,7 +546,7 @@ function ConfigTab({ agent }: { agent: AgentData }) {
       <div className="rounded-[30px] bg-white p-6">
         <h3
           className="mb-3 font-bold"
-          style={{ fontSize: "15px", color: "#0E0F10" }}
+          style={{ fontSize: "15px", color: "var(--hubia-ink-500)" }}
         >
           Configuração
         </h3>
@@ -554,7 +554,7 @@ function ConfigTab({ agent }: { agent: AgentData }) {
           className="overflow-x-auto rounded-xl p-4 text-[13px]"
           style={{
             background: "#F5F5F3",
-            color: "#0E0F10",
+            color: "var(--hubia-ink-500)",
             fontFamily: "monospace",
           }}
         >

@@ -85,8 +85,8 @@ function TableRow({
   alert: boolean;
 }) {
   return (
-    <div className="grid grid-cols-3 gap-3 border-b py-2.5 last:border-0" style={{ borderColor: "#EEEFE9" }}>
-      <span className="font-semibold" style={{ fontSize: "12px", color: "#0E0F10" }}>
+    <div className="grid grid-cols-3 gap-3 border-b py-2.5 last:border-0" style={{ borderColor: "var(--hubia-bg-base-500)" }}>
+      <span className="font-semibold" style={{ fontSize: "12px", color: "var(--hubia-ink-500)" }}>
         {elemento}
       </span>
       <span className="font-semibold" style={{ fontSize: "12px", color: "#A9AAA5" }}>
@@ -144,7 +144,7 @@ export default function CreatorAppearanceTab({
       >
         <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0" style={{ color: "#FF576D" }} />
         <div>
-          <p className="font-bold" style={{ fontSize: "12px", color: "#0E0F10" }}>
+          <p className="font-bold" style={{ fontSize: "12px", color: "var(--hubia-ink-500)" }}>
             DOCUMENTO FORENSE
           </p>
           <p className="font-semibold" style={{ fontSize: "12px", color: "#A9AAA5", marginTop: "2px" }}>
@@ -249,7 +249,7 @@ export default function CreatorAppearanceTab({
                 >
                   ✕
                 </span>
-                <span className="font-semibold" style={{ fontSize: "12px", color: "#0E0F10" }}>
+                <span className="font-semibold" style={{ fontSize: "12px", color: "var(--hubia-ink-500)" }}>
                   {item}
                 </span>
               </div>

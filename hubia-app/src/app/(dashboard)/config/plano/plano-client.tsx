@@ -180,13 +180,13 @@ export default function PlanoClient({
                   </p>
                   <p
                     className="mt-0.5 text-[18px] font-bold"
-                    style={{ color: isAtual ? "#FFFFFF" : "#0E0F10" }}
+                    style={{ color: isAtual ? "#FFFFFF" : "var(--hubia-ink-500)" }}
                   >
                     {p.nome}
                   </p>
                   <p
                     className="mt-1 text-[12px] leading-relaxed"
-                    style={{ color: isAtual ? "rgba(255,255,255,0.5)" : "#A9AAA5" }}
+                    style={{ color: isAtual ? "rgba(255,255,255,0.5)" : "var(--hubia-bg-base-700)" }}
                   >
                     {p.descricao}
                   </p>
@@ -199,11 +199,11 @@ export default function PlanoClient({
                       <div key={m.label} className="flex items-center gap-2">
                         <CheckCircle2
                           size={13}
-                          color={isAtual ? "#D7FF00" : "#43A047"}
+                          color={isAtual ? "var(--hubia-limao-500)" : "#43A047"}
                         />
                         <span
                           className="text-[12px] font-semibold"
-                          style={{ color: isAtual ? "rgba(255,255,255,0.8)" : "#0E0F10" }}
+                          style={{ color: isAtual ? "rgba(255,255,255,0.8)" : "var(--hubia-ink-500)" }}
                         >
                           {m.label}
                         </span>
@@ -216,10 +216,10 @@ export default function PlanoClient({
                   {p.branding ? (
                     <Sparkles
                       size={13}
-                      color={isAtual ? "#D7FF00" : "#0E0F10"}
+                      color={isAtual ? "var(--hubia-limao-500)" : "var(--hubia-ink-500)"}
                     />
                   ) : (
-                    <Lock size={13} color={isAtual ? "#555" : "#A9AAA5"} />
+                    <Lock size={13} color={isAtual ? "#555" : "var(--hubia-bg-base-700)"} />
                   )}
                   <span
                     className="text-[11px] font-semibold"

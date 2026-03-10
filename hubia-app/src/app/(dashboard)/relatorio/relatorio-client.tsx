@@ -140,7 +140,7 @@ const ACTIVITIES_POOL: Array<{ Icon: LucideIcon; text: string; color: string; ti
   { Icon: Zap, text: "Planner iniciou briefing #048", color: "#D7FF00", tipo: "Briefing" },
   { Icon: Palette, text: "Dir. de Arte solicitou revisão", color: "#FB8C00", tipo: "Revisão" },
   { Icon: Bot, text: "Agente QA detectou inconsistência", color: "#5E5E5F", tipo: "QA" },
-  { Icon: FileVideo, text: "Novo pedido criado: Campanha Q2", color: "#0E0F10", tipo: "Pedido" },
+  { Icon: FileVideo, text: "Novo pedido criado: Campanha Q2", color: "var(--hubia-ink-500)", tipo: "Pedido" },
   { Icon: Sparkles, text: "Prompt gerado para pedido #046", color: "#8AB000", tipo: "IA" },
   { Icon: Users, text: "Creator confirmada para pedido #045", color: "#5E5E5F", tipo: "Creator" },
   { Icon: ArrowUpRight, text: "Deploy automático concluído", color: "#43A047", tipo: "Deploy" },
