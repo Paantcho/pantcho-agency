@@ -388,7 +388,7 @@ function ChatTab({
               className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full"
               style={{
                 background:
-                  msg.role === "user" ? "var(--hubia-ink-500)" : `${(agent.config.color as string) || "var(--hubia-limao-500)"}20`,
+                  msg.role === "user" ? "var(--hubia-ink-500)" : `${(agent.config.color as string) || "#D7FF00"}20`,
               }}
             >
               {msg.role === "user" ? (

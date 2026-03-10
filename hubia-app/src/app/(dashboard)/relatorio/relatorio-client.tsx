@@ -1122,7 +1122,7 @@ function ActivityFeed() {
                     className="leading-tight truncate font-bold"
                     style={{
                       fontSize: isLive ? "14px" : "13px",
-                      color: isLive ? "#0E0F10" : "#7A7B7C",
+                      color: isLive ? "var(--hubia-ink-500)" : "#7A7B7C",
                       fontWeight: isLive ? 700 : 500,
                     }}
                   >

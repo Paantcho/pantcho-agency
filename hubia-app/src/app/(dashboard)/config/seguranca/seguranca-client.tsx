@@ -130,7 +130,7 @@ export default function SegurancaClient({
           <motion.button
             onClick={() => router.push("/organization/provedores")}
             className="flex items-center gap-1.5 text-[12px] font-semibold text-base-700"
-            whileHover={{ color: "#0E0F10" }}
+            whileHover={{ color: "var(--hubia-ink-500)" }}
             whileTap={{ scale: 0.97 }}
           >
             <ExternalLink size={12} />
@@ -196,7 +196,7 @@ export default function SegurancaClient({
         <motion.button
           onClick={() => router.push("/config/equipe")}
           className="flex items-center gap-1.5 text-[12px] font-semibold text-base-700"
-          whileHover={{ color: "#0E0F10" }}
+          whileHover={{ color: "var(--hubia-ink-500)" }}
           whileTap={{ scale: 0.97 }}
         >
           <ExternalLink size={12} />

@@ -73,7 +73,7 @@ export default function InviteModal({
                 type="button"
                 onClick={onClose}
                 className="flex h-8 w-8 items-center justify-center rounded-[12px] text-base-700"
-                whileHover={{ rotate: 90, scale: 1.1, color: "#0E0F10" }}
+                whileHover={{ rotate: 90, scale: 1.1, color: "var(--hubia-ink-500)" }}
                 whileTap={{ rotate: 90, scale: 0.9 }}
                 transition={{ duration: 0.15, ease: [0.34, 1.56, 0.64, 1] }}
               >

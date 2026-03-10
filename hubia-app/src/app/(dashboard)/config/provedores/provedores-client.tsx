@@ -326,7 +326,7 @@ export default function ProvedoresClient(props: Props) {
             disabled={loading}
             title="Definir como padrão"
             className="inline-flex flex-1 items-center justify-center gap-[6px] rounded-button border border-white/30 px-[12px] py-[10px] text-label-sm text-white/70 disabled:opacity-50"
-            whileHover={{ scale: 1.03, backgroundColor: "rgba(255,255,255,0.1)", color: "#D7FF00" }}
+            whileHover={{ scale: 1.03, backgroundColor: "rgba(255,255,255,0.1)", color: "var(--hubia-limao-500)" }}
             whileTap={{ scale: 0.96 }}
             transition={{ duration: 0.15, ease: [0.34, 1.56, 0.64, 1] }}
           >

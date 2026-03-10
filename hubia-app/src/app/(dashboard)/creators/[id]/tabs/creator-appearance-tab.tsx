@@ -265,7 +265,7 @@ export default function CreatorAppearanceTab({
           className="rounded-[30px] border p-5"
           style={{ borderColor: "var(--hubia-sand-600)", background: "#FFFFFF" }}
         >
-          <label htmlFor="ap-base" className="font-semibold" style={{ fontSize: "13px", color: "#0E0F10" }}>
+          <label htmlFor="ap-base" className="font-semibold" style={{ fontSize: "13px", color: "var(--hubia-ink-500)" }}>
             Prompt base (edição)
           </label>
           <textarea
@@ -274,8 +274,8 @@ export default function CreatorAppearanceTab({
             value={basePrompt}
             onChange={(e) => setBasePrompt(e.target.value)}
             placeholder="Descreva a aparência fixa do creator..."
-            className="mt-2 w-full rounded-xl border px-4 py-3 font-semibold outline-none transition-colors focus:border-[#D7FF00]"
-            style={{ borderColor: "#D9D9D4", background: "#EEEFE9", fontSize: "13px", color: "#0E0F10" }}
+            className="mt-2 w-full rounded-xl border px-4 py-3 font-semibold outline-none transition-colors focus:border-limao-500"
+            style={{ borderColor: "var(--hubia-sand-600)", background: "var(--hubia-bg-base-500)", fontSize: "13px", color: "var(--hubia-ink-500)" }}
           />
           <div className="mt-4 flex flex-wrap items-center gap-2">
             <button

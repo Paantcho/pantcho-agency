@@ -65,7 +65,7 @@ export default function EquipeClient({
         onClick={() => setOpen((v) => !v)}
         disabled={loading}
         className="flex h-[36px] w-[36px] items-center justify-center rounded-button text-base-700 disabled:opacity-50"
-        whileHover={{ scale: 1.12, color: "#0E0F10", backgroundColor: "rgba(14,15,16,0.04)" }}
+        whileHover={{ scale: 1.12, color: "var(--hubia-ink-500)", backgroundColor: "rgba(14,15,16,0.04)" }}
         whileTap={{ scale: 0.90 }}
         transition={{ duration: 0.15, ease: [0.34, 1.56, 0.64, 1] }}
       >

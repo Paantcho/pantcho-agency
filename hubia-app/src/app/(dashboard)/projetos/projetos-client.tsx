@@ -427,7 +427,7 @@ function ProjetoCardItem({ projeto: p, index: i, onClick }: {
 
   // Cores de progresso — paleta Hubia correta
   const corBarra = progresso !== null
-    ? progresso >= 75 ? "#D7FF00"   // limão-500 — acima de 75%
+    ? progresso >= 75 ? "var(--hubia-limao-500)"   // limão-500 — acima de 75%
     : progresso >= 40 ? "#A8C800"   // limão-600 — entre 40-74%
     : "#FB8C00"                      // laranja — abaixo de 40%
     : tipoConfig.cor;

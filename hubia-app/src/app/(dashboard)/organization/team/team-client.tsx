@@ -119,7 +119,7 @@ function MemberActions({
         onClick={() => setOpen((v) => !v)}
         disabled={loading}
         className="flex h-8 w-8 items-center justify-center rounded-[12px] text-base-700 disabled:opacity-40"
-        whileHover={{ scale: 1.12, color: "#0E0F10", backgroundColor: "rgba(14,15,16,0.04)" }}
+        whileHover={{ scale: 1.12, color: "var(--hubia-ink-500)", backgroundColor: "rgba(14,15,16,0.04)" }}
         whileTap={{ scale: 0.9 }}
         transition={{ duration: 0.15, ease: [0.34, 1.56, 0.64, 1] }}
       >
@@ -146,7 +146,7 @@ function MemberActions({
                   type="button"
                   onClick={() => handleChangeRole(r)}
                   className="w-full px-3 py-2 text-left text-[13px] font-semibold text-ink-500"
-                  whileHover={{ backgroundColor: "#EEEFE9" }}
+                  whileHover={{ backgroundColor: "var(--hubia-bg-base-500)" }}
                   whileTap={{ scale: 0.98 }}
                   transition={{ duration: 0.1 }}
                 >
@@ -372,7 +372,7 @@ export default function TeamClient({
                       disabled={loadingInviteId === inv.id}
                       title="Reenviar convite"
                       className="flex h-8 w-8 items-center justify-center rounded-[12px] text-base-700 disabled:opacity-40"
-                      whileHover={{ scale: 1.12, color: "#0E0F10", backgroundColor: "rgba(14,15,16,0.04)" }}
+                      whileHover={{ scale: 1.12, color: "var(--hubia-ink-500)", backgroundColor: "rgba(14,15,16,0.04)" }}
                       whileTap={{ scale: 0.9 }}
                       transition={{ duration: 0.15, ease: [0.34, 1.56, 0.64, 1] }}
                     >
