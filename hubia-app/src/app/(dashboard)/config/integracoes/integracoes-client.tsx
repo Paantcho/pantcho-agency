@@ -147,7 +147,7 @@ function IntegracaoCard({ item, idx }: { item: Integracao; idx: number }) {
       initial={{ opacity: 0, y: 12 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: Math.min(idx * 0.05, 0.3) }}
-      className="rounded-[16px] bg-[#EEEFE9] overflow-hidden"
+      className="rounded-[16px] bg-base-500 overflow-hidden"
     >
       <motion.button
         type="button"
@@ -274,7 +274,7 @@ export default function IntegracoesClient() {
               <h2 className="text-[15px] font-bold text-[#0E0F10]">
                 {cat.label}
               </h2>
-              <span className="rounded-[6px] bg-[#EEEFE9] px-2.5 py-1 text-[11px] font-bold text-[#A9AAA5]">
+              <span className="rounded-[6px] bg-base-500 px-2.5 py-1 text-[11px] font-bold text-[#A9AAA5]">
                 {ativos}/{itens.length} ativos
               </span>
             </div>

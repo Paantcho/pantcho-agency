@@ -194,7 +194,7 @@ export default function CreatorOverviewTab({
                     </p>
                     <p
                       className="font-semibold"
-                      style={{ fontSize: "12px", color: "#A9AAA5", marginTop: "2px" }}
+                      style={{ fontSize: "12px", color: "var(--hubia-bg-base-700)", marginTop: "2px" }}
                     >
                       {item.desc}
                     </p>
@@ -220,7 +220,7 @@ export default function CreatorOverviewTab({
           {/* Área da imagem — placeholder cinza */}
           <div
             className="mt-4 flex h-28 items-center justify-center rounded-2xl"
-            style={{ background: "#EEEFE9" }}
+            style={{ background: "var(--hubia-bg-base-500)" }}
           >
             <span
               className="font-semibold"

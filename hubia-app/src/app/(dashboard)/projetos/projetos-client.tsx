@@ -294,14 +294,14 @@ export default function ProjetosClient({
       {/* Linha 1: título + botão */}
       <div className="flex items-center justify-between gap-3">
         <div>
-          <h1 className="text-[28px] font-bold text-[#0E0F10]">Projetos</h1>
+          <h1 className="text-[28px] font-bold text-ink-500">Projetos</h1>
           <p className="text-[13px] text-[#A9AAA5] mt-0.5">
             {projetos.length} projeto{projetos.length !== 1 ? "s" : ""} · workspaces vivos por tipo
           </p>
         </div>
         <motion.button
           onClick={() => setModalOpen(true)}
-          className="flex items-center gap-2 rounded-[18px] px-4 py-3 text-[15px] font-semibold text-[#0E0F10]"
+          className="flex items-center gap-2 rounded-[18px] px-4 py-3 text-[15px] font-semibold text-ink-500"
           initial="rest" animate="rest" whileHover="hovered" whileTap={{ scale: 0.96 }}
           variants={{ rest: { scale: 1, backgroundColor: "#D7FF00" }, hovered: { scale: 1.03, backgroundColor: "#DFFF33" } }}
           transition={{ duration: 0.15, ease: [0.34, 1.56, 0.64, 1] }}
@@ -331,7 +331,7 @@ export default function ProjetosClient({
             value={busca}
             onChange={(e) => setBusca(e.target.value)}
             placeholder="Buscar projeto..."
-            className="h-9 rounded-[12px] bg-white pl-8 pr-3.5 text-[13px] text-[#0E0F10] outline-none placeholder:text-[#A9AAA5] border border-transparent focus:border-[#0E0F10] focus:ring-2 focus:ring-ink-500/10 transition-[border-color] duration-150 w-[200px]"
+            className="h-9 rounded-[12px] bg-white pl-8 pr-3.5 text-[13px] text-ink-500 outline-none placeholder:text-[#A9AAA5] border border-transparent focus:border-[#0E0F10] focus:ring-2 focus:ring-ink-500/10 transition-[border-color] duration-150 w-[200px]"
           />
         </div>
       </div>
@@ -479,7 +479,7 @@ function ProjetoCardItem({ projeto: p, index: i, onClick }: {
       </div>
 
       {/* Título — grande e dominante */}
-      <h3 className="text-[22px] font-bold text-[#0E0F10] leading-tight tracking-tight mb-1.5">
+      <h3 className="text-[22px] font-bold text-ink-500 leading-tight tracking-tight mb-1.5">
         {p.nome}
       </h3>
 
@@ -692,7 +692,7 @@ function NovoProjetoModal({ open, onClose, organizationId, onCreated }: {
                       {step === "tipo" ? "1. Escolha o tipo" : "2. Configure o projeto"}
                     </span>
                   </div>
-                  <h2 className="text-[22px] font-bold text-[#0E0F10]">Novo Projeto</h2>
+                  <h2 className="text-[22px] font-bold text-ink-500">Novo Projeto</h2>
                 </div>
                 <motion.button
                   onClick={handleClose}
@@ -741,7 +741,7 @@ function NovoProjetoModal({ open, onClose, organizationId, onCreated }: {
                                   <Icon size={15} />
                                 </div>
                                 <div>
-                                  <p className="text-[13px] font-bold text-[#0E0F10]">{cfg.label}</p>
+                                  <p className="text-[13px] font-bold text-ink-500">{cfg.label}</p>
                                   <p className="text-[11px] text-[#A9AAA5] leading-snug mt-0.5">{cfg.descricao}</p>
                                 </div>
                               </motion.button>
@@ -772,7 +772,7 @@ function NovoProjetoModal({ open, onClose, organizationId, onCreated }: {
                         <tipoConfig.icone size={16} />
                       </div>
                       <div className="flex-1 min-w-0">
-                        <p className="text-[13px] font-bold text-[#0E0F10]">{tipoConfig.label}</p>
+                        <p className="text-[13px] font-bold text-ink-500">{tipoConfig.label}</p>
                         <p className="text-[11px] text-[#5E5E5F] mt-0.5">{tipoConfig.descricao}</p>
                         <div className="flex flex-wrap gap-1 mt-2.5">
                           {tipoConfig.modulosBase.map((m) => (
@@ -790,7 +790,7 @@ function NovoProjetoModal({ open, onClose, organizationId, onCreated }: {
                         <input
                           autoFocus value={nome} onChange={(e) => setNome(e.target.value)}
                           placeholder={`Ex: ${tipoConfig.label} — Cliente 2026`}
-                          className="h-11 w-full rounded-[12px] border border-transparent bg-[#EEEFE9] px-3.5 text-[14px] text-[#0E0F10] outline-none placeholder:text-[#A9AAA5] hover:border-[#D4D5D6] focus:border-[#0E0F10] focus:ring-2 focus:ring-ink-500/10 transition-[border-color] duration-150"
+                          className="h-11 w-full rounded-[12px] border border-transparent bg-[#EEEFE9] px-3.5 text-[14px] text-ink-500 outline-none placeholder:text-[#A9AAA5] hover:border-[#D4D5D6] focus:border-[#0E0F10] focus:ring-2 focus:ring-ink-500/10 transition-[border-color] duration-150"
                         />
                       </div>
 
@@ -800,7 +800,7 @@ function NovoProjetoModal({ open, onClose, organizationId, onCreated }: {
                           <input
                             value={cliente} onChange={(e) => setCliente(e.target.value)}
                             placeholder="Ex: Pantcho Agency"
-                            className="h-11 w-full rounded-[12px] border border-transparent bg-[#EEEFE9] px-3.5 text-[14px] text-[#0E0F10] outline-none placeholder:text-[#A9AAA5] hover:border-[#D4D5D6] focus:border-[#0E0F10] focus:ring-2 focus:ring-ink-500/10 transition-[border-color] duration-150"
+                            className="h-11 w-full rounded-[12px] border border-transparent bg-[#EEEFE9] px-3.5 text-[14px] text-ink-500 outline-none placeholder:text-[#A9AAA5] hover:border-[#D4D5D6] focus:border-[#0E0F10] focus:ring-2 focus:ring-ink-500/10 transition-[border-color] duration-150"
                           />
                         </div>
                         <div>
@@ -808,7 +808,7 @@ function NovoProjetoModal({ open, onClose, organizationId, onCreated }: {
                           <input
                             value={prazo} onChange={(e) => setPrazo(e.target.value)}
                             placeholder="Ex: Março 2026"
-                            className="h-11 w-full rounded-[12px] border border-transparent bg-[#EEEFE9] px-3.5 text-[14px] text-[#0E0F10] outline-none placeholder:text-[#A9AAA5] hover:border-[#D4D5D6] focus:border-[#0E0F10] focus:ring-2 focus:ring-ink-500/10 transition-[border-color] duration-150"
+                            className="h-11 w-full rounded-[12px] border border-transparent bg-[#EEEFE9] px-3.5 text-[14px] text-ink-500 outline-none placeholder:text-[#A9AAA5] hover:border-[#D4D5D6] focus:border-[#0E0F10] focus:ring-2 focus:ring-ink-500/10 transition-[border-color] duration-150"
                           />
                         </div>
                       </div>
@@ -819,14 +819,14 @@ function NovoProjetoModal({ open, onClose, organizationId, onCreated }: {
                           value={objetivo} onChange={(e) => setObjetivo(e.target.value)}
                           placeholder="O que esse projeto precisa entregar?"
                           rows={2}
-                          className="w-full rounded-[12px] border border-transparent bg-[#EEEFE9] px-3.5 py-2.5 text-[14px] text-[#0E0F10] outline-none placeholder:text-[#A9AAA5] resize-none hover:border-[#D4D5D6] focus:border-[#0E0F10] focus:ring-2 focus:ring-ink-500/10 transition-[border-color] duration-150"
+                          className="w-full rounded-[12px] border border-transparent bg-[#EEEFE9] px-3.5 py-2.5 text-[14px] text-ink-500 outline-none placeholder:text-[#A9AAA5] resize-none hover:border-[#D4D5D6] focus:border-[#0E0F10] focus:ring-2 focus:ring-ink-500/10 transition-[border-color] duration-150"
                         />
                       </div>
 
                       {/* Squad automático */}
                       <div className="flex items-center justify-between rounded-[12px] bg-[#EEEFE9] px-3.5 h-10">
                         <span className="text-[11px] text-[#A9AAA5]">Squad responsável</span>
-                        <span className="text-[12px] font-bold text-[#0E0F10]">{tipoConfig.squad}</span>
+                        <span className="text-[12px] font-bold text-ink-500">{tipoConfig.squad}</span>
                       </div>
 
                       <div className="flex gap-3 mt-1">
@@ -836,7 +836,7 @@ function NovoProjetoModal({ open, onClose, organizationId, onCreated }: {
                           Cancelar
                         </motion.button>
                         <motion.button type="submit" disabled={!nome.trim() || loading}
-                          className="flex-1 flex items-center justify-center gap-2 rounded-[18px] bg-[#D7FF00] py-3 text-[14px] font-semibold text-[#0E0F10] disabled:opacity-40"
+                          className="flex-1 flex items-center justify-center gap-2 rounded-[18px] bg-[#D7FF00] py-3 text-[14px] font-semibold text-ink-500 disabled:opacity-40"
                           initial="rest" animate="rest"
                           whileHover={nome.trim() && !loading ? "hovered" : "rest"}
                           whileTap={{ scale: 0.96 }}

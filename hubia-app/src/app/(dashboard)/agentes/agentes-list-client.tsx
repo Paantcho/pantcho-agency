@@ -175,7 +175,7 @@ export default function AgentesListClient({
         >
           <div
             className="flex h-16 w-16 items-center justify-center rounded-full"
-            style={{ background: "#EEEFE9" }}
+            style={{ background: "var(--hubia-bg-base-500)" }}
           >
             <Bot size={32} style={{ color: "var(--hubia-bg-base-700)" }} />
           </div>

@@ -160,7 +160,7 @@ export default function CalendarioClient({
                           className="w-full rounded-[4px] px-1.5 py-0.5 text-left text-[10px] font-semibold truncate"
                           style={{
                             backgroundColor: `${STATUS_COLORS[e.status] ?? "var(--hubia-bg-base-700)"}22`,
-                            color: STATUS_COLORS[e.status] ?? "#A9AAA5",
+                            color: STATUS_COLORS[e.status] ?? "var(--hubia-bg-base-700)",
                           }}
                           whileHover={{ scale: 1.02 }}
                           whileTap={{ scale: 0.97 }}
@@ -276,7 +276,7 @@ export default function CalendarioClient({
                   animate="rest"
                   whileHover="hovered"
                   whileTap={{ scale: 0.96 }}
-                  variants={{ rest: { scale: 1, backgroundColor: "#D7FF00" }, hovered: { scale: 1.02, backgroundColor: "#DFFF33" } }}
+                  variants={{ rest: { scale: 1, backgroundColor: "var(--hubia-limao-500)" }, hovered: { scale: 1.02, backgroundColor: "#DFFF33" } }}
                   transition={{ duration: 0.15 }}
                 >
                   <motion.span variants={{ rest: { x: 0 }, hovered: { x: 2 } }}>
