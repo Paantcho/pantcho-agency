@@ -2,51 +2,46 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Bell, BellOff, Check, Mail, Zap, FolderKanban, Users } from "lucide-react";
+import { Bell, Check, Mail, Zap, FolderKanban, Users } from "lucide-react";
+import { saveNotificationSettings, type NotificationSettings } from "./actions";
 
 type NotifItem = {
   id: string;
   label: string;
   descricao: string;
   icon: React.ElementType;
-  ativo: boolean;
 };
 
-const initialNotifs: NotifItem[] = [
+const notifChannels: NotifItem[] = [
   {
     id: "pedidos",
     label: "Pedidos",
     descricao: "Novos pedidos, mudanças de status e aprovações",
     icon: Zap,
-    ativo: true,
   },
   {
     id: "projetos",
     label: "Projetos",
     descricao: "Atualizações de progresso e marcos importantes",
     icon: FolderKanban,
-    ativo: true,
   },
   {
     id: "equipe",
     label: "Equipe",
     descricao: "Novos membros, mudanças de role",
     icon: Users,
-    ativo: false,
   },
   {
     id: "sistema",
     label: "Sistema",
     descricao: "Atualizações da plataforma e alertas técnicos",
     icon: Bell,
-    ativo: true,
   },
   {
     id: "email",
     label: "E-mail digest",
     descricao: "Resumo semanal das atividades por e-mail",
     icon: Mail,
-    ativo: false,
   },
 ];
 
@@ -76,25 +71,34 @@ function Toggle({
   );
 }
 
-export default function NotificacoesClient() {
-  const [notifs, setNotifs] = useState<NotifItem[]>(initialNotifs);
+export default function NotificacoesClient({
+  initialSettings,
+}: {
+  initialSettings: NotificationSettings;
+}) {
+  const [settings, setSettings] = useState<NotificationSettings>(initialSettings);
   const [loading, setLoading] = useState(false);
   const [saved, setSaved] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   function toggleNotif(id: string, valor: boolean) {
-    setNotifs((prev) =>
-      prev.map((n) => (n.id === id ? { ...n, ativo: valor } : n))
-    );
+    setSettings((prev) => ({ ...prev, [id]: valor }));
   }
 
-  const ativos = notifs.filter((n) => n.ativo).length;
+  const ativos = Object.values(settings).filter(Boolean).length;
+  const total = notifChannels.length;
 
   async function handleSave() {
     setLoading(true);
-    await new Promise((r) => setTimeout(r, 600));
+    setError(null);
+    const result = await saveNotificationSettings(settings);
     setLoading(false);
-    setSaved(true);
-    setTimeout(() => setSaved(false), 2500);
+    if (result.ok) {
+      setSaved(true);
+      setTimeout(() => setSaved(false), 2500);
+    } else {
+      setError(result.error ?? "Erro ao salvar");
+    }
   }
 
   return (
@@ -108,33 +112,39 @@ export default function NotificacoesClient() {
           <div>
             <p className="text-[14px] font-bold text-white">Notificações</p>
             <p className="text-[12px] text-white/50">
-              {ativos} de {notifs.length} canais ativos
+              {ativos} de {total} canais ativos
             </p>
           </div>
         </div>
 
         <motion.button
           type="button"
-          onClick={() => setNotifs((prev) => prev.map((n) => ({ ...n, ativo: ativos < notifs.length })))}
+          onClick={() => {
+            const allOn = ativos < total;
+            const updated: NotificationSettings = {};
+            notifChannels.forEach((n) => { updated[n.id] = allOn; });
+            setSettings(updated);
+          }}
           className="rounded-[10px] px-4 py-2 text-[12px] font-bold"
           initial={false}
           animate={{
-            backgroundColor: ativos < notifs.length ? "#D7FF00" : "rgba(255,255,255,0.1)",
-            color: ativos < notifs.length ? "#0E0F10" : "#FFFFFF",
+            backgroundColor: ativos < total ? "#D7FF00" : "rgba(255,255,255,0.1)",
+            color: ativos < total ? "#0E0F10" : "#FFFFFF",
           }}
           whileHover={{ scale: 1.03 }}
           whileTap={{ scale: 0.97 }}
           transition={{ duration: 0.15 }}
         >
-          {ativos < notifs.length ? "Ativar todas" : "Desativar todas"}
+          {ativos < total ? "Ativar todas" : "Desativar todas"}
         </motion.button>
       </div>
 
       {/* Lista de notificações */}
       <div className="rounded-[20px] bg-white p-6">
         <div className="flex flex-col gap-3">
-          {notifs.map((notif, i) => {
+          {notifChannels.map((notif, i) => {
             const Icon = notif.icon;
+            const isAtivo = settings[notif.id] ?? false;
             return (
               <motion.div
                 key={notif.id}
@@ -147,17 +157,17 @@ export default function NotificacoesClient() {
                   <div
                     className="flex h-9 w-9 shrink-0 items-center justify-center rounded-[10px]"
                     style={{
-                      backgroundColor: notif.ativo ? "#0E0F10" : "#D9D9D4",
+                      backgroundColor: isAtivo ? "#0E0F10" : "#D9D9D4",
                     }}
                   >
-                    <Icon size={15} color={notif.ativo ? "#D7FF00" : "#FFFFFF"} />
+                    <Icon size={15} color={isAtivo ? "#D7FF00" : "#FFFFFF"} />
                   </div>
                   <div>
                     <p className="text-[14px] font-bold text-[#0E0F10]">{notif.label}</p>
                     <p className="text-[12px] text-[#A9AAA5]">{notif.descricao}</p>
                   </div>
                 </div>
-                <Toggle ativo={notif.ativo} onChange={(v) => toggleNotif(notif.id, v)} />
+                <Toggle ativo={isAtivo} onChange={(v) => toggleNotif(notif.id, v)} />
               </motion.div>
             );
           })}
@@ -166,6 +176,9 @@ export default function NotificacoesClient() {
 
       {/* Salvar */}
       <div className="flex items-center justify-end gap-3">
+        {error && (
+          <p className="text-[13px] font-semibold text-red-600">{error}</p>
+        )}
         <AnimatePresence>
           {saved && (
             <motion.div

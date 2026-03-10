@@ -345,7 +345,7 @@ function ChatTab({
           </p>
         </div>
         <Link
-          href="/config/provedores"
+          href="/organization/provedores"
           className="rounded-full font-bold transition-opacity hover:opacity-90"
           style={{
             background: "#D7FF00",

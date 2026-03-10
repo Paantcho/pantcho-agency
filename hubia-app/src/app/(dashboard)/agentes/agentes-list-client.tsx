@@ -280,7 +280,7 @@ function ProviderBanner({ hasProvider }: { hasProvider: boolean }) {
       >
         Para conversar com os agentes, configure um provedor de IA em{" "}
         <Link
-          href="/config/provedores"
+          href="/organization/provedores"
           className="font-bold underline"
           style={{ color: "#0E0F10" }}
         >

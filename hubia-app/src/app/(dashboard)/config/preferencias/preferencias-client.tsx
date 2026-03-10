@@ -11,6 +11,7 @@ import {
   Check,
   ChevronDown,
 } from "lucide-react";
+import { savePreferences, type UserPreferences } from "./actions";
 
 const idiomas = [
   { value: "pt-BR", label: "Português (Brasil)" },
@@ -91,19 +92,33 @@ function SelectField({
   );
 }
 
-export default function PreferenciasClient() {
-  const [idioma, setIdioma] = useState("pt-BR");
-  const [formato, setFormato] = useState("dd/MM/yyyy");
-  const [modo, setModo] = useState("system");
+export default function PreferenciasClient({
+  initialPrefs,
+}: {
+  initialPrefs: UserPreferences;
+}) {
+  const [idioma, setIdioma] = useState(initialPrefs.locale);
+  const [formato, setFormato] = useState(initialPrefs.dateFormat);
+  const [modo, setModo] = useState(initialPrefs.visualMode);
   const [loading, setLoading] = useState(false);
   const [saved, setSaved] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   async function handleSave() {
     setLoading(true);
-    await new Promise((r) => setTimeout(r, 600));
+    setError(null);
+    const result = await savePreferences({
+      locale: idioma,
+      dateFormat: formato,
+      visualMode: modo,
+    });
     setLoading(false);
-    setSaved(true);
-    setTimeout(() => setSaved(false), 2500);
+    if (result.ok) {
+      setSaved(true);
+      setTimeout(() => setSaved(false), 2500);
+    } else {
+      setError(result.error ?? "Erro ao salvar");
+    }
   }
 
   return (
@@ -160,6 +175,9 @@ export default function PreferenciasClient() {
 
       {/* Salvar */}
       <div className="flex items-center justify-end gap-3">
+        {error && (
+          <p className="text-[13px] font-semibold text-red-600">{error}</p>
+        )}
         <AnimatePresence>
           {saved && (
             <motion.div

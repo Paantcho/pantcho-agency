@@ -1,5 +1,8 @@
+import { getPreferences } from "./actions";
 import PreferenciasClient from "./preferencias-client";
 
-export default function PreferenciasPage() {
-  return <PreferenciasClient />;
+export default async function PreferenciasPage() {
+  const prefs = await getPreferences();
+
+  return <PreferenciasClient initialPrefs={prefs} />;
 }

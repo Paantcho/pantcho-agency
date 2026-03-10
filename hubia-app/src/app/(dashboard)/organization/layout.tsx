@@ -9,6 +9,7 @@ import { usePathname } from "next/navigation";
 const orgTabs = [
   { label: "Overview", href: "/organization/overview" },
   { label: "Plano", href: "/organization/plano" },
+  { label: "Provedores IA", href: "/organization/provedores" },
   { label: "Branding", href: "/organization/branding" },
   { label: "Domínio", href: "/organization/domain" },
   { label: "Equipe", href: "/organization/team" },

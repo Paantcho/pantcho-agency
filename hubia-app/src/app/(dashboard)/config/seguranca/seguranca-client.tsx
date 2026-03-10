@@ -128,7 +128,7 @@ export default function SegurancaClient({
             API Keys ativas
           </h2>
           <motion.button
-            onClick={() => router.push("/config/provedores")}
+            onClick={() => router.push("/organization/provedores")}
             className="flex items-center gap-1.5 text-[12px] font-semibold text-[#A9AAA5]"
             whileHover={{ color: "#0E0F10" }}
             whileTap={{ scale: 0.97 }}
@@ -143,7 +143,7 @@ export default function SegurancaClient({
             <Key size={20} color="#A9AAA5" className="mx-auto mb-2" />
             <p className="text-[13px] text-[#A9AAA5]">Nenhum provedor de IA configurado.</p>
             <motion.button
-              onClick={() => router.push("/config/provedores")}
+              onClick={() => router.push("/organization/provedores")}
               className="mt-3 text-[12px] font-semibold text-[#0E0F10] underline"
               whileHover={{ opacity: 0.7 }}
             >

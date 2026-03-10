@@ -88,6 +88,7 @@ export async function createProvider(
       },
     });
     revalidatePath("/config/provedores");
+    revalidatePath("/organization/provedores");
     return { ok: true };
   } catch (e) {
     const message = e instanceof Error ? e.message : "Erro ao criptografar";
@@ -152,6 +153,7 @@ export async function updateProvider(
     data: update,
   });
   revalidatePath("/config/provedores");
+  revalidatePath("/organization/provedores");
   return { ok: true };
 }
 
@@ -179,5 +181,6 @@ export async function deleteProvider(
 
   await prisma.aiProvider.delete({ where: { id: providerId } });
   revalidatePath("/config/provedores");
+  revalidatePath("/organization/provedores");
   return { ok: true };
 }
