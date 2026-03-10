@@ -49,8 +49,8 @@ const TIPO_BADGES: Record<PedidoTipo, string> = {
   sistema: "var(--hubia-ink-400)",
   creator: "#E91E63",
   skill: "#FF8F00",
-  agente: "#0E0F10",
-  outro: "#A9AAA5",
+  agente: "var(--hubia-ink-500)",
+  outro: "var(--hubia-bg-base-700)",
 };
 
 const TIPO_SQUAD: Record<PedidoTipo, string> = {
@@ -61,7 +61,7 @@ const TIPO_SQUAD: Record<PedidoTipo, string> = {
 const TIPOS_COM_CREATOR: PedidoTipo[] = ["imagem", "video", "creator"];
 
 const URGENCIA_COLORS: Record<PedidoUrgencia, string> = {
-  baixa: "#A9AAA5", media: "#5E5E5F", alta: "#FB8C00", critica: "#E53935",
+  baixa: "var(--hubia-bg-base-700)", media: "var(--hubia-ink-400)", alta: "#FB8C00", critica: "#E53935",
 };
 
 // ─── Cadeia de produção por tipo ──────────────────────────────────────────────
@@ -869,7 +869,7 @@ function TabConteudo({
         </div>
         <motion.div
           className="rounded-[12px] border-2 border-dashed border-[#D9D9D4] p-8 flex flex-col items-center gap-3 cursor-pointer text-center"
-          whileHover={{ borderColor: "#0E0F10", backgroundColor: "#EEEFE9" }}
+          whileHover={{ borderColor: "#0E0F10", backgroundColor: "var(--hubia-bg-base-500)" }}
           whileTap={{ scale: 0.99 }}
         >
           <Upload size={24} color="var(--hubia-bg-base-700)" />
@@ -1006,7 +1006,7 @@ function UploadResultado({ tipo }: { tipo: PedidoTipo }) {
         onDragLeave={handleDragLeave}
         onDrop={handleDrop}
         onClick={() => inputRef.current?.click()}
-        whileHover={{ borderColor: "#0E0F10", backgroundColor: "#EEEFE9" }}
+        whileHover={{ borderColor: "#0E0F10", backgroundColor: "var(--hubia-bg-base-500)" }}
         whileTap={{ scale: 0.99 }}
       >
         <Upload size={18} color={isDragOver ? "#0E0F10" : "#A9AAA5"} />

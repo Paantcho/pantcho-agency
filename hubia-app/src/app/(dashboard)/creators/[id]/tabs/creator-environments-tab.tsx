@@ -214,7 +214,7 @@ export default function CreatorEnvironmentsTab({
                   type="button"
                   onClick={() => startEdit(env)}
                   className="rounded-full border px-3 py-1.5 text-[11px] font-semibold transition-colors hover:bg-base-500"
-                  style={{ borderColor: "#D9D9D4", color: "#0E0F10" }}
+                  style={{ borderColor: "var(--hubia-sand-600)", color: "var(--hubia-ink-500)" }}
                 >
                   Editar
                 </button>
@@ -222,7 +222,7 @@ export default function CreatorEnvironmentsTab({
                   type="button"
                   onClick={() => setDeleteModalEnvId(env.id)}
                   className="rounded-full border px-3 py-1.5 text-[11px] font-semibold transition-colors hover:bg-[#FFF0F2]"
-                  style={{ borderColor: "#FFB2BC", color: "#FF576D" }}
+                  style={{ borderColor: "#FFB2BC", color: "var(--hubia-red-500)" }}
                 >
                   Excluir
                 </button>
@@ -243,7 +243,7 @@ export default function CreatorEnvironmentsTab({
           {formError && (
             <div
               className="rounded-xl px-4 py-3 text-[12px] font-semibold"
-              style={{ background: "#FFE8EB", color: "#FF576D" }}
+              style={{ background: "#FFE8EB", color: "var(--hubia-red-500)" }}
             >
               {formError}
             </div>
@@ -253,7 +253,7 @@ export default function CreatorEnvironmentsTab({
             { id: "env-desc", label: "Flexíveis (descrição)", value: description, onChange: setDescription, required: false, type: "text", rows: undefined },
           ].map((field) => (
             <div key={field.id} className="flex flex-col gap-1.5">
-              <label htmlFor={field.id} className="font-semibold" style={{ fontSize: "12px", color: "#0E0F10" }}>
+              <label htmlFor={field.id} className="font-semibold" style={{ fontSize: "12px", color: "var(--hubia-ink-500)" }}>
                 {field.label}
               </label>
               <input
@@ -262,13 +262,13 @@ export default function CreatorEnvironmentsTab({
                 required={field.required}
                 value={field.value}
                 onChange={(e) => field.onChange(e.target.value)}
-                className="w-full rounded-xl border-0 px-4 py-3 font-semibold outline-none transition-colors focus:ring-2 focus:ring-[#D7FF00]/30"
-                style={{ background: "#EEEFE9", fontSize: "13px", color: "#0E0F10" }}
+                className="w-full rounded-xl border-0 px-4 py-3 font-semibold outline-none transition-colors focus:ring-2 focus:ring-limao-500/30"
+                style={{ background: "var(--hubia-bg-base-500)", fontSize: "13px", color: "var(--hubia-ink-500)" }}
               />
             </div>
           ))}
           <div className="flex flex-col gap-1.5">
-            <label htmlFor="env-prompt" className="font-semibold" style={{ fontSize: "12px", color: "#0E0F10" }}>
+            <label htmlFor="env-prompt" className="font-semibold" style={{ fontSize: "12px", color: "var(--hubia-ink-500)" }}>
               Fixos (prompt)
             </label>
             <textarea
@@ -276,12 +276,12 @@ export default function CreatorEnvironmentsTab({
               rows={3}
               value={prompt}
               onChange={(e) => setPrompt(e.target.value)}
-              className="w-full rounded-xl border-0 px-4 py-3 font-semibold outline-none transition-colors focus:ring-2 focus:ring-[#D7FF00]/30"
-              style={{ background: "#EEEFE9", fontSize: "13px", color: "#0E0F10" }}
+              className="w-full rounded-xl border-0 px-4 py-3 font-semibold outline-none transition-colors focus:ring-2 focus:ring-limao-500/30"
+              style={{ background: "var(--hubia-bg-base-500)", fontSize: "13px", color: "var(--hubia-ink-500)" }}
             />
           </div>
           <div className="flex flex-col gap-1.5">
-            <label htmlFor="env-thumb" className="font-semibold" style={{ fontSize: "12px", color: "#0E0F10" }}>
+            <label htmlFor="env-thumb" className="font-semibold" style={{ fontSize: "12px", color: "var(--hubia-ink-500)" }}>
               URL thumbnail
             </label>
             <input
@@ -289,8 +289,8 @@ export default function CreatorEnvironmentsTab({
               type="url"
               value={thumbnailUrl}
               onChange={(e) => setThumbnailUrl(e.target.value)}
-              className="w-full rounded-xl border-0 px-4 py-3 font-semibold outline-none transition-colors focus:ring-2 focus:ring-[#D7FF00]/30"
-              style={{ background: "#EEEFE9", fontSize: "13px", color: "#0E0F10" }}
+              className="w-full rounded-xl border-0 px-4 py-3 font-semibold outline-none transition-colors focus:ring-2 focus:ring-limao-500/30"
+              style={{ background: "var(--hubia-bg-base-500)", fontSize: "13px", color: "var(--hubia-ink-500)" }}
             />
           </div>
           <div className="flex gap-2 pt-1">

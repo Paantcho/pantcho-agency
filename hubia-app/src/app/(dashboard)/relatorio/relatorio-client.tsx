@@ -139,10 +139,10 @@ const ACTIVITIES_POOL: Array<{ Icon: LucideIcon; text: string; color: string; ti
   { Icon: CheckCircle2, text: "Pedido #047 entregue com sucesso", color: "#43A047", tipo: "Entrega" },
   { Icon: Zap, text: "Planner iniciou briefing #048", color: "var(--hubia-limao-500)", tipo: "Briefing" },
   { Icon: Palette, text: "Dir. de Arte solicitou revisão", color: "#FB8C00", tipo: "Revisão" },
-  { Icon: Bot, text: "Agente QA detectou inconsistência", color: "#5E5E5F", tipo: "QA" },
+  { Icon: Bot, text: "Agente QA detectou inconsistência", color: "var(--hubia-ink-400)", tipo: "QA" },
   { Icon: FileVideo, text: "Novo pedido criado: Campanha Q2", color: "var(--hubia-ink-500)", tipo: "Pedido" },
   { Icon: Sparkles, text: "Prompt gerado para pedido #046", color: "#8AB000", tipo: "IA" },
-  { Icon: Users, text: "Creator confirmada para pedido #045", color: "#5E5E5F", tipo: "Creator" },
+  { Icon: Users, text: "Creator confirmada para pedido #045", color: "var(--hubia-ink-400)", tipo: "Creator" },
   { Icon: ArrowUpRight, text: "Deploy automático concluído", color: "#43A047", tipo: "Deploy" },
 ];
 
@@ -710,7 +710,7 @@ function StatusPedidos() {
     >
       <div className="flex items-center gap-2.5 mb-6">
         <div className="flex h-9 w-9 items-center justify-center rounded-[12px]" style={{ backgroundColor: "#F6F7F2" }}>
-          <BarChart3 size={15} color="#5E5E5F" />
+          <BarChart3 size={15} color="var(--hubia-ink-400)" />
         </div>
         <div>
           <h2 className="text-[16px] font-bold text-ink-500">Status dos pedidos</h2>
@@ -817,7 +817,7 @@ function DistribuicaoTipo() {
                     {i + 1}
                   </span>
                   <div className="flex h-8 w-8 items-center justify-center rounded-[12px]" style={{ backgroundColor: isFirst ? "color-mix(in srgb, var(--hubia-limao-500) 12%, transparent)" : "var(--hubia-bg-base-500)" }}>
-                    <IconComp size={14} color={isFirst ? "#8AB000" : "#A9AAA5"} />
+                    <IconComp size={14} color={isFirst ? "#8AB000" : "var(--hubia-bg-base-700)"} />
                   </div>
                   <span className="text-[14px] font-bold text-ink-500">{d.tipo}</span>
                 </div>
@@ -859,7 +859,7 @@ function UsoIA() {
       transition={{ duration: 0.35, ease: [0, 0, 0.2, 1], delay: 0.42 }}
     >
       <div className="flex items-center gap-3 mb-6">
-        <div className="flex h-10 w-10 items-center justify-center rounded-[12px]" style={{ backgroundColor: "#D7FF0020" }}>
+        <div className="flex h-10 w-10 items-center justify-center rounded-[12px]" style={{ backgroundColor: "color-mix(in srgb, var(--hubia-limao-500) 12%, transparent)" }}>
           <Sparkles size={16} color="#8AB000" />
         </div>
         <div>
@@ -990,7 +990,7 @@ function OrquestradorMonitor() {
                       exit={{ opacity: 0 }}
                       transition={{ duration: 0.28, ease: [0, 0, 0.2, 1] }}
                     >
-                      <span className="text-[12px] flex-shrink-0 font-bold leading-tight" style={{ color: i === 0 ? "#D7FF00" : "rgba(255,255,255,0.18)" }}>›</span>
+                      <span className="text-[12px] flex-shrink-0 font-bold leading-tight" style={{ color: i === 0 ? "var(--hubia-limao-500)" : "rgba(255,255,255,0.18)" }}>›</span>
                       <p className="text-[11px] font-semibold leading-tight truncate" style={{ color: i === 0 ? "#FFFFFF" : `rgba(255,255,255,${Math.max(0.14, 0.45 - i * 0.1)})` }}>
                         {entry.text}
                       </p>
@@ -1138,7 +1138,7 @@ function ActivityFeed() {
                   className="text-[11px] font-bold px-2.5 py-1.5 rounded-[8px] flex-shrink-0 tabular-nums"
                   style={{
                     backgroundColor: isLive ? "var(--hubia-ink-500)" : "#F2F3EE",
-                    color: isLive ? "#D7FF00" : "#B0B1AB",
+                    color: isLive ? "var(--hubia-limao-500)" : "#B0B1AB",
                   }}
                 >
                   {a.time}
@@ -1210,7 +1210,7 @@ function PedidosRecentes() {
             <p className="text-[13px] text-base-700 text-center py-8 font-semibold">Nenhum pedido nesta categoria</p>
           ) : (
             filtered.map((pedido, i) => {
-              const sm = STATUS_MAP[pedido.status] ?? { cor: "#A9AAA5", label: pedido.status };
+              const sm = STATUS_MAP[pedido.status] ?? { cor: "var(--hubia-bg-base-700)", label: pedido.status };
               const IconComp = pedido.Icon;
               const isAtrasado = pedido.dias > 7;
               return (
@@ -1226,7 +1226,7 @@ function PedidosRecentes() {
                 >
                   <p className="text-[14px] font-bold text-ink-500 truncate">{pedido.titulo}</p>
                   <div className="flex items-center gap-1.5 min-w-0">
-                    <div className="flex h-5 w-5 items-center justify-center rounded-[5px]" style={{ backgroundColor: "#EEEFE9" }}>
+                    <div className="flex h-5 w-5 items-center justify-center rounded-[5px]" style={{ backgroundColor: "var(--hubia-bg-base-500)" }}>
                       <IconComp size={10} color="#8A8B8C" />
                     </div>
                     <span className="text-[12px] font-semibold truncate" style={{ color: "#8A8B8C" }}>{pedido.tipo}</span>
@@ -1264,7 +1264,7 @@ function SquadPerformance() {
     >
       <div className="flex items-center gap-3 mb-7">
         <div className="flex h-10 w-10 items-center justify-center rounded-[12px]" style={{ backgroundColor: "#F6F7F2" }}>
-          <Layers size={16} color="#5E5E5F" />
+          <Layers size={16} color="var(--hubia-ink-400)" />
         </div>
         <div>
           <h2 className="text-[16px] font-bold text-ink-500">Performance por squad</h2>
@@ -1383,7 +1383,7 @@ export default function RelatorioClient() {
                 className="rounded-[12px] px-3.5 py-2 text-[12px] font-bold"
                 animate={{
                   backgroundColor: periodo === opt.value ? "var(--hubia-ink-500)" : "transparent",
-                  color: periodo === opt.value ? "#D7FF00" : "#A9AAA5",
+                  color: periodo === opt.value ? "var(--hubia-limao-500)" : "var(--hubia-bg-base-700)",
                 }}
                 initial={false}
                 whileHover={periodo !== opt.value ? { backgroundColor: "rgba(213,210,201,0.3)", color: "var(--hubia-ink-500)" } : {}}
@@ -1504,7 +1504,7 @@ export default function RelatorioClient() {
         >
           <div className="flex items-center gap-3 mb-6">
             <div className="flex h-10 w-10 items-center justify-center rounded-[12px]" style={{ backgroundColor: "#F6F7F2" }}>
-              <Cpu size={15} color="#5E5E5F" />
+              <Cpu size={15} color="var(--hubia-ink-400)" />
             </div>
             <div>
               <h2 className="text-[16px] font-bold text-ink-500">Orquestração</h2>

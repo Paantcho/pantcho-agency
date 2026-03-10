@@ -161,13 +161,13 @@ function AddAgentModal({
 
               {/* Search */}
               <div className="mb-3 flex items-center gap-2 rounded-[12px] px-3 py-2.5" style={{ background: "var(--hubia-bg-base-500)" }}>
-                <Search size={14} strokeWidth={2} color="#A9AAA5" />
+                <Search size={14} strokeWidth={2} color="var(--hubia-bg-base-700)" />
                 <input
                   autoFocus
                   value={search}
                   onChange={(e) => setSearch(e.target.value)}
                   placeholder="Buscar agente..."
-                  className="flex-1 bg-transparent text-[13px] outline-none placeholder:text-[#A9AAA5]"
+                  className="flex-1 bg-transparent text-[13px] outline-none placeholder:text-base-700"
                   style={{ color: "var(--hubia-ink-500)", fontFamily: "Urbanist, sans-serif" }}
                 />
               </div>
@@ -212,7 +212,7 @@ function AddAgentModal({
                               animate={{ opacity: isSel ? 1 : 0, scale: isSel ? 1 : 0.5 }}
                               transition={{ duration: 0.12 }}
                             >
-                              <Check size={11} strokeWidth={3} color="#D7FF00" />
+                              <Check size={11} strokeWidth={3} color="var(--hubia-limao-500)" />
                             </motion.div>
                           </motion.div>
 
@@ -221,7 +221,7 @@ function AddAgentModal({
                             className="flex h-8 w-8 shrink-0 items-center justify-center rounded-[9px]"
                             style={{ background: "var(--hubia-ink-500)" }}
                           >
-                            <Bot size={14} strokeWidth={2} color="#D7FF00" />
+                            <Bot size={14} strokeWidth={2} color="var(--hubia-limao-500)" />
                           </div>
 
                           {/* Info */}
@@ -258,7 +258,7 @@ function AddAgentModal({
                   className="flex items-center gap-1.5 rounded-[12px] px-4 py-2.5 text-[13px] font-bold"
                   initial={false}
                   animate={{
-                    backgroundColor: selected.size > 0 ? "#D7FF00" : "#EEEFE9",
+                    backgroundColor: selected.size > 0 ? "var(--hubia-limao-500)" : "var(--hubia-bg-base-500)",
                     color: selected.size > 0 ? "var(--hubia-ink-500)" : "var(--hubia-bg-base-700)",
                   }}
                   whileHover={selected.size > 0 ? { scale: 1.02, backgroundColor: "#DFFF33" } : undefined}
@@ -464,7 +464,7 @@ function NovoAgenteModal({
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                     placeholder="Ex: Analista de SEO"
-                    onFocus={(e) => (e.target.style.borderColor = "#0E0F10")}
+                    onFocus={(e) => (e.target.style.borderColor = "var(--hubia-ink-500)")}
                     onBlur={(e) => (e.target.style.borderColor = "transparent")}
                   />
                 </div>
@@ -479,7 +479,7 @@ function NovoAgenteModal({
                     value={description}
                     onChange={(e) => setDescription(e.target.value)}
                     placeholder="O que este agente faz?"
-                    onFocus={(e) => (e.target.style.borderColor = "#0E0F10")}
+                    onFocus={(e) => (e.target.style.borderColor = "var(--hubia-ink-500)")}
                     onBlur={(e) => (e.target.style.borderColor = "transparent")}
                   />
                 </div>
@@ -500,8 +500,8 @@ function NovoAgenteModal({
                           style={{ flex: 1 }}
                           initial={false}
                           animate={{
-                            backgroundColor: isSelected ? "#0E0F10" : "#EEEFE9",
-                            color: isSelected ? "#FFFFFF" : "#5E5E5F",
+                            backgroundColor: isSelected ? "var(--hubia-ink-500)" : "var(--hubia-bg-base-500)",
+                            color: isSelected ? "#FFFFFF" : "var(--hubia-ink-400)",
                           }}
                           whileHover={!isSelected ? { backgroundColor: "#D9D9D4" } : undefined}
                           whileTap={{ scale: 0.97 }}
@@ -510,7 +510,7 @@ function NovoAgenteModal({
                           <span className="font-bold text-[12px]">{opt.label}</span>
                           <motion.span
                             className="text-[10px]"
-                            animate={{ color: isSelected ? "rgba(255,255,255,0.55)" : "#A9AAA5" }}
+                            animate={{ color: isSelected ? "rgba(255,255,255,0.55)" : "var(--hubia-bg-base-700)" }}
                             transition={{ duration: 0.15 }}
                           >
                             {opt.desc}
@@ -531,7 +531,7 @@ function NovoAgenteModal({
                     value={tagsInput}
                     onChange={(e) => setTagsInput(e.target.value)}
                     placeholder="Ex: copywriting, SEO, análise"
-                    onFocus={(e) => (e.target.style.borderColor = "#0E0F10")}
+                    onFocus={(e) => (e.target.style.borderColor = "var(--hubia-ink-500)")}
                     onBlur={(e) => (e.target.style.borderColor = "transparent")}
                   />
                 </div>
@@ -621,7 +621,7 @@ export default function SquadDetailClient({
         >
           Agentes
         </motion.button>
-        <ChevronRight size={14} strokeWidth={2} color="#D5D2C9" />
+        <ChevronRight size={14} strokeWidth={2} color="var(--hubia-sand-600)" />
         <span className="text-[13px] font-semibold" style={{ color: "var(--hubia-ink-500)" }}>
           {squad.name}
         </span>
@@ -698,7 +698,7 @@ export default function SquadDetailClient({
         {/* Cabeçalho da seção */}
         <div className="mb-4 flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <Users size={16} strokeWidth={2} color="#A9AAA5" />
+            <Users size={16} strokeWidth={2} color="var(--hubia-bg-base-700)" />
             <h2 className="text-[14px] font-bold" style={{ color: "var(--hubia-ink-500)" }}>
               Agentes do squad
             </h2>
@@ -711,7 +711,7 @@ export default function SquadDetailClient({
           </div>
           {isEmBreve && (
             <div className="flex items-center gap-1.5 rounded-[9999px] px-3 py-1.5" style={{ background: "var(--hubia-bg-base-500)" }}>
-              <Activity size={12} strokeWidth={2} color="#A9AAA5" />
+              <Activity size={12} strokeWidth={2} color="var(--hubia-bg-base-700)" />
               <span className="text-[11px] font-semibold" style={{ color: "var(--hubia-bg-base-700)" }}>
                 Você já pode montar este squad
               </span>
@@ -723,7 +723,7 @@ export default function SquadDetailClient({
         {agents.length === 0 ? (
           <motion.div
             className="flex flex-col items-center justify-center rounded-[16px] py-16 text-center"
-            style={{ background: "var(--hubia-bg-base-500)", border: "1.5px dashed #D5D2C9" }}
+            style={{ background: "var(--hubia-bg-base-500)", border: "1.5px dashed var(--hubia-sand-600)" }}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
           >
@@ -731,7 +731,7 @@ export default function SquadDetailClient({
               className="mb-3 flex h-12 w-12 items-center justify-center rounded-[14px]"
               style={{ background: "#FFFFFF" }}
             >
-              <Sparkles size={22} strokeWidth={1.5} color="#A9AAA5" />
+              <Sparkles size={22} strokeWidth={1.5} color="var(--hubia-bg-base-700)" />
             </div>
             <p className="text-[14px] font-bold" style={{ color: "var(--hubia-ink-500)" }}>
               Nenhum agente ainda

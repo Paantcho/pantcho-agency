@@ -42,13 +42,13 @@ export default function MemoriaClient({
       <div className="flex flex-wrap items-center justify-between gap-4">
         <h1
           className="font-bold"
-          style={{ fontSize: "28px", color: "#0E0F10" }}
+          style={{ fontSize: "28px", color: "var(--hubia-ink-500)" }}
         >
           Memória
         </h1>
         <span
           className="font-semibold"
-          style={{ fontSize: "14px", color: "#A9AAA5" }}
+          style={{ fontSize: "14px", color: "var(--hubia-bg-base-700)" }}
         >
           {files.length} arquivos de memória
         </span>
@@ -66,14 +66,14 @@ export default function MemoriaClient({
         <div>
           <p
             className="font-semibold"
-            style={{ fontSize: "13px", color: "#0E0F10" }}
+            style={{ fontSize: "13px", color: "var(--hubia-ink-500)" }}
           >
             A memória é compartilhada entre todos os agentes. Cada agente lê
             esses arquivos antes de agir e atualiza após concluir.
           </p>
           <p
             className="mt-1 font-semibold"
-            style={{ fontSize: "12px", color: "#A9AAA5" }}
+            style={{ fontSize: "12px", color: "var(--hubia-bg-base-700)" }}
           >
             Fase atual: arquivos .md no repositório. Fase futura: banco de
             dados multi-tenant com busca semântica.
@@ -112,15 +112,15 @@ export default function MemoriaClient({
                   <div className="flex items-center gap-2">
                     <h3
                       className="font-bold"
-                      style={{ fontSize: "16px", color: "#0E0F10" }}
+                      style={{ fontSize: "16px", color: "var(--hubia-ink-500)" }}
                     >
                       {file.label}
                     </h3>
                     <span
                       className="rounded-full px-2 py-0.5 text-[10px] font-bold"
                       style={{
-                        background: "#EEEFE9",
-                        color: "#A9AAA5",
+                        background: "var(--hubia-bg-base-500)",
+                        color: "var(--hubia-bg-base-700)",
                         fontFamily: "monospace",
                       }}
                     >
@@ -129,7 +129,7 @@ export default function MemoriaClient({
                   </div>
                   <p
                     className="mt-0.5 font-semibold"
-                    style={{ fontSize: "13px", color: "#A9AAA5" }}
+                    style={{ fontSize: "13px", color: "var(--hubia-bg-base-700)" }}
                   >
                     {file.description}
                   </p>
@@ -157,19 +157,19 @@ export default function MemoriaClient({
                 )}
 
                 {isExpanded ? (
-                  <ChevronUp size={16} style={{ color: "#A9AAA5" }} />
+                  <ChevronUp size={16} style={{ color: "var(--hubia-bg-base-700)" }} />
                 ) : (
-                  <ChevronDown size={16} style={{ color: "#A9AAA5" }} />
+                  <ChevronDown size={16} style={{ color: "var(--hubia-bg-base-700)" }} />
                 )}
               </button>
 
               {/* Content */}
               {isExpanded && (
-                <div className="border-t border-[#EEEFE9] px-6 py-5">
+                <div className="border-t border-base-500 px-6 py-5">
                   <pre
                     className="max-h-[600px] overflow-y-auto whitespace-pre-wrap text-[13px] leading-relaxed"
                     style={{
-                      color: "#0E0F10",
+                      color: "var(--hubia-ink-500)",
                       fontFamily: "inherit",
                     }}
                   >
