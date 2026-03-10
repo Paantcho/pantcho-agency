@@ -216,7 +216,7 @@ export default function DadosClient() {
               {tipoAtual.inclui.map((item) => (
                 <div key={item} className="flex items-center gap-1.5">
                   <CheckCircle2 size={12} color="#43A047" />
-                  <span className="text-[12px] font-medium text-[#0E0F10]">{item}</span>
+                  <span className="text-[12px] font-semibold text-[#0E0F10]">{item}</span>
                 </div>
               ))}
             </div>
@@ -348,7 +348,7 @@ export default function DadosClient() {
                   {item.label}
                 </span>
               </div>
-              <span className="text-[12px] font-medium text-[#5E5E5F]">
+              <span className="text-[12px] font-semibold text-[#5E5E5F]">
                 {item.valor}
               </span>
             </motion.div>

@@ -202,7 +202,7 @@ export default function PlanoClient({
                           color={isAtual ? "#D7FF00" : "#43A047"}
                         />
                         <span
-                          className="text-[12px] font-medium"
+                          className="text-[12px] font-semibold"
                           style={{ color: isAtual ? "rgba(255,255,255,0.8)" : "#0E0F10" }}
                         >
                           {m.label}

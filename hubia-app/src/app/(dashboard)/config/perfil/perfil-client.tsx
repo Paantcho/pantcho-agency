@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { User, Mail, Camera, Check } from "lucide-react";
 
 const inputClass =
-  "h-11 w-full rounded-[12px] border border-transparent bg-[#EEEFE9] px-3.5 text-[15px] text-[#0E0F10] outline-none placeholder:text-[#A9AAA5] transition-[border-color,box-shadow] duration-150 hover:border-[#D4D5D6] focus:border-[#0E0F10] focus:ring-2 focus:ring-ink-500/10";
+  "h-11 w-full rounded-[12px] border border-transparent bg-[#EEEFE9] px-3.5 text-[15px] text-[#0E0F10] outline-none placeholder:text-[#A9AAA5] transition-[border-color] duration-150 hover:border-[#D4D5D6] focus:border-[#0E0F10] focus:ring-2 focus:ring-ink-500/10";
 
 export default function PerfilClient({
   nome: initialNome,

@@ -400,7 +400,7 @@ export default function PedidosClient({
                 </div>
                 {pedido.descricao && (
                   <p
-                    className="mt-0.5 truncate font-medium"
+                    className="mt-0.5 truncate font-semibold"
                     style={{ fontSize: "12px", color: "#A9AAA5" }}
                   >
                     {pedido.descricao}
@@ -476,7 +476,7 @@ export default function PedidosClient({
               {/* Due date */}
               {pedido.dueAt && (
                 <span
-                  className="hidden lg:inline-block shrink-0 text-[11px] font-medium"
+                  className="hidden lg:inline-block shrink-0 text-[11px] font-semibold"
                   style={{ color: "#C8C9C3" }}
                 >
                   {new Date(pedido.dueAt).toLocaleDateString("pt-BR", {

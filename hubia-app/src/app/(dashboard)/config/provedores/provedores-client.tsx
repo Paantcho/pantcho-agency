@@ -31,7 +31,7 @@ type Props =
       isDefault: boolean;
     };
 
-const inputClass = "mt-1 w-full rounded-input border border-base-600 bg-sand-100 px-3 py-2 text-body-sm text-ink-500 outline-none transition-[border-color,box-shadow] duration-150 focus:border-ink-500 focus:ring-2 focus:ring-ink-500/10";
+const inputClass = "mt-1 w-full rounded-input border border-base-600 bg-sand-100 px-3 py-2 text-body-sm text-ink-500 outline-none transition-[border-color] duration-150 focus:border-ink-500 focus:ring-2 focus:ring-ink-500/10";
 
 /* ─── Modal de formulário (criar/editar) ─────────────────────────────────── */
 

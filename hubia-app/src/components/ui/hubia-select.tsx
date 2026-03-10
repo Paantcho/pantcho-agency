@@ -60,7 +60,7 @@ export function HubiaSelect({
         type="button"
         disabled={disabled}
         onClick={() => !disabled && setOpen((v) => !v)}
-        className="flex w-full items-center justify-between gap-2 rounded-[12px] border border-transparent py-2.5 pl-3.5 pr-3 text-[14px] font-semibold outline-none transition-[border-color,box-shadow] duration-150 disabled:opacity-50 disabled:cursor-not-allowed"
+        className="flex w-full items-center justify-between gap-2 rounded-[12px] border border-transparent py-2.5 pl-3.5 pr-3 text-[14px] font-semibold outline-none transition-[border-color] duration-150 disabled:opacity-50 disabled:cursor-not-allowed"
         style={{
           background: "#EEEFE9",
           color: selectedLabel ? "#0E0F10" : "#A9AAA5",

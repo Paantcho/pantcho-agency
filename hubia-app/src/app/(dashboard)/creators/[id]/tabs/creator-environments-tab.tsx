@@ -136,7 +136,7 @@ export default function CreatorEnvironmentsTab({
           <p className="font-bold leading-snug" style={{ fontSize: "12px", color: "#FFFFFF" }}>
             {BANNER_TEXT}
           </p>
-          <p className="mt-1.5 font-medium" style={{ fontSize: "11px", color: "rgba(255,255,255,0.45)" }}>
+          <p className="mt-1.5 font-semibold" style={{ fontSize: "11px", color: "rgba(255,255,255,0.45)" }}>
             {BANNER_SUB}
           </p>
         </div>
@@ -185,7 +185,7 @@ export default function CreatorEnvironmentsTab({
               {/* Seção FIXOS */}
               <div className="flex flex-col gap-1.5">
                 <CategoryTag label="FIXOS" color={CATEGORY_COLORS.fixos} />
-                <p className="font-medium leading-snug" style={{ fontSize: "12px", color: "#A9AAA5" }}>
+                <p className="font-semibold leading-snug" style={{ fontSize: "12px", color: "#A9AAA5" }}>
                   {env.prompt ||
                     "Cinza contemporâneo, volumes retos, detalhes madeira/pedra clara. Jardim impecável. Porta grande madeira nobre. Espaço SUV."}
                 </p>
@@ -194,7 +194,7 @@ export default function CreatorEnvironmentsTab({
               {/* Seção FLEXÍVEIS */}
               <div className="flex flex-col gap-1.5">
                 <CategoryTag label="FLEXÍVEIS" color={CATEGORY_COLORS.flexiveis} />
-                <p className="font-medium leading-snug" style={{ fontSize: "12px", color: "#A9AAA5" }}>
+                <p className="font-semibold leading-snug" style={{ fontSize: "12px", color: "#A9AAA5" }}>
                   {env.description ||
                     "Detalhar aqui o que pode ser variável sem que descaracterize algo mais complexo de ser mudado. Ex.: se houver uma fonte a mesma não pode ser retirada... mas pode estar desligada."}
                 </p>
@@ -203,7 +203,7 @@ export default function CreatorEnvironmentsTab({
               {/* Seção PROIBIDO */}
               <div className="flex flex-col gap-1.5">
                 <CategoryTag label="PROIBIDO" color={CATEGORY_COLORS.proibido} />
-                <p className="font-medium leading-snug" style={{ fontSize: "12px", color: "#A9AAA5" }}>
+                <p className="font-semibold leading-snug" style={{ fontSize: "12px", color: "#A9AAA5" }}>
                   Cor da casa ou arquitetura. Qualquer vegetação que não seja compatível com a localização. Tipo do piso / acabamento.
                 </p>
               </div>
@@ -242,7 +242,7 @@ export default function CreatorEnvironmentsTab({
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
           {formError && (
             <div
-              className="rounded-xl px-4 py-3 text-[12px] font-medium"
+              className="rounded-xl px-4 py-3 text-[12px] font-semibold"
               style={{ background: "#FFE8EB", color: "#FF576D" }}
             >
               {formError}
@@ -262,7 +262,7 @@ export default function CreatorEnvironmentsTab({
                 required={field.required}
                 value={field.value}
                 onChange={(e) => field.onChange(e.target.value)}
-                className="w-full rounded-xl border-0 px-4 py-3 font-medium outline-none transition-colors focus:ring-2 focus:ring-[#D7FF00]/30"
+                className="w-full rounded-xl border-0 px-4 py-3 font-semibold outline-none transition-colors focus:ring-2 focus:ring-[#D7FF00]/30"
                 style={{ background: "#EEEFE9", fontSize: "13px", color: "#0E0F10" }}
               />
             </div>
@@ -276,7 +276,7 @@ export default function CreatorEnvironmentsTab({
               rows={3}
               value={prompt}
               onChange={(e) => setPrompt(e.target.value)}
-              className="w-full rounded-xl border-0 px-4 py-3 font-medium outline-none transition-colors focus:ring-2 focus:ring-[#D7FF00]/30"
+              className="w-full rounded-xl border-0 px-4 py-3 font-semibold outline-none transition-colors focus:ring-2 focus:ring-[#D7FF00]/30"
               style={{ background: "#EEEFE9", fontSize: "13px", color: "#0E0F10" }}
             />
           </div>
@@ -289,7 +289,7 @@ export default function CreatorEnvironmentsTab({
               type="url"
               value={thumbnailUrl}
               onChange={(e) => setThumbnailUrl(e.target.value)}
-              className="w-full rounded-xl border-0 px-4 py-3 font-medium outline-none transition-colors focus:ring-2 focus:ring-[#D7FF00]/30"
+              className="w-full rounded-xl border-0 px-4 py-3 font-semibold outline-none transition-colors focus:ring-2 focus:ring-[#D7FF00]/30"
               style={{ background: "#EEEFE9", fontSize: "13px", color: "#0E0F10" }}
             />
           </div>

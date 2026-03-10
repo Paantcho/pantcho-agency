@@ -76,7 +76,7 @@ export default function CreatorOverviewTab({
           {bioLines.slice(1).map((line, i) => (
             <p
               key={i}
-              className="mt-0.5 font-medium"
+              className="mt-0.5 font-semibold"
               style={{ fontSize: "13px", color: "rgba(255,255,255,0.55)" }}
             >
               {line}
@@ -148,7 +148,7 @@ export default function CreatorOverviewTab({
                       </span>
                       {typeof m === "object" && m !== null && "description" in m && (
                         <p
-                          className="font-medium"
+                          className="font-semibold"
                           style={{ fontSize: "12px", color: "#A9AAA5", marginTop: "1px" }}
                         >
                           {(m as { description?: string }).description}
@@ -193,7 +193,7 @@ export default function CreatorOverviewTab({
                       {item.label}
                     </p>
                     <p
-                      className="font-medium"
+                      className="font-semibold"
                       style={{ fontSize: "12px", color: "#A9AAA5", marginTop: "2px" }}
                     >
                       {item.desc}
@@ -237,13 +237,13 @@ export default function CreatorOverviewTab({
             BMW X2 2025
           </p>
           <p
-            className="font-medium"
+            className="font-semibold"
             style={{ fontSize: "13px", color: "#A9AAA5", marginTop: "3px" }}
           >
             Cape York Green metall...
           </p>
           <p
-            className="mt-3 font-medium leading-snug"
+            className="mt-3 font-semibold leading-snug"
             style={{ fontSize: "12px", color: "#A9AAA5" }}
           >
             Interior premium escuro · Preto/grafite com detalhes metálicos ·{" "}

@@ -202,7 +202,7 @@ export default function ConhecimentoItemClient({ item }: { item: KnowledgeCard }
               </span>
             )}
             {item.category && (
-              <span className="rounded-[7px] bg-[#EEEFE9] px-2.5 py-1 text-[11px] font-medium text-[#5E5E5F]">
+              <span className="rounded-[7px] bg-[#EEEFE9] px-2.5 py-1 text-[11px] font-semibold text-[#5E5E5F]">
                 {item.category}
               </span>
             )}
@@ -334,7 +334,7 @@ export default function ConhecimentoItemClient({ item }: { item: KnowledgeCard }
         {/* Indicador sutil: "coração da feature" */}
         {!TABS_ESTRATEGICAS.includes(activeTab) && temMetricas && (
           <motion.span
-            className="text-[10px] text-[#A9AAA5] font-medium hidden sm:block"
+            className="text-[10px] text-[#A9AAA5] font-semibold hidden sm:block"
             initial={{ opacity: 0 }} animate={{ opacity: 1 }}
           >
             Aprendizados, Lições e Aplicações contêm o valor principal
@@ -391,7 +391,7 @@ function TabVisaoGeral({
           transition={{ duration: 0.3, ease: [0, 0, 0.2, 1] }}
         >
           <p className="text-[10px] font-bold uppercase tracking-widest text-[#A9AAA5] mb-3">Resumo</p>
-          <p className="text-[15px] text-[#0E0F10] leading-relaxed font-medium">
+          <p className="text-[15px] text-[#0E0F10] leading-relaxed font-semibold">
             {item.summary ?? "Sem resumo disponível."}
           </p>
         </motion.div>
@@ -830,7 +830,7 @@ function TabAplicacoes({ aplicacoes, item }: {
               </div>
               <div className="flex flex-col gap-1.5">
                 {s.items.map((it, j) => (
-                  <span key={j} className="text-[12px] text-[#0E0F10] leading-snug font-medium">{it}</span>
+                  <span key={j} className="text-[12px] text-[#0E0F10] leading-snug font-semibold">{it}</span>
                 ))}
               </div>
             </motion.div>

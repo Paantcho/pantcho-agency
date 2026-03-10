@@ -286,7 +286,7 @@ export default function BrandingClient({
                   onChange={(e) => handleHexChange(e.target.value)}
                   placeholder="#D7FF00"
                   maxLength={7}
-                  className="h-11 w-36 rounded-[12px] border border-transparent bg-[#EEEFE9] px-3.5 font-mono text-[15px] text-[#0E0F10] outline-none transition-[border-color,box-shadow] duration-150 hover:border-[#D4D5D6] focus:border-[#0E0F10] focus:ring-2 focus:ring-ink-500/10"
+                  className="h-11 w-36 rounded-[12px] border border-transparent bg-[#EEEFE9] px-3.5 font-mono text-[15px] text-[#0E0F10] outline-none transition-[border-color] duration-150 hover:border-[#D4D5D6] focus:border-[#0E0F10] focus:ring-2 focus:ring-ink-500/10"
                   style={isValidHex(hexInput) ? {} : { borderColor: "#E53935" }}
                 />
                 <motion.button
