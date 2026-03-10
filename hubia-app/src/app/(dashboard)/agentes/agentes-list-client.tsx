@@ -133,8 +133,10 @@ function AgentCard({ agent }: { agent: AgentRow }) {
 
 export default function AgentesListClient({
   agents,
+  hasProvider = false,
 }: {
   agents: AgentRow[];
+  hasProvider?: boolean;
 }) {
   const [isPending, startTransition] = useTransition();
   const [seeded, setSeeded] = useState(false);
@@ -232,7 +234,7 @@ export default function AgentesListClient({
       </div>
 
       {/* Banner: sem provedor */}
-      <ProviderBanner />
+      <ProviderBanner hasProvider={hasProvider} />
 
       {/* Agentes agrupados por squad */}
       {squads.map((squad) => {
@@ -260,21 +262,9 @@ export default function AgentesListClient({
   );
 }
 
-function ProviderBanner() {
-  const [hasProvider, setHasProvider] = useState<boolean | null>(null);
+function ProviderBanner({ hasProvider }: { hasProvider: boolean }) {
+  if (hasProvider) return null;
 
-  // Check on mount
-  useState(() => {
-    fetch("/api/agents")
-      .then(() => {
-        // Provider check is done via the agent detail page
-        // This is just a visual hint
-      })
-      .catch(() => {});
-  });
-
-  // We'll show the banner unconditionally as a reminder
-  // since we can't easily check server state from a client component
   return (
     <div
       className="flex items-center gap-3 rounded-2xl border px-5 py-4"
