@@ -37,7 +37,7 @@ const STATUS_CONFIG: Record<
 > = {
   rascunho: {
     label: "Rascunho",
-    color: "#A9AAA5",
+    color: "var(--hubia-bg-base-700)",
     bg: "#EEEFE9",
     icon: Circle,
   },
@@ -83,7 +83,7 @@ const URGENCIA_CONFIG: Record<
   string,
   { label: string; color: string; bg: string }
 > = {
-  baixa: { label: "Baixa", color: "#A9AAA5", bg: "#EEEFE9" },
+  baixa: { label: "Baixa", color: "var(--hubia-bg-base-700)", bg: "#EEEFE9" },
   media: { label: "Média", color: "#3B82F6", bg: "#DBEAFE" },
   alta: { label: "Alta", color: "#F59E0B", bg: "#FEF3C7" },
   critica: { label: "Crítica", color: "#EF4444", bg: "#FEE2E2" },
@@ -198,14 +198,14 @@ export default function PedidosClient({
       <div className="flex flex-wrap items-center justify-between gap-4">
         <h1
           className="font-bold"
-          style={{ fontSize: "28px", color: "#0E0F10" }}
+          style={{ fontSize: "28px", color: "var(--hubia-ink-500)" }}
         >
           Pedidos
         </h1>
         <div className="flex items-center gap-3">
           <span
             className="font-semibold"
-            style={{ fontSize: "14px", color: "#A9AAA5" }}
+            style={{ fontSize: "14px", color: "var(--hubia-bg-base-700)" }}
           >
             {pedidos.length} {pedidos.length === 1 ? "pedido" : "pedidos"}
           </span>
@@ -215,7 +215,7 @@ export default function PedidosClient({
             className="flex items-center gap-2 rounded-full font-bold transition-colors duration-200 hover:opacity-90 active:scale-95"
             style={{
               background: "#D7FF00",
-              color: "#0E0F10",
+              color: "var(--hubia-ink-500)",
               fontSize: "14px",
               padding: "10px 22px",
             }}
@@ -268,7 +268,7 @@ export default function PedidosClient({
           <div className="mb-4 flex items-center justify-between">
             <h3
               className="font-bold"
-              style={{ fontSize: "16px", color: "#0E0F10" }}
+              style={{ fontSize: "16px", color: "var(--hubia-ink-500)" }}
             >
               Novo Pedido
             </h3>
@@ -277,7 +277,7 @@ export default function PedidosClient({
               onClick={() => setShowForm(false)}
               className="rounded-lg p-1.5 hover:bg-base-500"
             >
-              <X size={18} style={{ color: "#A9AAA5" }} />
+              <X size={18} style={{ color: "var(--hubia-bg-base-700)" }} />
             </button>
           </div>
 
@@ -345,7 +345,7 @@ export default function PedidosClient({
               className="self-end rounded-full font-bold transition-opacity hover:opacity-90 disabled:opacity-50"
               style={{
                 background: "#D7FF00",
-                color: "#0E0F10",
+                color: "var(--hubia-ink-500)",
                 fontSize: "13px",
                 padding: "10px 22px",
               }}
@@ -374,7 +374,7 @@ export default function PedidosClient({
                 className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl"
                 style={{ background: "#EEEFE9" }}
               >
-                <TipoIcon size={18} style={{ color: "#0E0F10" }} />
+                <TipoIcon size={18} style={{ color: "var(--hubia-ink-500)" }} />
               </div>
 
               {/* Main content */}
@@ -382,7 +382,7 @@ export default function PedidosClient({
                 <div className="flex items-center gap-2">
                   <h3
                     className="truncate font-bold"
-                    style={{ fontSize: "15px", color: "#0E0F10" }}
+                    style={{ fontSize: "15px", color: "var(--hubia-ink-500)" }}
                   >
                     {pedido.titulo}
                   </h3>
@@ -401,7 +401,7 @@ export default function PedidosClient({
                 {pedido.descricao && (
                   <p
                     className="mt-0.5 truncate font-semibold"
-                    style={{ fontSize: "12px", color: "#A9AAA5" }}
+                    style={{ fontSize: "12px", color: "var(--hubia-bg-base-700)" }}
                   >
                     {pedido.descricao}
                   </p>
@@ -460,7 +460,7 @@ export default function PedidosClient({
                         </button>
                       )
                     )}
-                    <div className="my-1 h-px bg-[#EEEFE9]" />
+                    <div className="my-1 h-px bg-base-500" />
                     <button
                       type="button"
                       onClick={() => handleDelete(pedido.id)}
@@ -500,11 +500,11 @@ export default function PedidosClient({
             className="flex h-14 w-14 items-center justify-center rounded-full"
             style={{ background: "#EEEFE9" }}
           >
-            <ClipboardList size={28} style={{ color: "#A9AAA5" }} />
+            <ClipboardList size={28} style={{ color: "var(--hubia-bg-base-700)" }} />
           </div>
           <p
             className="font-semibold"
-            style={{ fontSize: "15px", color: "#A9AAA5" }}
+            style={{ fontSize: "15px", color: "var(--hubia-bg-base-700)" }}
           >
             {pedidos.length === 0
               ? "Nenhum pedido cadastrado."
@@ -517,7 +517,7 @@ export default function PedidosClient({
               className="rounded-full font-bold transition-opacity hover:opacity-90"
               style={{
                 background: "#D7FF00",
-                color: "#0E0F10",
+                color: "var(--hubia-ink-500)",
                 fontSize: "13px",
                 padding: "10px 22px",
               }}

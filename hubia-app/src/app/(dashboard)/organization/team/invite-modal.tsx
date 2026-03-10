@@ -64,7 +64,7 @@ export default function InviteModal({
             {/* Header */}
             <div className="flex items-start justify-between">
               <div>
-                <h2 className="text-[18px] font-bold text-[#0E0F10]">Convidar membro</h2>
+                <h2 className="text-[18px] font-bold text-ink-500">Convidar membro</h2>
                 <p className="mt-1 text-[13px] text-[#A9AAA5]">
                   A pessoa receberá um email com o link de acesso.
                 </p>
@@ -99,7 +99,7 @@ export default function InviteModal({
                     placeholder="nome@empresa.com"
                     required
                     disabled={loading}
-                    className="h-11 w-full rounded-[12px] border border-transparent bg-[#EEEFE9] pl-10 pr-4 text-[14px] font-semibold text-[#0E0F10] outline-none placeholder:text-[#A9AAA5] focus:border-[#0E0F10] focus:ring-2 focus:ring-ink-500/10 transition-[border-color] duration-150 disabled:opacity-50"
+                    className="h-11 w-full rounded-[12px] border border-transparent bg-base-500 pl-10 pr-4 text-[14px] font-semibold text-ink-500 outline-none placeholder:text-[#A9AAA5] focus:border-[#0E0F10] focus:ring-2 focus:ring-ink-500/10 transition-[border-color] duration-150 disabled:opacity-50"
                   />
                 </div>
               </div>
@@ -118,20 +118,20 @@ export default function InviteModal({
               </div>
 
               {/* Info de permissão */}
-              <div className="rounded-[12px] bg-[#EEEFE9] p-3.5">
+              <div className="rounded-[12px] bg-base-500 p-3.5">
                 {role === "admin" && (
                   <p className="text-[12px] text-[#5E5E5F] leading-relaxed">
-                    <strong className="text-[#0E0F10]">Admin</strong> pode alterar plano, branding, domínio e gerenciar outros membros. Não pode alterar o proprietário.
+                    <strong className="text-ink-500">Admin</strong> pode alterar plano, branding, domínio e gerenciar outros membros. Não pode alterar o proprietário.
                   </p>
                 )}
                 {role === "editor" && (
                   <p className="text-[12px] text-[#5E5E5F] leading-relaxed">
-                    <strong className="text-[#0E0F10]">Editor</strong> tem acesso completo às funcionalidades operacionais: projetos, pedidos, creators, gerador e agentes.
+                    <strong className="text-ink-500">Editor</strong> tem acesso completo às funcionalidades operacionais: projetos, pedidos, creators, gerador e agentes.
                   </p>
                 )}
                 {role === "viewer" && (
                   <p className="text-[12px] text-[#5E5E5F] leading-relaxed">
-                    <strong className="text-[#0E0F10]">Visualizador</strong> pode ver tudo mas não pode criar, editar ou deletar nada. Ideal para stakeholders externos.
+                    <strong className="text-ink-500">Visualizador</strong> pode ver tudo mas não pode criar, editar ou deletar nada. Ideal para stakeholders externos.
                   </p>
                 )}
               </div>
@@ -152,7 +152,7 @@ export default function InviteModal({
                 <motion.button
                   type="submit"
                   disabled={loading || !email.trim()}
-                  className="flex items-center gap-2 rounded-[14px] bg-[#D7FF00] px-5 py-2.5 text-[13px] font-bold text-[#0E0F10] disabled:opacity-50"
+                  className="flex items-center gap-2 rounded-[14px] bg-[#D7FF00] px-5 py-2.5 text-[13px] font-bold text-ink-500 disabled:opacity-50"
                   whileHover={{ scale: 1.03, backgroundColor: "#DFFF33" }}
                   whileTap={{ scale: 0.96 }}
                   transition={{ duration: 0.15, ease: [0.34, 1.56, 0.64, 1] }}

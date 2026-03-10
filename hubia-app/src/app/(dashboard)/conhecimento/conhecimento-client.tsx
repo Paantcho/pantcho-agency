@@ -157,20 +157,20 @@ export default function ConhecimentoClient({
               value={title}
               onChange={(e) => setTitle(e.target.value)}
               placeholder="Título"
-              className="rounded-xl border border-base-500 bg-sand-200 px-4 py-3 text-[14px] text-ink-500 placeholder-[#A9AAA5] outline-none focus:border-[#D7FF00]"
+              className="rounded-xl border border-base-500 bg-sand-200 px-4 py-3 text-[14px] text-ink-500 placeholder:text-base-700 outline-none focus:border-limao-500"
             />
             <textarea
               value={content}
               onChange={(e) => setContent(e.target.value)}
               placeholder="Conteúdo, link, anotação, lição aprendida..."
               rows={5}
-              className="resize-none rounded-xl border border-base-500 bg-sand-200 px-4 py-3 text-[14px] text-ink-500 placeholder-[#A9AAA5] outline-none focus:border-[#D7FF00]"
+              className="resize-none rounded-xl border border-base-500 bg-sand-200 px-4 py-3 text-[14px] text-ink-500 placeholder:text-base-700 outline-none focus:border-limao-500"
             />
             <div className="flex gap-4">
               <select
                 value={category}
                 onChange={(e) => setCategory(e.target.value)}
-                className="flex-1 rounded-xl border border-base-500 bg-sand-200 px-4 py-3 text-[14px] text-ink-500 outline-none focus:border-[#D7FF00]"
+                className="flex-1 rounded-xl border border-base-500 bg-sand-200 px-4 py-3 text-[14px] text-ink-500 outline-none focus:border-limao-500"
               >
                 {categories.map((cat) => (
                   <option key={cat} value={cat}>
@@ -183,7 +183,7 @@ export default function ConhecimentoClient({
                 value={tagsInput}
                 onChange={(e) => setTagsInput(e.target.value)}
                 placeholder="Tags (separadas por vírgula)"
-                className="flex-1 rounded-xl border border-base-500 bg-sand-200 px-4 py-3 text-[14px] text-ink-500 placeholder-[#A9AAA5] outline-none focus:border-[#D7FF00]"
+                className="flex-1 rounded-xl border border-base-500 bg-sand-200 px-4 py-3 text-[14px] text-ink-500 placeholder:text-base-700 outline-none focus:border-limao-500"
               />
             </div>
             <button
@@ -217,7 +217,7 @@ export default function ConhecimentoClient({
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Buscar por título, conteúdo ou tag..."
-            className="w-full rounded-xl border border-base-500 bg-white py-2.5 pl-10 pr-4 text-[13px] text-ink-500 placeholder-[#A9AAA5] outline-none focus:border-[#D7FF00]"
+            className="w-full rounded-xl border border-base-500 bg-white py-2.5 pl-10 pr-4 text-[13px] text-ink-500 placeholder:text-base-700 outline-none focus:border-limao-500"
           />
         </div>
         <div className="flex flex-wrap gap-1.5">

@@ -145,7 +145,7 @@ function MemberActions({
                   key={r}
                   type="button"
                   onClick={() => handleChangeRole(r)}
-                  className="w-full px-3 py-2 text-left text-[13px] font-semibold text-[#0E0F10]"
+                  className="w-full px-3 py-2 text-left text-[13px] font-semibold text-ink-500"
                   whileHover={{ backgroundColor: "#EEEFE9" }}
                   whileTap={{ scale: 0.98 }}
                   transition={{ duration: 0.1 }}
@@ -153,7 +153,7 @@ function MemberActions({
                   {roleBadge[r].label}
                 </motion.button>
               ))}
-            <div className="mx-3 my-1 h-px bg-[#EEEFE9]" />
+            <div className="mx-3 my-1 h-px bg-base-500" />
             <motion.button
               type="button"
               onClick={handleRemove}
@@ -222,7 +222,7 @@ export default function TeamClient({
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-[16px] font-bold text-[#0E0F10]">Membros da equipe</h2>
+          <h2 className="text-[16px] font-bold text-ink-500">Membros da equipe</h2>
           <p className="mt-0.5 text-[12px] text-[#A9AAA5]">
             {members.length} membro{members.length !== 1 ? "s" : ""} ativo
             {members.length !== 1 ? "s" : ""}
@@ -234,7 +234,7 @@ export default function TeamClient({
           <motion.button
             type="button"
             onClick={() => setShowInviteModal(true)}
-            className="flex items-center gap-2 rounded-[14px] bg-[#D7FF00] px-5 py-2.5 text-[13px] font-bold text-[#0E0F10]"
+            className="flex items-center gap-2 rounded-[14px] bg-[#D7FF00] px-5 py-2.5 text-[13px] font-bold text-ink-500"
             whileHover={{ scale: 1.03, backgroundColor: "#DFFF33" }}
             whileTap={{ scale: 0.96 }}
             transition={{ duration: 0.15, ease: [0.34, 1.56, 0.64, 1] }}
@@ -265,7 +265,7 @@ export default function TeamClient({
               transition={{ delay: Math.min(i * 0.05, 0.25), duration: 0.28, ease: [0, 0, 0.2, 1] }}
             >
               {/* Avatar */}
-              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#EEEFE9] text-[12px] font-bold text-[#0E0F10]">
+              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-base-500 text-[12px] font-bold text-ink-500">
                 {member.avatarUrl ? (
                   // eslint-disable-next-line @next/next/no-img-element
                   <img
@@ -280,7 +280,7 @@ export default function TeamClient({
 
               {/* Identidade */}
               <div className="flex min-w-0 flex-1 flex-col gap-0.5">
-                <span className="text-[14px] font-semibold text-[#0E0F10] truncate">
+                <span className="text-[14px] font-semibold text-ink-500 truncate">
                   {member.name ?? member.email ?? `Usuário ${member.userId.slice(0, 8)}`}
                 </span>
                 {member.email && (
@@ -338,13 +338,13 @@ export default function TeamClient({
                 }}
               >
                 {/* Ícone de email */}
-                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#EEEFE9]">
+                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-base-500">
                   <Mail size={15} className="text-[#A9AAA5]" />
                 </div>
 
                 {/* Info */}
                 <div className="flex min-w-0 flex-1 flex-col gap-0.5">
-                  <span className="text-[14px] font-semibold text-[#0E0F10] truncate">
+                  <span className="text-[14px] font-semibold text-ink-500 truncate">
                     {inv.email}
                   </span>
                   <span className="text-[11px] text-[#A9AAA5]">
@@ -408,7 +408,7 @@ export default function TeamClient({
         </div>
         <div className="grid grid-cols-2 gap-3 md:grid-cols-4">
           {(["owner", "admin", "editor", "viewer"] as MemberRole[]).map((role) => (
-            <div key={role} className="rounded-[12px] bg-[#EEEFE9] p-3">
+            <div key={role} className="rounded-[12px] bg-base-500 p-3">
               <span
                 className="mb-2 inline-block rounded-[6px] px-2 py-0.5 text-[10px] font-bold"
                 style={{

@@ -176,7 +176,7 @@ function AgentCard({ agent }: { agent: AgentNode }) {
               background:
                 agent.level === "lead" ? "var(--hubia-ink-500)" : "var(--hubia-bg-base-500)",
               color:
-                agent.level === "lead" ? "#D7FF00" : "#A9AAA5",
+                agent.level === "lead" ? "var(--hubia-limao-500)" : "var(--hubia-bg-base-700)",
             }}
           >
             {agent.level}

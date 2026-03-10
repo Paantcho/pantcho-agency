@@ -243,7 +243,7 @@ export default function CreatorsListClient({
         >
           <div
             className="flex h-14 w-14 items-center justify-center rounded-full"
-            style={{ background: "#EEEFE9" }}
+            style={{ background: "var(--hubia-bg-base-500)" }}
           >
             <Users size={28} style={{ color: "var(--hubia-bg-base-700)" }} />
           </div>
@@ -258,8 +258,8 @@ export default function CreatorsListClient({
             onClick={() => setModalOpen(true)}
             className="rounded-full font-bold"
             style={{
-              background: "#D7FF00",
-              color: "#0E0F10",
+              background: "var(--hubia-limao-500)",
+              color: "var(--hubia-ink-500)",
               fontSize: "13px",
               padding: "10px 22px",
             }}
