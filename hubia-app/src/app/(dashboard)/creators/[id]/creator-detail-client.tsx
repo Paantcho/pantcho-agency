@@ -119,8 +119,8 @@ export default function CreatorDetailClient({
           <AnimatedLink href="/creators" className="transition-colors hover:text-ink-500" style={{ color: "var(--hubia-bg-base-700)" }}>
             Creators
           </AnimatedLink>
-          <span aria-hidden style={{ color: "#D9D9D4" }}>›</span>
-          <span className="font-semibold" style={{ color: "#0E0F10" }}>{creator.name}</span>
+          <span aria-hidden style={{ color: "var(--hubia-sand-600)" }}>›</span>
+          <span className="font-semibold" style={{ color: "var(--hubia-ink-500)" }}>{creator.name}</span>
         </nav>
         <div className="flex flex-wrap items-center gap-2">
           {actions?.secondary && (

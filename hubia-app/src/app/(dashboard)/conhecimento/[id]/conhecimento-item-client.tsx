@@ -169,7 +169,7 @@ export default function ConhecimentoItemClient({ item }: { item: KnowledgeCard }
     <div className="flex flex-col gap-5">
       {/* Voltar */}
       <motion.button
-        className="flex items-center gap-1.5 text-[12px] font-semibold text-[#A9AAA5] w-fit"
+        className="flex items-center gap-1.5 text-[12px] font-semibold text-base-700 w-fit"
         onClick={() => router.push("/conhecimento")}
         whileHover={{ color: "#0E0F10", x: -2 }}
         whileTap={{ scale: 0.97 }}
@@ -202,7 +202,7 @@ export default function ConhecimentoItemClient({ item }: { item: KnowledgeCard }
               </span>
             )}
             {item.category && (
-              <span className="rounded-[7px] bg-[#EEEFE9] px-2.5 py-1 text-[11px] font-semibold text-[#5E5E5F]">
+              <span className="rounded-[7px] bg-[#EEEFE9] px-2.5 py-1 text-[11px] font-semibold text-ink-400">
                 {item.category}
               </span>
             )}
@@ -210,7 +210,7 @@ export default function ConhecimentoItemClient({ item }: { item: KnowledgeCard }
           {/* Ações compactas no canto */}
           <div className="flex items-center gap-1.5 shrink-0">
             <motion.button
-              className="flex items-center gap-1.5 rounded-[12px] bg-[#EEEFE9] px-3 py-1.5 text-[11px] font-semibold text-[#5E5E5F]"
+              className="flex items-center gap-1.5 rounded-[12px] bg-[#EEEFE9] px-3 py-1.5 text-[11px] font-semibold text-ink-400"
               whileHover={{ scale: 1.03, backgroundColor: "#D9D9D4" }}
               whileTap={{ scale: 0.97 }}
               transition={{ duration: 0.15 }}
@@ -221,7 +221,7 @@ export default function ConhecimentoItemClient({ item }: { item: KnowledgeCard }
               Editar
             </motion.button>
             <motion.button
-              className="flex items-center gap-1.5 rounded-[12px] bg-[#EEEFE9] px-3 py-1.5 text-[11px] font-semibold text-[#5E5E5F]"
+              className="flex items-center gap-1.5 rounded-[12px] bg-[#EEEFE9] px-3 py-1.5 text-[11px] font-semibold text-ink-400"
               whileHover={{ scale: 1.03, backgroundColor: "#D9D9D4" }}
               whileTap={{ scale: 0.97 }}
               transition={{ duration: 0.15 }}
@@ -239,24 +239,24 @@ export default function ConhecimentoItemClient({ item }: { item: KnowledgeCard }
           <h1 className="text-[22px] font-bold text-ink-500 leading-snug">{item.title}</h1>
           {/* Meta linha — discreta, abaixo do título */}
           <div className="flex items-center gap-3 mt-2 flex-wrap">
-            <span className="flex items-center gap-1 text-[11px] text-[#A9AAA5]">
+            <span className="flex items-center gap-1 text-[11px] text-base-700">
               <Calendar size={11} />
               {new Date(item.createdAt).toLocaleDateString("pt-BR", { day: "numeric", month: "long", year: "numeric" })}
             </span>
             {item.origem && (
-              <span className="flex items-center gap-1 text-[11px] text-[#A9AAA5]">
+              <span className="flex items-center gap-1 text-[11px] text-base-700">
                 <Globe size={11} />
                 {item.origem}
               </span>
             )}
             {item.projetoVinculado && (
-              <span className="flex items-center gap-1 text-[11px] font-semibold text-[#5E5E5F]">
+              <span className="flex items-center gap-1 text-[11px] font-semibold text-ink-400">
                 <FolderKanban size={11} />
                 {item.projetoVinculado}
               </span>
             )}
             {item.creatorVinculado && (
-              <span className="flex items-center gap-1 text-[11px] font-semibold text-[#5E5E5F]">
+              <span className="flex items-center gap-1 text-[11px] font-semibold text-ink-400">
                 <Users size={11} />
                 {item.creatorVinculado}
               </span>
@@ -334,7 +334,7 @@ export default function ConhecimentoItemClient({ item }: { item: KnowledgeCard }
         {/* Indicador sutil: "coração da feature" */}
         {!TABS_ESTRATEGICAS.includes(activeTab) && temMetricas && (
           <motion.span
-            className="text-[10px] text-[#A9AAA5] font-semibold hidden sm:block"
+            className="text-[10px] text-base-700 font-semibold hidden sm:block"
             initial={{ opacity: 0 }} animate={{ opacity: 1 }}
           >
             Aprendizados, Lições e Aplicações contêm o valor principal
@@ -390,7 +390,7 @@ function TabVisaoGeral({
           initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.3, ease: [0, 0, 0.2, 1] }}
         >
-          <p className="text-[10px] font-bold uppercase tracking-widest text-[#A9AAA5] mb-3">Resumo</p>
+          <p className="text-[10px] font-bold uppercase tracking-widest text-base-700 mb-3">Resumo</p>
           <p className="text-[15px] text-ink-500 leading-relaxed font-semibold">
             {item.summary ?? "Sem resumo disponível."}
           </p>
@@ -403,8 +403,8 @@ function TabVisaoGeral({
             initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3, ease: [0, 0, 0.2, 1], delay: 0.05 }}
           >
-            <p className="text-[9px] font-bold uppercase tracking-widest text-[#D5D2C9]">Contexto</p>
-            <p className="text-[13px] text-[#5E5E5F] leading-relaxed">
+            <p className="text-[9px] font-bold uppercase tracking-widest text-sand-600">Contexto</p>
+            <p className="text-[13px] text-ink-400 leading-relaxed">
               Conteúdo processado e classificado automaticamente. Integrado ao acervo de conhecimento da Hubia.
             </p>
           </motion.div>
@@ -413,8 +413,8 @@ function TabVisaoGeral({
             initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3, ease: [0, 0, 0.2, 1], delay: 0.08 }}
           >
-            <p className="text-[9px] font-bold uppercase tracking-widest text-[#D5D2C9]">Impacto esperado</p>
-            <p className="text-[13px] text-[#5E5E5F] leading-relaxed">
+            <p className="text-[9px] font-bold uppercase tracking-widest text-sand-600">Impacto esperado</p>
+            <p className="text-[13px] text-ink-400 leading-relaxed">
               Gerar aprendizados, lições e regras que melhorem processos futuros na plataforma.
             </p>
           </motion.div>
@@ -427,7 +427,7 @@ function TabVisaoGeral({
             initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3, ease: [0, 0, 0.2, 1], delay: 0.1 }}
           >
-            <p className="text-[10px] font-bold uppercase tracking-widest text-[#A9AAA5]">Extrações geradas</p>
+            <p className="text-[10px] font-bold uppercase tracking-widest text-base-700">Extrações geradas</p>
             <div className="flex flex-col gap-2">
               {aprendizados.length > 0 && (
                 <motion.button
@@ -496,7 +496,7 @@ function TabVisaoGeral({
           initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.3, ease: [0, 0, 0.2, 1], delay: 0.06 }}
         >
-          <p className="text-[10px] font-bold uppercase tracking-widest text-[#A9AAA5]">Informações</p>
+          <p className="text-[10px] font-bold uppercase tracking-widest text-base-700">Informações</p>
           <div className="flex flex-col gap-2">
             {[
               { label: "Categoria",  value: item.category ?? "—" },
@@ -504,7 +504,7 @@ function TabVisaoGeral({
               { label: "Adicionado", value: new Date(item.createdAt).toLocaleDateString("pt-BR", { day: "2-digit", month: "short", year: "numeric" }) },
             ].map(({ label, value }) => (
               <div key={label} className="flex items-baseline justify-between gap-2">
-                <span className="text-[10px] text-[#A9AAA5] shrink-0">{label}</span>
+                <span className="text-[10px] text-base-700 shrink-0">{label}</span>
                 <span className="text-[12px] font-semibold text-ink-500 text-right truncate">{value}</span>
               </div>
             ))}
@@ -517,7 +517,7 @@ function TabVisaoGeral({
           initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.3, ease: [0, 0, 0.2, 1], delay: 0.1 }}
         >
-          <p className="text-[10px] font-bold uppercase tracking-widest text-[#A9AAA5]">Vínculos</p>
+          <p className="text-[10px] font-bold uppercase tracking-widest text-base-700">Vínculos</p>
           {item.projetoVinculado ? (
             <div className="flex items-center gap-2 rounded-[12px] bg-[#EEEFE9] px-3 py-2">
               <FolderKanban size={12} color="#5E5E5F" />
@@ -531,7 +531,7 @@ function TabVisaoGeral({
             </div>
           ) : null}
           {!item.projetoVinculado && !item.creatorVinculado && (
-            <p className="text-[11px] text-[#A9AAA5]">Nenhum vínculo registrado.</p>
+            <p className="text-[11px] text-base-700">Nenhum vínculo registrado.</p>
           )}
         </motion.div>
 
@@ -542,10 +542,10 @@ function TabVisaoGeral({
             initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3, ease: [0, 0, 0.2, 1], delay: 0.14 }}
           >
-            <p className="text-[10px] font-bold uppercase tracking-widest text-[#A9AAA5]">Tags</p>
+            <p className="text-[10px] font-bold uppercase tracking-widest text-base-700">Tags</p>
             <div className="flex flex-wrap gap-1.5">
               {item.tags.map((tag) => (
-                <span key={tag} className="rounded-[9999px] bg-[#EEEFE9] px-2.5 py-1 text-[10px] font-semibold text-[#5E5E5F]">
+                <span key={tag} className="rounded-[9999px] bg-[#EEEFE9] px-2.5 py-1 text-[10px] font-semibold text-ink-400">
                   #{tag}
                 </span>
               ))}
@@ -560,7 +560,7 @@ function TabVisaoGeral({
             initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3, ease: [0, 0, 0.2, 1], delay: 0.18 }}
           >
-            <p className="text-[10px] font-bold uppercase tracking-widest text-[#A9AAA5]">Fonte original</p>
+            <p className="text-[10px] font-bold uppercase tracking-widest text-base-700">Fonte original</p>
             <a
               href={item.sourceUrl}
               target="_blank"
@@ -588,7 +588,7 @@ function TabConteudoFonte({ item }: { item: KnowledgeCard }) {
           initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.3, ease: [0, 0, 0.2, 1] }}
         >
-          <p className="text-[10px] font-bold uppercase tracking-widest text-[#A9AAA5]">Link Original</p>
+          <p className="text-[10px] font-bold uppercase tracking-widest text-base-700">Link Original</p>
           <a href={item.sourceUrl} target="_blank" rel="noreferrer"
             className="flex items-center gap-2 text-[14px] text-ink-500 font-semibold hover:underline break-all">
             <ExternalLink size={14} />
@@ -601,8 +601,8 @@ function TabConteudoFonte({ item }: { item: KnowledgeCard }) {
         initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.3, ease: [0, 0, 0.2, 1], delay: 0.05 }}
       >
-        <p className="text-[10px] font-bold uppercase tracking-widest text-[#A9AAA5]">Texto Original</p>
-        <p className="text-[14px] text-[#5E5E5F] leading-relaxed whitespace-pre-wrap">
+        <p className="text-[10px] font-bold uppercase tracking-widest text-base-700">Texto Original</p>
+        <p className="text-[14px] text-ink-400 leading-relaxed whitespace-pre-wrap">
           {item.summary ?? "Conteúdo não disponível para visualização direta."}
         </p>
       </motion.div>
@@ -612,12 +612,12 @@ function TabConteudoFonte({ item }: { item: KnowledgeCard }) {
           initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.3, ease: [0, 0, 0.2, 1], delay: 0.1 }}
         >
-          <p className="text-[10px] font-bold uppercase tracking-widest text-[#A9AAA5]">Arquivo Associado</p>
+          <p className="text-[10px] font-bold uppercase tracking-widest text-base-700">Arquivo Associado</p>
           <div className="flex items-center gap-3 rounded-[12px] bg-[#EEEFE9] p-3">
             <File size={18} color="#5E5E5F" />
             <div className="flex-1">
               <p className="text-[13px] font-semibold text-ink-500">{item.fileUrl.split("/").pop()}</p>
-              <p className="text-[11px] text-[#A9AAA5]">Arquivo anexado</p>
+              <p className="text-[11px] text-base-700">Arquivo anexado</p>
             </div>
             <motion.a href={item.fileUrl} target="_blank" rel="noreferrer"
               className="flex h-8 w-8 items-center justify-center rounded-full bg-white"
@@ -633,7 +633,7 @@ function TabConteudoFonte({ item }: { item: KnowledgeCard }) {
           initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.3, ease: [0, 0, 0.2, 1], delay: 0.15 }}
         >
-          <p className="text-[10px] font-bold uppercase tracking-widest text-[#A9AAA5]">Fonte de Origem</p>
+          <p className="text-[10px] font-bold uppercase tracking-widest text-base-700">Fonte de Origem</p>
           <div className="flex items-center gap-2">
             <Globe size={13} color="#A9AAA5" />
             <span className="text-[13px] text-ink-500">{item.origem}</span>
@@ -653,7 +653,7 @@ function TabAprendizados({ aprendizados, item }: { aprendizados: string[]; item:
         <div className="flex h-10 w-10 items-center justify-center rounded-[12px] bg-[#F3E5F5]">
           <Brain size={20} color="#6A1B9A" />
         </div>
-        <p className="text-[13px] text-[#A9AAA5]">
+        <p className="text-[13px] text-base-700">
           {item.itemStatus === "bruto" ? "Este item ainda não foi processado pela IA." : "Nenhum aprendizado extraído."}
         </p>
         {item.itemStatus === "bruto" && (
@@ -710,7 +710,7 @@ function TabLicoes({ licoes, item }: { licoes: { titulo: string; tipo: "fazer" |
         <div className="flex h-10 w-10 items-center justify-center rounded-[12px] bg-[#FFF3E0]">
           <Lightbulb size={20} color="#E65100" />
         </div>
-        <p className="text-[13px] text-[#A9AAA5]">Nenhuma lição gerada para este item ainda.</p>
+        <p className="text-[13px] text-base-700">Nenhuma lição gerada para este item ainda.</p>
       </div>
     );
   }
@@ -752,7 +752,7 @@ function TabLicoes({ licoes, item }: { licoes: { titulo: string; tipo: "fazer" |
                   <Icon size={10} />
                   {conf.label}
                 </span>
-                <span className="text-[10px] text-[#A9AAA5]">{grupo.length} {grupo.length === 1 ? "item" : "itens"}</span>
+                <span className="text-[10px] text-base-700">{grupo.length} {grupo.length === 1 ? "item" : "itens"}</span>
               </div>
               {grupo.map((l, i) => (
                 <div key={i} className="rounded-[14px] bg-white p-3.5 flex items-start gap-3">
@@ -796,7 +796,7 @@ function TabAplicacoes({ aplicacoes, item }: {
         <div className="flex h-10 w-10 items-center justify-center rounded-[12px] bg-[#E8EAF6]">
           <Sparkles size={20} color="#283593" />
         </div>
-        <p className="text-[13px] text-[#A9AAA5]">Nenhuma aplicação registrada para este item.</p>
+        <p className="text-[13px] text-base-700">Nenhuma aplicação registrada para este item.</p>
       </div>
     );
   }
@@ -826,7 +826,7 @@ function TabAplicacoes({ aplicacoes, item }: {
                 <div className="flex h-6 w-6 items-center justify-center rounded-[6px]" style={{ backgroundColor: s.bg }}>
                   <Icon size={12} style={{ color: s.cor }} />
                 </div>
-                <span className="text-[10px] font-bold uppercase tracking-wide text-[#A9AAA5]">{s.label}</span>
+                <span className="text-[10px] font-bold uppercase tracking-wide text-base-700">{s.label}</span>
               </div>
               <div className="flex flex-col gap-1.5">
                 {s.items.map((it, j) => (
@@ -849,7 +849,7 @@ function TabArquivosLinks({ item }: { item: KnowledgeCard }) {
     return (
       <div className="rounded-[30px] bg-white p-10 flex flex-col items-center gap-3">
         <Paperclip size={22} color="#A9AAA5" />
-        <p className="text-[13px] text-[#A9AAA5]">Nenhum arquivo ou link associado.</p>
+        <p className="text-[13px] text-base-700">Nenhum arquivo ou link associado.</p>
       </div>
     );
   }
@@ -859,7 +859,7 @@ function TabArquivosLinks({ item }: { item: KnowledgeCard }) {
         <motion.div className="rounded-[30px] bg-white p-5 flex flex-col gap-3"
           initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.3, ease: [0, 0, 0.2, 1] }}>
-          <p className="text-[10px] font-bold uppercase tracking-widest text-[#A9AAA5]">Links Externos</p>
+          <p className="text-[10px] font-bold uppercase tracking-widest text-base-700">Links Externos</p>
           <a href={item.sourceUrl} target="_blank" rel="noreferrer"
             className="flex items-center gap-2 rounded-[12px] bg-[#EEEFE9] p-3 hover:bg-[#D9D9D4] transition-colors duration-150">
             <ExternalLink size={14} color="#5E5E5F" />
@@ -871,12 +871,12 @@ function TabArquivosLinks({ item }: { item: KnowledgeCard }) {
         <motion.div className="rounded-[30px] bg-white p-5 flex flex-col gap-3"
           initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.3, ease: [0, 0, 0.2, 1], delay: 0.05 }}>
-          <p className="text-[10px] font-bold uppercase tracking-widest text-[#A9AAA5]">Documentos & Arquivos</p>
+          <p className="text-[10px] font-bold uppercase tracking-widest text-base-700">Documentos & Arquivos</p>
           <div className="flex items-center gap-3 rounded-[12px] bg-[#EEEFE9] p-3">
             <File size={18} color="#5E5E5F" />
             <div className="flex-1">
               <p className="text-[13px] font-semibold text-ink-500">{item.fileUrl.split("/").pop()}</p>
-              <p className="text-[11px] text-[#A9AAA5]">Arquivo anexado</p>
+              <p className="text-[11px] text-base-700">Arquivo anexado</p>
             </div>
             <motion.a href={item.fileUrl} target="_blank" rel="noreferrer"
               className="flex h-8 w-8 items-center justify-center rounded-full bg-white"
@@ -895,7 +895,7 @@ function TabArquivosLinks({ item }: { item: KnowledgeCard }) {
 function TabLog({ log }: { log: { data: string; evento: string; agente?: string }[] }) {
   return (
     <div className="flex flex-col gap-2.5">
-      <p className="text-[11px] text-[#A9AAA5] mb-0.5">{log.length} eventos registrados</p>
+      <p className="text-[11px] text-base-700 mb-0.5">{log.length} eventos registrados</p>
       {[...log].reverse().map((entry, i) => (
         <motion.div
           key={i}
@@ -910,13 +910,13 @@ function TabLog({ log }: { log: { data: string; evento: string; agente?: string 
           <div className="flex-1">
             <p className="text-[12px] text-ink-500 font-semibold">{entry.evento}</p>
             <div className="flex items-center gap-1.5 mt-0.5">
-              <span className="text-[10px] text-[#A9AAA5]">
+              <span className="text-[10px] text-base-700">
                 {new Date(entry.data).toLocaleDateString("pt-BR", { day: "2-digit", month: "short", year: "numeric" })}
                 {" · "}
                 {new Date(entry.data).toLocaleTimeString("pt-BR", { hour: "2-digit", minute: "2-digit" })}
               </span>
               {entry.agente && (
-                <span className="text-[10px] text-[#A9AAA5]">· {entry.agente}</span>
+                <span className="text-[10px] text-base-700">· {entry.agente}</span>
               )}
             </div>
           </div>

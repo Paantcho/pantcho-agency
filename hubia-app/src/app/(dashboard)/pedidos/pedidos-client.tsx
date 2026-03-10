@@ -233,8 +233,8 @@ export default function PedidosClient({
           onClick={() => setStatusFilter(null)}
           className="rounded-full px-3 py-1.5 text-[11px] font-bold uppercase tracking-wider transition-colors"
           style={{
-            background: statusFilter === null ? "#0E0F10" : "#EEEFE9",
-            color: statusFilter === null ? "#D7FF00" : "#A9AAA5",
+            background: statusFilter === null ? "var(--hubia-ink-500)" : "var(--hubia-bg-base-500)",
+            color: statusFilter === null ? "var(--hubia-limao-500)" : "var(--hubia-bg-base-700)",
           }}
         >
           Todos ({pedidos.length})
@@ -437,7 +437,7 @@ export default function PedidosClient({
                 {menuOpen === pedido.id && (
                   <div
                     className="absolute right-0 top-full z-20 mt-1 min-w-[160px] rounded-xl border bg-white p-1"
-                    style={{ borderColor: "#EEEFE9" }}
+                    style={{ borderColor: "var(--hubia-bg-base-500)" }}
                   >
                     {Object.entries(STATUS_CONFIG).map(
                       ([key, cfg]) => (
@@ -452,7 +452,7 @@ export default function PedidosClient({
                             color:
                               pedido.status === key
                                 ? cfg.color
-                                : "#0E0F10",
+                                : "var(--hubia-ink-500)",
                           }}
                         >
                           <cfg.icon size={13} style={{ color: cfg.color }} />

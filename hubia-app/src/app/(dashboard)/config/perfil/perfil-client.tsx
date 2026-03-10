@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { User, Mail, Camera, Check } from "lucide-react";
 
 const inputClass =
-  "h-11 w-full rounded-[12px] border border-transparent bg-base-500 px-3.5 text-[15px] text-ink-500 outline-none placeholder:text-base-700 transition-[border-color] duration-150 hover:border-[#D4D5D6] focus:border-[#0E0F10] focus:ring-2 focus:ring-ink-500/10";
+  "h-11 w-full rounded-[12px] border border-transparent bg-base-500 px-3.5 text-[15px] text-ink-500 outline-none placeholder:text-base-700 transition-[border-color] duration-150 hover:border-base-600 focus:border-ink-500 focus:ring-2 focus:ring-ink-500/10";
 
 export default function PerfilClient({
   nome: initialNome,
@@ -46,7 +46,7 @@ export default function PerfilClient({
 
         <div className="flex items-center gap-6">
           <div className="relative">
-            <div className="flex h-16 w-16 items-center justify-center rounded-full bg-ink-500 text-[18px] font-bold text-[#D7FF00]">
+            <div className="flex h-16 w-16 items-center justify-center rounded-full bg-ink-500 text-[18px] font-bold text-limao-500">
               {initials || "HU"}
             </div>
             <motion.button

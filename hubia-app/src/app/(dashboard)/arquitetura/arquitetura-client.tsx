@@ -412,9 +412,9 @@ export default function ArquiteturaClient() {
         {/* Ciclo */}
         <div
           className="flex items-center gap-3 rounded-2xl px-6 py-4"
-          style={{ background: "#0E0F10" }}
+          style={{ background: "var(--hubia-ink-500)" }}
         >
-          <Network size={20} style={{ color: "#D7FF00" }} />
+          <Network size={20} style={{ color: "var(--hubia-limao-500)" }} />
           <div>
             <p
               className="font-bold"
