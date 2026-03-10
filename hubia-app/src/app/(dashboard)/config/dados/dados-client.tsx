@@ -150,7 +150,7 @@ export default function DadosClient() {
       {/* Gerar snapshot */}
       <div className="rounded-[30px] bg-white p-6">
         <div className="mb-5 flex items-center gap-2.5">
-          <div className="flex h-8 w-8 items-center justify-center rounded-[10px] bg-[#0E0F10]">
+          <div className="flex h-8 w-8 items-center justify-center rounded-[12px] bg-[#0E0F10]">
             <Download size={15} color="#D7FF00" />
           </div>
           <h2 className="text-[15px] font-bold text-[#0E0F10]">
@@ -266,7 +266,7 @@ export default function DadosClient() {
       {/* Histórico de backups */}
       <div className="rounded-[30px] bg-white p-6">
         <div className="mb-4 flex items-center gap-2.5">
-          <div className="flex h-8 w-8 items-center justify-center rounded-[10px] bg-[#0E0F10]">
+          <div className="flex h-8 w-8 items-center justify-center rounded-[12px] bg-[#0E0F10]">
             <Clock size={15} color="#D7FF00" />
           </div>
           <h2 className="text-[15px] font-bold text-[#0E0F10]">
@@ -289,7 +289,7 @@ export default function DadosClient() {
                 transition={{ delay: Math.min(i * 0.05, 0.3) }}
                 className="flex items-center gap-4 rounded-[12px] bg-[#EEEFE9] px-4 py-3"
               >
-                <div className="flex h-9 w-9 items-center justify-center rounded-[10px] bg-[#0E0F10]">
+                <div className="flex h-9 w-9 items-center justify-center rounded-[12px] bg-[#0E0F10]">
                   <Database size={14} color="#D7FF00" />
                 </div>
                 <div className="flex-1">
@@ -318,7 +318,7 @@ export default function DadosClient() {
       {/* Informações do sistema */}
       <div className="rounded-[30px] bg-white p-6">
         <div className="mb-4 flex items-center gap-2.5">
-          <div className="flex h-8 w-8 items-center justify-center rounded-[10px] bg-[#0E0F10]">
+          <div className="flex h-8 w-8 items-center justify-center rounded-[12px] bg-[#0E0F10]">
             <Server size={15} color="#D7FF00" />
           </div>
           <h2 className="text-[15px] font-bold text-[#0E0F10]">

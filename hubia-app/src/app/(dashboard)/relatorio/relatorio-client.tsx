@@ -816,7 +816,7 @@ function DistribuicaoTipo() {
                   >
                     {i + 1}
                   </span>
-                  <div className="flex h-8 w-8 items-center justify-center rounded-[10px]" style={{ backgroundColor: isFirst ? "#D7FF0020" : "#EEEFE9" }}>
+                  <div className="flex h-8 w-8 items-center justify-center rounded-[12px]" style={{ backgroundColor: isFirst ? "#D7FF0020" : "#EEEFE9" }}>
                     <IconComp size={14} color={isFirst ? "#8AB000" : "#A9AAA5"} />
                   </div>
                   <span className="text-[14px] font-bold text-[#0E0F10]">{d.tipo}</span>
@@ -1070,7 +1070,7 @@ function ActivityFeed() {
         style={{ borderBottom: "1px solid #F2F3EE" }}
       >
         <div className="flex items-center gap-2.5 flex-1">
-          <div className="flex h-8 w-8 items-center justify-center rounded-[10px]" style={{ backgroundColor: "#0E0F10" }}>
+          <div className="flex h-8 w-8 items-center justify-center rounded-[12px]" style={{ backgroundColor: "#0E0F10" }}>
             <Activity size={14} color="#D7FF00" />
           </div>
           <div>
@@ -1380,7 +1380,7 @@ export default function RelatorioClient() {
               <motion.button
                 key={opt.value}
                 onClick={() => setPeriodo(opt.value)}
-                className="rounded-[10px] px-3.5 py-2 text-[12px] font-bold"
+                className="rounded-[12px] px-3.5 py-2 text-[12px] font-bold"
                 animate={{
                   backgroundColor: periodo === opt.value ? "#0E0F10" : "transparent",
                   color: periodo === opt.value ? "#D7FF00" : "#A9AAA5",

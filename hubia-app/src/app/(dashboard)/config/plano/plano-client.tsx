@@ -235,7 +235,7 @@ export default function PlanoClient({
 
                 {!isAtual && p.nivel > planoAtual && (
                   <motion.button
-                    className="mt-1 rounded-[10px] bg-[#0E0F10] px-4 py-2.5 text-[12px] font-bold text-white"
+                    className="mt-1 rounded-[12px] bg-[#0E0F10] px-4 py-2.5 text-[12px] font-bold text-white"
                     whileHover={{ backgroundColor: "#2a2b2c", scale: 1.02 }}
                     whileTap={{ scale: 0.97 }}
                     transition={{ duration: 0.15 }}

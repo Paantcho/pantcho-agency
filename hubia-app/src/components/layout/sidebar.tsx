@@ -229,7 +229,7 @@ export function Sidebar({
             <motion.button
               type="button"
               onClick={() => setOrgOpen((v) => !v)}
-              className="mt-1 flex w-full items-center justify-between gap-2 rounded-[10px] px-2 py-1.5 text-left text-label-sm text-ink-500"
+              className="mt-1 flex w-full items-center justify-between gap-2 rounded-[12px] px-2 py-1.5 text-left text-label-sm text-ink-500"
               whileHover={{ backgroundColor: "rgba(213,210,201,0.35)" }}
               whileTap={{ scale: 0.97 }}
               transition={{ duration: 0.15, ease: [0.4, 0, 0.2, 1] }}

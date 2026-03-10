@@ -210,7 +210,7 @@ export default function ConhecimentoItemClient({ item }: { item: KnowledgeCard }
           {/* Ações compactas no canto */}
           <div className="flex items-center gap-1.5 shrink-0">
             <motion.button
-              className="flex items-center gap-1.5 rounded-[10px] bg-[#EEEFE9] px-3 py-1.5 text-[11px] font-semibold text-[#5E5E5F]"
+              className="flex items-center gap-1.5 rounded-[12px] bg-[#EEEFE9] px-3 py-1.5 text-[11px] font-semibold text-[#5E5E5F]"
               whileHover={{ scale: 1.03, backgroundColor: "#D9D9D4" }}
               whileTap={{ scale: 0.97 }}
               transition={{ duration: 0.15 }}
@@ -221,7 +221,7 @@ export default function ConhecimentoItemClient({ item }: { item: KnowledgeCard }
               Editar
             </motion.button>
             <motion.button
-              className="flex items-center gap-1.5 rounded-[10px] bg-[#EEEFE9] px-3 py-1.5 text-[11px] font-semibold text-[#5E5E5F]"
+              className="flex items-center gap-1.5 rounded-[12px] bg-[#EEEFE9] px-3 py-1.5 text-[11px] font-semibold text-[#5E5E5F]"
               whileHover={{ scale: 1.03, backgroundColor: "#D9D9D4" }}
               whileTap={{ scale: 0.97 }}
               transition={{ duration: 0.15 }}
@@ -519,13 +519,13 @@ function TabVisaoGeral({
         >
           <p className="text-[10px] font-bold uppercase tracking-widest text-[#A9AAA5]">Vínculos</p>
           {item.projetoVinculado ? (
-            <div className="flex items-center gap-2 rounded-[10px] bg-[#EEEFE9] px-3 py-2">
+            <div className="flex items-center gap-2 rounded-[12px] bg-[#EEEFE9] px-3 py-2">
               <FolderKanban size={12} color="#5E5E5F" />
               <span className="text-[12px] font-semibold text-[#0E0F10]">{item.projetoVinculado}</span>
             </div>
           ) : null}
           {item.creatorVinculado ? (
-            <div className="flex items-center gap-2 rounded-[10px] bg-[#EEEFE9] px-3 py-2">
+            <div className="flex items-center gap-2 rounded-[12px] bg-[#EEEFE9] px-3 py-2">
               <Users size={12} color="#5E5E5F" />
               <span className="text-[12px] font-semibold text-[#0E0F10]">{item.creatorVinculado}</span>
             </div>
@@ -565,7 +565,7 @@ function TabVisaoGeral({
               href={item.sourceUrl}
               target="_blank"
               rel="noreferrer"
-              className="flex items-center gap-2 rounded-[10px] bg-[#EEEFE9] px-3 py-2 hover:bg-[#D9D9D4] transition-colors duration-150"
+              className="flex items-center gap-2 rounded-[12px] bg-[#EEEFE9] px-3 py-2 hover:bg-[#D9D9D4] transition-colors duration-150"
             >
               <ExternalLink size={12} color="#5E5E5F" />
               <span className="text-[11px] font-semibold text-[#0E0F10] truncate">{item.sourceUrl}</span>

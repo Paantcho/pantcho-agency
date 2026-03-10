@@ -118,7 +118,7 @@ function MemberActions({
         type="button"
         onClick={() => setOpen((v) => !v)}
         disabled={loading}
-        className="flex h-8 w-8 items-center justify-center rounded-[10px] text-[#A9AAA5] disabled:opacity-40"
+        className="flex h-8 w-8 items-center justify-center rounded-[12px] text-[#A9AAA5] disabled:opacity-40"
         whileHover={{ scale: 1.12, color: "#0E0F10", backgroundColor: "rgba(14,15,16,0.04)" }}
         whileTap={{ scale: 0.9 }}
         transition={{ duration: 0.15, ease: [0.34, 1.56, 0.64, 1] }}
@@ -371,7 +371,7 @@ export default function TeamClient({
                       onClick={() => handleResendInvite(inv.id)}
                       disabled={loadingInviteId === inv.id}
                       title="Reenviar convite"
-                      className="flex h-8 w-8 items-center justify-center rounded-[10px] text-[#A9AAA5] disabled:opacity-40"
+                      className="flex h-8 w-8 items-center justify-center rounded-[12px] text-[#A9AAA5] disabled:opacity-40"
                       whileHover={{ scale: 1.12, color: "#0E0F10", backgroundColor: "rgba(14,15,16,0.04)" }}
                       whileTap={{ scale: 0.9 }}
                       transition={{ duration: 0.15, ease: [0.34, 1.56, 0.64, 1] }}
@@ -383,7 +383,7 @@ export default function TeamClient({
                       onClick={() => handleRevokeInvite(inv.id)}
                       disabled={loadingInviteId === inv.id}
                       title="Revogar convite"
-                      className="flex h-8 w-8 items-center justify-center rounded-[10px] text-[#A9AAA5] disabled:opacity-40"
+                      className="flex h-8 w-8 items-center justify-center rounded-[12px] text-[#A9AAA5] disabled:opacity-40"
                       whileHover={{ scale: 1.12, color: "#EF4444", backgroundColor: "rgba(239,68,68,0.08)" }}
                       whileTap={{ scale: 0.9 }}
                       transition={{ duration: 0.15, ease: [0.34, 1.56, 0.64, 1] }}
@@ -408,7 +408,7 @@ export default function TeamClient({
         </div>
         <div className="grid grid-cols-2 gap-3 md:grid-cols-4">
           {(["owner", "admin", "editor", "viewer"] as MemberRole[]).map((role) => (
-            <div key={role} className="rounded-[10px] bg-[#EEEFE9] p-3">
+            <div key={role} className="rounded-[12px] bg-[#EEEFE9] p-3">
               <span
                 className="mb-2 inline-block rounded-[6px] px-2 py-0.5 text-[10px] font-bold"
                 style={{

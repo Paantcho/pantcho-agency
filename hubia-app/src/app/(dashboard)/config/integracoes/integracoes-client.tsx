@@ -202,7 +202,7 @@ function IntegracaoCard({ item, idx }: { item: Integracao; idx: number }) {
               <div className="flex gap-2 flex-wrap">
                 {item.status === "desconectado" && (
                   <motion.button
-                    className="flex items-center gap-1.5 rounded-[10px] bg-[#0E0F10] px-4 py-2 text-[12px] font-bold text-white"
+                    className="flex items-center gap-1.5 rounded-[12px] bg-[#0E0F10] px-4 py-2 text-[12px] font-bold text-white"
                     whileHover={{ backgroundColor: "#2a2b2c", scale: 1.03 }}
                     whileTap={{ scale: 0.96 }}
                     transition={{ duration: 0.15 }}
@@ -213,7 +213,7 @@ function IntegracaoCard({ item, idx }: { item: Integracao; idx: number }) {
                 )}
                 {item.status === "ativo" && (
                   <motion.button
-                    className="flex items-center gap-1.5 rounded-[10px] border border-[#D5D2C9] px-4 py-2 text-[12px] font-semibold text-[#5E5E5F]"
+                    className="flex items-center gap-1.5 rounded-[12px] border border-[#D5D2C9] px-4 py-2 text-[12px] font-semibold text-[#5E5E5F]"
                     whileHover={{ backgroundColor: "rgba(213,210,201,0.5)", scale: 1.02 }}
                     whileTap={{ scale: 0.97 }}
                     transition={{ duration: 0.15 }}
@@ -227,7 +227,7 @@ function IntegracaoCard({ item, idx }: { item: Integracao; idx: number }) {
                     href={item.docs}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center gap-1.5 rounded-[10px] px-4 py-2 text-[12px] font-semibold text-[#A9AAA5]"
+                    className="flex items-center gap-1.5 rounded-[12px] px-4 py-2 text-[12px] font-semibold text-[#A9AAA5]"
                     whileHover={{ color: "#0E0F10", backgroundColor: "rgba(213,210,201,0.3)", scale: 1.02 }}
                     whileTap={{ scale: 0.97 }}
                     transition={{ duration: 0.15 }}
@@ -250,7 +250,7 @@ export default function IntegracoesClient() {
     <div className="flex flex-col gap-6">
       {/* Header info */}
       <div className="rounded-[30px] bg-[#0E0F10] p-6 flex items-start gap-3">
-        <div className="flex h-8 w-8 items-center justify-center rounded-[10px] bg-[#D7FF00] shrink-0">
+        <div className="flex h-8 w-8 items-center justify-center rounded-[12px] bg-[#D7FF00] shrink-0">
           <Plug size={15} color="#0E0F10" />
         </div>
         <div>

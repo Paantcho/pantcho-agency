@@ -93,7 +93,7 @@ export default function CalendarioClient({
         </div>
         <div className="flex items-center gap-2">
           <motion.button onClick={handleAnterior}
-            className="flex h-9 w-9 items-center justify-center rounded-[10px] bg-white"
+            className="flex h-9 w-9 items-center justify-center rounded-[12px] bg-white"
             whileHover={{ scale: 1.08, backgroundColor: "#EEEFE9" }}
             whileTap={{ scale: 0.92 }}
             transition={{ duration: 0.15 }}>
@@ -103,7 +103,7 @@ export default function CalendarioClient({
             {MESES[mes - 1]} {ano}
           </span>
           <motion.button onClick={handleProximo}
-            className="flex h-9 w-9 items-center justify-center rounded-[10px] bg-white"
+            className="flex h-9 w-9 items-center justify-center rounded-[12px] bg-white"
             whileHover={{ scale: 1.08, backgroundColor: "#EEEFE9" }}
             whileTap={{ scale: 0.92 }}
             transition={{ duration: 0.15 }}>

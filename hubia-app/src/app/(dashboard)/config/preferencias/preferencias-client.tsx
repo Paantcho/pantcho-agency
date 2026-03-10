@@ -51,7 +51,7 @@ function SelectField({
       <motion.button
         type="button"
         onClick={() => setOpen((v) => !v)}
-        className="flex h-11 w-full items-center justify-between rounded-[10px] border border-transparent bg-[#EEEFE9] px-3.5 text-[15px] text-[#0E0F10] outline-none transition-[border-color] duration-150 hover:border-[#D4D5D6]"
+        className="flex h-11 w-full items-center justify-between rounded-[12px] border border-transparent bg-[#EEEFE9] px-3.5 text-[15px] text-[#0E0F10] outline-none transition-[border-color] duration-150 hover:border-[#D4D5D6]"
         whileTap={{ scale: 0.995 }}
       >
         <span>{selected?.label ?? "Selecionar"}</span>
@@ -126,7 +126,7 @@ export default function PreferenciasClient({
       {/* Regional */}
       <div className="rounded-[30px] bg-white p-6">
         <div className="mb-5 flex items-center gap-2.5">
-          <div className="flex h-8 w-8 items-center justify-center rounded-[10px] bg-[#0E0F10]">
+          <div className="flex h-8 w-8 items-center justify-center rounded-[12px] bg-[#0E0F10]">
             <Globe size={15} color="#D7FF00" />
           </div>
           <h2 className="text-[15px] font-bold text-[#0E0F10]">Preferências regionais</h2>
@@ -140,7 +140,7 @@ export default function PreferenciasClient({
       {/* Modo visual */}
       <div className="rounded-[30px] bg-white p-6">
         <div className="mb-5 flex items-center gap-2.5">
-          <div className="flex h-8 w-8 items-center justify-center rounded-[10px] bg-[#0E0F10]">
+          <div className="flex h-8 w-8 items-center justify-center rounded-[12px] bg-[#0E0F10]">
             <Monitor size={15} color="#D7FF00" />
           </div>
           <h2 className="text-[15px] font-bold text-[#0E0F10]">Modo visual</h2>

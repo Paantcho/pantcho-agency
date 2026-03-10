@@ -106,7 +106,7 @@ export default function NotificacoesClient({
       {/* Header status */}
       <div className="rounded-[30px] bg-[#0E0F10] p-5 flex items-center justify-between">
         <div className="flex items-center gap-3">
-          <div className="flex h-8 w-8 items-center justify-center rounded-[10px] bg-[#D7FF00]">
+          <div className="flex h-8 w-8 items-center justify-center rounded-[12px] bg-[#D7FF00]">
             <Bell size={15} color="#0E0F10" />
           </div>
           <div>
@@ -125,7 +125,7 @@ export default function NotificacoesClient({
             notifChannels.forEach((n) => { updated[n.id] = allOn; });
             setSettings(updated);
           }}
-          className="rounded-[10px] px-4 py-2 text-[12px] font-bold"
+          className="rounded-[12px] px-4 py-2 text-[12px] font-bold"
           initial={false}
           animate={{
             backgroundColor: ativos < total ? "#D7FF00" : "rgba(255,255,255,0.1)",
@@ -155,7 +155,7 @@ export default function NotificacoesClient({
               >
                 <div className="flex items-center gap-3">
                   <div
-                    className="flex h-9 w-9 shrink-0 items-center justify-center rounded-[10px]"
+                    className="flex h-9 w-9 shrink-0 items-center justify-center rounded-[12px]"
                     style={{
                       backgroundColor: isAtivo ? "#0E0F10" : "#D9D9D4",
                     }}

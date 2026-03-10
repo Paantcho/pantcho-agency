@@ -235,14 +235,14 @@ export default function CreatorLooksTab({
                   <button
                     type="button"
                     onClick={() => startEdit(creator.looks.find((l) => l.id === look.id)!)}
-                    className="rounded-[10px] border border-base-600 px-3 py-1.5 text-[11px] font-semibold text-ink-500 transition-colors hover:bg-base-600/30"
+                    className="rounded-[12px] border border-base-600 px-3 py-1.5 text-[11px] font-semibold text-ink-500 transition-colors hover:bg-base-600/30"
                   >
                     Editar
                   </button>
                   <button
                     type="button"
                     onClick={() => setDeleteModalLookId(look.id)}
-                    className="rounded-[10px] border border-red-400/40 px-3 py-1.5 text-[11px] font-semibold text-red-500 transition-colors hover:bg-red-500/10"
+                    className="rounded-[12px] border border-red-400/40 px-3 py-1.5 text-[11px] font-semibold text-red-500 transition-colors hover:bg-red-500/10"
                   >
                     Excluir
                   </button>

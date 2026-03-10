@@ -64,7 +64,7 @@ export default function OverviewClient({
         </div>
 
         <div className="flex items-center gap-3">
-          <div className="rounded-[10px] bg-[#D7FF00] px-3 py-1.5 text-[12px] font-bold text-[#0E0F10]">
+          <div className="rounded-[12px] bg-[#D7FF00] px-3 py-1.5 text-[12px] font-bold text-[#0E0F10]">
             {planoNome} N{planoNivel}
           </div>
         </div>
@@ -108,7 +108,7 @@ export default function OverviewClient({
               className="flex flex-col gap-3 rounded-[16px] bg-white p-5"
             >
               <div className="flex items-center justify-between">
-                <div className="flex h-8 w-8 items-center justify-center rounded-[10px] bg-[#EEEFE9]">
+                <div className="flex h-8 w-8 items-center justify-center rounded-[12px] bg-[#EEEFE9]">
                   <Icon size={15} className="text-[#0E0F10]" />
                 </div>
                 {kpi.ok ? (
@@ -154,7 +154,7 @@ export default function OverviewClient({
                   >
                     <div className="flex items-center gap-3">
                       <div
-                        className="flex h-9 w-9 items-center justify-center rounded-[10px]"
+                        className="flex h-9 w-9 items-center justify-center rounded-[12px]"
                         style={{ backgroundColor: card.cor }}
                       >
                         <Icon size={16} color="#0E0F10" />
