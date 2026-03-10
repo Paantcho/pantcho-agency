@@ -377,7 +377,7 @@ export default function PedidoDetailClient({
           <div className="rounded-[30px] bg-white overflow-hidden">
             <div ref={tabContainerRef} className="relative flex overflow-x-auto border-b border-base-500">
               <motion.div aria-hidden
-                className="pointer-events-none absolute bottom-0 h-[2px] rounded-t-[2px] bg-[#0E0F10]"
+                className="pointer-events-none absolute bottom-0 h-[2px] rounded-t-[2px] bg-ink-500"
                 animate={{ left: tabPillLeft, width: tabPillWidth }}
                 transition={{ type: "spring", stiffness: 420, damping: 30, mass: 0.8 }}
               />
@@ -579,7 +579,7 @@ function PromptFinalCard({ briefing }: { briefing: Record<string, unknown> }) {
   };
 
   return (
-    <div className="rounded-[30px] bg-[#0E0F10] p-6">
+    <div className="rounded-[30px] bg-ink-500 p-6">
       <div className="flex items-center justify-between mb-4">
         <p className="text-[11px] font-bold uppercase tracking-wide text-base-700">Prompt Final</p>
         <div className="flex items-center gap-2">
@@ -684,7 +684,7 @@ function NotasCard({ pedidoId, organizationId }: { pedidoId: string; organizatio
               Cancelar
             </motion.button>
             <motion.button onClick={() => { setEditing(false); if (nota.trim()) toast.success("Nota salva!"); }}
-              className="flex-1 rounded-[12px] bg-[#0E0F10] py-2 text-[12px] font-semibold text-white"
+              className="flex-1 rounded-[12px] bg-ink-500 py-2 text-[12px] font-semibold text-white"
               whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.97 }}>
               Salvar
             </motion.button>
@@ -765,7 +765,7 @@ function TabConteudo({
                   Cancelar
                 </motion.button>
                 <motion.button onClick={handleSaveBriefing} disabled={saving}
-                  className="flex-1 rounded-[12px] bg-[#0E0F10] py-2.5 text-[13px] font-semibold text-white flex items-center justify-center gap-2 disabled:opacity-50"
+                  className="flex-1 rounded-[12px] bg-ink-500 py-2.5 text-[13px] font-semibold text-white flex items-center justify-center gap-2 disabled:opacity-50"
                   whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.97 }}>
                   <Save size={14} />
                   {saving ? "Salvando..." : "Salvar Briefing"}
@@ -878,7 +878,7 @@ function TabConteudo({
             <p className="text-[12px] text-base-700 mt-0.5">Imagens, links, PDFs, screenshots</p>
           </div>
           <motion.div
-            className="mt-1 rounded-[12px] bg-[#0E0F10] px-4 py-2 text-[12px] font-semibold text-white"
+            className="mt-1 rounded-[12px] bg-ink-500 px-4 py-2 text-[12px] font-semibold text-white"
             whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}
           >
             Escolher arquivos
@@ -980,13 +980,13 @@ function UploadResultado({ tipo }: { tipo: PedidoTipo }) {
               {arq.file.type.startsWith("image/") ? (
                 <img src={arq.url} alt="" className="w-full h-[80px] object-cover rounded-[12px]" />
               ) : (
-                <div className="w-full h-[80px] rounded-[12px] bg-[#0E0F10] flex items-center justify-center">
-                  <span className="text-[10px] font-bold text-[#D7FF00]">VÍDEO</span>
+                <div className="w-full h-[80px] rounded-[12px] bg-ink-500 flex items-center justify-center">
+                  <span className="text-[10px] font-bold text-limao-500">VÍDEO</span>
                 </div>
               )}
               <motion.button
                 onClick={() => handleRemover(i)}
-                className="absolute top-1 right-1 h-5 w-5 rounded-full bg-[#0E0F10]/70 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
+                className="absolute top-1 right-1 h-5 w-5 rounded-full bg-ink-500/70 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
                 whileHover={{ scale: 1.15 }} whileTap={{ scale: 0.9 }}>
                 <X size={10} color="white" />
               </motion.button>

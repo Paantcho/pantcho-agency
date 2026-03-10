@@ -431,7 +431,7 @@ function ProducaoVolumeChart({ periodo }: { periodo: string }) {
           strokeWidth={4}
           fill="url(#gradVolPedidos)"
           dot={false}
-          activeDot={{ r: 7, fill: "#D7FF00", strokeWidth: 3, stroke: "#FFFFFF" }}
+          activeDot={{ r: 7, fill: "var(--hubia-limao-500)", strokeWidth: 3, stroke: "#FFFFFF" }}
           animationDuration={420}
           animationEasing="ease-in-out"
         />
@@ -523,8 +523,8 @@ function ProducaoEficienciaChart() {
           name="Eficiência"
           stroke="var(--hubia-limao-500)"
           strokeWidth={4}
-          dot={{ r: 5, fill: "#D7FF00", strokeWidth: 0 }}
-          activeDot={{ r: 8, fill: "#D7FF00", strokeWidth: 3, stroke: "#FFFFFF" }}
+          dot={{ r: 5, fill: "var(--hubia-limao-500)", strokeWidth: 0 }}
+          activeDot={{ r: 8, fill: "var(--hubia-limao-500)", strokeWidth: 3, stroke: "#FFFFFF" }}
           animationDuration={420}
           animationEasing="ease-in-out"
         />

@@ -622,7 +622,7 @@ export default function ProjetoDetailClient({
                 </div>
                 <h1 className="text-[24px] font-bold text-ink-500 leading-tight">{projeto.nome}</h1>
                 {projeto.descricao && (
-                  <p className="mt-0.5 text-[13px] text-[#5E5E5F] leading-relaxed">{projeto.descricao}</p>
+                  <p className="mt-0.5 text-[13px] text-ink-400 leading-relaxed">{projeto.descricao}</p>
                 )}
               </div>
               <div className="flex flex-col items-end gap-2 flex-shrink-0">
@@ -837,7 +837,7 @@ function Sidebar({
             <p className="text-[11px] font-bold text-base-700 uppercase tracking-wide flex items-center gap-1.5">
               <Link2 size={11} /> Conectores
             </p>
-            <span className="text-[10px] font-bold text-[#5E5E5F]">{conectorAtivos} ativo{conectorAtivos !== 1 ? "s" : ""}</span>
+            <span className="text-[10px] font-bold text-ink-400">{conectorAtivos} ativo{conectorAtivos !== 1 ? "s" : ""}</span>
           </div>
           <div className="flex flex-col gap-1.5">
             {conectores.map((c, i) => {
@@ -1307,7 +1307,7 @@ function SubprojetosTab({ subprojetos, onSave }: {
       <AnimatePresence>
         {criando && (
           <motion.div
-            className="rounded-[16px] border border-[#D7FF00] bg-[#FAFFF0] p-4 flex flex-col gap-3"
+            className="rounded-[16px] border border-limao-500 bg-[#FAFFF0] p-4 flex flex-col gap-3"
             initial={{ opacity: 0, y: -8 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -8 }}
@@ -1315,7 +1315,7 @@ function SubprojetosTab({ subprojetos, onSave }: {
           >
             <div className="grid grid-cols-2 gap-3">
               <div className="col-span-2">
-                <label className="block text-[11px] font-semibold text-[#5E5E5F] mb-1 uppercase tracking-wide">Nome</label>
+                <label className="block text-[11px] font-semibold text-ink-400 mb-1 uppercase tracking-wide">Nome</label>
                 <input
                   value={novoNome}
                   onChange={e => setNovoNome(e.target.value)}
@@ -1324,7 +1324,7 @@ function SubprojetosTab({ subprojetos, onSave }: {
                 />
               </div>
               <div>
-                <label className="block text-[11px] font-semibold text-[#5E5E5F] mb-1 uppercase tracking-wide">Tipo</label>
+                <label className="block text-[11px] font-semibold text-ink-400 mb-1 uppercase tracking-wide">Tipo</label>
                 <select
                   value={novoTipo}
                   onChange={e => setNovoTipo(e.target.value as ProjetoTipo)}
@@ -1336,7 +1336,7 @@ function SubprojetosTab({ subprojetos, onSave }: {
                 </select>
               </div>
               <div>
-                <label className="block text-[11px] font-semibold text-[#5E5E5F] mb-1 uppercase tracking-wide">Descrição curta</label>
+                <label className="block text-[11px] font-semibold text-ink-400 mb-1 uppercase tracking-wide">Descrição curta</label>
                 <input
                   value={novaDesc}
                   onChange={e => setNovaDesc(e.target.value)}
@@ -1348,7 +1348,7 @@ function SubprojetosTab({ subprojetos, onSave }: {
             <div className="flex items-center gap-2 justify-end">
               <motion.button
                 onClick={() => setCriando(false)}
-                className="h-9 rounded-[12px] bg-[#F0F0EE] px-4 text-[13px] font-semibold text-[#5E5E5F]"
+                className="h-9 rounded-[12px] bg-[#F0F0EE] px-4 text-[13px] font-semibold text-ink-400"
                 whileHover={{ backgroundColor: "#E5E5E2" }} whileTap={{ scale: 0.97 }}
               >
                 Cancelar
@@ -1783,7 +1783,7 @@ function RulesTab({ rules, onSave }: {
             initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: "auto" }} exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.25, ease: [0, 0, 0.2, 1] }}
             className="overflow-hidden">
-            <div className="rounded-[16px] border-2 border-[#D7FF00] bg-[#FFFDE7] p-5 flex flex-col gap-3">
+            <div className="rounded-[16px] border-2 border-limao-500 bg-[#FFFDE7] p-5 flex flex-col gap-3">
               <p className="text-[11px] font-bold text-[#5A6600] uppercase tracking-wide">Nova Rule</p>
               <input
                 autoFocus value={novaTitulo} onChange={(e) => setNovaTitulo(e.target.value)}
@@ -1825,7 +1825,7 @@ function RulesTab({ rules, onSave }: {
               </label>
               <div className="flex gap-2">
                 <motion.button onClick={() => setAdicionando(false)}
-                  className="flex-1 rounded-[12px] bg-white py-2 text-[13px] font-semibold text-[#5E5E5F]"
+                  className="flex-1 rounded-[12px] bg-white py-2 text-[13px] font-semibold text-ink-400"
                   whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.97 }}>Cancelar</motion.button>
                 <motion.button onClick={adicionar} disabled={!novaTitulo.trim()}
                   className="flex-1 rounded-[12px] bg-[#0E0F10] py-2 text-[13px] font-semibold text-limao-500 disabled:opacity-40"
@@ -1892,7 +1892,7 @@ function RulesTab({ rules, onSave }: {
                               className="overflow-hidden">
                               <div className="px-4 pb-3 flex flex-col gap-2 border-t border-[#F0F0EE] pt-3">
                                 {r.descricao && (
-                                  <p className="text-[13px] text-[#5E5E5F] leading-relaxed">{r.descricao}</p>
+                                  <p className="text-[13px] text-ink-400 leading-relaxed">{r.descricao}</p>
                                 )}
                                 <div className="flex items-center justify-between">
                                   <div className="flex items-center gap-3">
@@ -1980,7 +1980,7 @@ function LogTab({ log }: { log: LogEntry[] }) {
                   <span className="text-[10px] text-base-700">· {entry.modulo}</span>
                 )}
                 {entry.versao && (
-                  <span className="text-[10px] font-bold text-[#5E5E5F] bg-base-500 px-1.5 py-0.5 rounded-[4px]">
+                  <span className="text-[10px] font-bold text-ink-400 bg-base-500 px-1.5 py-0.5 rounded-[4px]">
                     v{entry.versao}
                   </span>
                 )}
@@ -1989,7 +1989,7 @@ function LogTab({ log }: { log: LogEntry[] }) {
                 )}
               </div>
               {entry.impacto && (
-                <p className="text-[11px] text-[#5E5E5F] mt-1 italic">{entry.impacto}</p>
+                <p className="text-[11px] text-ink-400 mt-1 italic">{entry.impacto}</p>
               )}
             </div>
           </motion.div>
@@ -2273,7 +2273,7 @@ function EditableTextSection({ title, fieldKey, value, placeholder, onSave }: {
         <SectionLabel>{title}</SectionLabel>
         {!editing ? (
           <motion.button onClick={() => setEditing(true)}
-            className="flex items-center gap-1 rounded-[8px] bg-base-500 px-2.5 py-1 text-[11px] font-semibold text-[#5E5E5F]"
+            className="flex items-center gap-1 rounded-[8px] bg-base-500 px-2.5 py-1 text-[11px] font-semibold text-ink-400"
             whileHover={{ backgroundColor: "#D9D9D4", color: "#0E0F10", scale: 1.02 }}
             whileTap={{ scale: 0.97 }}>
             <Edit3 size={10} /> Editar
@@ -2281,7 +2281,7 @@ function EditableTextSection({ title, fieldKey, value, placeholder, onSave }: {
         ) : (
           <div className="flex items-center gap-2">
             <motion.button onClick={() => { setEditing(false); setDraft(value); }}
-              className="flex items-center gap-1 rounded-[8px] bg-base-500 px-2.5 py-1 text-[11px] font-semibold text-[#5E5E5F]"
+              className="flex items-center gap-1 rounded-[8px] bg-base-500 px-2.5 py-1 text-[11px] font-semibold text-ink-400"
               whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.97 }}>
               <X size={10} /> Cancelar
             </motion.button>

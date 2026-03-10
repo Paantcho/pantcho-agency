@@ -38,7 +38,7 @@ function CategoryTag({
 const CATEGORY_COLORS = {
   fixos: { bg: "#DCFFF6", text: "#00A87A" },
   flexiveis: { bg: "#FFF4E5", text: "#D97706" },
-  proibido: { bg: "#FFE8EB", text: "#FF576D" },
+  proibido: { bg: "#FFE8EB", text: "var(--hubia-red-500)" },
 };
 
 export default function CreatorEnvironmentsTab({
@@ -124,7 +124,7 @@ export default function CreatorEnvironmentsTab({
       {/* Banner de localização — fundo ink escuro */}
       <div
         className="flex items-start gap-4 rounded-2xl px-6 py-5"
-        style={{ background: "#0E0F10" }}
+        style={{ background: "var(--hubia-ink-500)" }}
       >
         <div
           className="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-xl"

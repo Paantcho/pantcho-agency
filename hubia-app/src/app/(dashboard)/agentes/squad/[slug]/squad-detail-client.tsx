@@ -52,11 +52,11 @@ function getSquadIcon(slug: string) {
 // ─── Status label do agente ───────────────────────────────────────
 function StatusBadge({ status }: { status: string }) {
   const map: Record<string, { label: string; bg: string; color: string }> = {
-    ativo: { label: "Ativo", bg: "#D7FF00", color: "var(--hubia-ink-500)" },
-    inativo: { label: "Inativo", bg: "#EEEFE9", color: "var(--hubia-bg-base-700)" },
-    rascunho: { label: "Rascunho", bg: "#EEEFE9", color: "var(--hubia-bg-base-700)" },
+    ativo: { label: "Ativo", bg: "var(--hubia-limao-500)", color: "var(--hubia-ink-500)" },
+    inativo: { label: "Inativo", bg: "var(--hubia-bg-base-500)", color: "var(--hubia-bg-base-700)" },
+    rascunho: { label: "Rascunho", bg: "var(--hubia-bg-base-500)", color: "var(--hubia-bg-base-700)" },
   };
-  const cfg = map[status] ?? { label: status, bg: "#EEEFE9", color: "var(--hubia-ink-400)" };
+  const cfg = map[status] ?? { label: status, bg: "var(--hubia-bg-base-500)", color: "var(--hubia-ink-400)" };
   return (
     <span
       className="rounded-[9999px] px-2.5 py-0.5 text-[10px] font-bold tracking-[0.3px]"
