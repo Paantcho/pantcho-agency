@@ -65,14 +65,14 @@ export default function InviteModal({
             <div className="flex items-start justify-between">
               <div>
                 <h2 className="text-[18px] font-bold text-ink-500">Convidar membro</h2>
-                <p className="mt-1 text-[13px] text-[#A9AAA5]">
+                <p className="mt-1 text-[13px] text-base-700">
                   A pessoa receberá um email com o link de acesso.
                 </p>
               </div>
               <motion.button
                 type="button"
                 onClick={onClose}
-                className="flex h-8 w-8 items-center justify-center rounded-[12px] text-[#A9AAA5]"
+                className="flex h-8 w-8 items-center justify-center rounded-[12px] text-base-700"
                 whileHover={{ rotate: 90, scale: 1.1, color: "#0E0F10" }}
                 whileTap={{ rotate: 90, scale: 0.9 }}
                 transition={{ duration: 0.15, ease: [0.34, 1.56, 0.64, 1] }}
@@ -90,7 +90,7 @@ export default function InviteModal({
                 <div className="relative">
                   <Mail
                     size={15}
-                    className="absolute left-3.5 top-1/2 -translate-y-1/2 text-[#A9AAA5]"
+                    className="absolute left-3.5 top-1/2 -translate-y-1/2 text-base-700"
                   />
                   <input
                     type="email"
@@ -99,7 +99,7 @@ export default function InviteModal({
                     placeholder="nome@empresa.com"
                     required
                     disabled={loading}
-                    className="h-11 w-full rounded-[12px] border border-transparent bg-base-500 pl-10 pr-4 text-[14px] font-semibold text-ink-500 outline-none placeholder:text-[#A9AAA5] focus:border-[#0E0F10] focus:ring-2 focus:ring-ink-500/10 transition-[border-color] duration-150 disabled:opacity-50"
+                    className="h-11 w-full rounded-[12px] border border-transparent bg-base-500 pl-10 pr-4 text-[14px] font-semibold text-ink-500 outline-none placeholder:text-base-700 focus:border-[#0E0F10] focus:ring-2 focus:ring-ink-500/10 transition-[border-color] duration-150 disabled:opacity-50"
                   />
                 </div>
               </div>

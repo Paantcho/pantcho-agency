@@ -214,7 +214,7 @@ export default function PedidosClient({
             onClick={() => setShowForm(!showForm)}
             className="flex items-center gap-2 rounded-full font-bold transition-colors duration-200 hover:opacity-90 active:scale-95"
             style={{
-              background: "#D7FF00",
+              background: "var(--hubia-limao-500)",
               color: "var(--hubia-ink-500)",
               fontSize: "14px",
               padding: "10px 22px",
@@ -344,7 +344,7 @@ export default function PedidosClient({
               disabled={!titulo.trim() || isPending}
               className="self-end rounded-full font-bold transition-opacity hover:opacity-90 disabled:opacity-50"
               style={{
-                background: "#D7FF00",
+                background: "var(--hubia-limao-500)",
                 color: "var(--hubia-ink-500)",
                 fontSize: "13px",
                 padding: "10px 22px",
@@ -372,7 +372,7 @@ export default function PedidosClient({
               {/* Tipo icon */}
               <div
                 className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl"
-                style={{ background: "#EEEFE9" }}
+                style={{ background: "var(--hubia-bg-base-500)" }}
               >
                 <TipoIcon size={18} style={{ color: "var(--hubia-ink-500)" }} />
               </div>
@@ -498,7 +498,7 @@ export default function PedidosClient({
         >
           <div
             className="flex h-14 w-14 items-center justify-center rounded-full"
-            style={{ background: "#EEEFE9" }}
+            style={{ background: "var(--hubia-bg-base-500)" }}
           >
             <ClipboardList size={28} style={{ color: "var(--hubia-bg-base-700)" }} />
           </div>
@@ -516,7 +516,7 @@ export default function PedidosClient({
               onClick={() => setShowForm(true)}
               className="rounded-full font-bold transition-opacity hover:opacity-90"
               style={{
-                background: "#D7FF00",
+                background: "var(--hubia-limao-500)",
                 color: "var(--hubia-ink-500)",
                 fontSize: "13px",
                 padding: "10px 22px",

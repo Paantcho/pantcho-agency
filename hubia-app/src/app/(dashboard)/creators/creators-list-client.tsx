@@ -288,8 +288,8 @@ export default function CreatorsListClient({
             type="button"
             onClick={() => setFilter("all")}
             className="mt-4 rounded-full border px-5 py-2 text-sm font-semibold"
-            style={{ borderColor: "#D9D9D4", color: "#0E0F10" }}
-            whileHover={{ scale: 1.03, backgroundColor: "#EEEFE9" }}
+            style={{ borderColor: "var(--hubia-sand-600)", color: "var(--hubia-ink-500)" }}
+            whileHover={{ scale: 1.03, backgroundColor: "var(--hubia-bg-base-500)" }}
             whileTap={{ scale: 0.96 }}
             transition={{ duration: 0.15, ease: [0.34, 1.56, 0.64, 1] }}
           >

@@ -241,7 +241,7 @@ export default function ArquiteturaClient() {
         {/* Orquestrador */}
         <div
           className="w-full max-w-lg rounded-2xl border-2 px-6 py-5"
-          style={{ borderColor: "#D7FF00", background: "#D7FF0010" }}
+          style={{ borderColor: "var(--hubia-limao-500)", background: "color-mix(in srgb, var(--hubia-limao-500) 6%, transparent)" }}
         >
           <div className="flex items-center gap-4">
             <div

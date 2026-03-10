@@ -118,7 +118,7 @@ function MemberActions({
         type="button"
         onClick={() => setOpen((v) => !v)}
         disabled={loading}
-        className="flex h-8 w-8 items-center justify-center rounded-[12px] text-[#A9AAA5] disabled:opacity-40"
+        className="flex h-8 w-8 items-center justify-center rounded-[12px] text-base-700 disabled:opacity-40"
         whileHover={{ scale: 1.12, color: "#0E0F10", backgroundColor: "rgba(14,15,16,0.04)" }}
         whileTap={{ scale: 0.9 }}
         transition={{ duration: 0.15, ease: [0.34, 1.56, 0.64, 1] }}
@@ -135,7 +135,7 @@ function MemberActions({
             exit={{ opacity: 0, y: -6, scale: 0.96 }}
             transition={{ duration: 0.15, ease: [0, 0, 0.2, 1] }}
           >
-            <p className="px-3 py-1.5 text-[10px] font-semibold uppercase tracking-wide text-[#A9AAA5]">
+            <p className="px-3 py-1.5 text-[10px] font-semibold uppercase tracking-wide text-base-700">
               Alterar para
             </p>
             {editableRoles
@@ -223,7 +223,7 @@ export default function TeamClient({
       <div className="flex items-center justify-between">
         <div>
           <h2 className="text-[16px] font-bold text-ink-500">Membros da equipe</h2>
-          <p className="mt-0.5 text-[12px] text-[#A9AAA5]">
+          <p className="mt-0.5 text-[12px] text-base-700">
             {members.length} membro{members.length !== 1 ? "s" : ""} ativo
             {members.length !== 1 ? "s" : ""}
             {pendingInvites.length > 0 &&
@@ -248,7 +248,7 @@ export default function TeamClient({
       {/* Lista de membros ativos */}
       {members.length === 0 ? (
         <div className="rounded-[16px] border-2 border-dashed border-[#D5D2C9] p-10 text-center">
-          <p className="text-[14px] text-[#A9AAA5]">
+          <p className="text-[14px] text-base-700">
             {organizationId
               ? "Nenhum membro ainda. Convide alguém para começar."
               : "Você não está vinculado a nenhuma organização."}
@@ -284,9 +284,9 @@ export default function TeamClient({
                   {member.name ?? member.email ?? `Usuário ${member.userId.slice(0, 8)}`}
                 </span>
                 {member.email && (
-                  <span className="text-[12px] text-[#A9AAA5] truncate">{member.email}</span>
+                  <span className="text-[12px] text-base-700 truncate">{member.email}</span>
                 )}
-                <span className="text-[11px] text-[#A9AAA5]">
+                <span className="text-[11px] text-base-700">
                   Desde {formatDate(member.acceptedAt ?? member.invitedAt)}
                 </span>
               </div>
@@ -319,8 +319,8 @@ export default function TeamClient({
       {pendingInvites.length > 0 && (
         <div className="flex flex-col gap-3">
           <div className="flex items-center gap-2">
-            <Clock size={13} className="text-[#A9AAA5]" />
-            <p className="text-[12px] font-semibold text-[#A9AAA5] uppercase tracking-wide">
+            <Clock size={13} className="text-base-700" />
+            <p className="text-[12px] font-semibold text-base-700 uppercase tracking-wide">
               Convites pendentes
             </p>
           </div>
@@ -339,7 +339,7 @@ export default function TeamClient({
               >
                 {/* Ícone de email */}
                 <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-base-500">
-                  <Mail size={15} className="text-[#A9AAA5]" />
+                  <Mail size={15} className="text-base-700" />
                 </div>
 
                 {/* Info */}
@@ -347,7 +347,7 @@ export default function TeamClient({
                   <span className="text-[14px] font-semibold text-ink-500 truncate">
                     {inv.email}
                   </span>
-                  <span className="text-[11px] text-[#A9AAA5]">
+                  <span className="text-[11px] text-base-700">
                     Convidado por {inv.inviterName ?? "—"} · {formatExpiry(inv.expiresAt)}
                   </span>
                 </div>
@@ -371,7 +371,7 @@ export default function TeamClient({
                       onClick={() => handleResendInvite(inv.id)}
                       disabled={loadingInviteId === inv.id}
                       title="Reenviar convite"
-                      className="flex h-8 w-8 items-center justify-center rounded-[12px] text-[#A9AAA5] disabled:opacity-40"
+                      className="flex h-8 w-8 items-center justify-center rounded-[12px] text-base-700 disabled:opacity-40"
                       whileHover={{ scale: 1.12, color: "#0E0F10", backgroundColor: "rgba(14,15,16,0.04)" }}
                       whileTap={{ scale: 0.9 }}
                       transition={{ duration: 0.15, ease: [0.34, 1.56, 0.64, 1] }}
@@ -383,7 +383,7 @@ export default function TeamClient({
                       onClick={() => handleRevokeInvite(inv.id)}
                       disabled={loadingInviteId === inv.id}
                       title="Revogar convite"
-                      className="flex h-8 w-8 items-center justify-center rounded-[12px] text-[#A9AAA5] disabled:opacity-40"
+                      className="flex h-8 w-8 items-center justify-center rounded-[12px] text-base-700 disabled:opacity-40"
                       whileHover={{ scale: 1.12, color: "#EF4444", backgroundColor: "rgba(239,68,68,0.08)" }}
                       whileTap={{ scale: 0.9 }}
                       transition={{ duration: 0.15, ease: [0.34, 1.56, 0.64, 1] }}
@@ -401,8 +401,8 @@ export default function TeamClient({
       {/* Legenda de roles */}
       <div className="rounded-[16px] bg-white p-5">
         <div className="mb-3 flex items-center gap-2">
-          <ShieldCheck size={13} className="text-[#A9AAA5]" />
-          <p className="text-[12px] font-semibold text-[#A9AAA5] uppercase tracking-wide">
+          <ShieldCheck size={13} className="text-base-700" />
+          <p className="text-[12px] font-semibold text-base-700 uppercase tracking-wide">
             Permissões por role
           </p>
         </div>

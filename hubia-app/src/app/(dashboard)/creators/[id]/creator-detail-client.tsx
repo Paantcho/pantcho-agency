@@ -93,7 +93,7 @@ export default function CreatorDetailClient({
       {!creator.isActive && (
         <div
           className="flex flex-wrap items-center justify-between gap-4 rounded-2xl border p-4"
-          style={{ borderColor: "#D9D9D4", background: "#FFFFFF" }}
+          style={{ borderColor: "var(--hubia-sand-600)", background: "#FFFFFF" }}
         >
           <p className="font-semibold" style={{ fontSize: "14px", color: "#0E0F10" }}>
             Creator inativa

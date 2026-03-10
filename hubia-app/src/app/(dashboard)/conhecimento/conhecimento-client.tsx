@@ -226,8 +226,8 @@ export default function ConhecimentoClient({
             onClick={() => setCategoryFilter(null)}
             className="rounded-full px-3 py-1.5 text-[11px] font-bold uppercase tracking-wider transition-colors"
             style={{
-              background: categoryFilter === null ? "#0E0F10" : "#EEEFE9",
-              color: categoryFilter === null ? "#D7FF00" : "#A9AAA5",
+              background: categoryFilter === null ? "var(--hubia-ink-500)" : "var(--hubia-bg-base-500)",
+              color: categoryFilter === null ? "var(--hubia-limao-500)" : "var(--hubia-bg-base-700)",
             }}
           >
             Todas
@@ -244,7 +244,7 @@ export default function ConhecimentoClient({
                 background:
                   categoryFilter === cat
                     ? getCategoryColor(cat)
-                    : "#EEEFE9",
+                    : "var(--hubia-bg-base-500)",
                 color:
                   categoryFilter === cat ? "#FFFFFF" : "#A9AAA5",
               }}

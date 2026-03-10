@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { User, Mail, Camera, Check } from "lucide-react";
 
 const inputClass =
-  "h-11 w-full rounded-[12px] border border-transparent bg-base-500 px-3.5 text-[15px] text-ink-500 outline-none placeholder:text-[#A9AAA5] transition-[border-color] duration-150 hover:border-[#D4D5D6] focus:border-[#0E0F10] focus:ring-2 focus:ring-ink-500/10";
+  "h-11 w-full rounded-[12px] border border-transparent bg-base-500 px-3.5 text-[15px] text-ink-500 outline-none placeholder:text-base-700 transition-[border-color] duration-150 hover:border-[#D4D5D6] focus:border-[#0E0F10] focus:ring-2 focus:ring-ink-500/10";
 
 export default function PerfilClient({
   nome: initialNome,
@@ -62,7 +62,7 @@ export default function PerfilClient({
 
           <div>
             <p className="text-[15px] font-bold text-ink-500">{nome || "Usuário"}</p>
-            <p className="text-[13px] text-[#A9AAA5]">{initialEmail}</p>
+            <p className="text-[13px] text-base-700">{initialEmail}</p>
           </div>
         </div>
       </div>
@@ -92,9 +92,9 @@ export default function PerfilClient({
               type="email"
               value={initialEmail}
               readOnly
-              className="h-11 w-full rounded-[12px] border border-transparent bg-base-500 px-3.5 text-[15px] text-[#A9AAA5] outline-none cursor-not-allowed"
+              className="h-11 w-full rounded-[12px] border border-transparent bg-base-500 px-3.5 text-[15px] text-base-700 outline-none cursor-not-allowed"
             />
-            <p className="text-[11px] text-[#A9AAA5]">
+            <p className="text-[11px] text-base-700">
               Gerenciado pelo provedor de autenticação
             </p>
           </div>
