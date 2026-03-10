@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { HubiaPageAction } from "@/components/ui/hubia-page-action";
 import {
   Globe,
   Calendar,
@@ -192,17 +193,16 @@ export default function PreferenciasClient({
           )}
         </AnimatePresence>
 
-        <motion.button
-          type="button"
+        <HubiaPageAction
+          icon={Check}
+          iconRotate={false}
           onClick={handleSave}
           disabled={loading}
-          className="rounded-[18px] bg-limao-500 px-6 py-3 text-[15px] font-semibold text-ink-500 disabled:opacity-50"
-          whileHover={{ scale: 1.03, backgroundColor: "#DFFF33" }}
-          whileTap={{ scale: 0.96 }}
-          transition={{ duration: 0.15, ease: [0.34, 1.56, 0.64, 1] }}
+          loading={loading}
+          loadingText="Salvando…"
         >
-          {loading ? "Salvando…" : "Salvar preferências"}
-        </motion.button>
+          Salvar preferências
+        </HubiaPageAction>
       </div>
     </div>
   );

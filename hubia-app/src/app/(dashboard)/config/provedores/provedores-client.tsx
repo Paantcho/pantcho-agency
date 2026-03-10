@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { Plus, Pencil, Trash2, X, Star, AlertTriangle } from "lucide-react";
+import { HubiaPageAction } from "@/components/ui/hubia-page-action";
 import {
   createProvider,
   updateProvider,
@@ -130,16 +131,14 @@ function ProviderModal({
             >
               Cancelar
             </motion.button>
-            <motion.button
+            <HubiaPageAction
               type="submit"
               disabled={loading}
-              className="rounded-button bg-limao-500 px-4 py-2 text-label-sm font-bold text-ink-500 disabled:opacity-50"
-              whileHover={{ scale: 1.03, backgroundColor: "#DFFF33" }}
-              whileTap={{ scale: 0.96 }}
-              transition={{ duration: 0.15, ease: [0.34, 1.56, 0.64, 1] }}
+              loading={loading}
+              loadingText="Salvando…"
             >
-              {loading ? "Salvando…" : title.startsWith("Editar") ? "Salvar" : "Adicionar"}
-            </motion.button>
+              {title.startsWith("Editar") ? "Salvar" : "Adicionar"}
+            </HubiaPageAction>
           </div>
         </form>
       </motion.div>
@@ -295,19 +294,9 @@ export default function ProvedoresClient(props: Props) {
   if (mode === "add") {
     return (
       <>
-        <motion.button
-          type="button"
-          onClick={() => setOpen(true)}
-          className="inline-flex items-center gap-[8px] rounded-button bg-limao-500 px-[20px] py-[12px] text-label-sm font-bold text-ink-500"
-          whileHover={{ scale: 1.03, backgroundColor: "#DFFF33" }}
-          whileTap={{ scale: 0.96 }}
-          transition={{ duration: 0.15, ease: [0.34, 1.56, 0.64, 1] }}
-        >
-          <motion.span whileHover={{ scale: 1.2 }} transition={{ duration: 0.3, ease: [0.34, 1.56, 0.64, 1] }}>
-            <Plus size={18} strokeWidth={2.5} />
-          </motion.span>
+        <HubiaPageAction onClick={() => setOpen(true)}>
           Adicionar provedor
-        </motion.button>
+        </HubiaPageAction>
         <AnimatePresence>
           {open && <ProviderModal title="Adicionar provedor" {...modalProps} />}
         </AnimatePresence>

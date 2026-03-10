@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { AnimatedLink } from "@/components/ui/animated-link";
-import { Plus, Globe, Code2, Clapperboard } from "lucide-react";
+import { HubiaPageAction } from "@/components/ui/hubia-page-action";
+import { Globe, Code2, Clapperboard } from "lucide-react";
 import { getCurrentOrganizationId } from "@/lib/auth-organization";
 import { getDashboardData } from "./dashboard-data";
 import { KpiCards, PedidosPrioritariosCards } from "./dashboard-motion";
@@ -98,17 +99,9 @@ export default async function DashboardPage() {
             {greeting}, Pantcho 👋
           </h1>
         </div>
-        <Button
-          variant="default"
-          size="lg"
-          asChild
-          className="mt-2 sm:mt-0 shrink-0 h-11 min-h-11 px-6 rounded-full"
-        >
-          <AnimatedLink href="/pedidos" className="gap-2">
-            <Plus className="size-5" />
-            Novo pedido
-          </AnimatedLink>
-        </Button>
+        <HubiaPageAction href="/pedidos" className="mt-2 sm:mt-0 shrink-0">
+          Novo pedido
+        </HubiaPageAction>
       </div>
 
       {/* 4 KPI cards — Client Component com stagger */}

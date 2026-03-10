@@ -23,6 +23,7 @@ import {
   Wand2,
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
+import { HubiaPageAction } from "@/components/ui/hubia-page-action";
 
 const ICON_MAP: Record<string, LucideIcon> = {
   brain: Brain,
@@ -342,18 +343,9 @@ function ChatTab({
             os agentes.
           </p>
         </div>
-        <Link
-          href="/organization/provedores"
-          className="rounded-full font-bold transition-opacity hover:opacity-90"
-          style={{
-            background: "var(--hubia-limao-500)",
-            color: "var(--hubia-ink-500)",
-            fontSize: "13px",
-            padding: "10px 22px",
-          }}
-        >
+        <HubiaPageAction href="/organization/provedores" icon={Settings} iconRotate={false}>
           Configurar Provedor
-        </Link>
+        </HubiaPageAction>
       </div>
     );
   }

@@ -6,6 +6,7 @@ import { motion } from "framer-motion";
 import { Plus, Users } from "lucide-react";
 import type { CreatorRow } from "./actions";
 import { NovaCreatorModal } from "./nova-creator-modal";
+import { HubiaPageAction } from "@/components/ui/hubia-page-action";
 
 const PLACEHOLDER_AVATAR =
   "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=600&h=800&fit=crop&crop=faces,top";
@@ -170,35 +171,9 @@ export default function CreatorsListClient({
           >
             {ativasCount} {ativasCount === 1 ? "ativa" : "ativas"}
           </span>
-          <motion.button
-            type="button"
-            onClick={() => setModalOpen(true)}
-            className="flex items-center gap-2 rounded-full font-bold"
-            style={{
-              background: "var(--hubia-limao-500)",
-              color: "var(--hubia-ink-500)",
-              fontSize: "14px",
-              padding: "10px 22px",
-            }}
-            initial="rest"
-            whileHover="hovered"
-            whileTap={{ scale: 0.96 }}
-            animate="rest"
-            variants={{
-              rest: { scale: 1, backgroundColor: "var(--hubia-limao-500)" },
-              hovered: { scale: 1.03, backgroundColor: "#DFFF33" },
-            }}
-            transition={{ duration: 0.15, ease: [0.34, 1.56, 0.64, 1] }}
-          >
-            <motion.span
-              className="flex items-center"
-              variants={{ rest: { scale: 1, rotate: 0 }, hovered: { scale: 1.2, rotate: 90 } }}
-              transition={{ duration: 0.25, ease: [0.34, 1.56, 0.64, 1] }}
-            >
-              <Plus size={16} strokeWidth={2.5} />
-            </motion.span>
+          <HubiaPageAction onClick={() => setModalOpen(true)}>
             Nova creator
-          </motion.button>
+          </HubiaPageAction>
         </div>
       </div>
 
@@ -253,22 +228,9 @@ export default function CreatorsListClient({
           >
             Nenhum creator cadastrado.
           </p>
-          <motion.button
-            type="button"
-            onClick={() => setModalOpen(true)}
-            className="rounded-full font-bold"
-            style={{
-              background: "var(--hubia-limao-500)",
-              color: "var(--hubia-ink-500)",
-              fontSize: "13px",
-              padding: "10px 22px",
-            }}
-            whileHover={{ scale: 1.03, backgroundColor: "#DFFF33" }}
-            whileTap={{ scale: 0.96 }}
-            transition={{ duration: 0.15, ease: [0.34, 1.56, 0.64, 1] }}
-          >
+          <HubiaPageAction onClick={() => setModalOpen(true)}>
             Adicionar primeiro creator
-          </motion.button>
+          </HubiaPageAction>
         </div>
       )}
 

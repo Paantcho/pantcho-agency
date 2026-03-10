@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { Home } from "lucide-react";
+import { HubiaPageAction } from "@/components/ui/hubia-page-action";
 import { HubiaModal } from "@/components/ui/hubia-modal";
 import { HubiaConfirmModal } from "@/components/ui/hubia-confirm-modal";
 import type { CreatorDetail } from "../../actions";
@@ -157,14 +158,9 @@ export default function CreatorEnvironmentsTab({
           <p className="font-semibold" style={{ fontSize: "14px", color: "var(--hubia-bg-base-700)" }}>
             Nenhum ambiente cadastrado.
           </p>
-          <button
-            type="button"
-            onClick={() => { resetForm(); setShowForm(true); }}
-            className="rounded-full font-bold transition-opacity hover:opacity-90"
-            style={{ background: "var(--hubia-limao-500)", color: "var(--hubia-ink-500)", fontSize: "13px", padding: "9px 22px" }}
-          >
+          <HubiaPageAction onClick={() => { resetForm(); setShowForm(true); }} icon={Home}>
             Adicionar ambiente
-          </button>
+          </HubiaPageAction>
         </div>
       )}
 
@@ -294,14 +290,14 @@ export default function CreatorEnvironmentsTab({
             />
           </div>
           <div className="flex gap-2 pt-1">
-            <button
+            <HubiaPageAction
               type="submit"
               disabled={loading}
-              className="rounded-full font-bold transition-opacity hover:opacity-90 disabled:opacity-50"
-              style={{ background: "var(--hubia-limao-500)", color: "var(--hubia-ink-500)", fontSize: "13px", padding: "9px 22px" }}
+              loading={loading}
+              loadingText="Salvando…"
             >
-              {loading ? "Salvando…" : editingId ? "Salvar" : "Criar"}
-            </button>
+              {editingId ? "Salvar" : "Criar"}
+            </HubiaPageAction>
             <button
               type="button"
               onClick={resetForm}

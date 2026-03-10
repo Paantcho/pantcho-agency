@@ -12,6 +12,7 @@ import {
   ListFilter, Pause, ShieldAlert, BookOpen, Timer,
 } from "lucide-react";
 import { HubiaPortal } from "@/components/ui/hubia-portal";
+import { HubiaPageAction } from "@/components/ui/hubia-page-action";
 import { SlidingTabs } from "@/components/ui/sliding-tabs";
 import { toast } from "@/components/ui/hubia-toast";
 import { createProjeto } from "./actions";
@@ -299,18 +300,9 @@ export default function ProjetosClient({
             {projetos.length} projeto{projetos.length !== 1 ? "s" : ""} · workspaces vivos por tipo
           </p>
         </div>
-        <motion.button
-          onClick={() => setModalOpen(true)}
-          className="flex items-center gap-2 rounded-[18px] px-4 py-3 text-[15px] font-semibold text-ink-500"
-          initial="rest" animate="rest" whileHover="hovered" whileTap={{ scale: 0.96 }}
-          variants={{ rest: { scale: 1, backgroundColor: "var(--hubia-limao-500)" }, hovered: { scale: 1.03, backgroundColor: "#DFFF33" } }}
-          transition={{ duration: 0.15, ease: [0.34, 1.56, 0.64, 1] }}
-        >
-          <motion.span variants={{ rest: { scale: 1 }, hovered: { scale: 1.2 } }} transition={{ duration: 0.25 }}>
-            <Plus size={16} />
-          </motion.span>
+        <HubiaPageAction onClick={() => setModalOpen(true)}>
           Novo Projeto
-        </motion.button>
+        </HubiaPageAction>
       </div>
 
       {/* Linha 2: views rápidas + busca */}

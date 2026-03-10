@@ -13,6 +13,7 @@ import {
   Crown,
   RefreshCw,
 } from "lucide-react";
+import { HubiaPageAction } from "@/components/ui/hubia-page-action";
 import { updateBranding } from "./actions";
 
 function hexToHSL(hex: string): { h: number; s: number; l: number } {
@@ -217,15 +218,9 @@ export default function BrandingClient({
               Neste plano, você pode alterar logotipo, favicon e a cor primária da plataforma.
             </p>
           </div>
-          <motion.button
-            className="flex items-center gap-2 rounded-[14px] bg-limao-500 px-6 py-3 text-[14px] font-bold text-ink-500"
-            whileHover={{ scale: 1.03, backgroundColor: "#DFFF33" }}
-            whileTap={{ scale: 0.96 }}
-            transition={{ duration: 0.15 }}
-          >
-            <Crown size={16} />
+          <HubiaPageAction icon={Crown} iconRotate={false}>
             Upgrade para Enterprise
-          </motion.button>
+          </HubiaPageAction>
         </div>
 
         <div className="rounded-[30px] bg-white p-6">
@@ -414,17 +409,16 @@ export default function BrandingClient({
           )}
         </AnimatePresence>
 
-        <motion.button
-          type="button"
+        <HubiaPageAction
+          icon={Check}
+          iconRotate={false}
           onClick={handleSave}
           disabled={loading || !isValidHex(cor)}
-          className="rounded-[18px] bg-limao-500 px-6 py-3 text-[15px] font-semibold text-ink-500 disabled:opacity-50"
-          whileHover={{ scale: 1.03, backgroundColor: "#DFFF33" }}
-          whileTap={{ scale: 0.96 }}
-          transition={{ duration: 0.15, ease: [0.34, 1.56, 0.64, 1] }}
+          loading={loading}
+          loadingText="Salvando…"
         >
-          {loading ? "Salvando…" : "Salvar branding"}
-        </motion.button>
+          Salvar branding
+        </HubiaPageAction>
       </div>
     </div>
   );

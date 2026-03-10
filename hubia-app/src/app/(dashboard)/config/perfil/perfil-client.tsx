@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { User, Mail, Camera, Check } from "lucide-react";
+import { HubiaPageAction } from "@/components/ui/hubia-page-action";
 
 const inputClass =
   "h-11 w-full rounded-[12px] border border-transparent bg-base-500 px-3.5 text-[15px] text-ink-500 outline-none placeholder:text-base-700 transition-[border-color] duration-150 hover:border-base-600 focus:border-ink-500 focus:ring-2 focus:ring-ink-500/10";
@@ -117,17 +118,16 @@ export default function PerfilClient({
           )}
         </AnimatePresence>
 
-        <motion.button
-          type="button"
+        <HubiaPageAction
+          icon={Check}
+          iconRotate={false}
           onClick={handleSave}
           disabled={loading}
-          className="rounded-[18px] bg-limao-500 px-6 py-3 text-[15px] font-semibold text-ink-500 disabled:opacity-50"
-          whileHover={{ scale: 1.03, backgroundColor: "#DFFF33" }}
-          whileTap={{ scale: 0.96 }}
-          transition={{ duration: 0.15, ease: [0.34, 1.56, 0.64, 1] }}
+          loading={loading}
+          loadingText="Salvando…"
         >
-          {loading ? "Salvando…" : "Salvar perfil"}
-        </motion.button>
+          Salvar perfil
+        </HubiaPageAction>
       </div>
     </div>
   );

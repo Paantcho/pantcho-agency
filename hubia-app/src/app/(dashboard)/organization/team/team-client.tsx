@@ -21,6 +21,7 @@ import {
   type PendingInviteRow,
 } from "@/app/(dashboard)/config/equipe/actions";
 import { toast } from "@/components/ui/hubia-toast";
+import { HubiaPageAction } from "@/components/ui/hubia-page-action";
 import InviteModal from "./invite-modal";
 import { useRouter } from "next/navigation";
 
@@ -231,17 +232,9 @@ export default function TeamClient({
           </p>
         </div>
         {canEdit && (
-          <motion.button
-            type="button"
-            onClick={() => setShowInviteModal(true)}
-            className="flex items-center gap-2 rounded-[14px] bg-limao-500 px-5 py-2.5 text-[13px] font-bold text-ink-500"
-            whileHover={{ scale: 1.03, backgroundColor: "#DFFF33" }}
-            whileTap={{ scale: 0.96 }}
-            transition={{ duration: 0.15, ease: [0.34, 1.56, 0.64, 1] }}
-          >
-            <Plus size={15} strokeWidth={2.5} />
+          <HubiaPageAction onClick={() => setShowInviteModal(true)}>
             Convidar membro
-          </motion.button>
+          </HubiaPageAction>
         )}
       </div>
 

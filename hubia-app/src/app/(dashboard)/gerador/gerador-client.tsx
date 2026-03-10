@@ -4,6 +4,7 @@ import { useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Sparkles, Copy, Check, Upload, History, Wand2, ImageIcon, Plus } from "lucide-react";
 import { SlidingTabs } from "@/components/ui/sliding-tabs";
+import { HubiaPageAction } from "@/components/ui/hubia-page-action";
 import { HubiaModal } from "@/components/ui/hubia-modal";
 import { HubiaSelect } from "@/components/ui/hubia-select";
 import type { CreatorOption, GeradorFormData, GeradorResult } from "./actions";
@@ -751,29 +752,9 @@ export function GeradorClient({ creators }: { creators: CreatorOption[] }) {
         <h1 style={{ fontSize: "28px", fontWeight: 700, color: "var(--hubia-ink-500)" }}>
           Gerador de prompt
         </h1>
-        <motion.button
-          type="button"
-          className="flex items-center gap-2 rounded-[18px] px-4 py-3 text-[14px] font-bold text-ink-500"
-          style={{ background: "var(--hubia-limao-500)" }}
-          initial="rest"
-          whileHover="hovered"
-          whileTap={{ scale: 0.96 }}
-          animate="rest"
-          variants={{
-            rest: { scale: 1, backgroundColor: "var(--hubia-limao-500)" },
-            hovered: { scale: 1.03, backgroundColor: "#DFFF33" },
-          }}
-          transition={{ duration: 0.15, ease: [0.34, 1.56, 0.64, 1] }}
-        >
-          <motion.span
-            className="flex items-center"
-            variants={{ rest: { scale: 1, rotate: 0 }, hovered: { scale: 1.2, rotate: 90 } }}
-            transition={{ duration: 0.2, ease: [0.34, 1.56, 0.64, 1] }}
-          >
-            <Plus size={16} strokeWidth={2.5} />
-          </motion.span>
+        <HubiaPageAction>
           Novo pedido
-        </motion.button>
+        </HubiaPageAction>
       </div>
 
       {/* Tabs */}

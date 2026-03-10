@@ -18,6 +18,7 @@ import {
   AlertCircle,
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
+import { HubiaPageAction } from "@/components/ui/hubia-page-action";
 import type { AgentRow } from "./actions";
 import { seedAgentsForOrganization } from "./actions";
 
@@ -193,21 +194,15 @@ export default function AgentesListClient({
               Inicialize os 10 agentes do ecossistema Pantcho Agency.
             </p>
           </div>
-          <button
-            type="button"
+          <HubiaPageAction
+            icon={Zap}
             onClick={handleSeed}
             disabled={isPending}
-            className="flex items-center gap-2 rounded-full font-bold transition-opacity hover:opacity-90 active:scale-95 disabled:opacity-50"
-            style={{
-              background: "var(--hubia-limao-500)",
-              color: "var(--hubia-ink-500)",
-              fontSize: "14px",
-              padding: "12px 28px",
-            }}
+            loading={isPending}
+            loadingText="Inicializando..."
           >
-            <Zap size={16} strokeWidth={2.5} />
-            {isPending ? "Inicializando..." : "Inicializar Agentes"}
-          </button>
+            Inicializar Agentes
+          </HubiaPageAction>
         </div>
       </div>
     );

@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { HubiaPageAction } from "@/components/ui/hubia-page-action";
 import {
   Database,
   Download,
@@ -224,27 +225,16 @@ export default function DadosClient() {
 
           {/* Botão gerar */}
           <div className="flex items-center gap-3">
-            <motion.button
-              type="button"
+            <HubiaPageAction
+              icon={Download}
+              iconRotate={false}
               onClick={handleGerar}
               disabled={gerando}
-              className="flex items-center gap-2 rounded-[18px] bg-limao-500 px-6 py-3 text-[15px] font-semibold text-ink-500 disabled:opacity-50"
-              whileHover={{ scale: 1.03, backgroundColor: "#DFFF33" }}
-              whileTap={{ scale: 0.96 }}
-              transition={{ duration: 0.15, ease: [0.34, 1.56, 0.64, 1] }}
+              loading={gerando}
+              loadingText="Gerando…"
             >
-              {gerando ? (
-                <>
-                  <Loader2 size={16} className="animate-spin" />
-                  Gerando…
-                </>
-              ) : (
-                <>
-                  <Download size={16} />
-                  Gerar e baixar
-                </>
-              )}
-            </motion.button>
+              Gerar e baixar
+            </HubiaPageAction>
 
             <AnimatePresence>
               {gerado && (

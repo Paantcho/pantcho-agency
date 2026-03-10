@@ -20,6 +20,7 @@ import {
   MoreHorizontal,
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
+import { HubiaPageAction } from "@/components/ui/hubia-page-action";
 import type { PedidoRow } from "./actions";
 import {
   createPedido,
@@ -209,20 +210,9 @@ export default function PedidosClient({
           >
             {pedidos.length} {pedidos.length === 1 ? "pedido" : "pedidos"}
           </span>
-          <button
-            type="button"
-            onClick={() => setShowForm(!showForm)}
-            className="flex items-center gap-2 rounded-full font-bold transition-colors duration-200 hover:opacity-90 active:scale-95"
-            style={{
-              background: "var(--hubia-limao-500)",
-              color: "var(--hubia-ink-500)",
-              fontSize: "14px",
-              padding: "10px 22px",
-            }}
-          >
-            <Plus size={16} strokeWidth={2.5} />
+          <HubiaPageAction onClick={() => setShowForm(!showForm)}>
             Novo Pedido
-          </button>
+          </HubiaPageAction>
         </div>
       </div>
 
@@ -338,20 +328,15 @@ export default function PedidosClient({
                 className="rounded-xl border border-base-500 bg-[#F5F5F3] px-4 py-3 text-[14px] text-ink-500 outline-none focus:border-limao-500"
               />
             </div>
-            <button
-              type="button"
+            <HubiaPageAction
               onClick={handleCreate}
               disabled={!titulo.trim() || isPending}
-              className="self-end rounded-full font-bold transition-opacity hover:opacity-90 disabled:opacity-50"
-              style={{
-                background: "var(--hubia-limao-500)",
-                color: "var(--hubia-ink-500)",
-                fontSize: "13px",
-                padding: "10px 22px",
-              }}
+              loading={isPending}
+              loadingText="Criando..."
+              className="self-end"
             >
-              {isPending ? "Criando..." : "Criar Pedido"}
-            </button>
+              Criar Pedido
+            </HubiaPageAction>
           </div>
         </div>
       )}
@@ -511,19 +496,9 @@ export default function PedidosClient({
               : "Nenhum pedido com este filtro."}
           </p>
           {pedidos.length === 0 && (
-            <button
-              type="button"
-              onClick={() => setShowForm(true)}
-              className="rounded-full font-bold transition-opacity hover:opacity-90"
-              style={{
-                background: "var(--hubia-limao-500)",
-                color: "var(--hubia-ink-500)",
-                fontSize: "13px",
-                padding: "10px 22px",
-              }}
-            >
+            <HubiaPageAction onClick={() => setShowForm(true)}>
               Criar primeiro pedido
-            </button>
+            </HubiaPageAction>
           )}
         </div>
       )}
