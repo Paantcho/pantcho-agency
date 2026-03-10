@@ -143,7 +143,7 @@ export default function CreatorEnvironmentsTab({
       </div>
 
       {/* Título com contagem */}
-      <h2 className="font-bold" style={{ fontSize: "17px", color: "#0E0F10" }}>
+      <h2 className="font-bold" style={{ fontSize: "17px", color: "var(--hubia-ink-500)" }}>
         {environments.length}{" "}
         {environments.length === 1 ? "Ambiente Aprovado" : "Ambientes Aprovados"}
       </h2>
@@ -152,7 +152,7 @@ export default function CreatorEnvironmentsTab({
       {environments.length === 0 && !showForm && (
         <div
           className="flex flex-col items-center justify-center gap-4 rounded-[30px] border-2 border-dashed py-16"
-          style={{ borderColor: "#D9D9D4" }}
+          style={{ borderColor: "var(--hubia-sand-600)" }}
         >
           <p className="font-semibold" style={{ fontSize: "14px", color: "#A9AAA5" }}>
             Nenhum ambiente cadastrado.

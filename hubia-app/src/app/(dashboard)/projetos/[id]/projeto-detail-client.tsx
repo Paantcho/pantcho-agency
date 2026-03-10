@@ -1497,7 +1497,7 @@ function ModulosTab({ modulosData, tipoConfig, onSave }: {
           const sCfg = statusConfig[m.status];
           return (
             <motion.div key={i}
-              className="flex items-center gap-3 rounded-[14px] border border-[#EEEFE9] bg-white px-4 py-3"
+              className="flex items-center gap-3 rounded-[14px] border border-base-500 bg-white px-4 py-3"
               initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }}
               transition={{ delay: i * 0.03 }}>
               <div className="flex-1 min-w-0">
@@ -1543,7 +1543,7 @@ function ModulosTab({ modulosData, tipoConfig, onSave }: {
 function AdicionarModulo({ onAdd }: { onAdd: (nome: string) => Promise<void> }) {
   const [novo, setNovo] = useState("");
   return (
-    <div className="flex gap-2 pt-2 border-t border-[#EEEFE9]">
+    <div className="flex gap-2 pt-2 border-t border-base-500">
       <input
         value={novo} onChange={(e) => setNovo(e.target.value)}
         onKeyDown={(e) => { if (e.key === "Enter" && novo.trim()) { onAdd(novo.trim()); setNovo(""); } }}

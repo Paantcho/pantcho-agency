@@ -245,7 +245,7 @@ function AddAgentModal({
               </div>
 
               {/* Rodapé: contador + botão confirmar */}
-              <div className="flex items-center justify-between gap-3 border-t pt-4" style={{ borderColor: "#EEEFE9" }}>
+              <div className="flex items-center justify-between gap-3 border-t pt-4" style={{ borderColor: "var(--hubia-bg-base-500)" }}>
                 <span className="text-[12px] font-semibold" style={{ color: "var(--hubia-bg-base-700)" }}>
                   {selected.size === 0
                     ? "Nenhum agente selecionado"
