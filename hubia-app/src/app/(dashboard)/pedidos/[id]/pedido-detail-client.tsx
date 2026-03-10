@@ -273,7 +273,7 @@ export default function PedidoDetailClient({
         <motion.button
           onClick={() => router.push("/pedidos")}
           className="flex items-center gap-1.5 text-[13px] font-semibold text-base-700"
-          whileHover={{ color: "#0E0F10", x: -2 }}
+          whileHover={{ color: "var(--hubia-ink-500)", x: -2 }}
           whileTap={{ scale: 0.97 }}
           transition={{ duration: 0.15 }}
         >
@@ -743,7 +743,7 @@ function TabConteudo({
                 setEditMode(e => !e);
               }}
               className="flex items-center gap-1 text-[11px] font-semibold text-base-700"
-              whileHover={{ color: "#0E0F10" }} whileTap={{ scale: 0.97 }}
+              whileHover={{ color: "var(--hubia-ink-500)" }} whileTap={{ scale: 0.97 }}
             >
               {editMode ? <X size={12} /> : <Edit3 size={12} />}
               {editMode ? "Cancelar" : "Editar"}

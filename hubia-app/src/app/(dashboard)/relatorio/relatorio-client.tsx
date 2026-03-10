@@ -549,7 +549,7 @@ function ProducaoChartContainer({ periodo }: { periodo: string }) {
     volume: (
       <div className="flex items-center gap-5">
         <div className="flex items-center gap-2">
-          <span className="h-[3px] w-7 rounded-full" style={{ backgroundColor: "#D7FF00" }} />
+          <span className="h-[3px] w-7 rounded-full" style={{ backgroundColor: "var(--hubia-limao-500)" }} />
           <span className="text-[12px] font-bold text-[#8A8B8C]">Pedidos</span>
         </div>
         <div className="flex items-center gap-2">
@@ -561,7 +561,7 @@ function ProducaoChartContainer({ periodo }: { periodo: string }) {
     squad: (
       <div className="flex items-center gap-5">
         <div className="flex items-center gap-2">
-          <span className="h-3.5 w-3.5 rounded-[4px]" style={{ backgroundColor: "#D7FF00" }} />
+          <span className="h-3.5 w-3.5 rounded-[4px]" style={{ backgroundColor: "var(--hubia-limao-500)" }} />
           <span className="text-[12px] font-bold text-[#8A8B8C]">Audiovisual</span>
         </div>
         <div className="flex items-center gap-2">
@@ -572,7 +572,7 @@ function ProducaoChartContainer({ periodo }: { periodo: string }) {
     ),
     eficiencia: (
       <div className="flex items-center gap-2">
-        <span className="h-[3px] w-7 rounded-full" style={{ backgroundColor: "#D7FF00" }} />
+        <span className="h-[3px] w-7 rounded-full" style={{ backgroundColor: "var(--hubia-limao-500)" }} />
         <span className="text-[12px] font-bold text-[#8A8B8C]">Taxa de entrega (%) por mês</span>
       </div>
     ),
@@ -898,7 +898,7 @@ function UsoIA() {
 
 function agentStatusConfig(load: number) {
   if (load > 80) return { color: "#FB8C00", label: "Sobrecarregado", bg: "#FB8C0012" };
-  if (load > 30) return { color: "#D7FF00", label: "Ativo", bg: "#D7FF0012" };
+  if (load > 30) return { color: "var(--hubia-limao-500)", label: "Ativo", bg: "#D7FF0012" };
   return { color: "#8A8B8C", label: "Livre", bg: "#8A8B8C12" };
 }
 
@@ -974,7 +974,7 @@ function OrquestradorMonitor() {
             <div className="rounded-[16px] bg-ink-500 p-4">
               <div className="flex items-center gap-2 mb-4">
                 <LivePulseDot color="#D7FF00" sizePx={7} />
-                <span className="text-[10px] font-bold tracking-[0.12em] uppercase" style={{ color: "#D7FF00" }}>Live</span>
+                <span className="text-[10px] font-bold tracking-[0.12em] uppercase" style={{ color: "var(--hubia-limao-500)" }}>Live</span>
                 <span className="text-[10px] font-semibold ml-auto" style={{ color: "#333435" }}>Tempo real</span>
               </div>
               <div style={{ height: LOG_H * MAX_LOGS, overflow: "hidden", position: "relative" }}>
@@ -1318,7 +1318,7 @@ function Tendencias() {
         className="px-6 pt-5 pb-4 flex items-center gap-3"
         style={{ borderBottom: "1px solid #F2F3EE" }}
       >
-        <div className="flex h-8 w-8 items-center justify-center rounded-full" style={{ backgroundColor: "#D7FF00" }}>
+        <div className="flex h-8 w-8 items-center justify-center rounded-full" style={{ backgroundColor: "var(--hubia-limao-500)" }}>
           <Flame size={13} color="var(--hubia-ink-500)" />
         </div>
         <div>
@@ -1443,7 +1443,7 @@ export default function RelatorioClient() {
                 )}
                 {isDark && kpi.trend !== undefined && (
                   <div className="flex items-center gap-0.5 font-bold text-[10px] px-1.5 py-0.5 rounded-full"
-                    style={{ color: "#D7FF00", backgroundColor: "#D7FF0015" }}>
+                    style={{ color: "var(--hubia-limao-500)", backgroundColor: "#D7FF0015" }}>
                     <TrendingUp size={9} />
                     +{kpi.trend}
                   </div>

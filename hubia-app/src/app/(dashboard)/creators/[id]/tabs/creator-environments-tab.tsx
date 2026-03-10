@@ -154,7 +154,7 @@ export default function CreatorEnvironmentsTab({
           className="flex flex-col items-center justify-center gap-4 rounded-[30px] border-2 border-dashed py-16"
           style={{ borderColor: "var(--hubia-sand-600)" }}
         >
-          <p className="font-semibold" style={{ fontSize: "14px", color: "#A9AAA5" }}>
+          <p className="font-semibold" style={{ fontSize: "14px", color: "var(--hubia-bg-base-700)" }}>
             Nenhum ambiente cadastrado.
           </p>
           <button

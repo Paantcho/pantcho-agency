@@ -145,7 +145,7 @@ function AddAgentModal({
                 onClick={handleClose}
                 className="absolute right-5 top-5 flex h-8 w-8 items-center justify-center rounded-full"
                 style={{ background: "var(--hubia-bg-base-500)", color: "var(--hubia-ink-400)" }}
-                whileHover={{ rotate: 90, scale: 1.1, backgroundColor: "#D5D2C9" }}
+                whileHover={{ rotate: 90, scale: 1.1, backgroundColor: "var(--hubia-sand-600)" }}
                 whileTap={{ rotate: 90, scale: 0.9 }}
                 transition={{ duration: 0.15, ease: [0.34, 1.56, 0.64, 1] }}
               >
@@ -421,7 +421,7 @@ function NovoAgenteModal({
                 onClick={handleClose}
                 className="absolute right-5 top-5 flex h-8 w-8 items-center justify-center rounded-full"
                 style={{ background: "var(--hubia-bg-base-500)", color: "var(--hubia-ink-400)" }}
-                whileHover={{ rotate: 90, scale: 1.1, backgroundColor: "#D5D2C9" }}
+                whileHover={{ rotate: 90, scale: 1.1, backgroundColor: "var(--hubia-sand-600)" }}
                 whileTap={{ rotate: 90, scale: 0.9 }}
                 transition={{ duration: 0.15, ease: [0.34, 1.56, 0.64, 1] }}
               >
