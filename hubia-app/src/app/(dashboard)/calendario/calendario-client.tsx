@@ -145,8 +145,8 @@ export default function CalendarioClient({
                       <span
                         className="flex h-6 w-6 items-center justify-center rounded-full text-[12px] font-semibold"
                         style={{
-                          backgroundColor: isHoje ? "#D7FF00" : "transparent",
-                          color: isHoje ? "#0E0F10" : "#5E5E5F",
+                          backgroundColor: isHoje ? "var(--hubia-limao-500)" : "transparent",
+                          color: isHoje ? "var(--hubia-ink-500)" : "var(--hubia-ink-400)",
                         }}
                       >
                         {dia}
@@ -159,7 +159,7 @@ export default function CalendarioClient({
                           onClick={() => setDrawerPedido(e)}
                           className="w-full rounded-[4px] px-1.5 py-0.5 text-left text-[10px] font-semibold truncate"
                           style={{
-                            backgroundColor: `${STATUS_COLORS[e.status] ?? "#A9AAA5"}22`,
+                            backgroundColor: `${STATUS_COLORS[e.status] ?? "var(--hubia-bg-base-700)"}22`,
                             color: STATUS_COLORS[e.status] ?? "#A9AAA5",
                           }}
                           whileHover={{ scale: 1.02 }}

@@ -101,7 +101,7 @@ function AgentCard({ agent }: { agent: AgentRow }) {
         </h3>
         <p
           className="line-clamp-2 font-semibold leading-snug"
-          style={{ fontSize: "13px", color: "#A9AAA5" }}
+          style={{ fontSize: "13px", color: "var(--hubia-bg-base-700)" }}
         >
           {agent.description}
         </p>
@@ -121,7 +121,7 @@ function AgentCard({ agent }: { agent: AgentRow }) {
         {agent.skillCount > 0 && (
           <span
             className="text-[11px] font-semibold"
-            style={{ color: "#A9AAA5" }}
+            style={{ color: "var(--hubia-bg-base-700)" }}
           >
             {agent.skillCount} {agent.skillCount === 1 ? "skill" : "skills"}
           </span>
@@ -177,7 +177,7 @@ export default function AgentesListClient({
             className="flex h-16 w-16 items-center justify-center rounded-full"
             style={{ background: "#EEEFE9" }}
           >
-            <Bot size={32} style={{ color: "#A9AAA5" }} />
+            <Bot size={32} style={{ color: "var(--hubia-bg-base-700)" }} />
           </div>
           <div className="text-center">
             <p
@@ -188,7 +188,7 @@ export default function AgentesListClient({
             </p>
             <p
               className="mt-1 font-semibold"
-              style={{ fontSize: "13px", color: "#A9AAA5" }}
+              style={{ fontSize: "13px", color: "var(--hubia-bg-base-700)" }}
             >
               Inicialize os 10 agentes do ecossistema Pantcho Agency.
             </p>
@@ -199,7 +199,7 @@ export default function AgentesListClient({
             disabled={isPending}
             className="flex items-center gap-2 rounded-full font-bold transition-opacity hover:opacity-90 active:scale-95 disabled:opacity-50"
             style={{
-              background: "#D7FF00",
+              background: "var(--hubia-limao-500)",
               color: "var(--hubia-ink-500)",
               fontSize: "14px",
               padding: "12px 28px",
@@ -226,7 +226,7 @@ export default function AgentesListClient({
         <div className="flex items-center gap-3">
           <span
             className="font-semibold"
-            style={{ fontSize: "14px", color: "#A9AAA5" }}
+            style={{ fontSize: "14px", color: "var(--hubia-bg-base-700)" }}
           >
             {agents.filter((a) => a.status === "ativo").length} ativos
           </span>
@@ -246,7 +246,7 @@ export default function AgentesListClient({
           <section key={squad} className="flex flex-col gap-4">
             <h2
               className="font-bold uppercase tracking-wider"
-              style={{ fontSize: "12px", color: "#A9AAA5" }}
+              style={{ fontSize: "12px", color: "var(--hubia-bg-base-700)" }}
             >
               {SQUAD_LABELS[squad] || squad}
             </h2>
@@ -273,7 +273,7 @@ function ProviderBanner({ hasProvider }: { hasProvider: boolean }) {
         background: "#D7FF0010",
       }}
     >
-      <AlertCircle size={18} style={{ color: "#A9AAA5" }} />
+      <AlertCircle size={18} style={{ color: "var(--hubia-bg-base-700)" }} />
       <p
         className="flex-1 font-semibold"
         style={{ fontSize: "13px", color: "var(--hubia-ink-500)" }}

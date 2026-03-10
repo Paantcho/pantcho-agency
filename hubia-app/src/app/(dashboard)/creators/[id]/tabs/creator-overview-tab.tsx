@@ -149,7 +149,7 @@ export default function CreatorOverviewTab({
                       {typeof m === "object" && m !== null && "description" in m && (
                         <p
                           className="font-semibold"
-                          style={{ fontSize: "12px", color: "#A9AAA5", marginTop: "1px" }}
+                          style={{ fontSize: "12px", color: "var(--hubia-bg-base-700)", marginTop: "1px" }}
                         >
                           {(m as { description?: string }).description}
                         </p>
@@ -181,7 +181,7 @@ export default function CreatorOverviewTab({
                 <li key={item.label} className="flex items-start gap-2.5">
                   <span
                     className="mt-0.5 shrink-0 font-bold"
-                    style={{ fontSize: "14px", color: "#A9AAA5" }}
+                    style={{ fontSize: "14px", color: "var(--hubia-bg-base-700)" }}
                   >
                     {item.icon}
                   </span>
