@@ -383,7 +383,7 @@ export default function ProjetosClient({
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0, transition: { delay: Math.min(projetosFiltrados.length * 0.06, 0.3) } }}
             >
-              <Plus size={20} color="#A9AAA5" />
+              <Plus size={20} color="var(--hubia-bg-base-700)" />
               <span className="text-[13px] font-semibold text-base-700">Novo Projeto</span>
             </motion.button>
           </motion.div>
@@ -500,7 +500,7 @@ function ProjetoCardItem({ projeto: p, index: i, onClick }: {
               key={idx}
               className="flex items-center gap-1 rounded-[6px] bg-[#F5F5F3] px-2 py-0.5 text-[10px] font-semibold text-ink-400"
             >
-              <FolderKanban size={9} color="#A9AAA5" />
+              <FolderKanban size={9} color="var(--hubia-bg-base-700)" />
               {s.nome}
             </span>
           ))}
@@ -535,13 +535,13 @@ function ProjetoCardItem({ projeto: p, index: i, onClick }: {
         <div className="flex items-center gap-3">
           {tarefasAbertas > 0 && (
             <div className="flex items-center gap-1">
-              <CheckSquare size={11} color="#A9AAA5" />
+              <CheckSquare size={11} color="var(--hubia-bg-base-700)" />
               <span className="text-[11px] text-base-700">{tarefasAbertas}</span>
             </div>
           )}
           {p.pedidosCount > 0 && (
             <div className="flex items-center gap-1">
-              <ClipboardList size={11} color="#A9AAA5" />
+              <ClipboardList size={11} color="var(--hubia-bg-base-700)" />
               <span className="text-[11px] text-base-700">{p.pedidosCount}</span>
             </div>
           )}
@@ -553,13 +553,13 @@ function ProjetoCardItem({ projeto: p, index: i, onClick }: {
           )}
           {subprojetos.length > 0 && (
             <div className="flex items-center gap-1">
-              <Layers size={11} color="#A9AAA5" />
+              <Layers size={11} color="var(--hubia-bg-base-700)" />
               <span className="text-[11px] text-base-700">{subprojetos.length}</span>
             </div>
           )}
           {!!meta.prazo && (
             <div className="flex items-center gap-1">
-              <Clock size={11} color="#A9AAA5" />
+              <Clock size={11} color="var(--hubia-bg-base-700)" />
               <span className="text-[11px] text-base-700">{String(meta.prazo)}</span>
             </div>
           )}
@@ -701,7 +701,7 @@ function NovoProjetoModal({ open, onClose, organizationId, onCreated }: {
                   whileTap={{ rotate: 90, scale: 0.9 }}
                   transition={{ duration: 0.15, ease: [0.34, 1.56, 0.64, 1] }}
                 >
-                  <X size={14} color="#0E0F10" />
+                  <X size={14} color="var(--hubia-ink-500)" />
                 </motion.button>
               </div>
 

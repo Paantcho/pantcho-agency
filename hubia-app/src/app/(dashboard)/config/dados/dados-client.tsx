@@ -276,7 +276,7 @@ export default function DadosClient() {
 
         {historico.length === 0 ? (
           <div className="rounded-[12px] border-2 border-dashed border-sand-600 p-8 text-center">
-            <Database size={20} color="#A9AAA5" className="mx-auto mb-2" />
+            <Database size={20} color="var(--hubia-bg-base-700)" className="mx-auto mb-2" />
             <p className="text-[13px] text-base-700">Nenhum snapshot gerado ainda.</p>
           </div>
         ) : (

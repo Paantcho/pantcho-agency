@@ -157,7 +157,7 @@ export default function CreatorAppearanceTab({
       <div className="grid gap-4 lg:grid-cols-2">
         {/* Rosto */}
         <div className="rounded-[30px] p-5" style={{ background: "#FFFFFF" }}>
-          <h3 className="font-bold" style={{ fontSize: "16px", color: "#0E0F10" }}>
+          <h3 className="font-bold" style={{ fontSize: "16px", color: "var(--hubia-ink-500)" }}>
             Rosto (Forense)
           </h3>
           <div className="mt-4 flex flex-col gap-0">
@@ -172,7 +172,7 @@ export default function CreatorAppearanceTab({
 
         {/* Corpo e Silhueta */}
         <div className="rounded-[30px] p-5" style={{ background: "#FFFFFF" }}>
-          <h3 className="font-bold" style={{ fontSize: "16px", color: "#0E0F10" }}>
+          <h3 className="font-bold" style={{ fontSize: "16px", color: "var(--hubia-ink-500)" }}>
             Corpo e Silhueta (Forense)
           </h3>
           <div className="mt-4 flex flex-col gap-0">
@@ -190,7 +190,7 @@ export default function CreatorAppearanceTab({
       <div className="grid gap-4 lg:grid-cols-2">
         {/* Checklist forense */}
         <div className="rounded-[30px] p-5" style={{ background: "#FFFFFF" }}>
-          <h3 className="font-bold" style={{ fontSize: "16px", color: "#0E0F10" }}>
+          <h3 className="font-bold" style={{ fontSize: "16px", color: "var(--hubia-ink-500)" }}>
             Checklist Forense — Validar ANTES de aprovar
           </h3>
           <div className="mt-4 grid grid-cols-2 gap-2">
@@ -233,7 +233,7 @@ export default function CreatorAppearanceTab({
 
         {/* Blindagem — proibido */}
         <div className="rounded-[30px] p-5" style={{ background: "#FFFFFF" }}>
-          <h3 className="font-bold" style={{ fontSize: "16px", color: "#0E0F10" }}>
+          <h3 className="font-bold" style={{ fontSize: "16px", color: "var(--hubia-ink-500)" }}>
             Blindagem — Proibido
           </h3>
           <div className="mt-4 flex flex-col gap-2">

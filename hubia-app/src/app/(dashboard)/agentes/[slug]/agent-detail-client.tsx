@@ -71,7 +71,7 @@ export default function AgentDetailClient({
 }) {
   const [activeTab, setActiveTab] = useState<TabId>("chat");
   const Icon = ICON_MAP[(agent.config.icon as string) || ""] || Bot;
-  const color = (agent.config.color as string) || "#D7FF00";
+  const color = (agent.config.color as string) || "var(--hubia-limao-500)";
   const level = (agent.config.level as string) || "specialist";
   const squad = (agent.config.squad as string) || "dev-squad";
 

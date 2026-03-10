@@ -404,8 +404,8 @@ function ProducaoVolumeChart({ periodo }: { periodo: string }) {
             <stop offset="100%" stopColor="#D7FF00" stopOpacity={0} />
           </linearGradient>
           <linearGradient id="gradVolEntregues" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stopColor="#0E0F10" stopOpacity={0.14} />
-            <stop offset="100%" stopColor="#0E0F10" stopOpacity={0} />
+            <stop offset="0%" stopColor="var(--hubia-ink-500)" stopOpacity={0.14} />
+            <stop offset="100%" stopColor="var(--hubia-ink-500)" stopOpacity={0} />
           </linearGradient>
         </defs>
         <CartesianGrid strokeDasharray="0" stroke="rgba(14,15,16,0.04)" horizontal={true} vertical={false} />
@@ -439,7 +439,7 @@ function ProducaoVolumeChart({ periodo }: { periodo: string }) {
           type="monotone"
           dataKey="entregues"
           name="Entregues"
-          stroke="#0E0F10"
+          stroke="var(--hubia-ink-500)"
           strokeWidth={2.5}
           fill="url(#gradVolEntregues)"
           dot={false}
