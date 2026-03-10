@@ -58,7 +58,7 @@ function Toggle({
       onClick={() => onChange(!ativo)}
       className="relative h-6 w-11 rounded-full flex-shrink-0"
       initial={false}
-      animate={{ backgroundColor: ativo ? "#D7FF00" : "#D9D9D4" }}
+      animate={{ backgroundColor: ativo ? "var(--hubia-limao-500)" : "#D9D9D4" }}
       transition={{ duration: 0.2 }}
       whileTap={{ scale: 0.95 }}
     >
@@ -157,10 +157,10 @@ export default function NotificacoesClient({
                   <div
                     className="flex h-9 w-9 shrink-0 items-center justify-center rounded-[12px]"
                     style={{
-                      backgroundColor: isAtivo ? "#0E0F10" : "#D9D9D4",
+                      backgroundColor: isAtivo ? "var(--hubia-ink-500)" : "#D9D9D4",
                     }}
                   >
-                    <Icon size={15} color={isAtivo ? "#D7FF00" : "#FFFFFF"} />
+                    <Icon size={15} color={isAtivo ? "var(--hubia-limao-500)" : "#FFFFFF"} />
                   </div>
                   <div>
                     <p className="text-[14px] font-bold text-ink-500">{notif.label}</p>

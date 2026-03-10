@@ -94,20 +94,20 @@ export default function CalendarioClient({
         <div className="flex items-center gap-2">
           <motion.button onClick={handleAnterior}
             className="flex h-9 w-9 items-center justify-center rounded-[12px] bg-white"
-            whileHover={{ scale: 1.08, backgroundColor: "#EEEFE9" }}
+            whileHover={{ scale: 1.08, backgroundColor: "var(--hubia-bg-base-500)" }}
             whileTap={{ scale: 0.92 }}
             transition={{ duration: 0.15 }}>
-            <ChevronLeft size={16} color="#0E0F10" />
+            <ChevronLeft size={16} color="var(--hubia-ink-500)" />
           </motion.button>
           <span className="min-w-[160px] text-center text-[16px] font-bold text-ink-500">
             {MESES[mes - 1]} {ano}
           </span>
           <motion.button onClick={handleProximo}
             className="flex h-9 w-9 items-center justify-center rounded-[12px] bg-white"
-            whileHover={{ scale: 1.08, backgroundColor: "#EEEFE9" }}
+            whileHover={{ scale: 1.08, backgroundColor: "var(--hubia-bg-base-500)" }}
             whileTap={{ scale: 0.92 }}
             transition={{ duration: 0.15 }}>
-            <ChevronRight size={16} color="#0E0F10" />
+            <ChevronRight size={16} color="var(--hubia-ink-500)" />
           </motion.button>
         </div>
       </div>
@@ -210,7 +210,7 @@ export default function CalendarioClient({
                   whileTap={{ scale: 0.9 }}
                   transition={{ duration: 0.15 }}
                 >
-                  <X size={14} color="#0E0F10" />
+                  <X size={14} color="var(--hubia-ink-500)" />
                 </motion.button>
               </div>
 

@@ -225,7 +225,7 @@ function BriefingOutputSection({
           onClick={onGenerate}
           disabled={isGenerating || !form.creatorId}
           className="mt-5 flex w-full items-center justify-center gap-2 rounded-[18px] py-3 text-[16px] font-bold tracking-[0.3px] text-ink-500 disabled:opacity-50"
-          style={{ background: "#D7FF00" }}
+          style={{ background: "var(--hubia-limao-500)" }}
           whileHover={!isGenerating && form.creatorId ? { scale: 1.02, backgroundColor: "#DFFF33" } : {}}
           whileTap={!isGenerating && form.creatorId ? { scale: 0.97 } : {}}
           transition={{ duration: 0.15, ease: [0.34, 1.56, 0.64, 1] }}
@@ -255,7 +255,7 @@ function BriefingOutputSection({
           >
             <div className="mb-3 flex items-center justify-between gap-3">
               <span
-                style={{ fontSize: "18px", fontWeight: 700, color: "#D7FF00" }}
+                style={{ fontSize: "18px", fontWeight: 700, color: "var(--hubia-limao-500)" }}
               >
                 Output — Prompt Final
               </span>
@@ -540,7 +540,7 @@ function TabPhotoCloner({
           {/* Output do clone */}
           <div>
             <div className="mb-3 flex items-center justify-between">
-              <span style={{ fontSize: "16px", fontWeight: 700, color: "#D7FF00" }}>
+              <span style={{ fontSize: "16px", fontWeight: 700, color: "var(--hubia-limao-500)" }}>
                 Image Prompt — descrição
               </span>
               {clonePrompt && (
@@ -685,7 +685,7 @@ function ModalVerCompleto({
           type="button"
           onClick={onCopy}
           className="flex items-center gap-2 rounded-[18px] px-6 py-3 text-[14px] font-bold text-ink-500"
-          style={{ background: "#D7FF00" }}
+          style={{ background: "var(--hubia-limao-500)" }}
           whileHover={{ scale: 1.03, backgroundColor: "#DFFF33" }}
           whileTap={{ scale: 0.96 }}
           transition={{ duration: 0.15, ease: [0.34, 1.56, 0.64, 1] }}
@@ -754,7 +754,7 @@ export function GeradorClient({ creators }: { creators: CreatorOption[] }) {
         <motion.button
           type="button"
           className="flex items-center gap-2 rounded-[18px] px-4 py-3 text-[14px] font-bold text-ink-500"
-          style={{ background: "#D7FF00" }}
+          style={{ background: "var(--hubia-limao-500)" }}
           initial="rest"
           whileHover="hovered"
           whileTap={{ scale: 0.96 }}

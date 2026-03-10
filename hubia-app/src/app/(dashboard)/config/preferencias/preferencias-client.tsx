@@ -157,8 +157,8 @@ export default function PreferenciasClient({
                 onClick={() => setModo(m.value)}
                 initial={false}
                 animate={{
-                  backgroundColor: isAtivo ? "#0E0F10" : "#EEEFE9",
-                  color: isAtivo ? "#D7FF00" : "#5E5E5F",
+                  backgroundColor: isAtivo ? "var(--hubia-ink-500)" : "var(--hubia-bg-base-500)",
+                  color: isAtivo ? "var(--hubia-limao-500)" : "var(--hubia-ink-400)",
                 }}
                 whileHover={!isAtivo ? { backgroundColor: "rgba(213,210,201,0.5)" } : undefined}
                 whileTap={{ scale: 0.97 }}

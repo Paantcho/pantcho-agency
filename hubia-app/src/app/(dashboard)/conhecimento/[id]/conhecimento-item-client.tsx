@@ -635,7 +635,7 @@ function TabConteudoFonte({ item }: { item: KnowledgeCard }) {
         >
           <p className="text-[10px] font-bold uppercase tracking-widest text-base-700">Fonte de Origem</p>
           <div className="flex items-center gap-2">
-            <Globe size={13} color="#A9AAA5" />
+            <Globe size={13} color="var(--hubia-bg-base-700)" />
             <span className="text-[13px] text-ink-500">{item.origem}</span>
           </div>
         </motion.div>
@@ -785,9 +785,9 @@ function TabAplicacoes({ aplicacoes, item }: {
     { label: "Ações recomendadas",  items: aplicacoes.acoes,    icon: Sparkles,     cor: "#E65100",  bg: "#FFF3E0" },
     { label: "Regras sugeridas",    items: aplicacoes.rules,    icon: ClipboardList, cor: "#283593",  bg: "#E8EAF6" },
     { label: "Memórias geradas",    items: aplicacoes.memorias, icon: Brain,         cor: "#6A1B9A",  bg: "#F3E5F5" },
-    { label: "Projetos impactados", items: aplicacoes.projetos, icon: FolderKanban,  cor: "#5E5E5F",  bg: "#EEEFE9" },
-    { label: "Creators impactados", items: aplicacoes.creators, icon: Users,         cor: "#5E5E5F",  bg: "#EEEFE9" },
-    { label: "Squads impactados",   items: aplicacoes.squads,   icon: Cpu,           cor: "#5E5E5F",  bg: "#EEEFE9" },
+    { label: "Projetos impactados", items: aplicacoes.projetos, icon: FolderKanban,  cor: "var(--hubia-ink-400)",  bg: "var(--hubia-bg-base-500)" },
+    { label: "Creators impactados", items: aplicacoes.creators, icon: Users,         cor: "var(--hubia-ink-400)",  bg: "var(--hubia-bg-base-500)" },
+    { label: "Squads impactados",   items: aplicacoes.squads,   icon: Cpu,           cor: "var(--hubia-ink-400)",  bg: "var(--hubia-bg-base-500)" },
   ].filter((s) => s.items.length > 0);
 
   if (secoes.length === 0) {
@@ -848,7 +848,7 @@ function TabArquivosLinks({ item }: { item: KnowledgeCard }) {
   if (!hasContent) {
     return (
       <div className="rounded-[30px] bg-white p-10 flex flex-col items-center gap-3">
-        <Paperclip size={22} color="#A9AAA5" />
+        <Paperclip size={22} color="var(--hubia-bg-base-700)" />
         <p className="text-[13px] text-base-700">Nenhum arquivo ou link associado.</p>
       </div>
     );
@@ -905,7 +905,7 @@ function TabLog({ log }: { log: { data: string; evento: string; agente?: string 
           transition={{ duration: 0.22, ease: [0, 0, 0.2, 1], delay: i * 0.04 }}
         >
           <div className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-base-500 mt-0.5">
-            <Activity size={9} color="#A9AAA5" />
+            <Activity size={9} color="var(--hubia-bg-base-700)" />
           </div>
           <div className="flex-1">
             <p className="text-[12px] text-ink-500 font-semibold">{entry.evento}</p>

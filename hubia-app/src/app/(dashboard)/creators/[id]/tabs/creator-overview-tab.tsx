@@ -42,7 +42,7 @@ export default function CreatorOverviewTab({
         {/* Tag Ativa/Inativa — canto superior direito */}
         <span
           className="absolute right-5 top-5 rounded-full px-3 py-1 text-[11px] font-bold uppercase tracking-widest"
-          style={{ background: "rgba(255,255,255,0.08)", color: "#D7FF00" }}
+          style={{ background: "rgba(255,255,255,0.08)", color: "var(--hubia-limao-500)" }}
         >
           {creator.isActive ? "Ativa" : "Inativa"}
         </span>
@@ -63,7 +63,7 @@ export default function CreatorOverviewTab({
         <div className="min-w-0 flex-1 pr-24">
           <h2
             className="font-bold leading-tight"
-            style={{ fontSize: "28px", color: "#D7FF00" }}
+            style={{ fontSize: "28px", color: "var(--hubia-limao-500)" }}
           >
             {creator.name}
           </h2>
