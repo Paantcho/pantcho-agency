@@ -339,7 +339,7 @@ export default function ArquiteturaClient() {
                 <span
                   key={name}
                   className="rounded-full px-3 py-1 text-[11px] font-semibold"
-                  style={{ background: "#EEEFE9", color: "var(--hubia-bg-base-700)" }}
+                  style={{ background: "var(--hubia-bg-base-500)", color: "var(--hubia-bg-base-700)" }}
                 >
                   {name}
                 </span>
@@ -347,7 +347,7 @@ export default function ArquiteturaClient() {
             )}
             <span
               className="rounded-full px-3 py-1 text-[11px] font-semibold"
-              style={{ background: "#D7FF0020", color: "#0E0F10" }}
+              style={{ background: "color-mix(in srgb, var(--hubia-limao-500) 12%, transparent)", color: "var(--hubia-ink-500)" }}
             >
               + Criados sob demanda
             </span>
@@ -391,7 +391,7 @@ export default function ArquiteturaClient() {
                     className="font-bold"
                     style={{
                       fontSize: "11px",
-                      color: "#0E0F10",
+                      color: "var(--hubia-ink-500)",
                       fontFamily: "monospace",
                     }}
                   >

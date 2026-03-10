@@ -129,7 +129,7 @@ function MemberActions({
       <AnimatePresence>
         {open && (
           <motion.div
-            className="absolute right-0 top-full z-20 mt-1 min-w-[190px] overflow-hidden rounded-[12px] border border-[#EEEFE9] bg-white py-1"
+            className="absolute right-0 top-full z-20 mt-1 min-w-[190px] overflow-hidden rounded-[12px] border border-base-500 bg-white py-1"
             initial={{ opacity: 0, y: -6, scale: 0.96 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -6, scale: 0.96 }}
@@ -247,7 +247,7 @@ export default function TeamClient({
 
       {/* Lista de membros ativos */}
       {members.length === 0 ? (
-        <div className="rounded-[16px] border-2 border-dashed border-[#D5D2C9] p-10 text-center">
+        <div className="rounded-[16px] border-2 border-dashed border-sand-600 p-10 text-center">
           <p className="text-[14px] text-base-700">
             {organizationId
               ? "Nenhum membro ainda. Convide alguém para começar."
@@ -328,7 +328,7 @@ export default function TeamClient({
             {pendingInvites.map((inv, i) => (
               <motion.div
                 key={inv.id}
-                className="flex items-center gap-4 rounded-[14px] border border-dashed border-[#D5D2C9] bg-white px-5 py-4"
+                className="flex items-center gap-4 rounded-[14px] border border-dashed border-sand-600 bg-white px-5 py-4"
                 initial={{ opacity: 0, y: 8 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{

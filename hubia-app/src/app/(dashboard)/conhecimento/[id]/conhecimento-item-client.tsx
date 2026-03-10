@@ -236,7 +236,7 @@ export default function ConhecimentoItemClient({ item }: { item: KnowledgeCard }
 
         {/* Título — hierarquia principal */}
         <div>
-          <h1 className="text-[22px] font-bold text-[#0E0F10] leading-snug">{item.title}</h1>
+          <h1 className="text-[22px] font-bold text-ink-500 leading-snug">{item.title}</h1>
           {/* Meta linha — discreta, abaixo do título */}
           <div className="flex items-center gap-3 mt-2 flex-wrap">
             <span className="flex items-center gap-1 text-[11px] text-[#A9AAA5]">
@@ -391,7 +391,7 @@ function TabVisaoGeral({
           transition={{ duration: 0.3, ease: [0, 0, 0.2, 1] }}
         >
           <p className="text-[10px] font-bold uppercase tracking-widest text-[#A9AAA5] mb-3">Resumo</p>
-          <p className="text-[15px] text-[#0E0F10] leading-relaxed font-semibold">
+          <p className="text-[15px] text-ink-500 leading-relaxed font-semibold">
             {item.summary ?? "Sem resumo disponível."}
           </p>
         </motion.div>
@@ -505,7 +505,7 @@ function TabVisaoGeral({
             ].map(({ label, value }) => (
               <div key={label} className="flex items-baseline justify-between gap-2">
                 <span className="text-[10px] text-[#A9AAA5] shrink-0">{label}</span>
-                <span className="text-[12px] font-semibold text-[#0E0F10] text-right truncate">{value}</span>
+                <span className="text-[12px] font-semibold text-ink-500 text-right truncate">{value}</span>
               </div>
             ))}
           </div>
@@ -521,13 +521,13 @@ function TabVisaoGeral({
           {item.projetoVinculado ? (
             <div className="flex items-center gap-2 rounded-[12px] bg-[#EEEFE9] px-3 py-2">
               <FolderKanban size={12} color="#5E5E5F" />
-              <span className="text-[12px] font-semibold text-[#0E0F10]">{item.projetoVinculado}</span>
+              <span className="text-[12px] font-semibold text-ink-500">{item.projetoVinculado}</span>
             </div>
           ) : null}
           {item.creatorVinculado ? (
             <div className="flex items-center gap-2 rounded-[12px] bg-[#EEEFE9] px-3 py-2">
               <Users size={12} color="#5E5E5F" />
-              <span className="text-[12px] font-semibold text-[#0E0F10]">{item.creatorVinculado}</span>
+              <span className="text-[12px] font-semibold text-ink-500">{item.creatorVinculado}</span>
             </div>
           ) : null}
           {!item.projetoVinculado && !item.creatorVinculado && (
@@ -568,7 +568,7 @@ function TabVisaoGeral({
               className="flex items-center gap-2 rounded-[12px] bg-[#EEEFE9] px-3 py-2 hover:bg-[#D9D9D4] transition-colors duration-150"
             >
               <ExternalLink size={12} color="#5E5E5F" />
-              <span className="text-[11px] font-semibold text-[#0E0F10] truncate">{item.sourceUrl}</span>
+              <span className="text-[11px] font-semibold text-ink-500 truncate">{item.sourceUrl}</span>
             </a>
           </motion.div>
         )}
@@ -590,7 +590,7 @@ function TabConteudoFonte({ item }: { item: KnowledgeCard }) {
         >
           <p className="text-[10px] font-bold uppercase tracking-widest text-[#A9AAA5]">Link Original</p>
           <a href={item.sourceUrl} target="_blank" rel="noreferrer"
-            className="flex items-center gap-2 text-[14px] text-[#0E0F10] font-semibold hover:underline break-all">
+            className="flex items-center gap-2 text-[14px] text-ink-500 font-semibold hover:underline break-all">
             <ExternalLink size={14} />
             {item.sourceUrl}
           </a>
@@ -616,7 +616,7 @@ function TabConteudoFonte({ item }: { item: KnowledgeCard }) {
           <div className="flex items-center gap-3 rounded-[12px] bg-[#EEEFE9] p-3">
             <File size={18} color="#5E5E5F" />
             <div className="flex-1">
-              <p className="text-[13px] font-semibold text-[#0E0F10]">{item.fileUrl.split("/").pop()}</p>
+              <p className="text-[13px] font-semibold text-ink-500">{item.fileUrl.split("/").pop()}</p>
               <p className="text-[11px] text-[#A9AAA5]">Arquivo anexado</p>
             </div>
             <motion.a href={item.fileUrl} target="_blank" rel="noreferrer"
@@ -636,7 +636,7 @@ function TabConteudoFonte({ item }: { item: KnowledgeCard }) {
           <p className="text-[10px] font-bold uppercase tracking-widest text-[#A9AAA5]">Fonte de Origem</p>
           <div className="flex items-center gap-2">
             <Globe size={13} color="#A9AAA5" />
-            <span className="text-[13px] text-[#0E0F10]">{item.origem}</span>
+            <span className="text-[13px] text-ink-500">{item.origem}</span>
           </div>
         </motion.div>
       )}
@@ -658,7 +658,7 @@ function TabAprendizados({ aprendizados, item }: { aprendizados: string[]; item:
         </p>
         {item.itemStatus === "bruto" && (
           <motion.button
-            className="flex items-center gap-2 rounded-[14px] bg-[#D7FF00] px-4 py-2.5 text-[13px] font-semibold text-[#0E0F10]"
+            className="flex items-center gap-2 rounded-[14px] bg-[#D7FF00] px-4 py-2.5 text-[13px] font-semibold text-ink-500"
             whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}>
             <Sparkles size={13} /> Processar com IA
           </motion.button>
@@ -688,7 +688,7 @@ function TabAprendizados({ aprendizados, item }: { aprendizados: string[]; item:
           <div className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[#F3E5F5] mt-0.5">
             <span className="text-[9px] font-bold" style={{ color: "#6A1B9A" }}>{i + 1}</span>
           </div>
-          <p className="text-[13px] text-[#0E0F10] leading-relaxed">{a}</p>
+          <p className="text-[13px] text-ink-500 leading-relaxed">{a}</p>
         </motion.div>
       ))}
     </div>
@@ -762,7 +762,7 @@ function TabLicoes({ licoes, item }: { licoes: { titulo: string; tipo: "fazer" |
                   >
                     <Icon size={10} style={{ color: conf.text }} />
                   </div>
-                  <p className="text-[13px] text-[#0E0F10] leading-relaxed">{l.titulo}</p>
+                  <p className="text-[13px] text-ink-500 leading-relaxed">{l.titulo}</p>
                 </div>
               ))}
             </motion.div>
@@ -830,7 +830,7 @@ function TabAplicacoes({ aplicacoes, item }: {
               </div>
               <div className="flex flex-col gap-1.5">
                 {s.items.map((it, j) => (
-                  <span key={j} className="text-[12px] text-[#0E0F10] leading-snug font-semibold">{it}</span>
+                  <span key={j} className="text-[12px] text-ink-500 leading-snug font-semibold">{it}</span>
                 ))}
               </div>
             </motion.div>
@@ -863,7 +863,7 @@ function TabArquivosLinks({ item }: { item: KnowledgeCard }) {
           <a href={item.sourceUrl} target="_blank" rel="noreferrer"
             className="flex items-center gap-2 rounded-[12px] bg-[#EEEFE9] p-3 hover:bg-[#D9D9D4] transition-colors duration-150">
             <ExternalLink size={14} color="#5E5E5F" />
-            <span className="text-[13px] font-semibold text-[#0E0F10] flex-1 truncate">{item.sourceUrl}</span>
+            <span className="text-[13px] font-semibold text-ink-500 flex-1 truncate">{item.sourceUrl}</span>
           </a>
         </motion.div>
       )}
@@ -875,7 +875,7 @@ function TabArquivosLinks({ item }: { item: KnowledgeCard }) {
           <div className="flex items-center gap-3 rounded-[12px] bg-[#EEEFE9] p-3">
             <File size={18} color="#5E5E5F" />
             <div className="flex-1">
-              <p className="text-[13px] font-semibold text-[#0E0F10]">{item.fileUrl.split("/").pop()}</p>
+              <p className="text-[13px] font-semibold text-ink-500">{item.fileUrl.split("/").pop()}</p>
               <p className="text-[11px] text-[#A9AAA5]">Arquivo anexado</p>
             </div>
             <motion.a href={item.fileUrl} target="_blank" rel="noreferrer"
@@ -908,7 +908,7 @@ function TabLog({ log }: { log: { data: string; evento: string; agente?: string 
             <Activity size={9} color="#A9AAA5" />
           </div>
           <div className="flex-1">
-            <p className="text-[12px] text-[#0E0F10] font-semibold">{entry.evento}</p>
+            <p className="text-[12px] text-ink-500 font-semibold">{entry.evento}</p>
             <div className="flex items-center gap-1.5 mt-0.5">
               <span className="text-[10px] text-[#A9AAA5]">
                 {new Date(entry.data).toLocaleDateString("pt-BR", { day: "2-digit", month: "short", year: "numeric" })}

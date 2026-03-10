@@ -99,7 +99,7 @@ export default function InviteModal({
                     placeholder="nome@empresa.com"
                     required
                     disabled={loading}
-                    className="h-11 w-full rounded-[12px] border border-transparent bg-base-500 pl-10 pr-4 text-[14px] font-semibold text-ink-500 outline-none placeholder:text-base-700 focus:border-[#0E0F10] focus:ring-2 focus:ring-ink-500/10 transition-[border-color] duration-150 disabled:opacity-50"
+                    className="h-11 w-full rounded-[12px] border border-transparent bg-base-500 pl-10 pr-4 text-[14px] font-semibold text-ink-500 outline-none placeholder:text-base-700 focus:border-ink-500 focus:ring-2 focus:ring-ink-500/10 transition-[border-color] duration-150 disabled:opacity-50"
                   />
                 </div>
               </div>

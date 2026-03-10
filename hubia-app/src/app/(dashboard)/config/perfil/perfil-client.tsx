@@ -38,15 +38,15 @@ export default function PerfilClient({
       {/* Avatar */}
       <div className="rounded-[30px] bg-white p-6">
         <div className="mb-5 flex items-center gap-2.5">
-          <div className="flex h-8 w-8 items-center justify-center rounded-[12px] bg-[#0E0F10]">
-            <User size={15} color="#D7FF00" />
+          <div className="flex h-8 w-8 items-center justify-center rounded-[12px] bg-ink-500">
+            <User size={15} color="var(--hubia-limao-500)" />
           </div>
           <h2 className="text-[15px] font-bold text-ink-500">Perfil</h2>
         </div>
 
         <div className="flex items-center gap-6">
           <div className="relative">
-            <div className="flex h-16 w-16 items-center justify-center rounded-full bg-[#0E0F10] text-[18px] font-bold text-[#D7FF00]">
+            <div className="flex h-16 w-16 items-center justify-center rounded-full bg-ink-500 text-[18px] font-bold text-[#D7FF00]">
               {initials || "HU"}
             </div>
             <motion.button
@@ -56,7 +56,7 @@ export default function PerfilClient({
               transition={{ duration: 0.15, ease: [0.34, 1.56, 0.64, 1] }}
               title="Alterar foto"
             >
-              <Camera size={13} color="#0E0F10" />
+              <Camera size={13} color="var(--hubia-ink-500)" />
             </motion.button>
           </div>
 

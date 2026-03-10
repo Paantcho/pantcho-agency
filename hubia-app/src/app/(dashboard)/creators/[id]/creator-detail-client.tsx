@@ -115,8 +115,8 @@ export default function CreatorDetailClient({
 
       {/* Cabeçalho: breadcrumb + botões por aba */}
       <div className="flex flex-wrap items-center justify-between gap-3">
-        <nav className="flex items-center gap-1.5" style={{ fontSize: "14px", color: "#A9AAA5" }}>
-          <AnimatedLink href="/creators" className="transition-colors hover:text-[#0E0F10]" style={{ color: "#A9AAA5" }}>
+        <nav className="flex items-center gap-1.5" style={{ fontSize: "14px", color: "var(--hubia-bg-base-700)" }}>
+          <AnimatedLink href="/creators" className="transition-colors hover:text-ink-500" style={{ color: "var(--hubia-bg-base-700)" }}>
             Creators
           </AnimatedLink>
           <span aria-hidden style={{ color: "#D9D9D4" }}>›</span>

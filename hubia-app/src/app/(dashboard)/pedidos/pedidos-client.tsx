@@ -83,7 +83,7 @@ const URGENCIA_CONFIG: Record<
   string,
   { label: string; color: string; bg: string }
 > = {
-  baixa: { label: "Baixa", color: "var(--hubia-bg-base-700)", bg: "#EEEFE9" },
+  baixa: { label: "Baixa", color: "var(--hubia-bg-base-700)", bg: "var(--hubia-bg-base-500)" },
   media: { label: "Média", color: "#3B82F6", bg: "#DBEAFE" },
   alta: { label: "Alta", color: "#F59E0B", bg: "#FEF3C7" },
   critica: { label: "Crítica", color: "#EF4444", bg: "#FEE2E2" },
