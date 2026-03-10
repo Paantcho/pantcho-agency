@@ -174,7 +174,7 @@ function AgentCard({ agent }: { agent: AgentNode }) {
             className="rounded-full px-1.5 py-0.5 text-[8px] font-bold uppercase tracking-wider"
             style={{
               background:
-                agent.level === "lead" ? "#0E0F10" : "#EEEFE9",
+                agent.level === "lead" ? "var(--hubia-ink-500)" : "var(--hubia-bg-base-500)",
               color:
                 agent.level === "lead" ? "#D7FF00" : "#A9AAA5",
             }}
@@ -223,7 +223,7 @@ export default function ArquiteturaClient() {
           <div>
             <p
               className="font-bold"
-              style={{ fontSize: "14px", color: "#0E0F10" }}
+              style={{ fontSize: "14px", color: "var(--hubia-ink-500)" }}
             >
               Entrada
             </p>
@@ -254,7 +254,7 @@ export default function ArquiteturaClient() {
               <div className="flex items-center gap-2">
                 <h2
                   className="font-bold"
-                  style={{ fontSize: "18px", color: "#0E0F10" }}
+                  style={{ fontSize: "18px", color: "var(--hubia-ink-500)" }}
                 >
                   {ORCHESTRATOR.name}
                 </h2>
@@ -365,7 +365,7 @@ export default function ArquiteturaClient() {
             <Database size={20} style={{ color: "#3B82F6" }} />
             <h3
               className="font-bold"
-              style={{ fontSize: "15px", color: "#0E0F10" }}
+              style={{ fontSize: "15px", color: "var(--hubia-ink-500)" }}
             >
               Memória Compartilhada
             </h3>

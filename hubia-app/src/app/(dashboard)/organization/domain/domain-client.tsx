@@ -14,7 +14,7 @@ import {
 } from "lucide-react";
 
 const inputClass =
-  "h-11 w-full rounded-[12px] border border-transparent bg-[#EEEFE9] px-3.5 text-[15px] text-[#0E0F10] outline-none placeholder:text-[#A9AAA5] transition-[border-color] duration-150 hover:border-[#D4D5D6] focus:border-[#0E0F10] focus:ring-2 focus:ring-ink-500/10 font-mono";
+  "h-11 w-full rounded-[12px] border border-transparent bg-base-500 px-3.5 text-[15px] text-ink-500 outline-none placeholder:text-base-700 transition-[border-color] duration-150 hover:border-base-600 focus:border-ink-500 focus:ring-2 focus:ring-ink-500/10 font-mono";
 
 const dnsRecords = [
   { tipo: "CNAME", host: "www", valor: "hubia-app.vercel.app", ttl: "3600" },
@@ -50,9 +50,9 @@ export default function DomainClient({
   if (!planoEnterprise) {
     return (
       <div className="flex flex-col gap-6">
-        <div className="rounded-[30px] bg-[#0E0F10] p-8 flex flex-col items-center justify-center gap-4 text-center">
-          <div className="flex h-14 w-14 items-center justify-center rounded-full bg-[#D7FF00]">
-            <Lock size={22} color="#0E0F10" />
+        <div className="rounded-[30px] bg-ink-500 p-8 flex flex-col items-center justify-center gap-4 text-center">
+          <div className="flex h-14 w-14 items-center justify-center rounded-full bg-limao-500">
+            <Lock size={22} color="var(--hubia-ink-500)" />
           </div>
           <div>
             <p className="text-[18px] font-bold text-white">Domínio customizado</p>
@@ -61,7 +61,7 @@ export default function DomainClient({
             </p>
           </div>
           <motion.button
-            className="flex items-center gap-2 rounded-[14px] bg-[#D7FF00] px-6 py-3 text-[14px] font-bold text-[#0E0F10]"
+            className="flex items-center gap-2 rounded-[14px] bg-limao-500 px-6 py-3 text-[14px] font-bold text-ink-500"
             whileHover={{ scale: 1.03, backgroundColor: "#DFFF33" }}
             whileTap={{ scale: 0.96 }}
             transition={{ duration: 0.15 }}
@@ -73,10 +73,10 @@ export default function DomainClient({
 
         <div className="rounded-[30px] bg-white p-6">
           <div className="mb-3 flex items-center gap-2">
-            <Globe size={15} className="text-[#A9AAA5]" />
-            <p className="text-[14px] font-semibold text-[#A9AAA5]">Domínio padrão</p>
+            <Globe size={15} className="text-base-700" />
+            <p className="text-[14px] font-semibold text-base-700">Domínio padrão</p>
           </div>
-          <p className="rounded-[12px] bg-[#EEEFE9] px-4 py-3 font-mono text-[14px] text-[#5E5E5F]">
+          <p className="rounded-[12px] bg-base-500 px-4 py-3 font-mono text-[14px] text-ink-400">
             hubia-app.vercel.app
           </p>
         </div>
@@ -89,15 +89,15 @@ export default function DomainClient({
       {/* Configurar domínio */}
       <div className="rounded-[30px] bg-white p-6">
         <div className="mb-5 flex items-center gap-2.5">
-          <div className="flex h-8 w-8 items-center justify-center rounded-[12px] bg-[#0E0F10]">
-            <Globe size={15} color="#D7FF00" />
+          <div className="flex h-8 w-8 items-center justify-center rounded-[12px] bg-ink-500">
+            <Globe size={15} color="var(--hubia-limao-500)" />
           </div>
-          <h2 className="text-[15px] font-bold text-[#0E0F10]">Domínio customizado</h2>
+          <h2 className="text-[15px] font-bold text-ink-500">Domínio customizado</h2>
         </div>
 
         <div className="flex flex-col gap-4">
           <div className="flex flex-col gap-1.5">
-            <label className="text-[13px] font-semibold text-[#5E5E5F]">
+            <label className="text-[13px] font-semibold text-ink-400">
               Seu domínio
             </label>
             <input
@@ -107,7 +107,7 @@ export default function DomainClient({
               placeholder="app.suaempresa.com"
               className={inputClass}
             />
-            <p className="text-[11px] text-[#A9AAA5]">
+            <p className="text-[11px] text-base-700">
               Use um subdomínio (ex: app.suaempresa.com) ou domínio raiz (suaempresa.com)
             </p>
           </div>
@@ -143,7 +143,7 @@ export default function DomainClient({
               type="button"
               onClick={handleSave}
               disabled={loading || !dominio}
-              className="flex items-center gap-2 rounded-[18px] bg-[#D7FF00] px-6 py-3 text-[15px] font-semibold text-[#0E0F10] disabled:opacity-50"
+              className="flex items-center gap-2 rounded-[18px] bg-limao-500 px-6 py-3 text-[15px] font-semibold text-ink-500 disabled:opacity-50"
               whileHover={{ scale: 1.03, backgroundColor: "#DFFF33" }}
               whileTap={{ scale: 0.96 }}
               transition={{ duration: 0.15, ease: [0.34, 1.56, 0.64, 1] }}
@@ -170,17 +170,17 @@ export default function DomainClient({
 
       {/* Registros DNS */}
       <div className="rounded-[30px] bg-white p-6">
-        <h2 className="mb-2 text-[15px] font-bold text-[#0E0F10]">
+        <h2 className="mb-2 text-[15px] font-bold text-ink-500">
           Configuração DNS
         </h2>
-        <p className="mb-4 text-[12px] text-[#A9AAA5]">
+        <p className="mb-4 text-[12px] text-base-700">
           Adicione os seguintes registros no painel DNS do seu provedor de domínio.
         </p>
         <div className="flex flex-col gap-2">
           {/* Header */}
           <div className="grid grid-cols-[80px_80px_1fr_80px_44px] gap-3 px-3 pb-1">
             {["Tipo", "Host", "Valor", "TTL", ""].map((h) => (
-              <span key={h} className="text-[11px] font-bold uppercase tracking-wide text-[#A9AAA5]">
+              <span key={h} className="text-[11px] font-bold uppercase tracking-wide text-base-700">
                 {h}
               </span>
             ))}
@@ -191,26 +191,26 @@ export default function DomainClient({
               initial={{ opacity: 0, y: 6 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: i * 0.08 }}
-              className="grid grid-cols-[80px_80px_1fr_80px_44px] items-center gap-3 rounded-[12px] bg-[#EEEFE9] px-3 py-3"
+              className="grid grid-cols-[80px_80px_1fr_80px_44px] items-center gap-3 rounded-[12px] bg-base-500 px-3 py-3"
             >
-              <span className="rounded-[6px] bg-[#0E0F10] px-2 py-0.5 text-center text-[11px] font-bold text-white w-fit">
+              <span className="rounded-[6px] bg-ink-500 px-2 py-0.5 text-center text-[11px] font-bold text-white w-fit">
                 {rec.tipo}
               </span>
-              <span className="font-mono text-[13px] text-[#5E5E5F]">{rec.host}</span>
-              <span className="truncate font-mono text-[13px] text-[#0E0F10]">{rec.valor}</span>
-              <span className="font-mono text-[12px] text-[#A9AAA5]">{rec.ttl}</span>
+              <span className="font-mono text-[13px] text-ink-400">{rec.host}</span>
+              <span className="truncate font-mono text-[13px] text-ink-500">{rec.valor}</span>
+              <span className="font-mono text-[12px] text-base-700">{rec.ttl}</span>
               <motion.button
                 type="button"
                 onClick={() => handleCopy(rec.valor)}
-                className="flex h-8 w-8 items-center justify-center rounded-[8px] bg-[#0E0F10]"
+                className="flex h-8 w-8 items-center justify-center rounded-[8px] bg-ink-500"
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.90 }}
                 title="Copiar valor"
               >
                 {copied === rec.valor ? (
-                  <Check size={13} color="#D7FF00" />
+                  <Check size={13} color="var(--hubia-limao-500)" />
                 ) : (
-                  <Copy size={13} color="#D7FF00" />
+                  <Copy size={13} color="var(--hubia-limao-500)" />
                 )}
               </motion.button>
             </motion.div>

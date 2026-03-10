@@ -221,14 +221,14 @@ export default function CreatorsListClient({
           whileTap={{ scale: 0.98 }}
         >
           <div
-            className="flex h-12 w-12 items-center justify-center rounded-full transition-colors duration-200 group-hover:bg-[#0E0F10]/10"
-            style={{ background: "#EEEFE9" }}
+            className="flex h-12 w-12 items-center justify-center rounded-full transition-colors duration-200 group-hover:bg-ink-500/10"
+            style={{ background: "var(--hubia-bg-base-500)" }}
           >
-            <Plus size={24} style={{ color: "#A9AAA5" }} />
+            <Plus size={24} style={{ color: "var(--hubia-bg-base-700)" }} />
           </div>
           <span
             className="font-bold uppercase tracking-widest"
-            style={{ fontSize: "11px", color: "#A9AAA5" }}
+            style={{ fontSize: "11px", color: "var(--hubia-bg-base-700)" }}
           >
             Nova creator
           </span>
@@ -245,11 +245,11 @@ export default function CreatorsListClient({
             className="flex h-14 w-14 items-center justify-center rounded-full"
             style={{ background: "#EEEFE9" }}
           >
-            <Users size={28} style={{ color: "#A9AAA5" }} />
+            <Users size={28} style={{ color: "var(--hubia-bg-base-700)" }} />
           </div>
           <p
             className="font-semibold"
-            style={{ fontSize: "15px", color: "#A9AAA5" }}
+            style={{ fontSize: "15px", color: "var(--hubia-bg-base-700)" }}
           >
             Nenhum creator cadastrado.
           </p>
@@ -280,7 +280,7 @@ export default function CreatorsListClient({
         >
           <p
             className="font-semibold"
-            style={{ fontSize: "15px", color: "#A9AAA5" }}
+            style={{ fontSize: "15px", color: "var(--hubia-bg-base-700)" }}
           >
             Nenhum creator com esse filtro.
           </p>
