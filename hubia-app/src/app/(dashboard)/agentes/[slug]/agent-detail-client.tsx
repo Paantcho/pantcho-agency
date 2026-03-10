@@ -153,7 +153,7 @@ export default function AgentDetailClient({
               style={{
                 background: isActive ? "#FFFFFF" : "transparent",
                 color: isActive ? "var(--hubia-ink-500)" : "var(--hubia-bg-base-700)",
-                borderBottom: isActive ? "2px solid #0E0F10" : "2px solid transparent",
+                borderBottom: isActive ? "2px solid var(--hubia-ink-500)" : "2px solid transparent",
               }}
             >
               <TabIcon size={16} />

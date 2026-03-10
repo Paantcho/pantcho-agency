@@ -145,8 +145,8 @@ export default function CreatorLooksTab({
             onClick={() => setLookFilter(f)}
             style={
               lookFilter === f
-                ? { background: "#D7FF00", color: "#0E0F10", borderColor: "#D7FF00" }
-                : { background: "#FFFFFF", color: "#0E0F10", borderColor: "#D9D9D4" }
+                ? { background: "var(--hubia-limao-500)", color: "var(--hubia-ink-500)", borderColor: "var(--hubia-limao-500)" }
+                : { background: "#FFFFFF", color: "var(--hubia-ink-500)", borderColor: "var(--hubia-sand-600)" }
             }
             className="motion-soft rounded-[18px] border px-4 py-2 text-[13px] font-semibold transition-colors duration-150"
           >
@@ -162,7 +162,7 @@ export default function CreatorLooksTab({
             type="button"
             onClick={openAddModal}
             className="mt-4 rounded-[18px] px-4 py-2 text-[13px] font-semibold text-ink-500"
-            style={{ background: "#D7FF00" }}
+            style={{ background: "var(--hubia-limao-500)" }}
           >
             Adicionar look
           </button>
@@ -185,7 +185,7 @@ export default function CreatorLooksTab({
                 >
                   <Star
                     size={18}
-                    className={favoriteIds.has(look.id) ? "fill-[#D7FF00] text-[#D7FF00]" : "fill-transparent"}
+                    className={favoriteIds.has(look.id) ? "fill-limao-500 text-limao-500" : "fill-transparent"}
                   />
                 </button>
 

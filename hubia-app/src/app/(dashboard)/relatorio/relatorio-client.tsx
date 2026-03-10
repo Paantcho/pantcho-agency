@@ -84,7 +84,7 @@ const AGENTES_HISTORICO = [
 const SPARKLINE_HERO = [8, 14, 11, 18, 22, 19, 26, 30, 27, 35, 38, 32, 41, 44, 38, 47, 52, 56, 61, 58, 67, 72, 68, 77, 82, 79, 88, 95];
 
 const DADOS_STATUS = [
-  { status: "entregue", label: "Entregue", value: 47, cor: "#D7FF00", insight: "Alta tendência", critico: false },
+  { status: "entregue", label: "Entregue", value: 47, cor: "var(--hubia-limao-500)", insight: "Alta tendência", critico: false },
   { status: "em_andamento", label: "Em andamento", value: 23, cor: "#2A2B2C", insight: "Normal", critico: false },
   { status: "revisao", label: "Em revisão", value: 12, cor: "#FB8C00", insight: "Acima da média", critico: true },
   { status: "aguardando", label: "Aguardando", value: 9, cor: "#8A8B8C", insight: "Dentro do esperado", critico: false },
@@ -137,7 +137,7 @@ const LOG_POOL = [
 
 const ACTIVITIES_POOL: Array<{ Icon: LucideIcon; text: string; color: string; tipo: string }> = [
   { Icon: CheckCircle2, text: "Pedido #047 entregue com sucesso", color: "#43A047", tipo: "Entrega" },
-  { Icon: Zap, text: "Planner iniciou briefing #048", color: "#D7FF00", tipo: "Briefing" },
+  { Icon: Zap, text: "Planner iniciou briefing #048", color: "var(--hubia-limao-500)", tipo: "Briefing" },
   { Icon: Palette, text: "Dir. de Arte solicitou revisão", color: "#FB8C00", tipo: "Revisão" },
   { Icon: Bot, text: "Agente QA detectou inconsistência", color: "#5E5E5F", tipo: "QA" },
   { Icon: FileVideo, text: "Novo pedido criado: Campanha Q2", color: "var(--hubia-ink-500)", tipo: "Pedido" },
@@ -159,7 +159,7 @@ const STATUS_MAP: Record<string, { cor: string; label: string }> = {
   em_andamento: { cor: "#2A74DC", label: "Em andamento" },
   revisao: { cor: "#FB8C00", label: "Revisão" },
   entregue: { cor: "#43A047", label: "Entregue" },
-  aprovado: { cor: "#D7FF00", label: "Aprovado" },
+  aprovado: { cor: "var(--hubia-limao-500)", label: "Aprovado" },
 };
 
 const KPIS_HERO: KpiHero[] = [
@@ -234,7 +234,7 @@ function AnimatedCount({ target, delay = 0, suffix = "" }: {
   return <>{display.toLocaleString("pt-BR")}{suffix}</>;
 }
 
-function LivePulseDot({ color = "#D7FF00", sizePx = 9 }: { color?: string; sizePx?: number }) {
+function LivePulseDot({ color = "var(--hubia-limao-500)", sizePx = 9 }: { color?: string; sizePx?: number }) {
   return (
     <span className="relative flex flex-shrink-0" style={{ width: sizePx, height: sizePx }}>
       <motion.span
@@ -398,10 +398,10 @@ function ProducaoVolumeChart({ periodo }: { periodo: string }) {
       <AreaChart data={dados} margin={{ top: 16, right: 8, left: 0, bottom: 4 }}>
         <defs>
           <linearGradient id="gradVolPedidos" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stopColor="#D7FF00" stopOpacity={0.6} />
-            <stop offset="30%" stopColor="#D7FF00" stopOpacity={0.28} />
-            <stop offset="70%" stopColor="#D7FF00" stopOpacity={0.06} />
-            <stop offset="100%" stopColor="#D7FF00" stopOpacity={0} />
+            <stop offset="0%" stopColor="var(--hubia-limao-500)" stopOpacity={0.6} />
+            <stop offset="30%" stopColor="var(--hubia-limao-500)" stopOpacity={0.28} />
+            <stop offset="70%" stopColor="var(--hubia-limao-500)" stopOpacity={0.06} />
+            <stop offset="100%" stopColor="var(--hubia-limao-500)" stopOpacity={0} />
           </linearGradient>
           <linearGradient id="gradVolEntregues" x1="0" y1="0" x2="0" y2="1">
             <stop offset="0%" stopColor="var(--hubia-ink-500)" stopOpacity={0.14} />
@@ -479,8 +479,8 @@ function ProducaoEficienciaChart() {
       <LineChart data={SERIE_EFICIENCIA_BASE} margin={{ top: 16, right: 8, left: 0, bottom: 4 }}>
         <defs>
           <linearGradient id="gradEfic" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stopColor="#D7FF00" stopOpacity={0.3} />
-            <stop offset="100%" stopColor="#D7FF00" stopOpacity={0} />
+            <stop offset="0%" stopColor="var(--hubia-limao-500)" stopOpacity={0.3} />
+            <stop offset="100%" stopColor="var(--hubia-limao-500)" stopOpacity={0} />
           </linearGradient>
         </defs>
         <CartesianGrid strokeDasharray="0" stroke="rgba(14,15,16,0.04)" horizontal={true} vertical={false} />
