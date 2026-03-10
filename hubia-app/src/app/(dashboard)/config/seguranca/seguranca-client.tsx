@@ -82,7 +82,7 @@ export default function SegurancaClient({
 
       {/* Checklist de segurança */}
       <div className="rounded-[30px] bg-white p-6">
-        <h2 className="text-[15px] font-bold text-[#0E0F10] mb-4 flex items-center gap-2">
+        <h2 className="text-[15px] font-bold text-ink-500 mb-4 flex items-center gap-2">
           <Lock size={14} />
           Checklist de segurança
         </h2>
@@ -102,7 +102,7 @@ export default function SegurancaClient({
                   <AlertCircle size={16} color="#FB8C00" className="mt-0.5 flex-shrink-0" />
                 )}
                 <div>
-                  <p className="text-[13px] font-semibold text-[#0E0F10]">{item.label}</p>
+                  <p className="text-[13px] font-semibold text-ink-500">{item.label}</p>
                   <p className="text-[11px] text-[#A9AAA5] mt-0.5">{item.desc}</p>
                 </div>
               </div>
@@ -123,7 +123,7 @@ export default function SegurancaClient({
       {/* Provedores de IA */}
       <div className="rounded-[30px] bg-white p-6">
         <div className="flex items-center justify-between mb-4">
-          <h2 className="text-[15px] font-bold text-[#0E0F10] flex items-center gap-2">
+          <h2 className="text-[15px] font-bold text-ink-500 flex items-center gap-2">
             <Key size={14} />
             API Keys ativas
           </h2>
@@ -144,7 +144,7 @@ export default function SegurancaClient({
             <p className="text-[13px] text-[#A9AAA5]">Nenhum provedor de IA configurado.</p>
             <motion.button
               onClick={() => router.push("/organization/provedores")}
-              className="mt-3 text-[12px] font-semibold text-[#0E0F10] underline"
+              className="mt-3 text-[12px] font-semibold text-ink-500 underline"
               whileHover={{ opacity: 0.7 }}
             >
               Configurar agora
@@ -164,12 +164,12 @@ export default function SegurancaClient({
                   <Key size={13} color="#D7FF00" />
                 </div>
                 <div className="flex-1">
-                  <p className="text-[13px] font-semibold text-[#0E0F10]">{p.name}</p>
+                  <p className="text-[13px] font-semibold text-ink-500">{p.name}</p>
                   <p className="text-[11px] text-[#A9AAA5]">{p.type} · atualizado {new Date(p.updatedAt).toLocaleDateString("pt-BR")}</p>
                 </div>
                 <div className="flex items-center gap-2">
                   {p.isDefault && (
-                    <span className="rounded-[5px] bg-[#D7FF00] px-1.5 py-0.5 text-[9px] font-bold text-[#0E0F10] uppercase">
+                    <span className="rounded-[5px] bg-[#D7FF00] px-1.5 py-0.5 text-[9px] font-bold text-ink-500 uppercase">
                       Default
                     </span>
                   )}
@@ -187,7 +187,7 @@ export default function SegurancaClient({
       {/* Membros */}
       <div className="rounded-[30px] bg-white p-6">
         <div className="flex items-center justify-between mb-3">
-          <h2 className="text-[15px] font-bold text-[#0E0F10] flex items-center gap-2">
+          <h2 className="text-[15px] font-bold text-ink-500 flex items-center gap-2">
             <Users size={14} />
             Membros da organização
           </h2>

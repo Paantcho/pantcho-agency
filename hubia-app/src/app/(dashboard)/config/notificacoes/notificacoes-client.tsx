@@ -163,7 +163,7 @@ export default function NotificacoesClient({
                     <Icon size={15} color={isAtivo ? "#D7FF00" : "#FFFFFF"} />
                   </div>
                   <div>
-                    <p className="text-[14px] font-bold text-[#0E0F10]">{notif.label}</p>
+                    <p className="text-[14px] font-bold text-ink-500">{notif.label}</p>
                     <p className="text-[12px] text-[#A9AAA5]">{notif.descricao}</p>
                   </div>
                 </div>
@@ -197,7 +197,7 @@ export default function NotificacoesClient({
           type="button"
           onClick={handleSave}
           disabled={loading}
-          className="rounded-[18px] bg-[#D7FF00] px-6 py-3 text-[15px] font-semibold text-[#0E0F10] disabled:opacity-50"
+          className="rounded-[18px] bg-[#D7FF00] px-6 py-3 text-[15px] font-semibold text-ink-500 disabled:opacity-50"
           whileHover={{ scale: 1.03, backgroundColor: "#DFFF33" }}
           whileTap={{ scale: 0.96 }}
           transition={{ duration: 0.15, ease: [0.34, 1.56, 0.64, 1] }}

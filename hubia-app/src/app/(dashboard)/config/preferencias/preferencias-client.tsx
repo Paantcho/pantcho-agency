@@ -51,7 +51,7 @@ function SelectField({
       <motion.button
         type="button"
         onClick={() => setOpen((v) => !v)}
-        className="flex h-11 w-full items-center justify-between rounded-[12px] border border-transparent bg-base-500 px-3.5 text-[15px] text-[#0E0F10] outline-none transition-[border-color] duration-150 hover:border-[#D4D5D6]"
+        className="flex h-11 w-full items-center justify-between rounded-[12px] border border-transparent bg-base-500 px-3.5 text-[15px] text-ink-500 outline-none transition-[border-color] duration-150 hover:border-[#D4D5D6]"
         whileTap={{ scale: 0.995 }}
       >
         <span>{selected?.label ?? "Selecionar"}</span>
@@ -77,12 +77,12 @@ function SelectField({
                 key={opt.value}
                 type="button"
                 onClick={() => { onChange(opt.value); setOpen(false); }}
-                className="flex w-full items-center justify-between px-4 py-2.5 text-[14px] text-[#0E0F10]"
+                className="flex w-full items-center justify-between px-4 py-2.5 text-[14px] text-ink-500"
                 whileHover={{ backgroundColor: "#EEEFE9" }}
                 transition={{ duration: 0.1 }}
               >
                 {opt.label}
-                {opt.value === value && <Check size={14} className="text-[#0E0F10]" />}
+                {opt.value === value && <Check size={14} className="text-ink-500" />}
               </motion.button>
             ))}
           </motion.div>
@@ -129,7 +129,7 @@ export default function PreferenciasClient({
           <div className="flex h-8 w-8 items-center justify-center rounded-[12px] bg-[#0E0F10]">
             <Globe size={15} color="#D7FF00" />
           </div>
-          <h2 className="text-[15px] font-bold text-[#0E0F10]">Preferências regionais</h2>
+          <h2 className="text-[15px] font-bold text-ink-500">Preferências regionais</h2>
         </div>
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
           <SelectField label="Idioma" value={idioma} onChange={setIdioma} options={idiomas} />
@@ -143,7 +143,7 @@ export default function PreferenciasClient({
           <div className="flex h-8 w-8 items-center justify-center rounded-[12px] bg-[#0E0F10]">
             <Monitor size={15} color="#D7FF00" />
           </div>
-          <h2 className="text-[15px] font-bold text-[#0E0F10]">Modo visual</h2>
+          <h2 className="text-[15px] font-bold text-ink-500">Modo visual</h2>
         </div>
 
         <div className="flex gap-3">
@@ -196,7 +196,7 @@ export default function PreferenciasClient({
           type="button"
           onClick={handleSave}
           disabled={loading}
-          className="rounded-[18px] bg-[#D7FF00] px-6 py-3 text-[15px] font-semibold text-[#0E0F10] disabled:opacity-50"
+          className="rounded-[18px] bg-[#D7FF00] px-6 py-3 text-[15px] font-semibold text-ink-500 disabled:opacity-50"
           whileHover={{ scale: 1.03, backgroundColor: "#DFFF33" }}
           whileTap={{ scale: 0.96 }}
           transition={{ duration: 0.15, ease: [0.34, 1.56, 0.64, 1] }}

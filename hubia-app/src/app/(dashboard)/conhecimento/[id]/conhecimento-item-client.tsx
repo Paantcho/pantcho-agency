@@ -25,7 +25,7 @@ const TIPO_CONFIG: Record<string, { label: string; bg: string; text: string; ico
   insight:        { label: "Insight",        bg: "#FFF3E0", text: "#E65100", icon: Lightbulb },
   regra_sugerida: { label: "Regra sugerida", bg: "#E8EAF6", text: "#283593", icon: ClipboardList },
   manual:         { label: "Manual",         bg: "#E0F7FA", text: "#00695C", icon: Layers },
-  texto:          { label: "Texto",          bg: "#EEEFE9", text: "#5E5E5F", icon: FileText },
+  texto:          { label: "Texto",          bg: "var(--hubia-bg-base-500)", text: "var(--hubia-ink-400)", icon: FileText },
 };
 
 const STATUS_CONFIG: Record<ItemStatus, { label: string; bg: string; text: string; dot: string }> = {

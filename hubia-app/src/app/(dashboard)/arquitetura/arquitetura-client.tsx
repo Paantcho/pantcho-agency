@@ -246,7 +246,7 @@ export default function ArquiteturaClient() {
           <div className="flex items-center gap-4">
             <div
               className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl"
-              style={{ background: "#D7FF0030" }}
+              style={{ background: "color-mix(in srgb, var(--hubia-limao-500) 19%, transparent)" }}
             >
               <Brain size={28} style={{ color: "var(--hubia-ink-500)" }} />
             </div>

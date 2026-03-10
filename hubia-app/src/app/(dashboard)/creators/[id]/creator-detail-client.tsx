@@ -159,13 +159,13 @@ export default function CreatorDetailClient({
             <motion.button
               type="button"
               className="flex items-center gap-2 rounded-full font-bold"
-              style={{ background: "#D7FF00", color: "#0E0F10", fontSize: "13px", padding: "9px 18px" }}
+              style={{ background: "var(--hubia-limao-500)", color: "var(--hubia-ink-500)", fontSize: "13px", padding: "9px 18px" }}
               initial="rest"
               whileHover="hovered"
               whileTap={{ scale: 0.96 }}
               animate="rest"
               variants={{
-                rest: { scale: 1, backgroundColor: "#D7FF00" },
+                rest: { scale: 1, backgroundColor: "var(--hubia-limao-500)" },
                 hovered: { scale: 1.03, backgroundColor: "#DFFF33" },
               }}
               transition={{ duration: 0.15, ease: [0.34, 1.56, 0.64, 1] }}
