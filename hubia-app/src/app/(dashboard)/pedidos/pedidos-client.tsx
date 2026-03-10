@@ -367,7 +367,7 @@ export default function PedidosClient({
           return (
             <div
               key={pedido.id}
-              className="group flex items-center gap-4 rounded-[16px] bg-white px-5 py-4"
+              className="group flex items-center gap-4 rounded-[30px] bg-white px-5 py-4"
             >
               {/* Tipo icon */}
               <div

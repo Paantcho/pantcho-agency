@@ -20,7 +20,7 @@ const MOCK_LOOKS = [
 ];
 
 const inputClass =
-  "w-full rounded-input border-0 bg-[var(--hubia-bg-base-500)] px-4 py-3 text-body-md font-medium text-ink-500 outline-none focus:ring-2 focus:ring-limao-500/30";
+  "w-full rounded-input border-0 bg-[var(--hubia-bg-base-500)] px-4 py-3 text-body-md font-semibold text-ink-500 outline-none focus:ring-2 focus:ring-limao-500/30";
 
 export default function CreatorLooksTab({
   creator,
@@ -157,7 +157,7 @@ export default function CreatorLooksTab({
 
       {displayLooks.length === 0 ? (
         <div className="rounded-[16px] border border-dashed border-base-600 bg-base-500/30 py-12 text-center">
-          <p className="font-medium text-base-700" style={{ fontSize: "14px" }}>Nenhum look cadastrado.</p>
+          <p className="font-semibold text-base-700" style={{ fontSize: "14px" }}>Nenhum look cadastrado.</p>
           <button
             type="button"
             onClick={openAddModal}
@@ -221,7 +221,7 @@ export default function CreatorLooksTab({
                     {look.name}
                   </p>
                   <p
-                    className="mt-0.5 font-medium"
+                    className="mt-0.5 font-semibold"
                     style={{ fontSize: "11px", color: "rgba(255,255,255,0.75)" }}
                   >
                     {look.date} · Pedido #{look.pedido}
@@ -261,7 +261,7 @@ export default function CreatorLooksTab({
       >
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
           {formError && (
-            <div className="rounded-card border border-red-500/30 bg-red-500/10 px-4 py-3 text-body-sm font-medium text-red-600">
+            <div className="rounded-card border border-red-500/30 bg-red-500/10 px-4 py-3 text-body-sm font-semibold text-red-600">
               {formError}
             </div>
           )}

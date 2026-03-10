@@ -30,7 +30,7 @@ function CreatorCard({ creator, index }: { creator: CreatorRow; index: number })
   return (
     <MotionLink
       href={`/creators/${creator.id}`}
-      className="group relative flex flex-col overflow-hidden rounded-[24px] bg-[#0E0F10]"
+      className="group relative flex flex-col overflow-hidden rounded-[30px] bg-[#0E0F10]"
       style={{ aspectRatio: "3/4" }}
       initial={{ opacity: 0, y: 16 }}
       animate={{ opacity: 1, y: 0 }}
@@ -39,7 +39,7 @@ function CreatorCard({ creator, index }: { creator: CreatorRow; index: number })
       whileTap={{ scale: 0.98 }}
     >
       {/* Foto fullbleed — parallax zoom só na imagem */}
-      <div className="absolute inset-0 overflow-hidden rounded-[24px]">
+      <div className="absolute inset-0 overflow-hidden rounded-[30px]">
         <img
           src={imageUrl}
           alt={creator.name}
@@ -212,7 +212,7 @@ export default function CreatorsListClient({
         <motion.button
           type="button"
           onClick={() => setModalOpen(true)}
-          className="group flex flex-col items-center justify-center gap-3 rounded-[24px] border-2 border-dashed"
+          className="group flex flex-col items-center justify-center gap-3 rounded-[30px] border-2 border-dashed"
           style={{ aspectRatio: "3/4", borderColor: "#D9D9D4" }}
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}

@@ -214,7 +214,7 @@ function BriefingOutputSection({
             onChange={(e) => setForm((f) => ({ ...f, descricao: e.target.value }))}
             placeholder="Ex: Ninaah está no beiro da piscina, sentada na espreguiçadeira..."
             rows={4}
-            className="w-full resize-none rounded-[12px] border border-transparent px-3.5 py-2.5 text-[14px] text-ink-500 outline-none placeholder:text-[#A9AAA5] transition-[border-color,box-shadow] duration-150 focus:border-ink-500 focus:shadow-[0_0_0_3px_rgba(14,15,16,0.08)]"
+            className="w-full resize-none rounded-[12px] border border-transparent px-3.5 py-2.5 text-[14px] text-ink-500 outline-none placeholder:text-[#A9AAA5] transition-[border-color,box-shadow] duration-150 focus:border-ink-500 focus:ring-2 focus:ring-ink-500/10"
             style={{ background: "#EEEFE9" }}
           />
         </div>

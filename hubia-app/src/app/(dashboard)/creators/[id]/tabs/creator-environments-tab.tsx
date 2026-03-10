@@ -151,7 +151,7 @@ export default function CreatorEnvironmentsTab({
       {/* Estado vazio */}
       {environments.length === 0 && !showForm && (
         <div
-          className="flex flex-col items-center justify-center gap-4 rounded-[24px] border-2 border-dashed py-16"
+          className="flex flex-col items-center justify-center gap-4 rounded-[30px] border-2 border-dashed py-16"
           style={{ borderColor: "#D9D9D4" }}
         >
           <p className="font-semibold" style={{ fontSize: "14px", color: "#A9AAA5" }}>
@@ -174,7 +174,7 @@ export default function CreatorEnvironmentsTab({
           {environments.map((env) => (
             <div
               key={env.id}
-              className="flex flex-col gap-4 rounded-[24px] p-5"
+              className="flex flex-col gap-4 rounded-[30px] p-5"
               style={{ background: "#FFFFFF" }}
             >
               {/* Nome */}

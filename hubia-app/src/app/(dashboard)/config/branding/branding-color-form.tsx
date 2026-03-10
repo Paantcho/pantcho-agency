@@ -35,7 +35,7 @@ export default function BrandingColorForm({
           onChange={(e) => setColor(e.target.value)}
           pattern="^#[0-9A-Fa-f]{6}$"
           placeholder="#D7FF00"
-          className="w-48 rounded-input border border-base-600 bg-sand-300 px-4 py-3 text-body-md text-ink-500 outline-none transition-[border-color,box-shadow] duration-150 focus:border-ink-500 focus:shadow-[0_0_0_3px_rgba(14,15,16,0.08)]"
+          className="w-48 rounded-input border border-base-600 bg-sand-300 px-4 py-3 text-body-md text-ink-500 outline-none transition-[border-color,box-shadow] duration-150 focus:border-ink-500 focus:ring-2 focus:ring-ink-500/10"
         />
       </div>
       <motion.button

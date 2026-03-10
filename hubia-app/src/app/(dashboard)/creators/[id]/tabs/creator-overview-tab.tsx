@@ -36,7 +36,7 @@ export default function CreatorOverviewTab({
     <div className="flex flex-col gap-5">
       {/* Hero card escuro */}
       <div
-        className="relative flex items-start gap-5 overflow-hidden rounded-[24px] p-6"
+        className="relative flex items-start gap-5 overflow-hidden rounded-[30px] p-6"
         style={{ background: "#0E0F10" }}
       >
         {/* Tag Ativa/Inativa — canto superior direito */}
@@ -121,7 +121,7 @@ export default function CreatorOverviewTab({
       <div className="grid gap-4 lg:grid-cols-2">
         {/* Marcadores */}
         <div
-          className="rounded-[24px] p-6"
+          className="rounded-[30px] p-6"
           style={{ background: "#FFFFFF" }}
         >
           <h3
@@ -207,7 +207,7 @@ export default function CreatorOverviewTab({
 
         {/* Veículo Fixo */}
         <div
-          className="rounded-[24px] p-6"
+          className="rounded-[30px] p-6"
           style={{ background: "#FFFFFF" }}
         >
           <h3

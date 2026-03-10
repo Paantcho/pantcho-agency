@@ -1320,7 +1320,7 @@ function SubprojetosTab({ subprojetos, onSave }: {
                   value={novoNome}
                   onChange={e => setNovoNome(e.target.value)}
                   placeholder="Ex: Módulo de Pagamentos"
-                  className="w-full h-10 rounded-[12px] bg-white border border-transparent px-3 text-[14px] text-[#0E0F10] outline-none focus:border-[#0E0F10] focus:shadow-[0_0_0_3px_rgba(14,15,16,0.08)] transition-[border-color,box-shadow] duration-150"
+                  className="w-full h-10 rounded-[12px] bg-white border border-transparent px-3 text-[14px] text-[#0E0F10] outline-none focus:border-[#0E0F10] focus:ring-2 focus:ring-ink-500/10 transition-[border-color,box-shadow] duration-150"
                 />
               </div>
               <div>
@@ -1548,7 +1548,7 @@ function AdicionarModulo({ onAdd }: { onAdd: (nome: string) => Promise<void> }) 
         value={novo} onChange={(e) => setNovo(e.target.value)}
         onKeyDown={(e) => { if (e.key === "Enter" && novo.trim()) { onAdd(novo.trim()); setNovo(""); } }}
         placeholder="Adicionar módulo extra..."
-        className="flex-1 h-9 rounded-[12px] border border-transparent bg-[#EEEFE9] px-3 text-[13px] text-[#0E0F10] outline-none placeholder:text-[#A9AAA5] focus:border-[#0E0F10] focus:shadow-[0_0_0_3px_rgba(14,15,16,0.08)] transition-[border-color,box-shadow] duration-150"
+        className="flex-1 h-9 rounded-[12px] border border-transparent bg-[#EEEFE9] px-3 text-[13px] text-[#0E0F10] outline-none placeholder:text-[#A9AAA5] focus:border-[#0E0F10] focus:ring-2 focus:ring-ink-500/10 transition-[border-color,box-shadow] duration-150"
       />
       <motion.button onClick={() => { if (novo.trim()) { onAdd(novo.trim()); setNovo(""); } }} disabled={!novo.trim()}
         className="h-9 w-9 rounded-[12px] bg-[#0E0F10] flex items-center justify-center disabled:opacity-40"
@@ -1633,7 +1633,7 @@ function MemoriaTab({ memoria, onSave }: {
             value={novo} onChange={(e) => setNovo(e.target.value)}
             onKeyDown={(e) => e.key === "Enter" && adicionar()}
             placeholder={`Adicionar à ${MEMORIA_TIPOS[novoTipo].label}...`}
-            className="flex-1 h-9 rounded-[12px] border border-transparent bg-[#EEEFE9] px-3 text-[13px] text-[#0E0F10] outline-none placeholder:text-[#A9AAA5] focus:border-[#0E0F10] focus:shadow-[0_0_0_3px_rgba(14,15,16,0.08)] transition-[border-color,box-shadow] duration-150"
+            className="flex-1 h-9 rounded-[12px] border border-transparent bg-[#EEEFE9] px-3 text-[13px] text-[#0E0F10] outline-none placeholder:text-[#A9AAA5] focus:border-[#0E0F10] focus:ring-2 focus:ring-ink-500/10 transition-[border-color,box-shadow] duration-150"
           />
           <motion.button onClick={adicionar} disabled={!novo.trim() || saving}
             className="h-9 px-4 rounded-[12px] bg-[#0E0F10] text-[12px] font-semibold text-[#D7FF00] disabled:opacity-40"
@@ -1788,13 +1788,13 @@ function RulesTab({ rules, onSave }: {
               <input
                 autoFocus value={novaTitulo} onChange={(e) => setNovaTitulo(e.target.value)}
                 placeholder="Título da rule *"
-                className="h-10 w-full rounded-[12px] border border-transparent bg-white px-3 text-[13px] text-[#0E0F10] outline-none placeholder:text-[#A9AAA5] focus:border-[#0E0F10] focus:shadow-[0_0_0_3px_rgba(14,15,16,0.08)] transition-[border-color,box-shadow] duration-150"
+                className="h-10 w-full rounded-[12px] border border-transparent bg-white px-3 text-[13px] text-[#0E0F10] outline-none placeholder:text-[#A9AAA5] focus:border-[#0E0F10] focus:ring-2 focus:ring-ink-500/10 transition-[border-color,box-shadow] duration-150"
               />
               <textarea
                 value={novaDesc} onChange={(e) => setNovaDesc(e.target.value)}
                 placeholder="Descrição (opcional)"
                 rows={2}
-                className="w-full rounded-[12px] border border-transparent bg-white px-3 py-2 text-[13px] text-[#0E0F10] outline-none placeholder:text-[#A9AAA5] resize-none focus:border-[#0E0F10] focus:shadow-[0_0_0_3px_rgba(14,15,16,0.08)] transition-[border-color,box-shadow] duration-150"
+                className="w-full rounded-[12px] border border-transparent bg-white px-3 py-2 text-[13px] text-[#0E0F10] outline-none placeholder:text-[#A9AAA5] resize-none focus:border-[#0E0F10] focus:ring-2 focus:ring-ink-500/10 transition-[border-color,box-shadow] duration-150"
               />
               <div className="grid grid-cols-2 gap-3">
                 <div>
@@ -2237,7 +2237,7 @@ function TarefasTab({ tarefas, tarefasConcluidas, onSave }: {
           onChange={(e) => setNovaTarefa(e.target.value)}
           onKeyDown={(e) => e.key === "Enter" && adicionarTarefa()}
           placeholder="Nova tarefa..."
-          className="flex-1 h-9 rounded-[12px] border border-transparent bg-[#EEEFE9] px-3 text-[13px] text-[#0E0F10] outline-none placeholder:text-[#A9AAA5] focus:border-[#0E0F10] focus:shadow-[0_0_0_3px_rgba(14,15,16,0.08)] transition-[border-color,box-shadow] duration-150"
+          className="flex-1 h-9 rounded-[12px] border border-transparent bg-[#EEEFE9] px-3 text-[13px] text-[#0E0F10] outline-none placeholder:text-[#A9AAA5] focus:border-[#0E0F10] focus:ring-2 focus:ring-ink-500/10 transition-[border-color,box-shadow] duration-150"
         />
         <motion.button onClick={adicionarTarefa} disabled={!novaTarefa.trim()}
           className="h-9 w-9 rounded-[12px] bg-[#0E0F10] flex items-center justify-center disabled:opacity-40"
@@ -2312,7 +2312,7 @@ function EditableTextSection({ title, fieldKey, value, placeholder, onSave }: {
             onChange={(e) => setDraft(e.target.value)}
             placeholder={placeholder}
             rows={8}
-            className="w-full rounded-[12px] border border-transparent bg-[#EEEFE9] px-4 py-3 text-[14px] text-[#0E0F10] outline-none placeholder:text-[#A9AAA5] resize-none focus:border-[#0E0F10] focus:shadow-[0_0_0_3px_rgba(14,15,16,0.08)] transition-[border-color,box-shadow] duration-150"
+            className="w-full rounded-[12px] border border-transparent bg-[#EEEFE9] px-4 py-3 text-[14px] text-[#0E0F10] outline-none placeholder:text-[#A9AAA5] resize-none focus:border-[#0E0F10] focus:ring-2 focus:ring-ink-500/10 transition-[border-color,box-shadow] duration-150"
           />
         )}
       </AnimatePresence>

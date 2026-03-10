@@ -675,7 +675,7 @@ function NotasCard({ pedidoId, organizationId }: { pedidoId: string; organizatio
             autoFocus value={nota} onChange={(e) => setNota(e.target.value)}
             placeholder="Adicionar nota..."
             rows={3}
-            className="w-full rounded-[12px] border border-transparent bg-[#EEEFE9] px-3 py-2 text-[13px] text-[#0E0F10] outline-none placeholder:text-[#A9AAA5] resize-none focus:border-[#0E0F10] focus:shadow-[0_0_0_3px_rgba(14,15,16,0.08)] transition-[border-color,box-shadow] duration-150"
+            className="w-full rounded-[12px] border border-transparent bg-[#EEEFE9] px-3 py-2 text-[13px] text-[#0E0F10] outline-none placeholder:text-[#A9AAA5] resize-none focus:border-[#0E0F10] focus:ring-2 focus:ring-ink-500/10 transition-[border-color,box-shadow] duration-150"
           />
           <div className="flex gap-2">
             <motion.button onClick={() => setEditing(false)}
@@ -755,7 +755,7 @@ function TabConteudo({
                 value={editValue}
                 onChange={(e) => setEditValue(e.target.value)}
                 rows={10}
-                className="w-full rounded-[12px] border border-[#EEEFE9] bg-[#EEEFE9] px-4 py-3 text-[12px] text-[#0E0F10] font-mono outline-none resize-vertical focus:border-[#0E0F10] focus:shadow-[0_0_0_3px_rgba(14,15,16,0.08)] transition-[border-color,box-shadow] duration-150"
+                className="w-full rounded-[12px] border border-[#EEEFE9] bg-[#EEEFE9] px-4 py-3 text-[12px] text-[#0E0F10] font-mono outline-none resize-vertical focus:border-[#0E0F10] focus:ring-2 focus:ring-ink-500/10 transition-[border-color,box-shadow] duration-150"
                 placeholder='{"squad": "AUDIOVISUAL", "mood": "elegante"}'
               />
               <div className="flex gap-2">

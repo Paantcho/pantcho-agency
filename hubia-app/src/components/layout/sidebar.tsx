@@ -261,7 +261,7 @@ export function Sidebar({
                     className={`w-full px-3 py-2 text-left text-[13px] ${
                       org.id === currentOrganizationId
                         ? "font-semibold text-ink-500"
-                        : "font-medium text-base-700"
+                        : "font-semibold text-base-700"
                     }`}
                     whileHover={{ backgroundColor: "#EEEFE9", color: "#0E0F10" }}
                     whileTap={{ scale: 0.98 }}

@@ -766,7 +766,7 @@ function NovoProjetoModal({ open, onClose, organizationId, onCreated }: {
                       style={{ backgroundColor: `${tipoConfig.cor}10` }}
                     >
                       <div
-                        className="flex-shrink-0 h-9 w-9 rounded-[10px] flex items-center justify-center"
+                        className="flex-shrink-0 h-9 w-9 rounded-[12px] flex items-center justify-center"
                         style={{ backgroundColor: `${tipoConfig.cor}25`, color: tipoConfig.cor }}
                       >
                         <tipoConfig.icone size={16} />
@@ -790,7 +790,7 @@ function NovoProjetoModal({ open, onClose, organizationId, onCreated }: {
                         <input
                           autoFocus value={nome} onChange={(e) => setNome(e.target.value)}
                           placeholder={`Ex: ${tipoConfig.label} — Cliente 2026`}
-                          className="h-11 w-full rounded-[10px] border border-transparent bg-[#EEEFE9] px-3.5 text-[14px] text-[#0E0F10] outline-none placeholder:text-[#A9AAA5] hover:border-[#D4D5D6] focus:border-[#0E0F10] focus:ring-2 focus:ring-ink-500/10 transition-[border-color,box-shadow] duration-150"
+                          className="h-11 w-full rounded-[12px] border border-transparent bg-[#EEEFE9] px-3.5 text-[14px] text-[#0E0F10] outline-none placeholder:text-[#A9AAA5] hover:border-[#D4D5D6] focus:border-[#0E0F10] focus:ring-2 focus:ring-ink-500/10 transition-[border-color,box-shadow] duration-150"
                         />
                       </div>
 
@@ -800,7 +800,7 @@ function NovoProjetoModal({ open, onClose, organizationId, onCreated }: {
                           <input
                             value={cliente} onChange={(e) => setCliente(e.target.value)}
                             placeholder="Ex: Pantcho Agency"
-                            className="h-11 w-full rounded-[10px] border border-transparent bg-[#EEEFE9] px-3.5 text-[14px] text-[#0E0F10] outline-none placeholder:text-[#A9AAA5] hover:border-[#D4D5D6] focus:border-[#0E0F10] focus:ring-2 focus:ring-ink-500/10 transition-[border-color,box-shadow] duration-150"
+                            className="h-11 w-full rounded-[12px] border border-transparent bg-[#EEEFE9] px-3.5 text-[14px] text-[#0E0F10] outline-none placeholder:text-[#A9AAA5] hover:border-[#D4D5D6] focus:border-[#0E0F10] focus:ring-2 focus:ring-ink-500/10 transition-[border-color,box-shadow] duration-150"
                           />
                         </div>
                         <div>
@@ -808,7 +808,7 @@ function NovoProjetoModal({ open, onClose, organizationId, onCreated }: {
                           <input
                             value={prazo} onChange={(e) => setPrazo(e.target.value)}
                             placeholder="Ex: Março 2026"
-                            className="h-11 w-full rounded-[10px] border border-transparent bg-[#EEEFE9] px-3.5 text-[14px] text-[#0E0F10] outline-none placeholder:text-[#A9AAA5] hover:border-[#D4D5D6] focus:border-[#0E0F10] focus:ring-2 focus:ring-ink-500/10 transition-[border-color,box-shadow] duration-150"
+                            className="h-11 w-full rounded-[12px] border border-transparent bg-[#EEEFE9] px-3.5 text-[14px] text-[#0E0F10] outline-none placeholder:text-[#A9AAA5] hover:border-[#D4D5D6] focus:border-[#0E0F10] focus:ring-2 focus:ring-ink-500/10 transition-[border-color,box-shadow] duration-150"
                           />
                         </div>
                       </div>
@@ -819,12 +819,12 @@ function NovoProjetoModal({ open, onClose, organizationId, onCreated }: {
                           value={objetivo} onChange={(e) => setObjetivo(e.target.value)}
                           placeholder="O que esse projeto precisa entregar?"
                           rows={2}
-                          className="w-full rounded-[10px] border border-transparent bg-[#EEEFE9] px-3.5 py-2.5 text-[14px] text-[#0E0F10] outline-none placeholder:text-[#A9AAA5] resize-none hover:border-[#D4D5D6] focus:border-[#0E0F10] focus:ring-2 focus:ring-ink-500/10 transition-[border-color,box-shadow] duration-150"
+                          className="w-full rounded-[12px] border border-transparent bg-[#EEEFE9] px-3.5 py-2.5 text-[14px] text-[#0E0F10] outline-none placeholder:text-[#A9AAA5] resize-none hover:border-[#D4D5D6] focus:border-[#0E0F10] focus:ring-2 focus:ring-ink-500/10 transition-[border-color,box-shadow] duration-150"
                         />
                       </div>
 
                       {/* Squad automático */}
-                      <div className="flex items-center justify-between rounded-[10px] bg-[#EEEFE9] px-3.5 h-10">
+                      <div className="flex items-center justify-between rounded-[12px] bg-[#EEEFE9] px-3.5 h-10">
                         <span className="text-[11px] text-[#A9AAA5]">Squad responsável</span>
                         <span className="text-[12px] font-bold text-[#0E0F10]">{tipoConfig.squad}</span>
                       </div>
