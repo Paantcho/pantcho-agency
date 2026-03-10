@@ -93,7 +93,7 @@ export default function PlanoClient({
       <div className="rounded-[30px] bg-ink-500 p-6 flex items-center justify-between">
         <div className="flex items-start gap-4">
           <div className="flex h-10 w-10 items-center justify-center rounded-[12px] bg-limao-500">
-            <Crown size={18} color="#0E0F10" />
+            <Crown size={18} color="var(--hubia-ink-500)" />
           </div>
           <div>
             <p className="text-[12px] font-semibold text-white/50 uppercase tracking-wide">
@@ -101,7 +101,7 @@ export default function PlanoClient({
             </p>
             <p className="mt-0.5 text-[22px] font-bold text-white">
               {atual.nome}{" "}
-              <span className="text-[#D7FF00]">N{planoAtual}</span>
+              <span className="text-limao-500">N{planoAtual}</span>
             </p>
             <p className="mt-1 text-[13px] text-white/60 max-w-[400px]">
               {atual.descricao}
@@ -122,7 +122,7 @@ export default function PlanoClient({
 
       {/* Módulos liberados */}
       <div className="rounded-[30px] bg-white p-6">
-        <h2 className="mb-4 text-[15px] font-bold text-[#0E0F10]">
+        <h2 className="mb-4 text-[15px] font-bold text-ink-500">
           Módulos disponíveis
         </h2>
         <div className="flex flex-wrap gap-2">
@@ -136,8 +136,8 @@ export default function PlanoClient({
                 transition={{ delay: Math.min(i * 0.06, 0.3) }}
                 className="flex items-center gap-2 rounded-[9999px] bg-base-500 px-4 py-2"
               >
-                <Icon size={14} className="text-[#0E0F10]" />
-                <span className="text-[13px] font-semibold text-[#0E0F10]">
+                <Icon size={14} className="text-ink-500" />
+                <span className="text-[13px] font-semibold text-ink-500">
                   {m.label}
                 </span>
               </motion.div>
@@ -148,7 +148,7 @@ export default function PlanoClient({
 
       {/* Comparativo de planos */}
       <div className="rounded-[30px] bg-white p-6">
-        <h2 className="mb-5 text-[15px] font-bold text-[#0E0F10]">
+        <h2 className="mb-5 text-[15px] font-bold text-ink-500">
           Comparativo de planos
         </h2>
         <div className="grid grid-cols-1 gap-3 md:grid-cols-2 xl:grid-cols-4">
@@ -162,11 +162,11 @@ export default function PlanoClient({
                 transition={{ delay: Math.min(i * 0.08, 0.3) }}
                 className="relative flex flex-col gap-4 rounded-[16px] p-5"
                 style={{
-                  backgroundColor: isAtual ? "#0E0F10" : "#EEEFE9",
+                  backgroundColor: isAtual ? "var(--hubia-ink-500)" : "var(--hubia-bg-base-500)",
                 }}
               >
                 {isAtual && (
-                  <div className="absolute right-3 top-3 rounded-[6px] bg-limao-500 px-2 py-0.5 text-[10px] font-bold text-[#0E0F10] uppercase">
+                  <div className="absolute right-3 top-3 rounded-[6px] bg-limao-500 px-2 py-0.5 text-[10px] font-bold text-ink-500 uppercase">
                     Atual
                   </div>
                 )}
@@ -174,7 +174,7 @@ export default function PlanoClient({
                 <div>
                   <p
                     className="text-[11px] font-bold uppercase tracking-wide"
-                    style={{ color: isAtual ? "#A9AAA5" : "#A9AAA5" }}
+                    style={{ color: isAtual ? "var(--hubia-bg-base-700)" : "var(--hubia-bg-base-700)" }}
                   >
                     Nível {p.nivel}
                   </p>

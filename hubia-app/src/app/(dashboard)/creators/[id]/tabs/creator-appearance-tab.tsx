@@ -58,13 +58,13 @@ function TableHeader() {
   return (
     <div
       className="grid grid-cols-3 gap-3 rounded-xl px-4 py-2"
-      style={{ background: "#EEEFE9" }}
+      style={{ background: "var(--hubia-bg-base-500)" }}
     >
       {["ELEMENTO", "DEFINIÇÃO FIXA", "TOLERÂNCIA"].map((h) => (
         <span
           key={h}
           className="font-bold uppercase tracking-widest"
-          style={{ fontSize: "9px", color: "#A9AAA5" }}
+          style={{ fontSize: "9px", color: "var(--hubia-bg-base-700)" }}
         >
           {h}
         </span>

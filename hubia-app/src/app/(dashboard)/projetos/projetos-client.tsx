@@ -518,7 +518,7 @@ function ProjetoCardItem({ projeto: p, index: i, onClick }: {
       {/* Barra de progresso com cor paleta correta */}
       {progresso !== null && (
         <div className="mb-3">
-          <div className="h-1.5 w-full rounded-full bg-[#EEEFE9] overflow-hidden">
+          <div className="h-1.5 w-full rounded-full bg-base-500 overflow-hidden">
             <motion.div
               className="h-full rounded-full"
               style={{ backgroundColor: corBarra }}
@@ -696,7 +696,7 @@ function NovoProjetoModal({ open, onClose, organizationId, onCreated }: {
                 </div>
                 <motion.button
                   onClick={handleClose}
-                  className="flex h-8 w-8 items-center justify-center rounded-full bg-[#EEEFE9] flex-shrink-0"
+                  className="flex h-8 w-8 items-center justify-center rounded-full bg-base-500 flex-shrink-0"
                   whileHover={{ rotate: 90, scale: 1.1, backgroundColor: "#0E0F10" }}
                   whileTap={{ rotate: 90, scale: 0.9 }}
                   transition={{ duration: 0.15, ease: [0.34, 1.56, 0.64, 1] }}
@@ -790,7 +790,7 @@ function NovoProjetoModal({ open, onClose, organizationId, onCreated }: {
                         <input
                           autoFocus value={nome} onChange={(e) => setNome(e.target.value)}
                           placeholder={`Ex: ${tipoConfig.label} — Cliente 2026`}
-                          className="h-11 w-full rounded-[12px] border border-transparent bg-[#EEEFE9] px-3.5 text-[14px] text-ink-500 outline-none placeholder:text-base-700 hover:border-[#D4D5D6] focus:border-ink-500 focus:ring-2 focus:ring-ink-500/10 transition-[border-color] duration-150"
+                          className="h-11 w-full rounded-[12px] border border-transparent bg-base-500 px-3.5 text-[14px] text-ink-500 outline-none placeholder:text-base-700 hover:border-base-600 focus:border-ink-500 focus:ring-2 focus:ring-ink-500/10 transition-[border-color] duration-150"
                         />
                       </div>
 
@@ -800,7 +800,7 @@ function NovoProjetoModal({ open, onClose, organizationId, onCreated }: {
                           <input
                             value={cliente} onChange={(e) => setCliente(e.target.value)}
                             placeholder="Ex: Pantcho Agency"
-                            className="h-11 w-full rounded-[12px] border border-transparent bg-[#EEEFE9] px-3.5 text-[14px] text-ink-500 outline-none placeholder:text-base-700 hover:border-[#D4D5D6] focus:border-ink-500 focus:ring-2 focus:ring-ink-500/10 transition-[border-color] duration-150"
+                            className="h-11 w-full rounded-[12px] border border-transparent bg-base-500 px-3.5 text-[14px] text-ink-500 outline-none placeholder:text-base-700 hover:border-base-600 focus:border-ink-500 focus:ring-2 focus:ring-ink-500/10 transition-[border-color] duration-150"
                           />
                         </div>
                         <div>
@@ -808,7 +808,7 @@ function NovoProjetoModal({ open, onClose, organizationId, onCreated }: {
                           <input
                             value={prazo} onChange={(e) => setPrazo(e.target.value)}
                             placeholder="Ex: Março 2026"
-                            className="h-11 w-full rounded-[12px] border border-transparent bg-[#EEEFE9] px-3.5 text-[14px] text-ink-500 outline-none placeholder:text-base-700 hover:border-[#D4D5D6] focus:border-ink-500 focus:ring-2 focus:ring-ink-500/10 transition-[border-color] duration-150"
+                            className="h-11 w-full rounded-[12px] border border-transparent bg-base-500 px-3.5 text-[14px] text-ink-500 outline-none placeholder:text-base-700 hover:border-base-600 focus:border-ink-500 focus:ring-2 focus:ring-ink-500/10 transition-[border-color] duration-150"
                           />
                         </div>
                       </div>
@@ -819,12 +819,12 @@ function NovoProjetoModal({ open, onClose, organizationId, onCreated }: {
                           value={objetivo} onChange={(e) => setObjetivo(e.target.value)}
                           placeholder="O que esse projeto precisa entregar?"
                           rows={2}
-                          className="w-full rounded-[12px] border border-transparent bg-[#EEEFE9] px-3.5 py-2.5 text-[14px] text-ink-500 outline-none placeholder:text-base-700 resize-none hover:border-[#D4D5D6] focus:border-ink-500 focus:ring-2 focus:ring-ink-500/10 transition-[border-color] duration-150"
+                          className="w-full rounded-[12px] border border-transparent bg-base-500 px-3.5 py-2.5 text-[14px] text-ink-500 outline-none placeholder:text-base-700 resize-none hover:border-base-600 focus:border-ink-500 focus:ring-2 focus:ring-ink-500/10 transition-[border-color] duration-150"
                         />
                       </div>
 
                       {/* Squad automático */}
-                      <div className="flex items-center justify-between rounded-[12px] bg-[#EEEFE9] px-3.5 h-10">
+                      <div className="flex items-center justify-between rounded-[12px] bg-base-500 px-3.5 h-10">
                         <span className="text-[11px] text-base-700">Squad responsável</span>
                         <span className="text-[12px] font-bold text-ink-500">{tipoConfig.squad}</span>
                       </div>
