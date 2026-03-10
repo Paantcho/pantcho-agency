@@ -48,7 +48,7 @@ const ORCHESTRATOR: AgentNode = {
   name: "Orquestrador",
   slug: "orquestrador",
   icon: Brain,
-  color: "#D7FF00",
+  color: "var(--hubia-limao-500)",
   level: "lead",
   description: "CEO — classifica, delega, valida",
 };
@@ -141,7 +141,7 @@ const SQUADS: SquadSection[] = [
 ];
 
 const MEMORY_BLOCKS = [
-  { name: "WORKING.md", description: "Tarefa ativa", color: "#D7FF00" },
+  { name: "WORKING.md", description: "Tarefa ativa", color: "var(--hubia-limao-500)" },
   { name: "MEMORY.md", description: "Longo prazo", color: "#3B82F6" },
   { name: "STATUS.md", description: "Consolidado", color: "#14B8A6" },
   { name: "LESSONS.md", description: "Lições", color: "#F59E0B" },
@@ -166,7 +166,7 @@ function AgentCard({ agent }: { agent: AgentNode }) {
         <div className="flex items-center gap-2">
           <span
             className="font-bold"
-            style={{ fontSize: "13px", color: "#0E0F10" }}
+            style={{ fontSize: "13px", color: "var(--hubia-ink-500)" }}
           >
             {agent.name}
           </span>
@@ -184,7 +184,7 @@ function AgentCard({ agent }: { agent: AgentNode }) {
         </div>
         <p
           className="truncate font-semibold"
-          style={{ fontSize: "11px", color: "#A9AAA5" }}
+          style={{ fontSize: "11px", color: "var(--hubia-bg-base-700)" }}
         >
           {agent.description}
         </p>
@@ -200,13 +200,13 @@ export default function ArquiteturaClient() {
       <div>
         <h1
           className="font-bold"
-          style={{ fontSize: "28px", color: "#0E0F10" }}
+          style={{ fontSize: "28px", color: "var(--hubia-ink-500)" }}
         >
           Arquitetura
         </h1>
         <p
           className="mt-1 font-semibold"
-          style={{ fontSize: "14px", color: "#A9AAA5" }}
+          style={{ fontSize: "14px", color: "var(--hubia-bg-base-700)" }}
         >
           Visão completa do sistema multi-agente Pantcho Agency
         </p>
@@ -219,7 +219,7 @@ export default function ArquiteturaClient() {
           className="flex items-center gap-3 rounded-2xl border-2 border-dashed px-6 py-4"
           style={{ borderColor: "#D9D9D4" }}
         >
-          <MessageSquare size={20} style={{ color: "#A9AAA5" }} />
+          <MessageSquare size={20} style={{ color: "var(--hubia-bg-base-700)" }} />
           <div>
             <p
               className="font-bold"
@@ -229,7 +229,7 @@ export default function ArquiteturaClient() {
             </p>
             <p
               className="font-semibold"
-              style={{ fontSize: "11px", color: "#A9AAA5" }}
+              style={{ fontSize: "11px", color: "var(--hubia-bg-base-700)" }}
             >
               Web UI / API / Telegram (futuro)
             </p>
@@ -267,7 +267,7 @@ export default function ArquiteturaClient() {
               </div>
               <p
                 className="mt-0.5 font-semibold"
-                style={{ fontSize: "13px", color: "#A9AAA5" }}
+                style={{ fontSize: "13px", color: "var(--hubia-bg-base-700)" }}
               >
                 BrainRouter: classifica pedido → identifica squad → delega
                 → valida → consolida
@@ -311,7 +311,7 @@ export default function ArquiteturaClient() {
                   <Zap size={14} style={{ color: "#EC4899" }} />
                   <p
                     className="font-semibold"
-                    style={{ fontSize: "11px", color: "#A9AAA5" }}
+                    style={{ fontSize: "11px", color: "var(--hubia-bg-base-700)" }}
                   >
                     Fluxo: Planner → Copywriter → Dir. Arte → Dir. Cena →
                     Consistência → Eng. Prompts
@@ -329,7 +329,7 @@ export default function ArquiteturaClient() {
         >
           <h3
             className="mb-2 font-bold uppercase tracking-wider"
-            style={{ fontSize: "11px", color: "#A9AAA5" }}
+            style={{ fontSize: "11px", color: "var(--hubia-bg-base-700)" }}
           >
             Squads Previstos
           </h3>
@@ -339,7 +339,7 @@ export default function ArquiteturaClient() {
                 <span
                   key={name}
                   className="rounded-full px-3 py-1 text-[11px] font-semibold"
-                  style={{ background: "#EEEFE9", color: "#A9AAA5" }}
+                  style={{ background: "#EEEFE9", color: "var(--hubia-bg-base-700)" }}
                 >
                   {name}
                 </span>
@@ -371,7 +371,7 @@ export default function ArquiteturaClient() {
             </h3>
             <span
               className="text-[11px] font-semibold"
-              style={{ color: "#A9AAA5" }}
+              style={{ color: "var(--hubia-bg-base-700)" }}
             >
               (Source of Truth)
             </span>
@@ -399,7 +399,7 @@ export default function ArquiteturaClient() {
                   </p>
                   <p
                     className="font-semibold"
-                    style={{ fontSize: "10px", color: "#A9AAA5" }}
+                    style={{ fontSize: "10px", color: "var(--hubia-bg-base-700)" }}
                   >
                     {block.description}
                   </p>
@@ -424,7 +424,7 @@ export default function ArquiteturaClient() {
             </p>
             <p
               className="mt-0.5 font-semibold"
-              style={{ fontSize: "11px", color: "#A9AAA5" }}
+              style={{ fontSize: "11px", color: "var(--hubia-bg-base-700)" }}
             >
               Obrigatório para todo agente. Validação de qualidade antes de
               entregar.

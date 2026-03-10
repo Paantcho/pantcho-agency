@@ -26,11 +26,11 @@ const CATEGORY_COLORS: Record<string, string> = {
   marketing: "#14B8A6",
   "negócios": "#F59E0B",
   ia: "#6366F1",
-  geral: "#A9AAA5",
+  geral: "var(--hubia-bg-base-700)",
 };
 
 function getCategoryColor(cat: string | null): string {
-  return CATEGORY_COLORS[cat || "geral"] || "#A9AAA5";
+  return CATEGORY_COLORS[cat || "geral"] || "var(--hubia-bg-base-700)";
 }
 
 export default function ConhecimentoClient({
@@ -104,14 +104,14 @@ export default function ConhecimentoClient({
       <div className="flex flex-wrap items-center justify-between gap-4">
         <h1
           className="font-bold"
-          style={{ fontSize: "28px", color: "#0E0F10" }}
+          style={{ fontSize: "28px", color: "var(--hubia-ink-500)" }}
         >
           Conhecimento
         </h1>
         <div className="flex items-center gap-3">
           <span
             className="font-semibold"
-            style={{ fontSize: "14px", color: "#A9AAA5" }}
+            style={{ fontSize: "14px", color: "var(--hubia-bg-base-700)" }}
           >
             {entries.length} {entries.length === 1 ? "entrada" : "entradas"}
           </span>
@@ -120,8 +120,8 @@ export default function ConhecimentoClient({
             onClick={() => setShowForm(!showForm)}
             className="flex items-center gap-2 rounded-full font-bold transition-colors duration-200 hover:opacity-90 active:scale-95"
             style={{
-              background: "#D7FF00",
-              color: "#0E0F10",
+              background: "var(--hubia-limao-500)",
+              color: "var(--hubia-ink-500)",
               fontSize: "14px",
               padding: "10px 22px",
             }}
@@ -138,7 +138,7 @@ export default function ConhecimentoClient({
           <div className="flex items-center justify-between mb-4">
             <h3
               className="font-bold"
-              style={{ fontSize: "16px", color: "#0E0F10" }}
+              style={{ fontSize: "16px", color: "var(--hubia-ink-500)" }}
             >
               Adicionar Conhecimento
             </h3>
@@ -147,7 +147,7 @@ export default function ConhecimentoClient({
               onClick={() => setShowForm(false)}
               className="rounded-lg p-1.5 hover:bg-[#EEEFE9]"
             >
-              <X size={18} style={{ color: "#A9AAA5" }} />
+              <X size={18} style={{ color: "var(--hubia-bg-base-700)" }} />
             </button>
           </div>
 
@@ -192,8 +192,8 @@ export default function ConhecimentoClient({
               disabled={!title.trim() || !content.trim() || isPending}
               className="self-end rounded-full font-bold transition-opacity hover:opacity-90 disabled:opacity-50"
               style={{
-                background: "#D7FF00",
-                color: "#0E0F10",
+                background: "var(--hubia-limao-500)",
+                color: "var(--hubia-ink-500)",
                 fontSize: "13px",
                 padding: "10px 22px",
               }}
@@ -210,7 +210,7 @@ export default function ConhecimentoClient({
           <Search
             size={16}
             className="absolute left-3.5 top-1/2 -translate-y-1/2"
-            style={{ color: "#A9AAA5" }}
+            style={{ color: "var(--hubia-bg-base-700)" }}
           />
           <input
             type="text"
@@ -283,14 +283,14 @@ export default function ConhecimentoClient({
                 <div className="flex-1 min-w-0">
                   <h3
                     className="truncate font-bold"
-                    style={{ fontSize: "15px", color: "#0E0F10" }}
+                    style={{ fontSize: "15px", color: "var(--hubia-ink-500)" }}
                   >
                     {entry.title}
                   </h3>
                   {!isExpanded && (
                     <p
                       className="mt-0.5 truncate font-semibold"
-                      style={{ fontSize: "12px", color: "#A9AAA5" }}
+                      style={{ fontSize: "12px", color: "var(--hubia-bg-base-700)" }}
                     >
                       {entry.content.slice(0, 120)}
                       {entry.content.length > 120 ? "..." : ""}
@@ -304,7 +304,7 @@ export default function ConhecimentoClient({
                     <span
                       key={tag}
                       className="flex items-center gap-1 rounded-full px-2 py-0.5 text-[10px] font-semibold"
-                      style={{ background: "#EEEFE9", color: "#A9AAA5" }}
+                      style={{ background: "var(--hubia-bg-base-500)", color: "var(--hubia-bg-base-700)" }}
                     >
                       <Tag size={9} />
                       {tag}
@@ -324,9 +324,9 @@ export default function ConhecimentoClient({
                 </span>
 
                 {isExpanded ? (
-                  <ChevronUp size={16} style={{ color: "#A9AAA5" }} />
+                  <ChevronUp size={16} style={{ color: "var(--hubia-bg-base-700)" }} />
                 ) : (
-                  <ChevronDown size={16} style={{ color: "#A9AAA5" }} />
+                  <ChevronDown size={16} style={{ color: "var(--hubia-bg-base-700)" }} />
                 )}
               </button>
 
@@ -336,7 +336,7 @@ export default function ConhecimentoClient({
                   <pre
                     className="whitespace-pre-wrap text-[13px] leading-relaxed"
                     style={{
-                      color: "#0E0F10",
+                      color: "var(--hubia-ink-500)",
                       fontFamily: "inherit",
                     }}
                   >
@@ -351,8 +351,8 @@ export default function ConhecimentoClient({
                           key={tag}
                           className="flex items-center gap-1 rounded-full px-2.5 py-1 text-[11px] font-semibold"
                           style={{
-                            background: "#EEEFE9",
-                            color: "#0E0F10",
+                            background: "var(--hubia-bg-base-500)",
+                            color: "var(--hubia-ink-500)",
                           }}
                         >
                           <Tag size={10} />
@@ -402,13 +402,13 @@ export default function ConhecimentoClient({
         >
           <div
             className="flex h-14 w-14 items-center justify-center rounded-full"
-            style={{ background: "#EEEFE9" }}
+            style={{ background: "var(--hubia-bg-base-500)" }}
           >
-            <BookOpen size={28} style={{ color: "#A9AAA5" }} />
+            <BookOpen size={28} style={{ color: "var(--hubia-bg-base-700)" }} />
           </div>
           <p
             className="font-semibold"
-            style={{ fontSize: "15px", color: "#A9AAA5" }}
+            style={{ fontSize: "15px", color: "var(--hubia-bg-base-700)" }}
           >
             {entries.length === 0
               ? "Nenhum conhecimento cadastrado."
@@ -420,8 +420,8 @@ export default function ConhecimentoClient({
               onClick={() => setShowForm(true)}
               className="rounded-full font-bold transition-opacity hover:opacity-90"
               style={{
-                background: "#D7FF00",
-                color: "#0E0F10",
+                background: "var(--hubia-limao-500)",
+                color: "var(--hubia-ink-500)",
                 fontSize: "13px",
                 padding: "10px 22px",
               }}

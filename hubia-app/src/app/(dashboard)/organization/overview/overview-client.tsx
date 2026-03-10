@@ -30,7 +30,7 @@ const cards: {
   href: string;
   cor: string;
 }[] = [
-  { label: "Plano", icon: Crown, href: "/organization/plano", cor: "#D7FF00" },
+  { label: "Plano", icon: Crown, href: "/organization/plano", cor: "var(--hubia-limao-500)" },
   { label: "Branding", icon: Palette, href: "/organization/branding", cor: "#EEEAFF" },
   { label: "Domínio", icon: Globe, href: "/organization/domain", cor: "#E1F4FE" },
   { label: "Equipe", icon: Users, href: "/organization/team", cor: "#E0F5F3" },
@@ -48,10 +48,10 @@ export default function OverviewClient({
   return (
     <div className="flex flex-col gap-6">
       {/* Banner identidade */}
-      <div className="rounded-[30px] bg-[#0E0F10] p-6 flex items-center justify-between">
+      <div className="rounded-[30px] bg-ink-500 p-6 flex items-center justify-between">
         <div className="flex items-center gap-4">
-          <div className="flex h-12 w-12 items-center justify-center rounded-[14px] bg-[#D7FF00]">
-            <Building2 size={22} color="#0E0F10" />
+          <div className="flex h-12 w-12 items-center justify-center rounded-[14px] bg-limao-500">
+            <Building2 size={22} color="var(--hubia-ink-500)" />
           </div>
           <div>
             <p className="text-[12px] font-semibold text-white/40 uppercase tracking-wide">
@@ -64,7 +64,7 @@ export default function OverviewClient({
         </div>
 
         <div className="flex items-center gap-3">
-          <div className="rounded-[12px] bg-[#D7FF00] px-3 py-1.5 text-[12px] font-bold text-[#0E0F10]">
+          <div className="rounded-[12px] bg-limao-500 px-3 py-1.5 text-[12px] font-bold text-ink-500">
             {planoNome} N{planoNivel}
           </div>
         </div>
@@ -108,8 +108,8 @@ export default function OverviewClient({
               className="flex flex-col gap-3 rounded-[16px] bg-white p-5"
             >
               <div className="flex items-center justify-between">
-                <div className="flex h-8 w-8 items-center justify-center rounded-[12px] bg-[#EEEFE9]">
-                  <Icon size={15} className="text-[#0E0F10]" />
+                <div className="flex h-8 w-8 items-center justify-center rounded-[12px] bg-base-500">
+                  <Icon size={15} className="text-ink-500" />
                 </div>
                 {kpi.ok ? (
                   <CheckCircle2 size={14} color="#43A047" />
@@ -118,10 +118,10 @@ export default function OverviewClient({
                 )}
               </div>
               <div>
-                <p className="text-[11px] font-semibold text-[#A9AAA5] uppercase tracking-wide">
+                <p className="text-[11px] font-semibold text-base-700 uppercase tracking-wide">
                   {kpi.label}
                 </p>
-                <p className="mt-0.5 text-[15px] font-bold text-[#0E0F10] truncate">
+                <p className="mt-0.5 text-[15px] font-bold text-ink-500 truncate">
                   {typeof kpi.valor === "number" ? kpi.valor : kpi.valor}
                 </p>
               </div>
@@ -132,7 +132,7 @@ export default function OverviewClient({
 
       {/* Atalhos para seções */}
       <div className="rounded-[30px] bg-white p-6">
-        <h2 className="mb-4 text-[15px] font-bold text-[#0E0F10]">
+        <h2 className="mb-4 text-[15px] font-bold text-ink-500">
           Gerenciar organização
         </h2>
         <div className="grid grid-cols-1 gap-2 md:grid-cols-2">
@@ -147,7 +147,7 @@ export default function OverviewClient({
               >
                 <Link href={card.href} className="block">
                   <motion.div
-                    className="flex items-center justify-between rounded-[14px] bg-[#EEEFE9] px-5 py-4"
+                    className="flex items-center justify-between rounded-[14px] bg-base-500 px-5 py-4"
                     whileHover={{ backgroundColor: "rgba(213,210,201,0.6)", y: -2 }}
                     whileTap={{ scale: 0.98 }}
                     transition={{ duration: 0.15 }}
@@ -157,13 +157,13 @@ export default function OverviewClient({
                         className="flex h-9 w-9 items-center justify-center rounded-[12px]"
                         style={{ backgroundColor: card.cor }}
                       >
-                        <Icon size={16} color="#0E0F10" />
+                        <Icon size={16} color="var(--hubia-ink-500)" />
                       </div>
-                      <span className="text-[14px] font-semibold text-[#0E0F10]">
+                      <span className="text-[14px] font-semibold text-ink-500">
                         {card.label}
                       </span>
                     </div>
-                    <ArrowRight size={15} className="text-[#A9AAA5]" />
+                    <ArrowRight size={15} className="text-base-700" />
                   </motion.div>
                 </Link>
               </motion.div>

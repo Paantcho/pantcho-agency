@@ -30,7 +30,7 @@ function CreatorCard({ creator, index }: { creator: CreatorRow; index: number })
   return (
     <MotionLink
       href={`/creators/${creator.id}`}
-      className="group relative flex flex-col overflow-hidden rounded-[30px] bg-[#0E0F10]"
+      className="group relative flex flex-col overflow-hidden rounded-[30px] bg-ink-500"
       style={{ aspectRatio: "3/4" }}
       initial={{ opacity: 0, y: 16 }}
       animate={{ opacity: 1, y: 0 }}
@@ -61,8 +61,8 @@ function CreatorCard({ creator, index }: { creator: CreatorRow; index: number })
         <span
           className="rounded-full px-3 py-1 text-[11px] font-bold uppercase tracking-widest"
           style={{
-            background: isDraft ? "#FF8C00" : "#0E0F10",
-            color: isDraft ? "#FFFFFF" : "#D7FF00",
+            background: isDraft ? "#FF8C00" : "var(--hubia-ink-500)",
+            color: isDraft ? "#FFFFFF" : "var(--hubia-limao-500)",
           }}
         >
           {isDraft ? "Rascunho" : creator.isActive ? "Ativa" : "Inativa"}
@@ -75,7 +75,7 @@ function CreatorCard({ creator, index }: { creator: CreatorRow; index: number })
           className="font-bold"
           style={{
             fontSize: "clamp(18px,1.8vw,24px)",
-            color: "#D7FF00",
+            color: "var(--hubia-limao-500)",
             lineHeight: 1.1,
             letterSpacing: "-0.01em",
           }}
@@ -119,7 +119,7 @@ function CreatorCard({ creator, index }: { creator: CreatorRow; index: number })
                 className="rounded-full px-2.5 py-0.5 text-[10px] font-semibold capitalize"
                 style={{
                   background: "rgba(14,15,16,0.65)",
-                  color: "#D7FF00",
+                  color: "var(--hubia-limao-500)",
                   backdropFilter: "blur(6px)",
                   border: "1px solid rgba(215,255,0,0.15)",
                 }}
@@ -159,14 +159,14 @@ export default function CreatorsListClient({
       <div className="flex flex-wrap items-center justify-between gap-4">
         <h1
           className="font-bold"
-          style={{ fontSize: "28px", color: "#0E0F10" }}
+          style={{ fontSize: "28px", color: "var(--hubia-ink-500)" }}
         >
           Creators
         </h1>
         <div className="flex items-center gap-4">
           <span
             className="font-semibold"
-            style={{ fontSize: "14px", color: "#A9AAA5" }}
+            style={{ fontSize: "14px", color: "var(--hubia-bg-base-700)" }}
           >
             {ativasCount} {ativasCount === 1 ? "ativa" : "ativas"}
           </span>
@@ -175,8 +175,8 @@ export default function CreatorsListClient({
             onClick={() => setModalOpen(true)}
             className="flex items-center gap-2 rounded-full font-bold"
             style={{
-              background: "#D7FF00",
-              color: "#0E0F10",
+              background: "var(--hubia-limao-500)",
+              color: "var(--hubia-ink-500)",
               fontSize: "14px",
               padding: "10px 22px",
             }}
@@ -185,7 +185,7 @@ export default function CreatorsListClient({
             whileTap={{ scale: 0.96 }}
             animate="rest"
             variants={{
-              rest: { scale: 1, backgroundColor: "#D7FF00" },
+              rest: { scale: 1, backgroundColor: "var(--hubia-limao-500)" },
               hovered: { scale: 1.03, backgroundColor: "#DFFF33" },
             }}
             transition={{ duration: 0.15, ease: [0.34, 1.56, 0.64, 1] }}
@@ -213,7 +213,7 @@ export default function CreatorsListClient({
           type="button"
           onClick={() => setModalOpen(true)}
           className="group flex flex-col items-center justify-center gap-3 rounded-[30px] border-2 border-dashed"
-          style={{ aspectRatio: "3/4", borderColor: "#D9D9D4" }}
+          style={{ aspectRatio: "3/4", borderColor: "var(--hubia-sand-600)" }}
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.3, ease: [0, 0, 0.2, 1], delay: Math.min(creators.length * 0.06, 0.3) }}

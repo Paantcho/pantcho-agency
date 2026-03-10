@@ -275,7 +275,7 @@ export default function PedidosClient({
             <button
               type="button"
               onClick={() => setShowForm(false)}
-              className="rounded-lg p-1.5 hover:bg-[#EEEFE9]"
+              className="rounded-lg p-1.5 hover:bg-base-500"
             >
               <X size={18} style={{ color: "#A9AAA5" }} />
             </button>
@@ -287,20 +287,20 @@ export default function PedidosClient({
               value={titulo}
               onChange={(e) => setTitulo(e.target.value)}
               placeholder="Título do pedido"
-              className="rounded-xl border border-[#EEEFE9] bg-[#F5F5F3] px-4 py-3 text-[14px] text-[#0E0F10] placeholder-[#A9AAA5] outline-none focus:border-[#D7FF00]"
+              className="rounded-xl border border-base-500 bg-[#F5F5F3] px-4 py-3 text-[14px] text-[#0E0F10] placeholder-[#A9AAA5] outline-none focus:border-[#D7FF00]"
             />
             <textarea
               value={descricao}
               onChange={(e) => setDescricao(e.target.value)}
               placeholder="Descrição / briefing..."
               rows={3}
-              className="resize-none rounded-xl border border-[#EEEFE9] bg-[#F5F5F3] px-4 py-3 text-[14px] text-[#0E0F10] placeholder-[#A9AAA5] outline-none focus:border-[#D7FF00]"
+              className="resize-none rounded-xl border border-base-500 bg-[#F5F5F3] px-4 py-3 text-[14px] text-[#0E0F10] placeholder-[#A9AAA5] outline-none focus:border-[#D7FF00]"
             />
             <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
               <select
                 value={tipo}
                 onChange={(e) => setTipo(e.target.value)}
-                className="rounded-xl border border-[#EEEFE9] bg-[#F5F5F3] px-4 py-3 text-[14px] text-[#0E0F10] outline-none focus:border-[#D7FF00]"
+                className="rounded-xl border border-base-500 bg-[#F5F5F3] px-4 py-3 text-[14px] text-[#0E0F10] outline-none focus:border-[#D7FF00]"
               >
                 {Object.entries(TIPO_LABELS).map(([key, label]) => (
                   <option key={key} value={key}>
@@ -311,7 +311,7 @@ export default function PedidosClient({
               <select
                 value={urgencia}
                 onChange={(e) => setUrgencia(e.target.value)}
-                className="rounded-xl border border-[#EEEFE9] bg-[#F5F5F3] px-4 py-3 text-[14px] text-[#0E0F10] outline-none focus:border-[#D7FF00]"
+                className="rounded-xl border border-base-500 bg-[#F5F5F3] px-4 py-3 text-[14px] text-[#0E0F10] outline-none focus:border-[#D7FF00]"
               >
                 {Object.entries(URGENCIA_CONFIG).map(([key, cfg]) => (
                   <option key={key} value={key}>
@@ -322,7 +322,7 @@ export default function PedidosClient({
               <select
                 value={creatorId}
                 onChange={(e) => setCreatorId(e.target.value)}
-                className="rounded-xl border border-[#EEEFE9] bg-[#F5F5F3] px-4 py-3 text-[14px] text-[#0E0F10] outline-none focus:border-[#D7FF00]"
+                className="rounded-xl border border-base-500 bg-[#F5F5F3] px-4 py-3 text-[14px] text-[#0E0F10] outline-none focus:border-[#D7FF00]"
               >
                 <option value="">Sem creator</option>
                 {creators.map((c) => (
@@ -335,7 +335,7 @@ export default function PedidosClient({
                 type="date"
                 value={dueAt}
                 onChange={(e) => setDueAt(e.target.value)}
-                className="rounded-xl border border-[#EEEFE9] bg-[#F5F5F3] px-4 py-3 text-[14px] text-[#0E0F10] outline-none focus:border-[#D7FF00]"
+                className="rounded-xl border border-base-500 bg-[#F5F5F3] px-4 py-3 text-[14px] text-[#0E0F10] outline-none focus:border-[#D7FF00]"
               />
             </div>
             <button
