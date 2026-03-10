@@ -29,12 +29,12 @@ const STATUS_LABELS: Record<PedidoStatus, string> = {
 };
 
 const STATUS_PALETTE: Record<PedidoStatus, { bg: string; text: string; dot: string }> = {
-  rascunho:     { bg: "#F0F0EE", text: "#6B6C68", dot: "#A9AAA5" },
+  rascunho:     { bg: "#F0F0EE", text: "#6B6C68", dot: "var(--hubia-bg-base-700)" },
   aguardando:   { bg: "#F0EFFF", text: "#5B52C7", dot: "#7C6AF7" },
   em_andamento: { bg: "#F0FF80", text: "#5A6600", dot: "#A8C800" },
   revisao:      { bg: "#FFF0E0", text: "#A05500", dot: "#FB8C00" },
   aprovado:     { bg: "#E6F4EA", text: "#2E7D32", dot: "#43A047" },
-  entregue:     { bg: "#E8E8E8", text: "#0E0F10", dot: "#0E0F10" },
+  entregue:     { bg: "#E8E8E8", text: "var(--hubia-ink-500)", dot: "var(--hubia-ink-500)" },
   cancelado:    { bg: "#FDECEA", text: "#C62828", dot: "#E53935" },
 };
 
@@ -46,7 +46,7 @@ const TIPO_BADGES: Record<PedidoTipo, string> = {
   landing_page: "#0288D1",
   app: "#43A047",
   site: "#0288D1",
-  sistema: "#5E5E5F",
+  sistema: "var(--hubia-ink-400)",
   creator: "#E91E63",
   skill: "#FF8F00",
   agente: "#0E0F10",

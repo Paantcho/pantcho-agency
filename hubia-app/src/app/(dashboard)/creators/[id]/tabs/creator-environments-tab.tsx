@@ -185,7 +185,7 @@ export default function CreatorEnvironmentsTab({
               {/* Seção FIXOS */}
               <div className="flex flex-col gap-1.5">
                 <CategoryTag label="FIXOS" color={CATEGORY_COLORS.fixos} />
-                <p className="font-semibold leading-snug" style={{ fontSize: "12px", color: "#A9AAA5" }}>
+                <p className="font-semibold leading-snug" style={{ fontSize: "12px", color: "var(--hubia-bg-base-700)" }}>
                   {env.prompt ||
                     "Cinza contemporâneo, volumes retos, detalhes madeira/pedra clara. Jardim impecável. Porta grande madeira nobre. Espaço SUV."}
                 </p>
@@ -194,7 +194,7 @@ export default function CreatorEnvironmentsTab({
               {/* Seção FLEXÍVEIS */}
               <div className="flex flex-col gap-1.5">
                 <CategoryTag label="FLEXÍVEIS" color={CATEGORY_COLORS.flexiveis} />
-                <p className="font-semibold leading-snug" style={{ fontSize: "12px", color: "#A9AAA5" }}>
+                <p className="font-semibold leading-snug" style={{ fontSize: "12px", color: "var(--hubia-bg-base-700)" }}>
                   {env.description ||
                     "Detalhar aqui o que pode ser variável sem que descaracterize algo mais complexo de ser mudado. Ex.: se houver uma fonte a mesma não pode ser retirada... mas pode estar desligada."}
                 </p>
@@ -203,17 +203,17 @@ export default function CreatorEnvironmentsTab({
               {/* Seção PROIBIDO */}
               <div className="flex flex-col gap-1.5">
                 <CategoryTag label="PROIBIDO" color={CATEGORY_COLORS.proibido} />
-                <p className="font-semibold leading-snug" style={{ fontSize: "12px", color: "#A9AAA5" }}>
+                <p className="font-semibold leading-snug" style={{ fontSize: "12px", color: "var(--hubia-bg-base-700)" }}>
                   Cor da casa ou arquitetura. Qualquer vegetação que não seja compatível com a localização. Tipo do piso / acabamento.
                 </p>
               </div>
 
               {/* Ações */}
-              <div className="mt-auto flex gap-2 border-t pt-3" style={{ borderColor: "#EEEFE9" }}>
+              <div className="mt-auto flex gap-2 border-t pt-3" style={{ borderColor: "var(--hubia-bg-base-500)" }}>
                 <button
                   type="button"
                   onClick={() => startEdit(env)}
-                  className="rounded-full border px-3 py-1.5 text-[11px] font-semibold transition-colors hover:bg-[#EEEFE9]"
+                  className="rounded-full border px-3 py-1.5 text-[11px] font-semibold transition-colors hover:bg-base-500"
                   style={{ borderColor: "#D9D9D4", color: "#0E0F10" }}
                 >
                   Editar
@@ -305,7 +305,7 @@ export default function CreatorEnvironmentsTab({
             <button
               type="button"
               onClick={resetForm}
-              className="rounded-full border font-semibold transition-colors hover:bg-[#EEEFE9]"
+              className="rounded-full border font-semibold transition-colors hover:bg-base-500"
               style={{ borderColor: "#D9D9D4", color: "#0E0F10", fontSize: "13px", padding: "9px 22px" }}
             >
               Cancelar

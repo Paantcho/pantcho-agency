@@ -194,7 +194,7 @@ function AddAgentModal({
                           animate={{ opacity: 1, y: 0 }}
                           transition={{ delay: i * 0.03, duration: 0.16 }}
                           // animate controla background dinamicamente
-                          style={{ border: `1.5px solid ${isSel ? "#0E0F10" : "transparent"}` }}
+                          style={{ border: `1.5px solid ${isSel ? "var(--hubia-ink-500)" : "transparent"}` }}
                           whileHover={!isSel ? { backgroundColor: "#F5F5F0" } : undefined}
                           whileTap={{ scale: 0.97 }}
                         >
@@ -203,7 +203,7 @@ function AddAgentModal({
                             className="absolute right-2.5 top-2.5 flex h-5 w-5 items-center justify-center rounded-full"
                             initial={false}
                             animate={{
-                              backgroundColor: isSel ? "#0E0F10" : "#EEEFE9",
+                              backgroundColor: isSel ? "var(--hubia-ink-500)" : "var(--hubia-bg-base-500)",
                               scale: isSel ? 1 : 0.85,
                             }}
                             transition={{ duration: 0.15, ease: [0.34, 1.56, 0.64, 1] }}
@@ -259,7 +259,7 @@ function AddAgentModal({
                   initial={false}
                   animate={{
                     backgroundColor: selected.size > 0 ? "#D7FF00" : "#EEEFE9",
-                    color: selected.size > 0 ? "#0E0F10" : "#A9AAA5",
+                    color: selected.size > 0 ? "var(--hubia-ink-500)" : "var(--hubia-bg-base-700)",
                   }}
                   whileHover={selected.size > 0 ? { scale: 1.02, backgroundColor: "#DFFF33" } : undefined}
                   whileTap={selected.size > 0 ? { scale: 0.97 } : undefined}
@@ -267,7 +267,7 @@ function AddAgentModal({
                 >
                   {loading ? (
                     <motion.div
-                      className="h-4 w-4 rounded-full border-2 border-[#0E0F10] border-t-transparent"
+                      className="h-4 w-4 rounded-full border-2 border-ink-500 border-t-transparent"
                       animate={{ rotate: 360 }}
                       transition={{ duration: 0.8, repeat: Infinity, ease: "linear" }}
                     />

@@ -791,7 +791,7 @@ function DistribuicaoTipo() {
           const isFirst = i === 0;
           const isSecond = i === 1;
           const IconComp = d.Icon;
-          const barColor = isFirst ? "#D7FF00" : isSecond ? "#2A2B2C" : "#D9D9D4";
+          const barColor = isFirst ? "var(--hubia-limao-500)" : isSecond ? "#2A2B2C" : "#D9D9D4";
           const barH = isFirst ? 12 : isSecond ? 8 : 6;
           const numSize = isFirst ? "26px" : isSecond ? "22px" : "18px";
           return (
@@ -808,7 +808,7 @@ function DistribuicaoTipo() {
                     className="text-[10px] font-bold flex-shrink-0 flex items-center justify-center rounded-full"
                     style={{
                       color: isFirst ? "var(--hubia-ink-500)" : "var(--hubia-bg-base-700)",
-                      backgroundColor: isFirst ? "#D7FF00" : "transparent",
+                      backgroundColor: isFirst ? "var(--hubia-limao-500)" : "transparent",
                       width: 20,
                       height: 20,
                       border: isFirst ? "none" : "1.5px solid #E4E5E0",
@@ -816,7 +816,7 @@ function DistribuicaoTipo() {
                   >
                     {i + 1}
                   </span>
-                  <div className="flex h-8 w-8 items-center justify-center rounded-[12px]" style={{ backgroundColor: isFirst ? "#D7FF0020" : "#EEEFE9" }}>
+                  <div className="flex h-8 w-8 items-center justify-center rounded-[12px]" style={{ backgroundColor: isFirst ? "color-mix(in srgb, var(--hubia-limao-500) 12%, transparent)" : "var(--hubia-bg-base-500)" }}>
                     <IconComp size={14} color={isFirst ? "#8AB000" : "#A9AAA5"} />
                   </div>
                   <span className="text-[14px] font-bold text-ink-500">{d.tipo}</span>

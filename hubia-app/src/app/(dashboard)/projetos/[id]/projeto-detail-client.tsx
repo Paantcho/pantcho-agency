@@ -2059,7 +2059,7 @@ function ConectoresTab({ conectores, tipoConfig, meta, onSave }: {
                     <ExternalLink size={11} color="#A9AAA5" className="flex-shrink-0" />
                   </div>
                 ) : (
-                  <span className="text-[12px] text-[#D5D2C9] italic">{placeholder}</span>
+                  <span className="text-[12px] text-sand-600 italic">{placeholder}</span>
                 )}
               </div>
             );
@@ -2110,7 +2110,7 @@ function ConectoresTab({ conectores, tipoConfig, meta, onSave }: {
                   value={c.url ?? ""}
                   onChange={(e) => updateUrl(i, e.target.value)}
                   placeholder="URL ou identificador..."
-                  className="h-8 w-full rounded-[8px] border border-transparent bg-[#FAFAFA] px-3 text-[12px] text-ink-500 outline-none placeholder:text-[#D5D2C9] focus:border-[#D9D9D4] transition-[border-color] duration-150"
+                  className="h-8 w-full rounded-[8px] border border-transparent bg-[#FAFAFA] px-3 text-[12px] text-ink-500 outline-none placeholder:text-sand-600 focus:border-[#D9D9D4] transition-[border-color] duration-150"
                 />
               </motion.div>
             );
