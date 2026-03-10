@@ -295,7 +295,7 @@ export default function ProjetosClient({
       <div className="flex items-center justify-between gap-3">
         <div>
           <h1 className="text-[28px] font-bold text-ink-500">Projetos</h1>
-          <p className="text-[13px] text-[#A9AAA5] mt-0.5">
+          <p className="text-[13px] text-base-700 mt-0.5">
             {projetos.length} projeto{projetos.length !== 1 ? "s" : ""} · workspaces vivos por tipo
           </p>
         </div>
@@ -326,12 +326,12 @@ export default function ProjetosClient({
 
         {/* Busca */}
         <div className="relative flex items-center">
-          <Search size={13} className="absolute left-3 text-[#A9AAA5] pointer-events-none" />
+          <Search size={13} className="absolute left-3 text-base-700 pointer-events-none" />
           <input
             value={busca}
             onChange={(e) => setBusca(e.target.value)}
             placeholder="Buscar projeto..."
-            className="h-9 rounded-[12px] bg-white pl-8 pr-3.5 text-[13px] text-ink-500 outline-none placeholder:text-[#A9AAA5] border border-transparent focus:border-[#0E0F10] focus:ring-2 focus:ring-ink-500/10 transition-[border-color] duration-150 w-[200px]"
+            className="h-9 rounded-[12px] bg-white pl-8 pr-3.5 text-[13px] text-ink-500 outline-none placeholder:text-base-700 border border-transparent focus:border-[#0E0F10] focus:ring-2 focus:ring-ink-500/10 transition-[border-color] duration-150 w-[200px]"
           />
         </div>
       </div>
@@ -345,13 +345,13 @@ export default function ProjetosClient({
             className="flex flex-col items-center justify-center py-20 gap-3"
           >
             <FolderKanban size={32} color="#D5D2C9" />
-            <p className="text-[13px] text-[#A9AAA5]">
+            <p className="text-[13px] text-base-700">
               {busca || viewAtiva !== "todos" ? "Nenhum projeto nesta view." : "Nenhum projeto ainda."}
             </p>
             {!busca && viewAtiva === "todos" && (
               <motion.button
                 onClick={() => setModalOpen(true)}
-                className="mt-1 rounded-[14px] border-2 border-dashed border-[#D5D2C9] px-5 py-2.5 text-[13px] font-semibold text-[#A9AAA5]"
+                className="mt-1 rounded-[14px] border-2 border-dashed border-[#D5D2C9] px-5 py-2.5 text-[13px] font-semibold text-base-700"
                 whileHover={{ borderColor: "#A9AAA5", color: "#0E0F10", backgroundColor: "rgba(213,210,201,0.08)" }}
                 whileTap={{ scale: 0.98 }}
               >
@@ -384,7 +384,7 @@ export default function ProjetosClient({
               animate={{ opacity: 1, y: 0, transition: { delay: Math.min(projetosFiltrados.length * 0.06, 0.3) } }}
             >
               <Plus size={20} color="#A9AAA5" />
-              <span className="text-[13px] font-semibold text-[#A9AAA5]">Novo Projeto</span>
+              <span className="text-[13px] font-semibold text-base-700">Novo Projeto</span>
             </motion.button>
           </motion.div>
         )}
@@ -485,7 +485,7 @@ function ProjetoCardItem({ projeto: p, index: i, onClick }: {
 
       {/* Descrição / objetivo */}
       {!!meta.objetivo ? (
-        <p className="text-[12px] text-[#A9AAA5] leading-relaxed line-clamp-2 mb-4">
+        <p className="text-[12px] text-base-700 leading-relaxed line-clamp-2 mb-4">
           {String(meta.objetivo)}
         </p>
       ) : (
@@ -498,14 +498,14 @@ function ProjetoCardItem({ projeto: p, index: i, onClick }: {
           {subprojetos.slice(0, 3).map((s, idx) => (
             <span
               key={idx}
-              className="flex items-center gap-1 rounded-[6px] bg-[#F5F5F3] px-2 py-0.5 text-[10px] font-semibold text-[#5E5E5F]"
+              className="flex items-center gap-1 rounded-[6px] bg-[#F5F5F3] px-2 py-0.5 text-[10px] font-semibold text-ink-400"
             >
               <FolderKanban size={9} color="#A9AAA5" />
               {s.nome}
             </span>
           ))}
           {subprojetos.length > 3 && (
-            <span className="rounded-[6px] bg-[#F0F0EE] px-2 py-0.5 text-[10px] font-semibold text-[#A9AAA5]">
+            <span className="rounded-[6px] bg-[#F0F0EE] px-2 py-0.5 text-[10px] font-semibold text-base-700">
               +{subprojetos.length - 3}
             </span>
           )}
@@ -536,13 +536,13 @@ function ProjetoCardItem({ projeto: p, index: i, onClick }: {
           {tarefasAbertas > 0 && (
             <div className="flex items-center gap-1">
               <CheckSquare size={11} color="#A9AAA5" />
-              <span className="text-[11px] text-[#A9AAA5]">{tarefasAbertas}</span>
+              <span className="text-[11px] text-base-700">{tarefasAbertas}</span>
             </div>
           )}
           {p.pedidosCount > 0 && (
             <div className="flex items-center gap-1">
               <ClipboardList size={11} color="#A9AAA5" />
-              <span className="text-[11px] text-[#A9AAA5]">{p.pedidosCount}</span>
+              <span className="text-[11px] text-base-700">{p.pedidosCount}</span>
             </div>
           )}
           {rulesBlockers > 0 && (
@@ -554,13 +554,13 @@ function ProjetoCardItem({ projeto: p, index: i, onClick }: {
           {subprojetos.length > 0 && (
             <div className="flex items-center gap-1">
               <Layers size={11} color="#A9AAA5" />
-              <span className="text-[11px] text-[#A9AAA5]">{subprojetos.length}</span>
+              <span className="text-[11px] text-base-700">{subprojetos.length}</span>
             </div>
           )}
           {!!meta.prazo && (
             <div className="flex items-center gap-1">
               <Clock size={11} color="#A9AAA5" />
-              <span className="text-[11px] text-[#A9AAA5]">{String(meta.prazo)}</span>
+              <span className="text-[11px] text-base-700">{String(meta.prazo)}</span>
             </div>
           )}
         </div>
@@ -682,13 +682,13 @@ function NovoProjetoModal({ open, onClose, organizationId, onCreated }: {
                     {step === "detalhe" && (
                       <motion.button
                         onClick={() => setStep("tipo")}
-                        className="text-[11px] font-semibold text-[#A9AAA5] flex items-center gap-1"
+                        className="text-[11px] font-semibold text-base-700 flex items-center gap-1"
                         whileHover={{ color: "#0E0F10" }} whileTap={{ scale: 0.97 }}>
                         ← Tipos
                       </motion.button>
                     )}
                     {step === "detalhe" && <span className="text-[#D4D5D6] text-[11px]">/</span>}
-                    <span className="text-[11px] font-semibold text-[#A9AAA5]">
+                    <span className="text-[11px] font-semibold text-base-700">
                       {step === "tipo" ? "1. Escolha o tipo" : "2. Configure o projeto"}
                     </span>
                   </div>
@@ -716,7 +716,7 @@ function NovoProjetoModal({ open, onClose, organizationId, onCreated }: {
                   >
                     {TIPO_GROUPS.map((group) => (
                       <div key={group.label}>
-                        <p className="text-[10px] font-bold uppercase tracking-widest text-[#A9AAA5] mb-2.5">{group.label}</p>
+                        <p className="text-[10px] font-bold uppercase tracking-widest text-base-700 mb-2.5">{group.label}</p>
                         <div className="grid grid-cols-2 gap-2">
                           {group.tipos.map((tipo) => {
                             const cfg = TIPO_CONFIG[tipo];
@@ -742,7 +742,7 @@ function NovoProjetoModal({ open, onClose, organizationId, onCreated }: {
                                 </div>
                                 <div>
                                   <p className="text-[13px] font-bold text-ink-500">{cfg.label}</p>
-                                  <p className="text-[11px] text-[#A9AAA5] leading-snug mt-0.5">{cfg.descricao}</p>
+                                  <p className="text-[11px] text-base-700 leading-snug mt-0.5">{cfg.descricao}</p>
                                 </div>
                               </motion.button>
                             );
@@ -773,7 +773,7 @@ function NovoProjetoModal({ open, onClose, organizationId, onCreated }: {
                       </div>
                       <div className="flex-1 min-w-0">
                         <p className="text-[13px] font-bold text-ink-500">{tipoConfig.label}</p>
-                        <p className="text-[11px] text-[#5E5E5F] mt-0.5">{tipoConfig.descricao}</p>
+                        <p className="text-[11px] text-ink-400 mt-0.5">{tipoConfig.descricao}</p>
                         <div className="flex flex-wrap gap-1 mt-2.5">
                           {tipoConfig.modulosBase.map((m) => (
                             <span key={m} className="rounded-[5px] bg-white px-1.5 py-0.5 text-[9px] font-semibold" style={{ color: tipoConfig.cor }}>
@@ -786,52 +786,52 @@ function NovoProjetoModal({ open, onClose, organizationId, onCreated }: {
 
                     <form onSubmit={handleSubmit} className="flex flex-col gap-4">
                       <div>
-                        <label className="mb-1.5 block text-[11px] font-bold uppercase tracking-wide text-[#A9AAA5]">Nome do Projeto *</label>
+                        <label className="mb-1.5 block text-[11px] font-bold uppercase tracking-wide text-base-700">Nome do Projeto *</label>
                         <input
                           autoFocus value={nome} onChange={(e) => setNome(e.target.value)}
                           placeholder={`Ex: ${tipoConfig.label} — Cliente 2026`}
-                          className="h-11 w-full rounded-[12px] border border-transparent bg-[#EEEFE9] px-3.5 text-[14px] text-ink-500 outline-none placeholder:text-[#A9AAA5] hover:border-[#D4D5D6] focus:border-[#0E0F10] focus:ring-2 focus:ring-ink-500/10 transition-[border-color] duration-150"
+                          className="h-11 w-full rounded-[12px] border border-transparent bg-[#EEEFE9] px-3.5 text-[14px] text-ink-500 outline-none placeholder:text-base-700 hover:border-[#D4D5D6] focus:border-[#0E0F10] focus:ring-2 focus:ring-ink-500/10 transition-[border-color] duration-150"
                         />
                       </div>
 
                       <div className="grid grid-cols-2 gap-3">
                         <div>
-                          <label className="mb-1.5 block text-[11px] font-bold uppercase tracking-wide text-[#A9AAA5]">Cliente / Organização</label>
+                          <label className="mb-1.5 block text-[11px] font-bold uppercase tracking-wide text-base-700">Cliente / Organização</label>
                           <input
                             value={cliente} onChange={(e) => setCliente(e.target.value)}
                             placeholder="Ex: Pantcho Agency"
-                            className="h-11 w-full rounded-[12px] border border-transparent bg-[#EEEFE9] px-3.5 text-[14px] text-ink-500 outline-none placeholder:text-[#A9AAA5] hover:border-[#D4D5D6] focus:border-[#0E0F10] focus:ring-2 focus:ring-ink-500/10 transition-[border-color] duration-150"
+                            className="h-11 w-full rounded-[12px] border border-transparent bg-[#EEEFE9] px-3.5 text-[14px] text-ink-500 outline-none placeholder:text-base-700 hover:border-[#D4D5D6] focus:border-[#0E0F10] focus:ring-2 focus:ring-ink-500/10 transition-[border-color] duration-150"
                           />
                         </div>
                         <div>
-                          <label className="mb-1.5 block text-[11px] font-bold uppercase tracking-wide text-[#A9AAA5]">Prazo estimado</label>
+                          <label className="mb-1.5 block text-[11px] font-bold uppercase tracking-wide text-base-700">Prazo estimado</label>
                           <input
                             value={prazo} onChange={(e) => setPrazo(e.target.value)}
                             placeholder="Ex: Março 2026"
-                            className="h-11 w-full rounded-[12px] border border-transparent bg-[#EEEFE9] px-3.5 text-[14px] text-ink-500 outline-none placeholder:text-[#A9AAA5] hover:border-[#D4D5D6] focus:border-[#0E0F10] focus:ring-2 focus:ring-ink-500/10 transition-[border-color] duration-150"
+                            className="h-11 w-full rounded-[12px] border border-transparent bg-[#EEEFE9] px-3.5 text-[14px] text-ink-500 outline-none placeholder:text-base-700 hover:border-[#D4D5D6] focus:border-[#0E0F10] focus:ring-2 focus:ring-ink-500/10 transition-[border-color] duration-150"
                           />
                         </div>
                       </div>
 
                       <div>
-                        <label className="mb-1.5 block text-[11px] font-bold uppercase tracking-wide text-[#A9AAA5]">Objetivo Principal</label>
+                        <label className="mb-1.5 block text-[11px] font-bold uppercase tracking-wide text-base-700">Objetivo Principal</label>
                         <textarea
                           value={objetivo} onChange={(e) => setObjetivo(e.target.value)}
                           placeholder="O que esse projeto precisa entregar?"
                           rows={2}
-                          className="w-full rounded-[12px] border border-transparent bg-[#EEEFE9] px-3.5 py-2.5 text-[14px] text-ink-500 outline-none placeholder:text-[#A9AAA5] resize-none hover:border-[#D4D5D6] focus:border-[#0E0F10] focus:ring-2 focus:ring-ink-500/10 transition-[border-color] duration-150"
+                          className="w-full rounded-[12px] border border-transparent bg-[#EEEFE9] px-3.5 py-2.5 text-[14px] text-ink-500 outline-none placeholder:text-base-700 resize-none hover:border-[#D4D5D6] focus:border-[#0E0F10] focus:ring-2 focus:ring-ink-500/10 transition-[border-color] duration-150"
                         />
                       </div>
 
                       {/* Squad automático */}
                       <div className="flex items-center justify-between rounded-[12px] bg-[#EEEFE9] px-3.5 h-10">
-                        <span className="text-[11px] text-[#A9AAA5]">Squad responsável</span>
+                        <span className="text-[11px] text-base-700">Squad responsável</span>
                         <span className="text-[12px] font-bold text-ink-500">{tipoConfig.squad}</span>
                       </div>
 
                       <div className="flex gap-3 mt-1">
                         <motion.button type="button" onClick={handleClose}
-                          className="rounded-[18px] border border-[#EEEFE9] bg-white px-5 py-3 text-[14px] font-semibold text-[#5E5E5F]"
+                          className="rounded-[18px] border border-[#EEEFE9] bg-white px-5 py-3 text-[14px] font-semibold text-ink-400"
                           whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.97 }}>
                           Cancelar
                         </motion.button>

@@ -48,7 +48,7 @@ function getIcon(config: Record<string, unknown>): LucideIcon {
 }
 
 function getColor(config: Record<string, unknown>): string {
-  return (config.color as string) || "#D7FF00";
+  return (config.color as string) || "var(--hubia-limao-500)";
 }
 
 function getSquad(config: Record<string, unknown>): string {
@@ -83,7 +83,7 @@ function AgentCard({ agent }: { agent: AgentRow }) {
             style={{
               background:
                 agent.status === "ativo" ? "#D7FF0020" : "#EF444420",
-              color: agent.status === "ativo" ? "#0E0F10" : "#EF4444",
+              color: agent.status === "ativo" ? "var(--hubia-ink-500)" : "#EF4444",
             }}
           >
             {agent.status}
@@ -112,8 +112,8 @@ function AgentCard({ agent }: { agent: AgentRow }) {
         <span
           className="rounded-full px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-widest"
           style={{
-            background: level === "lead" ? "#0E0F10" : "#EEEFE9",
-            color: level === "lead" ? "#D7FF00" : "#0E0F10",
+            background: level === "lead" ? "var(--hubia-ink-500)" : "var(--hubia-bg-base-500)",
+            color: level === "lead" ? "var(--hubia-limao-500)" : "var(--hubia-ink-500)",
           }}
         >
           {level}

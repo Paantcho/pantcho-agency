@@ -341,7 +341,7 @@ function HubiaTooltip({ active, payload, label }: {
 }) {
   if (!active || !payload?.length) return null;
   return (
-    <div className="rounded-[16px] bg-[#0E0F10] px-4 py-4 text-white min-w-[150px]">
+    <div className="rounded-[16px] bg-ink-500 px-4 py-4 text-white min-w-[150px]">
       <p className="text-[10px] mb-3 font-bold tracking-[0.12em] uppercase" style={{ color: "#4A4B4C" }}>{label}</p>
       {payload.map((item) => (
         <div key={item.name} className="flex items-center justify-between gap-6 mb-2.5 last:mb-0">
@@ -503,7 +503,7 @@ function ProducaoEficienciaChart() {
           content={({ active, payload, label }) => {
             if (!active || !payload?.length) return null;
             return (
-              <div className="rounded-[16px] bg-[#0E0F10] px-4 py-4 text-white min-w-[140px]">
+              <div className="rounded-[16px] bg-ink-500 px-4 py-4 text-white min-w-[140px]">
                 <p className="text-[10px] mb-3 font-bold tracking-[0.12em] uppercase" style={{ color: "#4A4B4C" }}>{label}</p>
                 <div className="flex items-center justify-between gap-5">
                   <div className="flex items-center gap-2">
@@ -553,7 +553,7 @@ function ProducaoChartContainer({ periodo }: { periodo: string }) {
           <span className="text-[12px] font-bold text-[#8A8B8C]">Pedidos</span>
         </div>
         <div className="flex items-center gap-2">
-          <span className="h-[3px] w-7 rounded-full bg-[#0E0F10]" />
+          <span className="h-[3px] w-7 rounded-full bg-ink-500" />
           <span className="text-[12px] font-bold text-[#8A8B8C]">Entregues</span>
         </div>
       </div>
@@ -565,7 +565,7 @@ function ProducaoChartContainer({ periodo }: { periodo: string }) {
           <span className="text-[12px] font-bold text-[#8A8B8C]">Audiovisual</span>
         </div>
         <div className="flex items-center gap-2">
-          <span className="h-3.5 w-3.5 rounded-[4px] bg-[#0E0F10]" />
+          <span className="h-3.5 w-3.5 rounded-[4px] bg-ink-500" />
           <span className="text-[12px] font-bold text-[#8A8B8C]">Dev Squad</span>
         </div>
       </div>
@@ -594,7 +594,7 @@ function ProducaoChartContainer({ periodo }: { periodo: string }) {
     <>
       <div className="flex items-start justify-between mb-7 gap-4">
         <div>
-          <h2 className="text-[20px] font-bold text-[#0E0F10]">{titles[view]}</h2>
+          <h2 className="text-[20px] font-bold text-ink-500">{titles[view]}</h2>
           <p className="text-[12px] font-semibold mt-1" style={{ color: "#A9AAA5" }}>{subtitles[view]}</p>
         </div>
         <div className="flex items-center gap-5 flex-shrink-0">
@@ -627,7 +627,7 @@ function SaudeOperacional() {
 
   return (
     <motion.div
-      className="rounded-[30px] bg-[#0E0F10] p-6 flex flex-col"
+      className="rounded-[30px] bg-ink-500 p-6 flex flex-col"
       initial={{ opacity: 0, y: 16 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.35, ease: [0, 0, 0.2, 1], delay: 0.18 }}
@@ -713,7 +713,7 @@ function StatusPedidos() {
           <BarChart3 size={15} color="#5E5E5F" />
         </div>
         <div>
-          <h2 className="text-[16px] font-bold text-[#0E0F10]">Status dos pedidos</h2>
+          <h2 className="text-[16px] font-bold text-ink-500">Status dos pedidos</h2>
           <p className="text-[11px] font-semibold mt-0.5" style={{ color: "#A9AAA5" }}>Leitura operacional</p>
         </div>
       </div>
@@ -744,7 +744,7 @@ function StatusPedidos() {
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2.5">
                 <span className="h-2.5 w-2.5 rounded-full flex-shrink-0" style={{ backgroundColor: s.cor }} />
-                <span className="text-[14px] font-bold text-[#0E0F10]">{s.label}</span>
+                <span className="text-[14px] font-bold text-ink-500">{s.label}</span>
                 {s.critico && (
                   <span className="text-[9px] font-bold px-1.5 py-0.5 rounded-full" style={{ backgroundColor: "#FB8C0018", color: "#FB8C00" }}>
                     atenção
@@ -754,7 +754,7 @@ function StatusPedidos() {
               <div className="flex items-center gap-3">
                 <span className="text-[11px] font-semibold" style={{ color: "#A9AAA5" }}>{s.insight}</span>
                 <div className="flex items-baseline gap-1">
-                  <span className="text-[26px] font-bold text-[#0E0F10] leading-none tabular-nums">{s.value}</span>
+                  <span className="text-[26px] font-bold text-ink-500 leading-none tabular-nums">{s.value}</span>
                   <span className="text-[11px] font-bold" style={{ color: "#C8C9C4" }}>
                     {Math.round((s.value / total) * 100)}%
                   </span>
@@ -782,7 +782,7 @@ function DistribuicaoTipo() {
       transition={{ duration: 0.35, ease: [0, 0, 0.2, 1], delay: 0.38 }}
     >
       <div className="mb-6">
-        <h2 className="text-[16px] font-bold text-[#0E0F10]">Por tipo de pedido</h2>
+        <h2 className="text-[16px] font-bold text-ink-500">Por tipo de pedido</h2>
         <p className="text-[11px] font-semibold mt-0.5" style={{ color: "#A9AAA5" }}>Ranking de volume no período</p>
       </div>
 
@@ -819,7 +819,7 @@ function DistribuicaoTipo() {
                   <div className="flex h-8 w-8 items-center justify-center rounded-[12px]" style={{ backgroundColor: isFirst ? "#D7FF0020" : "#EEEFE9" }}>
                     <IconComp size={14} color={isFirst ? "#8AB000" : "#A9AAA5"} />
                   </div>
-                  <span className="text-[14px] font-bold text-[#0E0F10]">{d.tipo}</span>
+                  <span className="text-[14px] font-bold text-ink-500">{d.tipo}</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <span className="font-bold tabular-nums" style={{ fontSize: numSize, color: isFirst ? "#0E0F10" : "#5E5E5F" }}>
@@ -863,7 +863,7 @@ function UsoIA() {
           <Sparkles size={16} color="#8AB000" />
         </div>
         <div>
-          <h2 className="text-[16px] font-bold text-[#0E0F10]">Uso de IA</h2>
+          <h2 className="text-[16px] font-bold text-ink-500">Uso de IA</h2>
           <p className="text-[11px] font-semibold mt-0.5" style={{ color: "#A9AAA5" }}>Consumo inteligente no período</p>
         </div>
       </div>
@@ -879,7 +879,7 @@ function UsoIA() {
             transition={{ delay: 0.48 + i * 0.07 }}
           >
             <p className="text-[10px] font-bold tracking-[0.1em] uppercase leading-tight" style={{ color: "#A9AAA5" }}>{m.label}</p>
-            <p className="text-[28px] font-bold text-[#0E0F10] leading-none tabular-nums">{m.value}</p>
+            <p className="text-[28px] font-bold text-ink-500 leading-none tabular-nums">{m.value}</p>
             <div className="flex items-center justify-between mt-auto">
               <p className="text-[11px] font-semibold leading-tight" style={{ color: "#8A8B8C" }}>{m.sub}</p>
               <div className="flex items-center gap-1 px-1.5 py-0.5 rounded-full" style={{ backgroundColor: m.pos ? "#43A04714" : "#8A8B8C12" }}>
@@ -957,7 +957,7 @@ function OrquestradorMonitor() {
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-1.5">
                         <LivePulseDot color={color} sizePx={7} />
-                        <span className="text-[11px] font-bold text-[#0E0F10] truncate">{ag.label}</span>
+                        <span className="text-[11px] font-bold text-ink-500 truncate">{ag.label}</span>
                       </div>
                       <span className="text-[10px] font-bold px-1.5 py-0.5 rounded-full flex-shrink-0" style={{ color, backgroundColor: bg }}>
                         {ag.load}%
@@ -971,7 +971,7 @@ function OrquestradorMonitor() {
             </div>
 
             {/* LIVE log */}
-            <div className="rounded-[16px] bg-[#0E0F10] p-4">
+            <div className="rounded-[16px] bg-ink-500 p-4">
               <div className="flex items-center gap-2 mb-4">
                 <LivePulseDot color="#D7FF00" sizePx={7} />
                 <span className="text-[10px] font-bold tracking-[0.12em] uppercase" style={{ color: "#D7FF00" }}>Live</span>
@@ -1015,19 +1015,19 @@ function OrquestradorMonitor() {
                 >
                   <div className="flex items-center gap-1.5 w-28 flex-shrink-0">
                     <LivePulseDot color={statusCfg.color} sizePx={6} />
-                    <span className="text-[12px] font-bold text-[#0E0F10] truncate">{ag.label}</span>
+                    <span className="text-[12px] font-bold text-ink-500 truncate">{ag.label}</span>
                   </div>
                   <div className="flex-1 min-w-0">
                     <MiniSparkline data={ag.historico} color={statusCfg.color} height={34} />
                   </div>
                   <div className="flex-shrink-0 text-right w-14">
-                    <p className="text-[16px] font-bold text-[#0E0F10] tabular-nums">{ag.historico[ag.historico.length - 1]}%</p>
+                    <p className="text-[16px] font-bold text-ink-500 tabular-nums">{ag.historico[ag.historico.length - 1]}%</p>
                     <p className="text-[10px] font-semibold" style={{ color: "#A9AAA5" }}>pico {ag.pico}%</p>
                   </div>
                 </motion.div>
               );
             })}
-            <p className="text-[10px] text-[#A9AAA5] text-center pt-1 font-semibold">Últimos 8 períodos de monitoramento</p>
+            <p className="text-[10px] text-base-700 text-center pt-1 font-semibold">Últimos 8 períodos de monitoramento</p>
           </div>
         )}
       </TabContent>
@@ -1074,7 +1074,7 @@ function ActivityFeed() {
             <Activity size={14} color="#D7FF00" />
           </div>
           <div>
-            <h2 className="text-[15px] font-bold text-[#0E0F10]">Atividade</h2>
+            <h2 className="text-[15px] font-bold text-ink-500">Atividade</h2>
             <div className="flex items-center gap-1.5 mt-0.5">
               <LivePulseDot sizePx={6} />
               <span className="text-[10px] font-bold tracking-[0.1em] uppercase" style={{ color: "#A9AAA5" }}>Tempo real</span>
@@ -1181,7 +1181,7 @@ function PedidosRecentes() {
     >
       <div className="flex items-center justify-between mb-6">
         <div>
-          <h2 className="text-[16px] font-bold text-[#0E0F10]">Pedidos recentes</h2>
+          <h2 className="text-[16px] font-bold text-ink-500">Pedidos recentes</h2>
           <p className="text-[11px] font-semibold mt-0.5" style={{ color: "#A9AAA5" }}>Últimos 30 dias</p>
         </div>
         <div className="flex items-center gap-3">
@@ -1207,7 +1207,7 @@ function PedidosRecentes() {
       <TabContent tabKey={tab} direction={dir}>
         <div className="flex flex-col gap-0.5">
           {filtered.length === 0 ? (
-            <p className="text-[13px] text-[#A9AAA5] text-center py-8 font-semibold">Nenhum pedido nesta categoria</p>
+            <p className="text-[13px] text-base-700 text-center py-8 font-semibold">Nenhum pedido nesta categoria</p>
           ) : (
             filtered.map((pedido, i) => {
               const sm = STATUS_MAP[pedido.status] ?? { cor: "#A9AAA5", label: pedido.status };
@@ -1224,7 +1224,7 @@ function PedidosRecentes() {
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: i * 0.05 }}
                 >
-                  <p className="text-[14px] font-bold text-[#0E0F10] truncate">{pedido.titulo}</p>
+                  <p className="text-[14px] font-bold text-ink-500 truncate">{pedido.titulo}</p>
                   <div className="flex items-center gap-1.5 min-w-0">
                     <div className="flex h-5 w-5 items-center justify-center rounded-[5px]" style={{ backgroundColor: "#EEEFE9" }}>
                       <IconComp size={10} color="#8A8B8C" />
@@ -1267,7 +1267,7 @@ function SquadPerformance() {
           <Layers size={16} color="#5E5E5F" />
         </div>
         <div>
-          <h2 className="text-[16px] font-bold text-[#0E0F10]">Performance por squad</h2>
+          <h2 className="text-[16px] font-bold text-ink-500">Performance por squad</h2>
           <p className="text-[11px] font-semibold mt-0.5" style={{ color: "#A9AAA5" }}>Taxa de conclusão e volume</p>
         </div>
       </div>
@@ -1277,10 +1277,10 @@ function SquadPerformance() {
           <motion.div key={squad.id} className="flex flex-col gap-3"
             initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.57 + i * 0.09 }}>
             <div className="flex items-start justify-between">
-              <span className="text-[15px] font-bold text-[#0E0F10]">{squad.label}</span>
+              <span className="text-[15px] font-bold text-ink-500">{squad.label}</span>
               <div className="text-right">
                 <div className="flex items-baseline gap-1">
-                  <span className="text-[34px] font-bold text-[#0E0F10] leading-none tabular-nums">{squad.conclusao}</span>
+                  <span className="text-[34px] font-bold text-ink-500 leading-none tabular-nums">{squad.conclusao}</span>
                   <span className="text-[14px] font-bold" style={{ color: "#A9AAA5" }}>%</span>
                 </div>
                 <span className="text-[11px] font-semibold" style={{ color: "#A9AAA5" }}>{squad.volume} pedidos</span>
@@ -1322,7 +1322,7 @@ function Tendencias() {
           <Flame size={13} color="#0E0F10" />
         </div>
         <div>
-          <h2 className="text-[15px] font-bold text-[#0E0F10]">Tendências</h2>
+          <h2 className="text-[15px] font-bold text-ink-500">Tendências</h2>
           <p className="text-[10px] font-semibold mt-0.5" style={{ color: "#A9AAA5" }}>Destaques do período</p>
         </div>
       </div>
@@ -1345,7 +1345,7 @@ function Tendencias() {
             >
               <insight.Icon size={13} color={insight.tipo === "positivo" ? "#43A047" : "#8A8B8C"} />
             </div>
-            <p className="text-[13px] font-semibold text-[#0E0F10] leading-snug">{insight.text}</p>
+            <p className="text-[13px] font-semibold text-ink-500 leading-snug">{insight.text}</p>
           </motion.div>
         ))}
       </div>
@@ -1368,7 +1368,7 @@ export default function RelatorioClient() {
       {/* ── Header ──────────────────────────────────────────────────────── */}
       <div className="flex items-start justify-between">
         <div>
-          <h1 className="text-[28px] font-bold text-[#0E0F10] leading-tight">Relatório</h1>
+          <h1 className="text-[28px] font-bold text-ink-500 leading-tight">Relatório</h1>
           <p className="text-[13px] font-semibold mt-0.5 flex items-center gap-1.5" style={{ color: "#A9AAA5" }}>
             <LivePulseDot sizePx={7} />
             Dados em tempo real
@@ -1507,7 +1507,7 @@ export default function RelatorioClient() {
               <Cpu size={15} color="#5E5E5F" />
             </div>
             <div>
-              <h2 className="text-[16px] font-bold text-[#0E0F10]">Orquestração</h2>
+              <h2 className="text-[16px] font-bold text-ink-500">Orquestração</h2>
               <p className="text-[11px] font-semibold mt-0.5" style={{ color: "#A9AAA5" }}>Carga e status em tempo real</p>
             </div>
           </div>

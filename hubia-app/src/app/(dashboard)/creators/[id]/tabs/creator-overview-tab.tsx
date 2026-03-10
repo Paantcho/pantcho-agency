@@ -224,7 +224,7 @@ export default function CreatorOverviewTab({
           >
             <span
               className="font-semibold"
-              style={{ fontSize: "12px", color: "#A9AAA5" }}
+              style={{ fontSize: "12px", color: "var(--hubia-bg-base-700)" }}
             >
               imagem do veículo
             </span>
@@ -232,19 +232,19 @@ export default function CreatorOverviewTab({
 
           <p
             className="mt-4 font-bold"
-            style={{ fontSize: "15px", color: "#0E0F10" }}
+            style={{ fontSize: "15px", color: "var(--hubia-ink-500)" }}
           >
             BMW X2 2025
           </p>
           <p
             className="font-semibold"
-            style={{ fontSize: "13px", color: "#A9AAA5", marginTop: "3px" }}
+            style={{ fontSize: "13px", color: "var(--hubia-bg-base-700)", marginTop: "3px" }}
           >
             Cape York Green metall...
           </p>
           <p
             className="mt-3 font-semibold leading-snug"
-            style={{ fontSize: "12px", color: "#A9AAA5" }}
+            style={{ fontSize: "12px", color: "var(--hubia-bg-base-700)" }}
           >
             Interior premium escuro · Preto/grafite com detalhes metálicos ·{" "}
             <strong style={{ color: "#0E0F10" }}>Cor não muda nunca</strong>
