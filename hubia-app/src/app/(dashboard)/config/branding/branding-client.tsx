@@ -120,7 +120,7 @@ function InterfacePreview({ cor }: { cor: string }) {
               className="rounded-[8px] px-2 py-1.5 text-[10px] font-semibold"
               style={{
                 backgroundColor: i === 0 ? cor : "transparent",
-                color: i === 0 ? "#0E0F10" : "#A9AAA5",
+                color: i === 0 ? "var(--hubia-ink-500)" : "var(--hubia-bg-base-700)",
               }}
             >
               {item}
@@ -146,8 +146,8 @@ function InterfacePreview({ cor }: { cor: string }) {
             key={s}
             className="rounded-[6px] px-2 py-1 text-[10px] font-bold"
             style={{
-              backgroundColor: i === 2 ? "#0E0F10" : i === 0 ? cor + "33" : "#E8F5E9",
-              color: i === 2 ? cor : i === 0 ? "#0E0F10" : "#2E7D32",
+              backgroundColor: i === 2 ? "var(--hubia-ink-500)" : i === 0 ? cor + "33" : "#E8F5E9",
+              color: i === 2 ? cor : i === 0 ? "var(--hubia-ink-500)" : "#2E7D32",
             }}
           >
             {s}
@@ -293,7 +293,7 @@ export default function BrandingClient({
                   type="button"
                   onClick={() => { setCor(initialColor); setHexInput(initialColor); }}
                   className="flex h-11 w-11 items-center justify-center rounded-[12px] bg-base-500 text-base-700"
-                  whileHover={{ backgroundColor: "rgba(213,210,201,0.5)", color: "#0E0F10", scale: 1.05 }}
+                  whileHover={{ backgroundColor: "rgba(213,210,201,0.5)", color: "var(--hubia-ink-500)", scale: 1.05 }}
                   whileTap={{ scale: 0.90 }}
                   title="Restaurar padrão"
                   transition={{ duration: 0.15 }}
@@ -349,7 +349,7 @@ export default function BrandingClient({
               type="button"
               onClick={() => fileInputRef.current?.click()}
               className="flex flex-col items-center justify-center gap-2 rounded-[14px] border-2 border-dashed border-sand-600 bg-base-500 px-6 py-8"
-              whileHover={{ borderColor: "#0E0F10", backgroundColor: "rgba(238,239,233,0.6)" }}
+              whileHover={{ borderColor: "var(--hubia-ink-500)", backgroundColor: "rgba(238,239,233,0.6)" }}
               whileTap={{ scale: 0.98 }}
               transition={{ duration: 0.15 }}
             >
@@ -373,7 +373,7 @@ export default function BrandingClient({
               type="button"
               onClick={() => faviconInputRef.current?.click()}
               className="flex flex-col items-center justify-center gap-2 rounded-[14px] border-2 border-dashed border-sand-600 bg-base-500 px-6 py-8"
-              whileHover={{ borderColor: "#0E0F10", backgroundColor: "rgba(238,239,233,0.6)" }}
+              whileHover={{ borderColor: "var(--hubia-ink-500)", backgroundColor: "rgba(238,239,233,0.6)" }}
               whileTap={{ scale: 0.98 }}
               transition={{ duration: 0.15 }}
             >

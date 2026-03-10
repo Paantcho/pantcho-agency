@@ -245,7 +245,7 @@ export default function CreatorAppearanceTab({
               >
                 <span
                   className="mt-0.5 shrink-0 font-bold"
-                  style={{ color: "#FF576D", fontSize: "13px" }}
+                  style={{ color: "var(--hubia-red-500)", fontSize: "13px" }}
                 >
                   ✕
                 </span>

@@ -807,7 +807,7 @@ function DistribuicaoTipo() {
                   <span
                     className="text-[10px] font-bold flex-shrink-0 flex items-center justify-center rounded-full"
                     style={{
-                      color: isFirst ? "#0E0F10" : "#A9AAA5",
+                      color: isFirst ? "var(--hubia-ink-500)" : "var(--hubia-bg-base-700)",
                       backgroundColor: isFirst ? "#D7FF00" : "transparent",
                       width: 20,
                       height: 20,
@@ -822,7 +822,7 @@ function DistribuicaoTipo() {
                   <span className="text-[14px] font-bold text-ink-500">{d.tipo}</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <span className="font-bold tabular-nums" style={{ fontSize: numSize, color: isFirst ? "#0E0F10" : "#5E5E5F" }}>
+                  <span className="font-bold tabular-nums" style={{ fontSize: numSize, color: isFirst ? "var(--hubia-ink-500)" : "var(--hubia-ink-400)" }}>
                     {d.value}%
                   </span>
                   {isFirst && (

@@ -367,7 +367,7 @@ function ChatTab({
       <div className="flex-1 overflow-y-auto p-6">
         {messages.length === 0 && (
           <div className="flex h-full flex-col items-center justify-center gap-3">
-            <Bot size={40} style={{ color: "#EEEFE9" }} />
+            <Bot size={40} style={{ color: "var(--hubia-bg-base-500)" }} />
             <p
               className="font-semibold"
               style={{ fontSize: "14px", color: "var(--hubia-bg-base-700)" }}

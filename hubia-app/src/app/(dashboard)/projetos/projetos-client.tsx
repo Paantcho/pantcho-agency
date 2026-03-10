@@ -352,7 +352,7 @@ export default function ProjetosClient({
               <motion.button
                 onClick={() => setModalOpen(true)}
                 className="mt-1 rounded-[14px] border-2 border-dashed border-sand-600 px-5 py-2.5 text-[13px] font-semibold text-base-700"
-                whileHover={{ borderColor: "#A9AAA5", color: "#0E0F10", backgroundColor: "rgba(213,210,201,0.08)" }}
+                whileHover={{ borderColor: "var(--hubia-bg-base-700)", color: "#0E0F10", backgroundColor: "rgba(213,210,201,0.08)" }}
                 whileTap={{ scale: 0.98 }}
               >
                 + Criar primeiro projeto
@@ -377,7 +377,7 @@ export default function ProjetosClient({
             <motion.button
               onClick={() => setModalOpen(true)}
               className="rounded-[30px] border-2 border-dashed border-sand-600 p-6 flex flex-col items-center justify-center gap-2 min-h-[220px]"
-              whileHover={{ borderColor: "#A9AAA5", backgroundColor: "rgba(213,210,201,0.08)" }}
+              whileHover={{ borderColor: "var(--hubia-bg-base-700)", backgroundColor: "rgba(213,210,201,0.08)" }}
               whileTap={{ scale: 0.98 }}
               transition={{ duration: 0.15 }}
               initial={{ opacity: 0, y: 16 }}
