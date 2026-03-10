@@ -124,7 +124,7 @@ export default function PreferenciasClient({
   return (
     <div className="flex flex-col gap-6">
       {/* Regional */}
-      <div className="rounded-[20px] bg-white p-6">
+      <div className="rounded-[30px] bg-white p-6">
         <div className="mb-5 flex items-center gap-2.5">
           <div className="flex h-8 w-8 items-center justify-center rounded-[10px] bg-[#0E0F10]">
             <Globe size={15} color="#D7FF00" />
@@ -138,7 +138,7 @@ export default function PreferenciasClient({
       </div>
 
       {/* Modo visual */}
-      <div className="rounded-[20px] bg-white p-6">
+      <div className="rounded-[30px] bg-white p-6">
         <div className="mb-5 flex items-center gap-2.5">
           <div className="flex h-8 w-8 items-center justify-center rounded-[10px] bg-[#0E0F10]">
             <Monitor size={15} color="#D7FF00" />

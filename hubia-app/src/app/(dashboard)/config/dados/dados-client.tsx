@@ -148,7 +148,7 @@ export default function DadosClient() {
   return (
     <div className="flex flex-col gap-6">
       {/* Gerar snapshot */}
-      <div className="rounded-[20px] bg-white p-6">
+      <div className="rounded-[30px] bg-white p-6">
         <div className="mb-5 flex items-center gap-2.5">
           <div className="flex h-8 w-8 items-center justify-center rounded-[10px] bg-[#0E0F10]">
             <Download size={15} color="#D7FF00" />
@@ -264,7 +264,7 @@ export default function DadosClient() {
       </div>
 
       {/* Histórico de backups */}
-      <div className="rounded-[20px] bg-white p-6">
+      <div className="rounded-[30px] bg-white p-6">
         <div className="mb-4 flex items-center gap-2.5">
           <div className="flex h-8 w-8 items-center justify-center rounded-[10px] bg-[#0E0F10]">
             <Clock size={15} color="#D7FF00" />
@@ -316,7 +316,7 @@ export default function DadosClient() {
       </div>
 
       {/* Informações do sistema */}
-      <div className="rounded-[20px] bg-white p-6">
+      <div className="rounded-[30px] bg-white p-6">
         <div className="mb-4 flex items-center gap-2.5">
           <div className="flex h-8 w-8 items-center justify-center rounded-[10px] bg-[#0E0F10]">
             <Server size={15} color="#D7FF00" />

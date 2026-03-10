@@ -129,7 +129,7 @@ function BriefingOutputSection({
   return (
     <div className="grid gap-4" style={{ gridTemplateColumns: "1fr 1fr" }}>
       {/* Coluna esquerda — Briefing */}
-      <div className="rounded-[20px] bg-white p-6">
+      <div className="rounded-[30px] bg-white p-6">
         <h2
           className="mb-5"
           style={{ fontSize: "20px", fontWeight: 700, color: "#0E0F10" }}
@@ -214,7 +214,7 @@ function BriefingOutputSection({
             onChange={(e) => setForm((f) => ({ ...f, descricao: e.target.value }))}
             placeholder="Ex: Ninaah está no beiro da piscina, sentada na espreguiçadeira..."
             rows={4}
-            className="w-full resize-none rounded-[10px] border border-transparent px-3.5 py-2.5 text-[14px] text-ink-500 outline-none placeholder:text-[#A9AAA5] transition-[border-color,box-shadow] duration-150 focus:border-ink-500 focus:shadow-[0_0_0_3px_rgba(14,15,16,0.08)]"
+            className="w-full resize-none rounded-[12px] border border-transparent px-3.5 py-2.5 text-[14px] text-ink-500 outline-none placeholder:text-[#A9AAA5] transition-[border-color,box-shadow] duration-150 focus:border-ink-500 focus:shadow-[0_0_0_3px_rgba(14,15,16,0.08)]"
             style={{ background: "#EEEFE9" }}
           />
         </div>
@@ -247,7 +247,7 @@ function BriefingOutputSection({
         <AnimatePresence mode="wait">
           <motion.div
             key={output ? "with-output" : "empty"}
-            className="rounded-[20px] p-6"
+            className="rounded-[30px] p-6"
             style={{ background: "#0E0F10", minHeight: "200px" }}
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
@@ -312,14 +312,14 @@ function BriefingOutputSection({
         </AnimatePresence>
 
         {/* Card Parâmetros Técnicos */}
-        <div className="rounded-[20px] bg-white p-5">
+        <div className="rounded-[30px] bg-white p-5">
           <h3
             className="mb-4"
             style={{ fontSize: "16px", fontWeight: 700, color: "#0E0F10" }}
           >
             Parâmetros Técnicos
           </h3>
-          <div className="grid grid-cols-4 gap-3 rounded-[10px] p-3" style={{ background: "#EEEFE9" }}>
+          <div className="grid grid-cols-4 gap-3 rounded-[12px] p-3" style={{ background: "#EEEFE9" }}>
             <ParamCell label="Câmera" value={output?.parametros.camera ?? form.camera} />
             <ParamCell label="Lente" value={output?.parametros.lente ?? (form.lente ? `${form.lente} f/1.4` : "")} />
             <ParamCell label="Abertura" value={output?.parametros.abertura ?? ""} />
@@ -375,7 +375,7 @@ function TabGerador({
       {(markers.length > 0 || protectedItems.length > 0) && (
         <div className="grid gap-4" style={{ gridTemplateColumns: "1fr 1fr" }}>
           {/* Checklist Forense */}
-          <div className="rounded-[20px] bg-white p-6">
+          <div className="rounded-[30px] bg-white p-6">
             <h3
               className="mb-4"
               style={{ fontSize: "16px", fontWeight: 700, color: "#0E0F10" }}
@@ -390,7 +390,7 @@ function TabGerador({
           </div>
 
           {/* Blindagem */}
-          <div className="rounded-[20px] bg-white p-6">
+          <div className="rounded-[30px] bg-white p-6">
             <h3
               className="mb-4"
               style={{ fontSize: "16px", fontWeight: 700, color: "#0E0F10" }}
@@ -409,7 +409,7 @@ function TabGerador({
       {/* Estado: creator selecionada mas sem dados ainda */}
       {selectedCreator && markers.length === 0 && protectedItems.length === 0 && (
         <div className="grid gap-4" style={{ gridTemplateColumns: "1fr 1fr" }}>
-          <div className="rounded-[20px] bg-white p-6">
+          <div className="rounded-[30px] bg-white p-6">
             <h3
               className="mb-3"
               style={{ fontSize: "16px", fontWeight: 700, color: "#0E0F10" }}
@@ -420,7 +420,7 @@ function TabGerador({
               Configure a aparência da creator para ver o checklist.
             </p>
           </div>
-          <div className="rounded-[20px] bg-white p-6">
+          <div className="rounded-[30px] bg-white p-6">
             <h3
               className="mb-3"
               style={{ fontSize: "16px", fontWeight: 700, color: "#0E0F10" }}
@@ -486,7 +486,7 @@ function TabPhotoCloner({
   return (
     <div className="flex flex-col gap-5">
       {/* Bloco preto full-width */}
-      <div className="rounded-[20px] p-6" style={{ background: "#0E0F10" }}>
+      <div className="rounded-[30px] p-6" style={{ background: "#0E0F10" }}>
         <div className="grid gap-5" style={{ gridTemplateColumns: "340px 1fr" }}>
           {/* Área de upload */}
           <div className="flex flex-col gap-3">
@@ -511,7 +511,7 @@ function TabPhotoCloner({
                 <img
                   src={imagePreview}
                   alt="Imagem para clonar"
-                  className="max-h-[150px] rounded-[10px] object-contain"
+                  className="max-h-[150px] rounded-[12px] object-contain"
                 />
               ) : (
                 <>
@@ -527,7 +527,7 @@ function TabPhotoCloner({
             <motion.button
               type="button"
               disabled={!clonePrompt}
-              className="w-full rounded-[10px] py-3 text-[13px] font-bold tracking-[0.5px] text-white disabled:opacity-40"
+              className="w-full rounded-[12px] py-3 text-[13px] font-bold tracking-[0.5px] text-white disabled:opacity-40"
               style={{ background: "#3E3F40" }}
               whileHover={clonePrompt ? { backgroundColor: "#4A4B4C" } : {}}
               whileTap={clonePrompt ? { scale: 0.98 } : {}}
@@ -588,7 +588,7 @@ function TabPhotoCloner({
       {/* Checklist + Blindagem */}
       {(markers.length > 0 || protectedItems.length > 0) && (
         <div className="grid gap-4" style={{ gridTemplateColumns: "1fr 1fr" }}>
-          <div className="rounded-[20px] bg-white p-6">
+          <div className="rounded-[30px] bg-white p-6">
             <h3 className="mb-4" style={{ fontSize: "16px", fontWeight: 700, color: "#0E0F10" }}>
               Checklist Forense — Validar ANTES de aprovar
             </h3>
@@ -598,7 +598,7 @@ function TabPhotoCloner({
               ))}
             </div>
           </div>
-          <div className="rounded-[20px] bg-white p-6">
+          <div className="rounded-[30px] bg-white p-6">
             <h3 className="mb-4" style={{ fontSize: "16px", fontWeight: 700, color: "#0E0F10" }}>
               Blindagem — Proibido
             </h3>
@@ -614,12 +614,12 @@ function TabPhotoCloner({
       {/* Empty state checklist */}
       {markers.length === 0 && protectedItems.length === 0 && (
         <div className="grid gap-4" style={{ gridTemplateColumns: "1fr 1fr" }}>
-          <div className="rounded-[20px] bg-white p-6">
+          <div className="rounded-[30px] bg-white p-6">
             <h3 className="mb-2" style={{ fontSize: "16px", fontWeight: 700, color: "#0E0F10" }}>
               Checklist Forense — Validar ANTES de aprovar
             </h3>
           </div>
-          <div className="rounded-[20px] bg-white p-6">
+          <div className="rounded-[30px] bg-white p-6">
             <h3 className="mb-2" style={{ fontSize: "16px", fontWeight: 700, color: "#0E0F10" }}>
               Blindagem — Proibido
             </h3>

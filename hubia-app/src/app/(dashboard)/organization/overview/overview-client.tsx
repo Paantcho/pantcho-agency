@@ -48,7 +48,7 @@ export default function OverviewClient({
   return (
     <div className="flex flex-col gap-6">
       {/* Banner identidade */}
-      <div className="rounded-[20px] bg-[#0E0F10] p-6 flex items-center justify-between">
+      <div className="rounded-[30px] bg-[#0E0F10] p-6 flex items-center justify-between">
         <div className="flex items-center gap-4">
           <div className="flex h-12 w-12 items-center justify-center rounded-[14px] bg-[#D7FF00]">
             <Building2 size={22} color="#0E0F10" />
@@ -131,7 +131,7 @@ export default function OverviewClient({
       </div>
 
       {/* Atalhos para seções */}
-      <div className="rounded-[20px] bg-white p-6">
+      <div className="rounded-[30px] bg-white p-6">
         <h2 className="mb-4 text-[15px] font-bold text-[#0E0F10]">
           Gerenciar organização
         </h2>

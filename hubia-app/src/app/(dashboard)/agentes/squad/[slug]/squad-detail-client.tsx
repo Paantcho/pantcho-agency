@@ -133,7 +133,7 @@ function AddAgentModal({
             onClick={handleClose}
           >
             <motion.div
-              className="relative w-full max-w-[520px] rounded-[20px] bg-white p-7"
+              className="relative w-full max-w-[520px] rounded-[30px] bg-white p-7"
               initial={{ scale: 0.88, y: 20, opacity: 0 }}
               animate={{ scale: 1, y: 0, opacity: 1 }}
               exit={{ scale: 0.92, y: 10, opacity: 0 }}
@@ -160,7 +160,7 @@ function AddAgentModal({
               </p>
 
               {/* Search */}
-              <div className="mb-3 flex items-center gap-2 rounded-[10px] px-3 py-2.5" style={{ background: "#EEEFE9" }}>
+              <div className="mb-3 flex items-center gap-2 rounded-[12px] px-3 py-2.5" style={{ background: "#EEEFE9" }}>
                 <Search size={14} strokeWidth={2} color="#A9AAA5" />
                 <input
                   autoFocus
@@ -393,7 +393,7 @@ function NovoAgenteModal({
     }
   }
 
-  const inputClass = "w-full rounded-[10px] border border-transparent px-3.5 py-2.5 text-[14px] outline-none transition-[border-color] duration-150";
+  const inputClass = "w-full rounded-[12px] border border-transparent px-3.5 py-2.5 text-[14px] outline-none transition-[border-color] duration-150";
   const inputStyle = { background: "#EEEFE9", color: "#0E0F10", fontFamily: "Urbanist, sans-serif" };
 
   return (
@@ -409,7 +409,7 @@ function NovoAgenteModal({
             onClick={handleClose}
           >
             <motion.div
-              className="relative w-full max-w-[480px] rounded-[20px] bg-white p-7"
+              className="relative w-full max-w-[480px] rounded-[30px] bg-white p-7"
               initial={{ scale: 0.88, y: 20, opacity: 0 }}
               animate={{ scale: 1, y: 0, opacity: 1 }}
               exit={{ scale: 0.92, y: 10, opacity: 0 }}
@@ -439,7 +439,7 @@ function NovoAgenteModal({
               <AnimatePresence>
                 {draftSavedMsg && (
                   <motion.div
-                    className="mb-3 flex items-center gap-2 rounded-[10px] px-3 py-2"
+                    className="mb-3 flex items-center gap-2 rounded-[12px] px-3 py-2"
                     style={{ background: "rgba(215,255,0,0.15)", border: "1px solid rgba(215,255,0,0.4)" }}
                     initial={{ opacity: 0, y: -6 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -496,7 +496,7 @@ function NovoAgenteModal({
                           key={opt.value}
                           type="button"
                           onClick={() => setStatus(isSelected ? null : opt.value)}
-                          className="flex flex-col rounded-[10px] px-3 py-2.5 text-left"
+                          className="flex flex-col rounded-[12px] px-3 py-2.5 text-left"
                           style={{ flex: 1 }}
                           initial={false}
                           animate={{
@@ -537,7 +537,7 @@ function NovoAgenteModal({
                 </div>
 
                 {error && (
-                  <div className="flex items-center gap-2 rounded-[10px] px-3 py-2.5" style={{ background: "rgba(239,68,68,0.08)" }}>
+                  <div className="flex items-center gap-2 rounded-[12px] px-3 py-2.5" style={{ background: "rgba(239,68,68,0.08)" }}>
                     <AlertCircle size={14} strokeWidth={2} color="#EF4444" />
                     <span className="text-[12px] font-semibold" style={{ color: "#EF4444" }}>{error}</span>
                   </div>
@@ -693,7 +693,7 @@ export default function SquadDetailClient({
       </div>
 
       {/* ── Conteúdo principal ──────────────────────────────────── */}
-      <div className="rounded-[20px] bg-white p-6">
+      <div className="rounded-[30px] bg-white p-6">
 
         {/* Cabeçalho da seção */}
         <div className="mb-4 flex items-center justify-between">
@@ -782,7 +782,7 @@ export default function SquadDetailClient({
                 >
                   {/* Ícone do agente */}
                   <div
-                    className="flex h-9 w-9 shrink-0 items-center justify-center rounded-[10px]"
+                    className="flex h-9 w-9 shrink-0 items-center justify-center rounded-[12px]"
                     style={{ background: "#0E0F10" }}
                   >
                     <Bot size={16} strokeWidth={2} color={squadColor} />
@@ -821,7 +821,7 @@ export default function SquadDetailClient({
                     <motion.button
                       type="button"
                       onClick={() => router.push(`/agentes/${agent.slug}`)}
-                      className="rounded-[10px] px-3 py-2 text-[12px] font-semibold"
+                      className="rounded-[12px] px-3 py-2 text-[12px] font-semibold"
                       style={{ background: "#FFFFFF", color: "#0E0F10" }}
                       whileHover={{ scale: 1.03, backgroundColor: "#D9D9D4" }}
                       whileTap={{ scale: 0.97 }}
@@ -833,7 +833,7 @@ export default function SquadDetailClient({
                       type="button"
                       onClick={() => handleRemove(agent.id)}
                       disabled={removingId === agent.id}
-                      className="flex h-8 w-8 items-center justify-center rounded-[10px]"
+                      className="flex h-8 w-8 items-center justify-center rounded-[12px]"
                       style={{ background: "rgba(239,68,68,0.08)", color: "#EF4444" }}
                       whileHover={{ scale: 1.08, backgroundColor: "rgba(239,68,68,0.15)" }}
                       whileTap={{ scale: 0.9 }}

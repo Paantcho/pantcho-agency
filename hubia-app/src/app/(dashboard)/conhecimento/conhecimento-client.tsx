@@ -134,7 +134,7 @@ export default function ConhecimentoClient({
 
       {/* Form */}
       {showForm && (
-        <div className="rounded-[20px] bg-white p-6">
+        <div className="rounded-[30px] bg-white p-6">
           <div className="flex items-center justify-between mb-4">
             <h3
               className="font-bold"
@@ -289,7 +289,7 @@ export default function ConhecimentoClient({
                   </h3>
                   {!isExpanded && (
                     <p
-                      className="mt-0.5 truncate font-medium"
+                      className="mt-0.5 truncate font-semibold"
                       style={{ fontSize: "12px", color: "#A9AAA5" }}
                     >
                       {entry.content.slice(0, 120)}
@@ -365,7 +365,7 @@ export default function ConhecimentoClient({
                   {/* Footer */}
                   <div className="mt-4 flex items-center justify-between">
                     <span
-                      className="text-[11px] font-medium"
+                      className="text-[11px] font-semibold"
                       style={{ color: "#C8C9C3" }}
                     >
                       Criado em{" "}

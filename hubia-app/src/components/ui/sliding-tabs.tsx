@@ -48,7 +48,7 @@ export function SlidingTabs({ tabs, activeId, onChange }: SlidingTabsProps) {
   return (
     <div
       ref={containerRef}
-      className="relative inline-flex items-center rounded-[20px] p-1.5"
+      className="relative inline-flex items-center rounded-[30px] p-1.5"
       style={{ background: "#FFFFFF" }}
     >
       {/* Pill deslizante spring */}

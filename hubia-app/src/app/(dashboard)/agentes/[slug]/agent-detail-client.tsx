@@ -114,7 +114,7 @@ export default function AgentDetailClient({
             {agent.name}
           </h1>
           <p
-            className="font-medium"
+            className="font-semibold"
             style={{ fontSize: "14px", color: "#A9AAA5" }}
           >
             {agent.description}
@@ -318,7 +318,7 @@ function ChatTab({
   if (!providerReady) {
     return (
       <div
-        className="flex flex-col items-center justify-center gap-4 rounded-[20px] py-16"
+        className="flex flex-col items-center justify-center gap-4 rounded-[30px] py-16"
         style={{ background: "#FFFFFF" }}
       >
         <div
@@ -335,7 +335,7 @@ function ChatTab({
             Nenhum provedor de IA configurado
           </p>
           <p
-            className="mt-1 font-medium"
+            className="mt-1 font-semibold"
             style={{ fontSize: "13px", color: "#A9AAA5" }}
           >
             Adicione a chave da API (Anthropic ou OpenAI) para conversar com
@@ -360,7 +360,7 @@ function ChatTab({
 
   return (
     <div
-      className="flex flex-col rounded-[20px] bg-white"
+      className="flex flex-col rounded-[30px] bg-white"
       style={{ height: "calc(100vh - 320px)", minHeight: "400px" }}
     >
       {/* Messages area */}
@@ -369,7 +369,7 @@ function ChatTab({
           <div className="flex h-full flex-col items-center justify-center gap-3">
             <Bot size={40} style={{ color: "#EEEFE9" }} />
             <p
-              className="font-medium"
+              className="font-semibold"
               style={{ fontSize: "14px", color: "#A9AAA5" }}
             >
               Envie uma mensagem para conversar com{" "}
@@ -461,7 +461,7 @@ function ChatTab({
           </button>
         </div>
         <p
-          className="mt-2 text-center font-medium"
+          className="mt-2 text-center font-semibold"
           style={{ fontSize: "11px", color: "#C8C9C3" }}
         >
           Shift + Enter para nova linha
@@ -479,7 +479,7 @@ function ConfigTab({ agent }: { agent: AgentData }) {
   return (
     <div className="flex flex-col gap-6">
       {/* System Prompt */}
-      <div className="rounded-[20px] bg-white p-6">
+      <div className="rounded-[30px] bg-white p-6">
         <h3
           className="mb-3 font-bold"
           style={{ fontSize: "15px", color: "#0E0F10" }}
@@ -500,7 +500,7 @@ function ConfigTab({ agent }: { agent: AgentData }) {
 
       {/* Skills */}
       {agent.skills.length > 0 && (
-        <div className="rounded-[20px] bg-white p-6">
+        <div className="rounded-[30px] bg-white p-6">
           <h3
             className="mb-3 font-bold"
             style={{ fontSize: "15px", color: "#0E0F10" }}
@@ -523,7 +523,7 @@ function ConfigTab({ agent }: { agent: AgentData }) {
                   </p>
                   {skill.description && (
                     <p
-                      className="mt-0.5 font-medium"
+                      className="mt-0.5 font-semibold"
                       style={{ fontSize: "12px", color: "#A9AAA5" }}
                     >
                       {skill.description}
@@ -543,7 +543,7 @@ function ConfigTab({ agent }: { agent: AgentData }) {
       )}
 
       {/* Metadata */}
-      <div className="rounded-[20px] bg-white p-6">
+      <div className="rounded-[30px] bg-white p-6">
         <h3
           className="mb-3 font-bold"
           style={{ fontSize: "15px", color: "#0E0F10" }}

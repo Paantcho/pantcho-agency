@@ -376,7 +376,7 @@ export default function ProjetosClient({
             {/* Card fantasma */}
             <motion.button
               onClick={() => setModalOpen(true)}
-              className="rounded-[20px] border-2 border-dashed border-[#D5D2C9] p-6 flex flex-col items-center justify-center gap-2 min-h-[220px]"
+              className="rounded-[30px] border-2 border-dashed border-[#D5D2C9] p-6 flex flex-col items-center justify-center gap-2 min-h-[220px]"
               whileHover={{ borderColor: "#A9AAA5", backgroundColor: "rgba(213,210,201,0.08)" }}
               whileTap={{ scale: 0.98 }}
               transition={{ duration: 0.15 }}
@@ -440,7 +440,7 @@ function ProjetoCardItem({ projeto: p, index: i, onClick }: {
 
   return (
     <motion.div
-      className="cursor-pointer rounded-[20px] bg-white p-5 flex flex-col"
+      className="cursor-pointer rounded-[30px] bg-white p-5 flex flex-col"
       initial={{ opacity: 0, y: 16 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.3, ease: [0, 0, 0.2, 1], delay: Math.min(i * 0.06, 0.3) }}
@@ -668,7 +668,7 @@ function NovoProjetoModal({ open, onClose, organizationId, onCreated }: {
             onClick={(e) => e.target === e.currentTarget && handleClose()}
           >
             <motion.div
-              className="w-full max-w-[620px] rounded-[20px] bg-white overflow-hidden"
+              className="w-full max-w-[620px] rounded-[30px] bg-white overflow-hidden"
               initial={{ scale: 0.88, y: 20, opacity: 0 }}
               animate={{ scale: 1, y: 0, opacity: 1 }}
               exit={{ scale: 0.92, y: 10, opacity: 0 }}

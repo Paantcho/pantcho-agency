@@ -183,7 +183,7 @@ function AgentCard({ agent }: { agent: AgentNode }) {
           </span>
         </div>
         <p
-          className="truncate font-medium"
+          className="truncate font-semibold"
           style={{ fontSize: "11px", color: "#A9AAA5" }}
         >
           {agent.description}
@@ -205,7 +205,7 @@ export default function ArquiteturaClient() {
           Arquitetura
         </h1>
         <p
-          className="mt-1 font-medium"
+          className="mt-1 font-semibold"
           style={{ fontSize: "14px", color: "#A9AAA5" }}
         >
           Visão completa do sistema multi-agente Pantcho Agency
@@ -228,7 +228,7 @@ export default function ArquiteturaClient() {
               Entrada
             </p>
             <p
-              className="font-medium"
+              className="font-semibold"
               style={{ fontSize: "11px", color: "#A9AAA5" }}
             >
               Web UI / API / Telegram (futuro)
@@ -266,7 +266,7 @@ export default function ArquiteturaClient() {
                 </span>
               </div>
               <p
-                className="mt-0.5 font-medium"
+                className="mt-0.5 font-semibold"
                 style={{ fontSize: "13px", color: "#A9AAA5" }}
               >
                 BrainRouter: classifica pedido → identifica squad → delega
@@ -310,7 +310,7 @@ export default function ArquiteturaClient() {
                 >
                   <Zap size={14} style={{ color: "#EC4899" }} />
                   <p
-                    className="font-medium"
+                    className="font-semibold"
                     style={{ fontSize: "11px", color: "#A9AAA5" }}
                   >
                     Fluxo: Planner → Copywriter → Dir. Arte → Dir. Cena →
@@ -370,7 +370,7 @@ export default function ArquiteturaClient() {
               Memória Compartilhada
             </h3>
             <span
-              className="text-[11px] font-medium"
+              className="text-[11px] font-semibold"
               style={{ color: "#A9AAA5" }}
             >
               (Source of Truth)
@@ -398,7 +398,7 @@ export default function ArquiteturaClient() {
                     {block.name}
                   </p>
                   <p
-                    className="font-medium"
+                    className="font-semibold"
                     style={{ fontSize: "10px", color: "#A9AAA5" }}
                   >
                     {block.description}
@@ -423,7 +423,7 @@ export default function ArquiteturaClient() {
               Ciclo: PLAN → EXECUTE → REFLECT
             </p>
             <p
-              className="mt-0.5 font-medium"
+              className="mt-0.5 font-semibold"
               style={{ fontSize: "11px", color: "#A9AAA5" }}
             >
               Obrigatório para todo agente. Validação de qualidade antes de

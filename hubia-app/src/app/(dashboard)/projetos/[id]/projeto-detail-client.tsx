@@ -593,7 +593,7 @@ export default function ProjetoDetailClient({
         <div className="flex flex-col gap-4">
 
           {/* Header card */}
-          <div className="rounded-[20px] bg-white p-6">
+          <div className="rounded-[30px] bg-white p-6">
             <div className="flex items-start gap-4 mb-5">
               <div
                 className="flex-shrink-0 h-12 w-12 rounded-[16px] flex items-center justify-center"
@@ -658,7 +658,7 @@ export default function ProjetoDetailClient({
           </div>
 
           {/* Tabs — usando SlidingTabs padrão do sistema */}
-          <div className="rounded-[20px] bg-white overflow-hidden">
+          <div className="rounded-[30px] bg-white overflow-hidden">
             <div className="px-4 pt-4 pb-0 overflow-x-auto scrollbar-none">
               <SlidingTabs
                 tabs={tabs.map(t => ({ id: t.id, label: t.label, icon: t.icon }))}
@@ -844,7 +844,7 @@ function Sidebar({
               const Icon = CONECTOR_ICONS[c.tipo] ?? CONECTOR_ICONS.default;
               const statusCor = c.status === "ativo" ? "#43A047" : c.status === "inativo" ? "#C62828" : "#FB8C00";
               return (
-                <div key={i} className="flex items-center justify-between rounded-[10px] bg-[#FAFAFA] px-3 py-2">
+                <div key={i} className="flex items-center justify-between rounded-[12px] bg-[#FAFAFA] px-3 py-2">
                   <div className="flex items-center gap-2">
                     <Icon size={13} color="#5E5E5F" />
                     <span className="text-[12px] font-semibold text-[#0E0F10]">{c.nome}</span>
@@ -914,7 +914,7 @@ function Sidebar({
         <motion.a href={String(meta.figmaUrl)} target="_blank" rel="noopener noreferrer"
           className="rounded-[16px] bg-white p-4 flex items-center gap-3"
           whileHover={{ backgroundColor: "#EEEFE9" }} whileTap={{ scale: 0.99 }}>
-          <div className="h-8 w-8 rounded-[10px] bg-[#1E1E1E] flex items-center justify-center flex-shrink-0">
+          <div className="h-8 w-8 rounded-[12px] bg-[#1E1E1E] flex items-center justify-center flex-shrink-0">
             <Globe size={15} color="#FFFFFF" />
           </div>
           <div className="flex-1 min-w-0">
@@ -1320,7 +1320,7 @@ function SubprojetosTab({ subprojetos, onSave }: {
                   value={novoNome}
                   onChange={e => setNovoNome(e.target.value)}
                   placeholder="Ex: Módulo de Pagamentos"
-                  className="w-full h-10 rounded-[10px] bg-white border border-transparent px-3 text-[14px] text-[#0E0F10] outline-none focus:border-[#0E0F10] focus:shadow-[0_0_0_3px_rgba(14,15,16,0.08)] transition-[border-color,box-shadow] duration-150"
+                  className="w-full h-10 rounded-[12px] bg-white border border-transparent px-3 text-[14px] text-[#0E0F10] outline-none focus:border-[#0E0F10] focus:shadow-[0_0_0_3px_rgba(14,15,16,0.08)] transition-[border-color,box-shadow] duration-150"
                 />
               </div>
               <div>
@@ -1328,7 +1328,7 @@ function SubprojetosTab({ subprojetos, onSave }: {
                 <select
                   value={novoTipo}
                   onChange={e => setNovoTipo(e.target.value as ProjetoTipo)}
-                  className="w-full h-10 rounded-[10px] bg-white border border-transparent px-3 text-[13px] text-[#0E0F10] outline-none focus:border-[#0E0F10] transition-[border-color] duration-150"
+                  className="w-full h-10 rounded-[12px] bg-white border border-transparent px-3 text-[13px] text-[#0E0F10] outline-none focus:border-[#0E0F10] transition-[border-color] duration-150"
                 >
                   {Object.entries(TIPO_CONFIG).map(([k, v]) => (
                     <option key={k} value={k}>{v.label}</option>
@@ -1341,14 +1341,14 @@ function SubprojetosTab({ subprojetos, onSave }: {
                   value={novaDesc}
                   onChange={e => setNovaDesc(e.target.value)}
                   placeholder="Opcional"
-                  className="w-full h-10 rounded-[10px] bg-white border border-transparent px-3 text-[13px] text-[#0E0F10] outline-none focus:border-[#0E0F10] transition-[border-color] duration-150"
+                  className="w-full h-10 rounded-[12px] bg-white border border-transparent px-3 text-[13px] text-[#0E0F10] outline-none focus:border-[#0E0F10] transition-[border-color] duration-150"
                 />
               </div>
             </div>
             <div className="flex items-center gap-2 justify-end">
               <motion.button
                 onClick={() => setCriando(false)}
-                className="h-9 rounded-[10px] bg-[#F0F0EE] px-4 text-[13px] font-semibold text-[#5E5E5F]"
+                className="h-9 rounded-[12px] bg-[#F0F0EE] px-4 text-[13px] font-semibold text-[#5E5E5F]"
                 whileHover={{ backgroundColor: "#E5E5E2" }} whileTap={{ scale: 0.97 }}
               >
                 Cancelar
@@ -1356,7 +1356,7 @@ function SubprojetosTab({ subprojetos, onSave }: {
               <motion.button
                 onClick={adicionar}
                 disabled={!novoNome.trim() || saving}
-                className="h-9 rounded-[10px] bg-[#0E0F10] px-4 text-[13px] font-semibold text-white disabled:opacity-40"
+                className="h-9 rounded-[12px] bg-[#0E0F10] px-4 text-[13px] font-semibold text-white disabled:opacity-40"
                 whileHover={{ backgroundColor: "#2A2B2C" }} whileTap={{ scale: 0.97 }}
               >
                 {saving ? "Salvando..." : "Adicionar"}
@@ -1548,10 +1548,10 @@ function AdicionarModulo({ onAdd }: { onAdd: (nome: string) => Promise<void> }) 
         value={novo} onChange={(e) => setNovo(e.target.value)}
         onKeyDown={(e) => { if (e.key === "Enter" && novo.trim()) { onAdd(novo.trim()); setNovo(""); } }}
         placeholder="Adicionar módulo extra..."
-        className="flex-1 h-9 rounded-[10px] border border-transparent bg-[#EEEFE9] px-3 text-[13px] text-[#0E0F10] outline-none placeholder:text-[#A9AAA5] focus:border-[#0E0F10] focus:shadow-[0_0_0_3px_rgba(14,15,16,0.08)] transition-[border-color,box-shadow] duration-150"
+        className="flex-1 h-9 rounded-[12px] border border-transparent bg-[#EEEFE9] px-3 text-[13px] text-[#0E0F10] outline-none placeholder:text-[#A9AAA5] focus:border-[#0E0F10] focus:shadow-[0_0_0_3px_rgba(14,15,16,0.08)] transition-[border-color,box-shadow] duration-150"
       />
       <motion.button onClick={() => { if (novo.trim()) { onAdd(novo.trim()); setNovo(""); } }} disabled={!novo.trim()}
-        className="h-9 w-9 rounded-[10px] bg-[#0E0F10] flex items-center justify-center disabled:opacity-40"
+        className="h-9 w-9 rounded-[12px] bg-[#0E0F10] flex items-center justify-center disabled:opacity-40"
         whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
         <Plus size={14} color="#D7FF00" />
       </motion.button>
@@ -1616,7 +1616,7 @@ function MemoriaTab({ memoria, onSave }: {
             return (
               <motion.button key={t}
                 onClick={() => setNovoTipo(t)}
-                className="flex-1 rounded-[10px] py-1.5 text-[11px] font-bold"
+                className="flex-1 rounded-[12px] py-1.5 text-[11px] font-bold"
                 animate={{
                   backgroundColor: novoTipo === t ? cfg.bg : "#FAFAFA",
                   color: novoTipo === t ? cfg.cor : "#A9AAA5",
@@ -1633,10 +1633,10 @@ function MemoriaTab({ memoria, onSave }: {
             value={novo} onChange={(e) => setNovo(e.target.value)}
             onKeyDown={(e) => e.key === "Enter" && adicionar()}
             placeholder={`Adicionar à ${MEMORIA_TIPOS[novoTipo].label}...`}
-            className="flex-1 h-9 rounded-[10px] border border-transparent bg-[#EEEFE9] px-3 text-[13px] text-[#0E0F10] outline-none placeholder:text-[#A9AAA5] focus:border-[#0E0F10] focus:shadow-[0_0_0_3px_rgba(14,15,16,0.08)] transition-[border-color,box-shadow] duration-150"
+            className="flex-1 h-9 rounded-[12px] border border-transparent bg-[#EEEFE9] px-3 text-[13px] text-[#0E0F10] outline-none placeholder:text-[#A9AAA5] focus:border-[#0E0F10] focus:shadow-[0_0_0_3px_rgba(14,15,16,0.08)] transition-[border-color,box-shadow] duration-150"
           />
           <motion.button onClick={adicionar} disabled={!novo.trim() || saving}
-            className="h-9 px-4 rounded-[10px] bg-[#0E0F10] text-[12px] font-semibold text-[#D7FF00] disabled:opacity-40"
+            className="h-9 px-4 rounded-[12px] bg-[#0E0F10] text-[12px] font-semibold text-[#D7FF00] disabled:opacity-40"
             whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.96 }}>
             {saving ? "…" : <Plus size={13} />}
           </motion.button>
@@ -1769,7 +1769,7 @@ function RulesTab({ rules, onSave }: {
         <div className="flex items-center gap-2">
           {saving && <span className="text-[11px] text-[#A9AAA5]">Salvando...</span>}
           <motion.button onClick={() => setAdicionando(v => !v)}
-            className="flex items-center gap-1.5 rounded-[10px] bg-[#0E0F10] px-3 py-1.5 text-[12px] font-semibold text-[#D7FF00]"
+            className="flex items-center gap-1.5 rounded-[12px] bg-[#0E0F10] px-3 py-1.5 text-[12px] font-semibold text-[#D7FF00]"
             whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.96 }}>
             <Plus size={12} /> Nova Rule
           </motion.button>
@@ -1788,20 +1788,20 @@ function RulesTab({ rules, onSave }: {
               <input
                 autoFocus value={novaTitulo} onChange={(e) => setNovaTitulo(e.target.value)}
                 placeholder="Título da rule *"
-                className="h-10 w-full rounded-[10px] border border-transparent bg-white px-3 text-[13px] text-[#0E0F10] outline-none placeholder:text-[#A9AAA5] focus:border-[#0E0F10] focus:shadow-[0_0_0_3px_rgba(14,15,16,0.08)] transition-[border-color,box-shadow] duration-150"
+                className="h-10 w-full rounded-[12px] border border-transparent bg-white px-3 text-[13px] text-[#0E0F10] outline-none placeholder:text-[#A9AAA5] focus:border-[#0E0F10] focus:shadow-[0_0_0_3px_rgba(14,15,16,0.08)] transition-[border-color,box-shadow] duration-150"
               />
               <textarea
                 value={novaDesc} onChange={(e) => setNovaDesc(e.target.value)}
                 placeholder="Descrição (opcional)"
                 rows={2}
-                className="w-full rounded-[10px] border border-transparent bg-white px-3 py-2 text-[13px] text-[#0E0F10] outline-none placeholder:text-[#A9AAA5] resize-none focus:border-[#0E0F10] focus:shadow-[0_0_0_3px_rgba(14,15,16,0.08)] transition-[border-color,box-shadow] duration-150"
+                className="w-full rounded-[12px] border border-transparent bg-white px-3 py-2 text-[13px] text-[#0E0F10] outline-none placeholder:text-[#A9AAA5] resize-none focus:border-[#0E0F10] focus:shadow-[0_0_0_3px_rgba(14,15,16,0.08)] transition-[border-color,box-shadow] duration-150"
               />
               <div className="grid grid-cols-2 gap-3">
                 <div>
                   <label className="mb-1 block text-[10px] font-bold uppercase text-[#A9AAA5]">Categoria</label>
                   <select
                     value={novaCateg} onChange={(e) => setNovaCateg(e.target.value as Rule["categoria"])}
-                    className="h-9 w-full rounded-[10px] border border-transparent bg-white px-2 text-[12px] text-[#0E0F10] outline-none focus:border-[#0E0F10] transition-[border-color] duration-150">
+                    className="h-9 w-full rounded-[12px] border border-transparent bg-white px-2 text-[12px] text-[#0E0F10] outline-none focus:border-[#0E0F10] transition-[border-color] duration-150">
                     {Object.entries(RULE_CATEGORIAS).map(([k, v]) => (
                       <option key={k} value={k}>{v.label}</option>
                     ))}
@@ -1811,7 +1811,7 @@ function RulesTab({ rules, onSave }: {
                   <label className="mb-1 block text-[10px] font-bold uppercase text-[#A9AAA5]">Prioridade</label>
                   <select
                     value={novaPrio} onChange={(e) => setNovaPrio(e.target.value as Rule["prioridade"])}
-                    className="h-9 w-full rounded-[10px] border border-transparent bg-white px-2 text-[12px] text-[#0E0F10] outline-none focus:border-[#0E0F10] transition-[border-color] duration-150">
+                    className="h-9 w-full rounded-[12px] border border-transparent bg-white px-2 text-[12px] text-[#0E0F10] outline-none focus:border-[#0E0F10] transition-[border-color] duration-150">
                     {Object.entries(prioConfig).map(([k, v]) => (
                       <option key={k} value={k}>{v.label}</option>
                     ))}
@@ -1825,10 +1825,10 @@ function RulesTab({ rules, onSave }: {
               </label>
               <div className="flex gap-2">
                 <motion.button onClick={() => setAdicionando(false)}
-                  className="flex-1 rounded-[10px] bg-white py-2 text-[13px] font-semibold text-[#5E5E5F]"
+                  className="flex-1 rounded-[12px] bg-white py-2 text-[13px] font-semibold text-[#5E5E5F]"
                   whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.97 }}>Cancelar</motion.button>
                 <motion.button onClick={adicionar} disabled={!novaTitulo.trim()}
-                  className="flex-1 rounded-[10px] bg-[#0E0F10] py-2 text-[13px] font-semibold text-[#D7FF00] disabled:opacity-40"
+                  className="flex-1 rounded-[12px] bg-[#0E0F10] py-2 text-[13px] font-semibold text-[#D7FF00] disabled:opacity-40"
                   whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.96 }}>Salvar Rule</motion.button>
               </div>
             </div>
@@ -2083,7 +2083,7 @@ function ConectoresTab({ conectores, tipoConfig, meta, onSave }: {
                 initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: i * 0.04 }}>
                 <div className="flex items-center gap-3 mb-3">
-                  <div className="h-8 w-8 rounded-[10px] bg-[#EEEFE9] flex items-center justify-center flex-shrink-0">
+                  <div className="h-8 w-8 rounded-[12px] bg-[#EEEFE9] flex items-center justify-center flex-shrink-0">
                     <Icon size={15} color="#5E5E5F" />
                   </div>
                   <div className="flex-1 min-w-0">
@@ -2179,7 +2179,7 @@ function TarefasTab({ tarefas, tarefasConcluidas, onSave }: {
             const pCfg = t.prioridade ? prioConfig[t.prioridade] : null;
             return (
               <motion.div key={t.id}
-                className="flex items-center gap-3 rounded-[10px] bg-[#FAFAFA] px-3 py-2.5 cursor-pointer"
+                className="flex items-center gap-3 rounded-[12px] bg-[#FAFAFA] px-3 py-2.5 cursor-pointer"
                 initial={{ opacity: 0, x: -8 }} animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: i * 0.04 }}
                 whileHover={{ backgroundColor: "#F3F3F1" }}
@@ -2202,7 +2202,7 @@ function TarefasTab({ tarefas, tarefasConcluidas, onSave }: {
           <p className="text-[10px] font-bold uppercase text-[#A9AAA5] mb-1">Concluídas</p>
           {concluidas.map((t, i) => (
             <motion.div key={t.id}
-              className="flex items-center gap-3 rounded-[10px] bg-[#E6F4EA] px-3 py-2.5 cursor-pointer"
+              className="flex items-center gap-3 rounded-[12px] bg-[#E6F4EA] px-3 py-2.5 cursor-pointer"
               initial={{ opacity: 0, x: -8 }} animate={{ opacity: 1, x: 0 }}
               transition={{ delay: i * 0.04 }}
               whileHover={{ backgroundColor: "#DDF0E0" }}
@@ -2237,10 +2237,10 @@ function TarefasTab({ tarefas, tarefasConcluidas, onSave }: {
           onChange={(e) => setNovaTarefa(e.target.value)}
           onKeyDown={(e) => e.key === "Enter" && adicionarTarefa()}
           placeholder="Nova tarefa..."
-          className="flex-1 h-9 rounded-[10px] border border-transparent bg-[#EEEFE9] px-3 text-[13px] text-[#0E0F10] outline-none placeholder:text-[#A9AAA5] focus:border-[#0E0F10] focus:shadow-[0_0_0_3px_rgba(14,15,16,0.08)] transition-[border-color,box-shadow] duration-150"
+          className="flex-1 h-9 rounded-[12px] border border-transparent bg-[#EEEFE9] px-3 text-[13px] text-[#0E0F10] outline-none placeholder:text-[#A9AAA5] focus:border-[#0E0F10] focus:shadow-[0_0_0_3px_rgba(14,15,16,0.08)] transition-[border-color,box-shadow] duration-150"
         />
         <motion.button onClick={adicionarTarefa} disabled={!novaTarefa.trim()}
-          className="h-9 w-9 rounded-[10px] bg-[#0E0F10] flex items-center justify-center disabled:opacity-40"
+          className="h-9 w-9 rounded-[12px] bg-[#0E0F10] flex items-center justify-center disabled:opacity-40"
           whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
           <Plus size={14} color="#D7FF00" />
         </motion.button>

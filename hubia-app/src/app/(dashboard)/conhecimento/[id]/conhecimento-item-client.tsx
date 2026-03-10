@@ -386,7 +386,7 @@ function TabVisaoGeral({
 
         {/* Resumo — bloco de destaque */}
         <motion.div
-          className="rounded-[20px] bg-white p-5"
+          className="rounded-[30px] bg-white p-5"
           initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.3, ease: [0, 0, 0.2, 1] }}
         >
@@ -399,7 +399,7 @@ function TabVisaoGeral({
         {/* Contexto + Impacto — em grid */}
         <div className="grid grid-cols-2 gap-3">
           <motion.div
-            className="rounded-[20px] bg-white p-4 flex flex-col gap-1.5"
+            className="rounded-[30px] bg-white p-4 flex flex-col gap-1.5"
             initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3, ease: [0, 0, 0.2, 1], delay: 0.05 }}
           >
@@ -409,7 +409,7 @@ function TabVisaoGeral({
             </p>
           </motion.div>
           <motion.div
-            className="rounded-[20px] bg-white p-4 flex flex-col gap-1.5"
+            className="rounded-[30px] bg-white p-4 flex flex-col gap-1.5"
             initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3, ease: [0, 0, 0.2, 1], delay: 0.08 }}
           >
@@ -423,7 +423,7 @@ function TabVisaoGeral({
         {/* Preview das tabs estratégicas */}
         {(aprendizados.length > 0 || licoes.length > 0 || aplicacoes.acoes.length > 0) && (
           <motion.div
-            className="rounded-[20px] bg-white p-5 flex flex-col gap-3"
+            className="rounded-[30px] bg-white p-5 flex flex-col gap-3"
             initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3, ease: [0, 0, 0.2, 1], delay: 0.1 }}
           >
@@ -492,7 +492,7 @@ function TabVisaoGeral({
       <div className="flex flex-col gap-3">
         {/* Informações do item */}
         <motion.div
-          className="rounded-[20px] bg-white p-4 flex flex-col gap-3"
+          className="rounded-[30px] bg-white p-4 flex flex-col gap-3"
           initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.3, ease: [0, 0, 0.2, 1], delay: 0.06 }}
         >
@@ -513,7 +513,7 @@ function TabVisaoGeral({
 
         {/* Vínculos */}
         <motion.div
-          className="rounded-[20px] bg-white p-4 flex flex-col gap-3"
+          className="rounded-[30px] bg-white p-4 flex flex-col gap-3"
           initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.3, ease: [0, 0, 0.2, 1], delay: 0.1 }}
         >
@@ -538,7 +538,7 @@ function TabVisaoGeral({
         {/* Tags */}
         {item.tags.length > 0 && (
           <motion.div
-            className="rounded-[20px] bg-white p-4 flex flex-col gap-2.5"
+            className="rounded-[30px] bg-white p-4 flex flex-col gap-2.5"
             initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3, ease: [0, 0, 0.2, 1], delay: 0.14 }}
           >
@@ -556,7 +556,7 @@ function TabVisaoGeral({
         {/* Se há link externo, mostrá-lo */}
         {item.sourceUrl && (
           <motion.div
-            className="rounded-[20px] bg-white p-4 flex flex-col gap-2"
+            className="rounded-[30px] bg-white p-4 flex flex-col gap-2"
             initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3, ease: [0, 0, 0.2, 1], delay: 0.18 }}
           >
@@ -584,7 +584,7 @@ function TabConteudoFonte({ item }: { item: KnowledgeCard }) {
     <div className="flex flex-col gap-3">
       {item.sourceUrl && (
         <motion.div
-          className="rounded-[20px] bg-white p-5 flex flex-col gap-3"
+          className="rounded-[30px] bg-white p-5 flex flex-col gap-3"
           initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.3, ease: [0, 0, 0.2, 1] }}
         >
@@ -597,7 +597,7 @@ function TabConteudoFonte({ item }: { item: KnowledgeCard }) {
         </motion.div>
       )}
       <motion.div
-        className="rounded-[20px] bg-white p-5 flex flex-col gap-3"
+        className="rounded-[30px] bg-white p-5 flex flex-col gap-3"
         initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.3, ease: [0, 0, 0.2, 1], delay: 0.05 }}
       >
@@ -608,7 +608,7 @@ function TabConteudoFonte({ item }: { item: KnowledgeCard }) {
       </motion.div>
       {item.fileUrl && (
         <motion.div
-          className="rounded-[20px] bg-white p-5 flex flex-col gap-3"
+          className="rounded-[30px] bg-white p-5 flex flex-col gap-3"
           initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.3, ease: [0, 0, 0.2, 1], delay: 0.1 }}
         >
@@ -629,7 +629,7 @@ function TabConteudoFonte({ item }: { item: KnowledgeCard }) {
       )}
       {item.origem && (
         <motion.div
-          className="rounded-[20px] bg-white p-5 flex flex-col gap-2"
+          className="rounded-[30px] bg-white p-5 flex flex-col gap-2"
           initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.3, ease: [0, 0, 0.2, 1], delay: 0.15 }}
         >
@@ -649,7 +649,7 @@ function TabConteudoFonte({ item }: { item: KnowledgeCard }) {
 function TabAprendizados({ aprendizados, item }: { aprendizados: string[]; item: KnowledgeCard }) {
   if (aprendizados.length === 0) {
     return (
-      <div className="rounded-[20px] bg-white p-10 flex flex-col items-center gap-3">
+      <div className="rounded-[30px] bg-white p-10 flex flex-col items-center gap-3">
         <div className="flex h-10 w-10 items-center justify-center rounded-[12px] bg-[#F3E5F5]">
           <Brain size={20} color="#6A1B9A" />
         </div>
@@ -706,7 +706,7 @@ function TabLicoes({ licoes, item }: { licoes: { titulo: string; tipo: "fazer" |
 
   if (licoes.length === 0) {
     return (
-      <div className="rounded-[20px] bg-white p-10 flex flex-col items-center gap-3">
+      <div className="rounded-[30px] bg-white p-10 flex flex-col items-center gap-3">
         <div className="flex h-10 w-10 items-center justify-center rounded-[12px] bg-[#FFF3E0]">
           <Lightbulb size={20} color="#E65100" />
         </div>
@@ -792,7 +792,7 @@ function TabAplicacoes({ aplicacoes, item }: {
 
   if (secoes.length === 0) {
     return (
-      <div className="rounded-[20px] bg-white p-10 flex flex-col items-center gap-3">
+      <div className="rounded-[30px] bg-white p-10 flex flex-col items-center gap-3">
         <div className="flex h-10 w-10 items-center justify-center rounded-[12px] bg-[#E8EAF6]">
           <Sparkles size={20} color="#283593" />
         </div>
@@ -847,7 +847,7 @@ function TabArquivosLinks({ item }: { item: KnowledgeCard }) {
   const hasContent = item.fileUrl || item.sourceUrl || item.temAnexos || item.temLinks;
   if (!hasContent) {
     return (
-      <div className="rounded-[20px] bg-white p-10 flex flex-col items-center gap-3">
+      <div className="rounded-[30px] bg-white p-10 flex flex-col items-center gap-3">
         <Paperclip size={22} color="#A9AAA5" />
         <p className="text-[13px] text-[#A9AAA5]">Nenhum arquivo ou link associado.</p>
       </div>
@@ -856,7 +856,7 @@ function TabArquivosLinks({ item }: { item: KnowledgeCard }) {
   return (
     <div className="flex flex-col gap-3">
       {item.sourceUrl && (
-        <motion.div className="rounded-[20px] bg-white p-5 flex flex-col gap-3"
+        <motion.div className="rounded-[30px] bg-white p-5 flex flex-col gap-3"
           initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.3, ease: [0, 0, 0.2, 1] }}>
           <p className="text-[10px] font-bold uppercase tracking-widest text-[#A9AAA5]">Links Externos</p>
@@ -868,7 +868,7 @@ function TabArquivosLinks({ item }: { item: KnowledgeCard }) {
         </motion.div>
       )}
       {item.fileUrl && (
-        <motion.div className="rounded-[20px] bg-white p-5 flex flex-col gap-3"
+        <motion.div className="rounded-[30px] bg-white p-5 flex flex-col gap-3"
           initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.3, ease: [0, 0, 0.2, 1], delay: 0.05 }}>
           <p className="text-[10px] font-bold uppercase tracking-widest text-[#A9AAA5]">Documentos & Arquivos</p>

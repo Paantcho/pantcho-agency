@@ -54,7 +54,7 @@ export default function InviteModal({
           onClick={(e) => e.target === e.currentTarget && onClose()}
         >
           <motion.div
-            className="w-full max-w-[460px] rounded-[20px] bg-white p-7"
+            className="w-full max-w-[460px] rounded-[30px] bg-white p-7"
             initial={{ scale: 0.88, y: 20, opacity: 0 }}
             animate={{ scale: 1, y: 0, opacity: 1 }}
             exit={{ scale: 0.92, y: 10, opacity: 0 }}
@@ -72,7 +72,7 @@ export default function InviteModal({
               <motion.button
                 type="button"
                 onClick={onClose}
-                className="flex h-8 w-8 items-center justify-center rounded-[10px] text-[#A9AAA5]"
+                className="flex h-8 w-8 items-center justify-center rounded-[12px] text-[#A9AAA5]"
                 whileHover={{ rotate: 90, scale: 1.1, color: "#0E0F10" }}
                 whileTap={{ rotate: 90, scale: 0.9 }}
                 transition={{ duration: 0.15, ease: [0.34, 1.56, 0.64, 1] }}
@@ -99,7 +99,7 @@ export default function InviteModal({
                     placeholder="nome@empresa.com"
                     required
                     disabled={loading}
-                    className="h-11 w-full rounded-[10px] border border-transparent bg-[#EEEFE9] pl-10 pr-4 text-[14px] font-medium text-[#0E0F10] outline-none placeholder:text-[#A9AAA5] focus:border-[#0E0F10] focus:shadow-[0_0_0_3px_rgba(14,15,16,0.08)] transition-[border-color,box-shadow] duration-150 disabled:opacity-50"
+                    className="h-11 w-full rounded-[12px] border border-transparent bg-[#EEEFE9] pl-10 pr-4 text-[14px] font-medium text-[#0E0F10] outline-none placeholder:text-[#A9AAA5] focus:border-[#0E0F10] focus:shadow-[0_0_0_3px_rgba(14,15,16,0.08)] transition-[border-color,box-shadow] duration-150 disabled:opacity-50"
                   />
                 </div>
               </div>
@@ -118,7 +118,7 @@ export default function InviteModal({
               </div>
 
               {/* Info de permissão */}
-              <div className="rounded-[10px] bg-[#EEEFE9] p-3.5">
+              <div className="rounded-[12px] bg-[#EEEFE9] p-3.5">
                 {role === "admin" && (
                   <p className="text-[12px] text-[#5E5E5F] leading-relaxed">
                     <strong className="text-[#0E0F10]">Admin</strong> pode alterar plano, branding, domínio e gerenciar outros membros. Não pode alterar o proprietário.

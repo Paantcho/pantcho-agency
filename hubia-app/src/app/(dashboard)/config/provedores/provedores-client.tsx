@@ -78,7 +78,7 @@ function ProviderModal({
       onClick={(e) => e.target === e.currentTarget && onClose()}
     >
       <motion.div
-        className="w-full max-w-md rounded-[20px] bg-surface-500 p-7"
+        className="w-full max-w-md rounded-[30px] bg-surface-500 p-7"
         initial={{ scale: 0.88, y: 20, opacity: 0 }}
         animate={{ scale: 1, y: 0, opacity: 1 }}
         exit={{ scale: 0.92, y: 10, opacity: 0 }}
@@ -170,7 +170,7 @@ function DeleteConfirmModal({
       onClick={(e) => e.target === e.currentTarget && onClose()}
     >
       <motion.div
-        className="w-full max-w-sm rounded-[20px] bg-surface-500 p-7"
+        className="w-full max-w-sm rounded-[30px] bg-surface-500 p-7"
         initial={{ scale: 0.88, y: 20, opacity: 0 }}
         animate={{ scale: 1, y: 0, opacity: 1 }}
         exit={{ scale: 0.92, y: 10, opacity: 0 }}

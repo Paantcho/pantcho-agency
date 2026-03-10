@@ -19,7 +19,7 @@ import {
 import type { CreatorAutoFillData } from "@/app/api/creators/process-zip/route";
 
 const inputClass =
-  "w-full rounded-input border-0 bg-[var(--hubia-bg-base-500)] px-4 py-3 text-body-md font-medium text-ink-500 outline-none placeholder:text-base-600 focus:ring-2 focus:ring-limao-500/30";
+  "w-full rounded-input border-0 bg-[var(--hubia-bg-base-500)] px-4 py-3 text-body-md font-semibold text-ink-500 outline-none placeholder:text-base-600 focus:ring-2 focus:ring-limao-500/30";
 
 const DRAFT_KEY = "hubia-creator-draft";
 
@@ -365,7 +365,7 @@ export function NovaCreatorModal({
         {error && (
           <div
             role="alert"
-            className="flex items-start gap-2 rounded-card border border-red-500/30 bg-red-500/10 px-4 py-3 text-body-sm font-medium text-red-600"
+            className="flex items-start gap-2 rounded-card border border-red-500/30 bg-red-500/10 px-4 py-3 text-body-sm font-semibold text-red-600"
           >
             <AlertCircle size={16} className="mt-0.5 shrink-0" />
             {error}
@@ -375,7 +375,7 @@ export function NovaCreatorModal({
         {/* Mensagem de upload/AI */}
         {uploadMessage && (
           <div
-            className={`flex items-start gap-2 rounded-card border px-4 py-3 text-body-sm font-medium ${
+            className={`flex items-start gap-2 rounded-card border px-4 py-3 text-body-sm font-semibold ${
               aiProcessed
                 ? "border-limao-500/30 bg-limao-500/10 text-ink-500"
                 : "border-orange-400/30 bg-orange-400/10 text-orange-700"
@@ -676,7 +676,7 @@ export function NovaCreatorModal({
             />
             <label
               htmlFor="mc-active"
-              className="text-body-md font-medium text-ink-500"
+              className="text-body-md font-semibold text-ink-500"
             >
               Creator ativa
             </label>

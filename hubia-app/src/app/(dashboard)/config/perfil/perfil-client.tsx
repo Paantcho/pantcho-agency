@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { User, Mail, Camera, Check } from "lucide-react";
 
 const inputClass =
-  "h-11 w-full rounded-[10px] border border-transparent bg-[#EEEFE9] px-3.5 text-[15px] text-[#0E0F10] outline-none placeholder:text-[#A9AAA5] transition-[border-color,box-shadow] duration-150 hover:border-[#D4D5D6] focus:border-[#0E0F10] focus:shadow-[0_0_0_3px_rgba(14,15,16,0.08)]";
+  "h-11 w-full rounded-[12px] border border-transparent bg-[#EEEFE9] px-3.5 text-[15px] text-[#0E0F10] outline-none placeholder:text-[#A9AAA5] transition-[border-color,box-shadow] duration-150 hover:border-[#D4D5D6] focus:border-[#0E0F10] focus:shadow-[0_0_0_3px_rgba(14,15,16,0.08)]";
 
 export default function PerfilClient({
   nome: initialNome,
@@ -36,9 +36,9 @@ export default function PerfilClient({
   return (
     <div className="flex flex-col gap-6">
       {/* Avatar */}
-      <div className="rounded-[20px] bg-white p-6">
+      <div className="rounded-[30px] bg-white p-6">
         <div className="mb-5 flex items-center gap-2.5">
-          <div className="flex h-8 w-8 items-center justify-center rounded-[10px] bg-[#0E0F10]">
+          <div className="flex h-8 w-8 items-center justify-center rounded-[12px] bg-[#0E0F10]">
             <User size={15} color="#D7FF00" />
           </div>
           <h2 className="text-[15px] font-bold text-[#0E0F10]">Perfil</h2>
@@ -68,7 +68,7 @@ export default function PerfilClient({
       </div>
 
       {/* Campos */}
-      <div className="rounded-[20px] bg-white p-6">
+      <div className="rounded-[30px] bg-white p-6">
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
           <div className="flex flex-col gap-1.5">
             <label className="text-[13px] font-semibold text-[#5E5E5F]">
@@ -92,7 +92,7 @@ export default function PerfilClient({
               type="email"
               value={initialEmail}
               readOnly
-              className="h-11 w-full rounded-[10px] border border-transparent bg-[#EEEFE9] px-3.5 text-[15px] text-[#A9AAA5] outline-none cursor-not-allowed"
+              className="h-11 w-full rounded-[12px] border border-transparent bg-[#EEEFE9] px-3.5 text-[15px] text-[#A9AAA5] outline-none cursor-not-allowed"
             />
             <p className="text-[11px] text-[#A9AAA5]">
               Gerenciado pelo provedor de autenticação

@@ -206,7 +206,7 @@ export default function BrandingClient({
   if (!planoEnterprise) {
     return (
       <div className="flex flex-col gap-6">
-        <div className="rounded-[20px] bg-[#0E0F10] p-8 flex flex-col items-center justify-center gap-4 text-center">
+        <div className="rounded-[30px] bg-[#0E0F10] p-8 flex flex-col items-center justify-center gap-4 text-center">
           <div className="flex h-14 w-14 items-center justify-center rounded-full bg-[#D7FF00]">
             <Lock size={22} color="#0E0F10" />
           </div>
@@ -228,7 +228,7 @@ export default function BrandingClient({
           </motion.button>
         </div>
 
-        <div className="rounded-[20px] bg-white p-6">
+        <div className="rounded-[30px] bg-white p-6">
           <div className="mb-4 flex items-center gap-2">
             <Globe size={15} className="text-[#A9AAA5]" />
             <h2 className="text-[14px] font-semibold text-[#A9AAA5]">
@@ -244,9 +244,9 @@ export default function BrandingClient({
   return (
     <div className="flex flex-col gap-6">
       {/* Cor primária */}
-      <div className="rounded-[20px] bg-white p-6">
+      <div className="rounded-[30px] bg-white p-6">
         <div className="mb-5 flex items-center gap-2.5">
-          <div className="flex h-8 w-8 items-center justify-center rounded-[10px] bg-[#0E0F10]">
+          <div className="flex h-8 w-8 items-center justify-center rounded-[12px] bg-[#0E0F10]">
             <Palette size={15} color="#D7FF00" />
           </div>
           <h2 className="text-[15px] font-bold text-[#0E0F10]">
@@ -286,13 +286,13 @@ export default function BrandingClient({
                   onChange={(e) => handleHexChange(e.target.value)}
                   placeholder="#D7FF00"
                   maxLength={7}
-                  className="h-11 w-36 rounded-[10px] border border-transparent bg-[#EEEFE9] px-3.5 font-mono text-[15px] text-[#0E0F10] outline-none transition-[border-color,box-shadow] duration-150 hover:border-[#D4D5D6] focus:border-[#0E0F10] focus:shadow-[0_0_0_3px_rgba(14,15,16,0.08)]"
+                  className="h-11 w-36 rounded-[12px] border border-transparent bg-[#EEEFE9] px-3.5 font-mono text-[15px] text-[#0E0F10] outline-none transition-[border-color,box-shadow] duration-150 hover:border-[#D4D5D6] focus:border-[#0E0F10] focus:shadow-[0_0_0_3px_rgba(14,15,16,0.08)]"
                   style={isValidHex(hexInput) ? {} : { borderColor: "#E53935" }}
                 />
                 <motion.button
                   type="button"
                   onClick={() => { setCor(initialColor); setHexInput(initialColor); }}
-                  className="flex h-11 w-11 items-center justify-center rounded-[10px] bg-[#EEEFE9] text-[#A9AAA5]"
+                  className="flex h-11 w-11 items-center justify-center rounded-[12px] bg-[#EEEFE9] text-[#A9AAA5]"
                   whileHover={{ backgroundColor: "rgba(213,210,201,0.5)", color: "#0E0F10", scale: 1.05 }}
                   whileTap={{ scale: 0.90 }}
                   title="Restaurar padrão"
@@ -326,9 +326,9 @@ export default function BrandingClient({
       </div>
 
       {/* Logotipo */}
-      <div className="rounded-[20px] bg-white p-6">
+      <div className="rounded-[30px] bg-white p-6">
         <div className="mb-5 flex items-center gap-2.5">
-          <div className="flex h-8 w-8 items-center justify-center rounded-[10px] bg-[#0E0F10]">
+          <div className="flex h-8 w-8 items-center justify-center rounded-[12px] bg-[#0E0F10]">
             <Upload size={15} color="#D7FF00" />
           </div>
           <h2 className="text-[15px] font-bold text-[#0E0F10]">

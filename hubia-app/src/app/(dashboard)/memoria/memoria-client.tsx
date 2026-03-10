@@ -65,14 +65,14 @@ export default function MemoriaClient({
         <BookOpen size={18} className="mt-0.5 shrink-0" style={{ color: "#3B82F6" }} />
         <div>
           <p
-            className="font-medium"
+            className="font-semibold"
             style={{ fontSize: "13px", color: "#0E0F10" }}
           >
             A memória é compartilhada entre todos os agentes. Cada agente lê
             esses arquivos antes de agir e atualiza após concluir.
           </p>
           <p
-            className="mt-1 font-medium"
+            className="mt-1 font-semibold"
             style={{ fontSize: "12px", color: "#A9AAA5" }}
           >
             Fase atual: arquivos .md no repositório. Fase futura: banco de
@@ -91,7 +91,7 @@ export default function MemoriaClient({
           return (
             <div
               key={file.id}
-              className="rounded-[20px] bg-white overflow-hidden"
+              className="rounded-[30px] bg-white overflow-hidden"
             >
               {/* Header */}
               <button
@@ -128,7 +128,7 @@ export default function MemoriaClient({
                     </span>
                   </div>
                   <p
-                    className="mt-0.5 font-medium"
+                    className="mt-0.5 font-semibold"
                     style={{ fontSize: "13px", color: "#A9AAA5" }}
                   >
                     {file.description}
@@ -140,7 +140,7 @@ export default function MemoriaClient({
                   <div className="hidden sm:flex items-center gap-1.5">
                     <Clock size={12} style={{ color: "#C8C9C3" }} />
                     <span
-                      className="text-[11px] font-medium"
+                      className="text-[11px] font-semibold"
                       style={{ color: "#C8C9C3" }}
                     >
                       {new Date(file.lastModified).toLocaleDateString(
@@ -179,19 +179,19 @@ export default function MemoriaClient({
                   {/* Word count */}
                   <div className="mt-4 flex items-center gap-4">
                     <span
-                      className="text-[11px] font-medium"
+                      className="text-[11px] font-semibold"
                       style={{ color: "#C8C9C3" }}
                     >
                       {file.content.split(/\s+/).length} palavras
                     </span>
                     <span
-                      className="text-[11px] font-medium"
+                      className="text-[11px] font-semibold"
                       style={{ color: "#C8C9C3" }}
                     >
                       {file.content.length} caracteres
                     </span>
                     <span
-                      className="text-[11px] font-medium"
+                      className="text-[11px] font-semibold"
                       style={{ color: "#C8C9C3" }}
                     >
                       {file.content.split("\n").length} linhas

@@ -114,7 +114,7 @@ export default function CalendarioClient({
 
       {/* Grade */}
       <motion.div
-        className="rounded-[20px] bg-white overflow-hidden"
+        className="rounded-[30px] bg-white overflow-hidden"
         animate={{ opacity: loading ? 0.5 : 1 }}
         transition={{ duration: 0.2 }}
       >

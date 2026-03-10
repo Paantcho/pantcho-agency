@@ -90,7 +90,7 @@ export default function PlanoClient({
   return (
     <div className="flex flex-col gap-6">
       {/* Banner do plano ativo */}
-      <div className="rounded-[20px] bg-[#0E0F10] p-6 flex items-center justify-between">
+      <div className="rounded-[30px] bg-[#0E0F10] p-6 flex items-center justify-between">
         <div className="flex items-start gap-4">
           <div className="flex h-10 w-10 items-center justify-center rounded-[12px] bg-[#D7FF00]">
             <Crown size={18} color="#0E0F10" />
@@ -121,7 +121,7 @@ export default function PlanoClient({
       </div>
 
       {/* Módulos liberados */}
-      <div className="rounded-[20px] bg-white p-6">
+      <div className="rounded-[30px] bg-white p-6">
         <h2 className="mb-4 text-[15px] font-bold text-[#0E0F10]">
           Módulos disponíveis
         </h2>
@@ -147,7 +147,7 @@ export default function PlanoClient({
       </div>
 
       {/* Comparativo de planos */}
-      <div className="rounded-[20px] bg-white p-6">
+      <div className="rounded-[30px] bg-white p-6">
         <h2 className="mb-5 text-[15px] font-bold text-[#0E0F10]">
           Comparativo de planos
         </h2>

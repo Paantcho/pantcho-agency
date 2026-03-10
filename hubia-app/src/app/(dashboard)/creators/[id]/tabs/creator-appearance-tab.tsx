@@ -89,7 +89,7 @@ function TableRow({
       <span className="font-semibold" style={{ fontSize: "12px", color: "#0E0F10" }}>
         {elemento}
       </span>
-      <span className="font-medium" style={{ fontSize: "12px", color: "#A9AAA5" }}>
+      <span className="font-semibold" style={{ fontSize: "12px", color: "#A9AAA5" }}>
         {definicao}
       </span>
       <span
@@ -147,7 +147,7 @@ export default function CreatorAppearanceTab({
           <p className="font-bold" style={{ fontSize: "12px", color: "#0E0F10" }}>
             DOCUMENTO FORENSE
           </p>
-          <p className="font-medium" style={{ fontSize: "12px", color: "#A9AAA5", marginTop: "2px" }}>
+          <p className="font-semibold" style={{ fontSize: "12px", color: "#A9AAA5", marginTop: "2px" }}>
             Fonte da verdade absoluta — nenhum detalhe pode ser alterado sem aprovação explícita de Pantcho..
           </p>
         </div>
@@ -206,7 +206,7 @@ export default function CreatorAppearanceTab({
                 >
                   ✓
                 </span>
-                <span className="font-medium" style={{ fontSize: "11px", color: "#0E0F10" }}>
+                <span className="font-semibold" style={{ fontSize: "11px", color: "#0E0F10" }}>
                   {item}
                 </span>
               </div>
@@ -223,7 +223,7 @@ export default function CreatorAppearanceTab({
                 >
                   ✓
                 </span>
-                <span className="font-medium" style={{ fontSize: "11px", color: "#0E0F10" }}>
+                <span className="font-semibold" style={{ fontSize: "11px", color: "#0E0F10" }}>
                   {item}
                 </span>
               </div>
@@ -249,7 +249,7 @@ export default function CreatorAppearanceTab({
                 >
                   ✕
                 </span>
-                <span className="font-medium" style={{ fontSize: "12px", color: "#0E0F10" }}>
+                <span className="font-semibold" style={{ fontSize: "12px", color: "#0E0F10" }}>
                   {item}
                 </span>
               </div>
@@ -274,7 +274,7 @@ export default function CreatorAppearanceTab({
             value={basePrompt}
             onChange={(e) => setBasePrompt(e.target.value)}
             placeholder="Descreva a aparência fixa do creator..."
-            className="mt-2 w-full rounded-xl border px-4 py-3 font-medium outline-none transition-colors focus:border-[#D7FF00]"
+            className="mt-2 w-full rounded-xl border px-4 py-3 font-semibold outline-none transition-colors focus:border-[#D7FF00]"
             style={{ borderColor: "#D9D9D4", background: "#EEEFE9", fontSize: "13px", color: "#0E0F10" }}
           />
           <div className="mt-4 flex flex-wrap items-center gap-2">
@@ -295,10 +295,10 @@ export default function CreatorAppearanceTab({
               Cancelar
             </button>
             {message === "ok" && (
-              <span className="font-medium" style={{ fontSize: "12px", color: "#00FCB0" }}>Salvo.</span>
+              <span className="font-semibold" style={{ fontSize: "12px", color: "#00FCB0" }}>Salvo.</span>
             )}
             {message === "error" && errorText && (
-              <span className="font-medium" style={{ fontSize: "12px", color: "#FF576D" }}>{errorText}</span>
+              <span className="font-semibold" style={{ fontSize: "12px", color: "#FF576D" }}>{errorText}</span>
             )}
           </div>
         </form>

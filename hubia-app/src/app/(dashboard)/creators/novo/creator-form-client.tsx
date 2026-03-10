@@ -316,7 +316,7 @@ export default function CreatorFormClient({
 
       {uploadMessage && (
         <div
-          className={`flex items-start gap-2 rounded-card border px-4 py-3 text-body-sm font-medium ${
+          className={`flex items-start gap-2 rounded-card border px-4 py-3 text-body-sm font-semibold ${
             aiProcessed
               ? "border-limao-500/30 bg-limao-500/10 text-ink-500"
               : "border-orange-400/30 bg-orange-400/10 text-orange-700"

@@ -627,7 +627,7 @@ function SaudeOperacional() {
 
   return (
     <motion.div
-      className="rounded-[20px] bg-[#0E0F10] p-6 flex flex-col"
+      className="rounded-[30px] bg-[#0E0F10] p-6 flex flex-col"
       initial={{ opacity: 0, y: 16 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.35, ease: [0, 0, 0.2, 1], delay: 0.18 }}
@@ -703,7 +703,7 @@ function StatusPedidos() {
 
   return (
     <motion.div
-      className="rounded-[20px] bg-white p-6"
+      className="rounded-[30px] bg-white p-6"
       initial={{ opacity: 0, y: 16 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.35, ease: [0, 0, 0.2, 1], delay: 0.35 }}
@@ -776,7 +776,7 @@ function DistribuicaoTipo() {
 
   return (
     <motion.div
-      className="rounded-[20px] bg-white p-6"
+      className="rounded-[30px] bg-white p-6"
       initial={{ opacity: 0, y: 16 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.35, ease: [0, 0, 0.2, 1], delay: 0.38 }}
@@ -853,7 +853,7 @@ function UsoIA() {
 
   return (
     <motion.div
-      className="rounded-[20px] bg-white p-6"
+      className="rounded-[30px] bg-white p-6"
       initial={{ opacity: 0, y: 16 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.35, ease: [0, 0, 0.2, 1], delay: 0.42 }}
@@ -1059,7 +1059,7 @@ function ActivityFeed() {
 
   return (
     <motion.div
-      className="rounded-[20px] bg-white overflow-hidden"
+      className="rounded-[30px] bg-white overflow-hidden"
       initial={{ opacity: 0, y: 16 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.35, ease: [0, 0, 0.2, 1], delay: 0.22 }}
@@ -1174,7 +1174,7 @@ function PedidosRecentes() {
 
   return (
     <motion.div
-      className="rounded-[20px] bg-white p-6"
+      className="rounded-[30px] bg-white p-6"
       initial={{ opacity: 0, y: 16 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.35, ease: [0, 0, 0.2, 1], delay: 0.45 }}
@@ -1257,7 +1257,7 @@ function PedidosRecentes() {
 function SquadPerformance() {
   return (
     <motion.div
-      className="rounded-[20px] bg-white p-6"
+      className="rounded-[30px] bg-white p-6"
       initial={{ opacity: 0, y: 16 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.35, ease: [0, 0, 0.2, 1], delay: 0.52 }}
@@ -1309,7 +1309,7 @@ function SquadPerformance() {
 function Tendencias() {
   return (
     <motion.div
-      className="rounded-[20px] bg-white overflow-hidden"
+      className="rounded-[30px] bg-white overflow-hidden"
       initial={{ opacity: 0, y: 16 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.35, ease: [0, 0, 0.2, 1], delay: 0.58 }}
@@ -1420,7 +1420,7 @@ export default function RelatorioClient() {
           return (
             <motion.div
               key={kpi.label}
-              className="rounded-[20px] p-6 flex flex-col cursor-default overflow-hidden"
+              className="rounded-[30px] p-6 flex flex-col cursor-default overflow-hidden"
               style={{ backgroundColor: bgColor }}
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
@@ -1484,7 +1484,7 @@ export default function RelatorioClient() {
 
       {/* ── Row 3: Gráfico hero ───────────────────────────────────────────── */}
       <motion.div
-        className="rounded-[20px] bg-white px-6 pt-7 pb-4"
+        className="rounded-[30px] bg-white px-6 pt-7 pb-4"
         initial={{ opacity: 0, y: 16 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.35, ease: [0, 0, 0.2, 1], delay: 0.28 }}
@@ -1497,7 +1497,7 @@ export default function RelatorioClient() {
         <StatusPedidos />
         <DistribuicaoTipo />
         <motion.div
-          className="rounded-[20px] bg-white p-6"
+          className="rounded-[30px] bg-white p-6"
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.35, ease: [0, 0, 0.2, 1], delay: 0.4 }}

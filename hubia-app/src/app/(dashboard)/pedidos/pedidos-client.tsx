@@ -264,7 +264,7 @@ export default function PedidosClient({
 
       {/* New pedido form */}
       {showForm && (
-        <div className="rounded-[20px] bg-white p-6">
+        <div className="rounded-[30px] bg-white p-6">
           <div className="mb-4 flex items-center justify-between">
             <h3
               className="font-bold"

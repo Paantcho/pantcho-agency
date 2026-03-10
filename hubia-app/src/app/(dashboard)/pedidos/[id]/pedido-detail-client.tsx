@@ -290,7 +290,7 @@ export default function PedidoDetailClient({
         <div className="flex flex-col gap-4">
 
           {/* Header card */}
-          <div className="rounded-[20px] bg-white p-6">
+          <div className="rounded-[30px] bg-white p-6">
             <div className="flex items-start gap-3 mb-5">
               {/* Avatar colorido baseado no tipo */}
               <div
@@ -374,7 +374,7 @@ export default function PedidoDetailClient({
           <CadeiaProducao etapas={cadeia} />
 
           {/* Tabs + conteúdo */}
-          <div className="rounded-[20px] bg-white overflow-hidden">
+          <div className="rounded-[30px] bg-white overflow-hidden">
             <div ref={tabContainerRef} className="relative flex overflow-x-auto border-b border-[#EEEFE9]">
               <motion.div aria-hidden
                 className="pointer-events-none absolute bottom-0 h-[2px] rounded-t-[2px] bg-[#0E0F10]"
@@ -511,7 +511,7 @@ export default function PedidoDetailClient({
 function CadeiaProducao({ etapas }: { etapas: EtapaProducao[] }) {
   const concluidas = etapas.filter(e => e.concluido).length;
   return (
-    <div className="rounded-[20px] bg-white p-6">
+    <div className="rounded-[30px] bg-white p-6">
       <div className="flex items-center justify-between mb-4">
         <p className="text-[11px] font-bold uppercase tracking-wide text-[#A9AAA5]">Cadeia de Produção</p>
         <span className="text-[11px] font-semibold text-[#5E5E5F]">{concluidas}/{etapas.length} concluídas</span>
@@ -579,14 +579,14 @@ function PromptFinalCard({ briefing }: { briefing: Record<string, unknown> }) {
   };
 
   return (
-    <div className="rounded-[20px] bg-[#0E0F10] p-6">
+    <div className="rounded-[30px] bg-[#0E0F10] p-6">
       <div className="flex items-center justify-between mb-4">
         <p className="text-[11px] font-bold uppercase tracking-wide text-[#A9AAA5]">Prompt Final</p>
         <div className="flex items-center gap-2">
           {temPrompt && (
             <motion.button
               onClick={handleCopy}
-              className="flex items-center gap-1.5 rounded-[10px] bg-[#D7FF00] px-3 py-1.5 text-[11px] font-bold text-[#0E0F10]"
+              className="flex items-center gap-1.5 rounded-[12px] bg-[#D7FF00] px-3 py-1.5 text-[11px] font-bold text-[#0E0F10]"
               whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.96 }}
             >
               {copied ? <Check size={12} /> : <Copy size={12} />}
@@ -675,16 +675,16 @@ function NotasCard({ pedidoId, organizationId }: { pedidoId: string; organizatio
             autoFocus value={nota} onChange={(e) => setNota(e.target.value)}
             placeholder="Adicionar nota..."
             rows={3}
-            className="w-full rounded-[10px] border border-transparent bg-[#EEEFE9] px-3 py-2 text-[13px] text-[#0E0F10] outline-none placeholder:text-[#A9AAA5] resize-none focus:border-[#0E0F10] focus:shadow-[0_0_0_3px_rgba(14,15,16,0.08)] transition-[border-color,box-shadow] duration-150"
+            className="w-full rounded-[12px] border border-transparent bg-[#EEEFE9] px-3 py-2 text-[13px] text-[#0E0F10] outline-none placeholder:text-[#A9AAA5] resize-none focus:border-[#0E0F10] focus:shadow-[0_0_0_3px_rgba(14,15,16,0.08)] transition-[border-color,box-shadow] duration-150"
           />
           <div className="flex gap-2">
             <motion.button onClick={() => setEditing(false)}
-              className="flex-1 rounded-[10px] bg-[#EEEFE9] py-2 text-[12px] font-semibold text-[#5E5E5F]"
+              className="flex-1 rounded-[12px] bg-[#EEEFE9] py-2 text-[12px] font-semibold text-[#5E5E5F]"
               whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.97 }}>
               Cancelar
             </motion.button>
             <motion.button onClick={() => { setEditing(false); if (nota.trim()) toast.success("Nota salva!"); }}
-              className="flex-1 rounded-[10px] bg-[#0E0F10] py-2 text-[12px] font-semibold text-white"
+              className="flex-1 rounded-[12px] bg-[#0E0F10] py-2 text-[12px] font-semibold text-white"
               whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.97 }}>
               Salvar
             </motion.button>
@@ -821,7 +821,7 @@ function TabConteudo({
             {tarefas.map((t, i) => (
               <motion.div
                 key={i}
-                className="flex items-center gap-3 rounded-[10px] px-3 py-2.5"
+                className="flex items-center gap-3 rounded-[12px] px-3 py-2.5"
                 style={{ backgroundColor: t.concluido ? "#E6F4EA" : "#FAFAFA" }}
                 initial={{ opacity: 0, x: -8 }} animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: i * 0.04 }}
@@ -973,14 +973,14 @@ function UploadResultado({ tipo }: { tipo: PedidoTipo }) {
       {arquivos.length > 0 && (
         <div className="grid grid-cols-2 gap-2">
           {arquivos.map((arq, i) => (
-            <motion.div key={i} className="relative rounded-[10px] overflow-hidden group"
+            <motion.div key={i} className="relative rounded-[12px] overflow-hidden group"
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.2 }}>
               {arq.file.type.startsWith("image/") ? (
-                <img src={arq.url} alt="" className="w-full h-[80px] object-cover rounded-[10px]" />
+                <img src={arq.url} alt="" className="w-full h-[80px] object-cover rounded-[12px]" />
               ) : (
-                <div className="w-full h-[80px] rounded-[10px] bg-[#0E0F10] flex items-center justify-center">
+                <div className="w-full h-[80px] rounded-[12px] bg-[#0E0F10] flex items-center justify-center">
                   <span className="text-[10px] font-bold text-[#D7FF00]">VÍDEO</span>
                 </div>
               )}

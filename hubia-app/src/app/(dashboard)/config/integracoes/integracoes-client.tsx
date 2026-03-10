@@ -249,7 +249,7 @@ export default function IntegracoesClient() {
   return (
     <div className="flex flex-col gap-6">
       {/* Header info */}
-      <div className="rounded-[20px] bg-[#0E0F10] p-6 flex items-start gap-3">
+      <div className="rounded-[30px] bg-[#0E0F10] p-6 flex items-start gap-3">
         <div className="flex h-8 w-8 items-center justify-center rounded-[10px] bg-[#D7FF00] shrink-0">
           <Plug size={15} color="#0E0F10" />
         </div>
@@ -269,7 +269,7 @@ export default function IntegracoesClient() {
         let globalIdx = integracoes.findIndex((i) => i.categoria === cat.id);
 
         return (
-          <div key={cat.id} className="rounded-[20px] bg-white p-6">
+          <div key={cat.id} className="rounded-[30px] bg-white p-6">
             <div className="mb-4 flex items-center justify-between">
               <h2 className="text-[15px] font-bold text-[#0E0F10]">
                 {cat.label}

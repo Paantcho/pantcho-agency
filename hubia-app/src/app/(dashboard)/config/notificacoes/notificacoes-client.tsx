@@ -104,7 +104,7 @@ export default function NotificacoesClient({
   return (
     <div className="flex flex-col gap-6">
       {/* Header status */}
-      <div className="rounded-[20px] bg-[#0E0F10] p-5 flex items-center justify-between">
+      <div className="rounded-[30px] bg-[#0E0F10] p-5 flex items-center justify-between">
         <div className="flex items-center gap-3">
           <div className="flex h-8 w-8 items-center justify-center rounded-[10px] bg-[#D7FF00]">
             <Bell size={15} color="#0E0F10" />
@@ -140,7 +140,7 @@ export default function NotificacoesClient({
       </div>
 
       {/* Lista de notificações */}
-      <div className="rounded-[20px] bg-white p-6">
+      <div className="rounded-[30px] bg-white p-6">
         <div className="flex flex-col gap-3">
           {notifChannels.map((notif, i) => {
             const Icon = notif.icon;

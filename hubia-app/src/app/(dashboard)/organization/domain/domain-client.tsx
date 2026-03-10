@@ -14,7 +14,7 @@ import {
 } from "lucide-react";
 
 const inputClass =
-  "h-11 w-full rounded-[10px] border border-transparent bg-[#EEEFE9] px-3.5 text-[15px] text-[#0E0F10] outline-none placeholder:text-[#A9AAA5] transition-[border-color,box-shadow] duration-150 hover:border-[#D4D5D6] focus:border-[#0E0F10] focus:shadow-[0_0_0_3px_rgba(14,15,16,0.08)] font-mono";
+  "h-11 w-full rounded-[12px] border border-transparent bg-[#EEEFE9] px-3.5 text-[15px] text-[#0E0F10] outline-none placeholder:text-[#A9AAA5] transition-[border-color,box-shadow] duration-150 hover:border-[#D4D5D6] focus:border-[#0E0F10] focus:shadow-[0_0_0_3px_rgba(14,15,16,0.08)] font-mono";
 
 const dnsRecords = [
   { tipo: "CNAME", host: "www", valor: "hubia-app.vercel.app", ttl: "3600" },
@@ -50,7 +50,7 @@ export default function DomainClient({
   if (!planoEnterprise) {
     return (
       <div className="flex flex-col gap-6">
-        <div className="rounded-[20px] bg-[#0E0F10] p-8 flex flex-col items-center justify-center gap-4 text-center">
+        <div className="rounded-[30px] bg-[#0E0F10] p-8 flex flex-col items-center justify-center gap-4 text-center">
           <div className="flex h-14 w-14 items-center justify-center rounded-full bg-[#D7FF00]">
             <Lock size={22} color="#0E0F10" />
           </div>
@@ -71,12 +71,12 @@ export default function DomainClient({
           </motion.button>
         </div>
 
-        <div className="rounded-[20px] bg-white p-6">
+        <div className="rounded-[30px] bg-white p-6">
           <div className="mb-3 flex items-center gap-2">
             <Globe size={15} className="text-[#A9AAA5]" />
             <p className="text-[14px] font-semibold text-[#A9AAA5]">Domínio padrão</p>
           </div>
-          <p className="rounded-[10px] bg-[#EEEFE9] px-4 py-3 font-mono text-[14px] text-[#5E5E5F]">
+          <p className="rounded-[12px] bg-[#EEEFE9] px-4 py-3 font-mono text-[14px] text-[#5E5E5F]">
             hubia-app.vercel.app
           </p>
         </div>
@@ -87,9 +87,9 @@ export default function DomainClient({
   return (
     <div className="flex flex-col gap-6">
       {/* Configurar domínio */}
-      <div className="rounded-[20px] bg-white p-6">
+      <div className="rounded-[30px] bg-white p-6">
         <div className="mb-5 flex items-center gap-2.5">
-          <div className="flex h-8 w-8 items-center justify-center rounded-[10px] bg-[#0E0F10]">
+          <div className="flex h-8 w-8 items-center justify-center rounded-[12px] bg-[#0E0F10]">
             <Globe size={15} color="#D7FF00" />
           </div>
           <h2 className="text-[15px] font-bold text-[#0E0F10]">Domínio customizado</h2>
@@ -113,7 +113,7 @@ export default function DomainClient({
           </div>
 
           {dominioAtual && (
-            <div className="flex items-center gap-2 rounded-[10px] bg-[#E8F5E9] px-4 py-3">
+            <div className="flex items-center gap-2 rounded-[12px] bg-[#E8F5E9] px-4 py-3">
               <CheckCircle2 size={14} color="#43A047" />
               <span className="text-[13px] font-semibold text-[#2E7D32]">
                 {dominioAtual} — verificado e ativo
@@ -130,7 +130,7 @@ export default function DomainClient({
           )}
 
           {!dominioAtual && dominio && (
-            <div className="flex items-center gap-2 rounded-[10px] bg-[#FFF3CD] px-4 py-3">
+            <div className="flex items-center gap-2 rounded-[12px] bg-[#FFF3CD] px-4 py-3">
               <AlertCircle size={14} color="#856404" />
               <span className="text-[13px] font-semibold text-[#856404]">
                 Domínio não verificado — configure os registros DNS abaixo
@@ -169,7 +169,7 @@ export default function DomainClient({
       </div>
 
       {/* Registros DNS */}
-      <div className="rounded-[20px] bg-white p-6">
+      <div className="rounded-[30px] bg-white p-6">
         <h2 className="mb-2 text-[15px] font-bold text-[#0E0F10]">
           Configuração DNS
         </h2>

@@ -67,7 +67,7 @@ function AgentCard({ agent }: { agent: AgentRow }) {
   return (
     <Link
       href={`/agentes/${agent.slug}`}
-      className="group flex flex-col gap-4 rounded-[20px] border border-transparent bg-white p-6 transition-all duration-300 hover:border-[#D7FF00]/30"
+      className="group flex flex-col gap-4 rounded-[30px] border border-transparent bg-white p-6 transition-all duration-300 hover:border-[#D7FF00]/30"
     >
       {/* Ícone + Status */}
       <div className="flex items-start justify-between">
@@ -100,7 +100,7 @@ function AgentCard({ agent }: { agent: AgentRow }) {
           {agent.name}
         </h3>
         <p
-          className="line-clamp-2 font-medium leading-snug"
+          className="line-clamp-2 font-semibold leading-snug"
           style={{ fontSize: "13px", color: "#A9AAA5" }}
         >
           {agent.description}
@@ -187,7 +187,7 @@ export default function AgentesListClient({
               Nenhum agente configurado
             </p>
             <p
-              className="mt-1 font-medium"
+              className="mt-1 font-semibold"
               style={{ fontSize: "13px", color: "#A9AAA5" }}
             >
               Inicialize os 10 agentes do ecossistema Pantcho Agency.
@@ -275,7 +275,7 @@ function ProviderBanner({ hasProvider }: { hasProvider: boolean }) {
     >
       <AlertCircle size={18} style={{ color: "#A9AAA5" }} />
       <p
-        className="flex-1 font-medium"
+        className="flex-1 font-semibold"
         style={{ fontSize: "13px", color: "#0E0F10" }}
       >
         Para conversar com os agentes, configure um provedor de IA em{" "}

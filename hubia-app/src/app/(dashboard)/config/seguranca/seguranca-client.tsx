@@ -81,7 +81,7 @@ export default function SegurancaClient({
       </div>
 
       {/* Checklist de segurança */}
-      <div className="rounded-[20px] bg-white p-6">
+      <div className="rounded-[30px] bg-white p-6">
         <h2 className="text-[15px] font-bold text-[#0E0F10] mb-4 flex items-center gap-2">
           <Lock size={14} />
           Checklist de segurança
@@ -121,7 +121,7 @@ export default function SegurancaClient({
       </div>
 
       {/* Provedores de IA */}
-      <div className="rounded-[20px] bg-white p-6">
+      <div className="rounded-[30px] bg-white p-6">
         <div className="flex items-center justify-between mb-4">
           <h2 className="text-[15px] font-bold text-[#0E0F10] flex items-center gap-2">
             <Key size={14} />
@@ -185,7 +185,7 @@ export default function SegurancaClient({
       </div>
 
       {/* Membros */}
-      <div className="rounded-[20px] bg-white p-6">
+      <div className="rounded-[30px] bg-white p-6">
         <div className="flex items-center justify-between mb-3">
           <h2 className="text-[15px] font-bold text-[#0E0F10] flex items-center gap-2">
             <Users size={14} />

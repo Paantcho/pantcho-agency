@@ -72,7 +72,7 @@ export default function EquipeClient({
         <MoreHorizontal size={18} />
       </motion.button>
 
-      {error && <p className="text-body-sm font-medium text-red-600">{error}</p>}
+      {error && <p className="text-body-sm font-semibold text-red-600">{error}</p>}
 
       {/* Dropdown — AnimatePresence para animação de entrada/saída */}
       <AnimatePresence>

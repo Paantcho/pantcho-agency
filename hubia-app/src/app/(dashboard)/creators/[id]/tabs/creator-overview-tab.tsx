@@ -90,7 +90,7 @@ export default function CreatorOverviewTab({
         {KPI_LABELS.map((kpi) => (
           <div
             key={kpi.key}
-            className="flex flex-col gap-1 rounded-[20px] p-4"
+            className="flex flex-col gap-1 rounded-[30px] p-4"
             style={{ background: "#0E0F10" }}
           >
             <p

@@ -145,7 +145,7 @@ function MemberActions({
                   key={r}
                   type="button"
                   onClick={() => handleChangeRole(r)}
-                  className="w-full px-3 py-2 text-left text-[13px] font-medium text-[#0E0F10]"
+                  className="w-full px-3 py-2 text-left text-[13px] font-semibold text-[#0E0F10]"
                   whileHover={{ backgroundColor: "#EEEFE9" }}
                   whileTap={{ scale: 0.98 }}
                   transition={{ duration: 0.1 }}
@@ -157,7 +157,7 @@ function MemberActions({
             <motion.button
               type="button"
               onClick={handleRemove}
-              className="w-full px-3 py-2 text-left text-[13px] font-medium text-red-500"
+              className="w-full px-3 py-2 text-left text-[13px] font-semibold text-red-500"
               whileHover={{ backgroundColor: "#FFF0F0" }}
               whileTap={{ scale: 0.98 }}
               transition={{ duration: 0.1 }}
