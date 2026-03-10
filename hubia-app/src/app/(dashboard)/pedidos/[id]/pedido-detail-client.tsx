@@ -536,7 +536,7 @@ function CadeiaProducao({ etapas }: { etapas: EtapaProducao[] }) {
                   </div>
                 ) : (
                   <div className="h-7 w-7 rounded-full bg-base-500 flex items-center justify-center">
-                    <Icon size={14} color="#A9AAA5" />
+                    <Icon size={14} color="var(--hubia-bg-base-700)" />
                   </div>
                 )}
               </div>
@@ -665,7 +665,7 @@ function NotasCard({ pedidoId, organizationId }: { pedidoId: string; organizatio
         <p className="text-[11px] font-bold text-base-700 uppercase tracking-wide">Notas</p>
         {!editing && (
           <motion.button onClick={() => setEditing(true)} whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
-            <Plus size={14} color="#A9AAA5" />
+            <Plus size={14} color="var(--hubia-bg-base-700)" />
           </motion.button>
         )}
       </div>
@@ -826,7 +826,7 @@ function TabConteudo({
                 initial={{ opacity: 0, x: -8 }} animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: i * 0.04 }}
               >
-                {t.concluido ? <CheckCircle2 size={16} color="#43A047" /> : <Square size={16} color="#A9AAA5" />}
+                {t.concluido ? <CheckCircle2 size={16} color="#43A047" /> : <Square size={16} color="var(--hubia-bg-base-700)" />}
                 <span className="text-[13px] font-semibold" style={{ color: t.concluido ? "#2E7D32" : "#0E0F10" }}>{t.titulo}</span>
               </motion.div>
             ))}
@@ -872,7 +872,7 @@ function TabConteudo({
           whileHover={{ borderColor: "#0E0F10", backgroundColor: "#EEEFE9" }}
           whileTap={{ scale: 0.99 }}
         >
-          <Upload size={24} color="#A9AAA5" />
+          <Upload size={24} color="var(--hubia-bg-base-700)" />
           <div>
             <p className="text-[14px] font-semibold text-ink-400">Subir referências</p>
             <p className="text-[12px] text-base-700 mt-0.5">Imagens, links, PDFs, screenshots</p>
@@ -1041,7 +1041,7 @@ function MetaRow({ label, value }: { label: string; value: React.ReactNode }) {
 function EmptyState({ icon: Icon, text }: { icon: React.ElementType; text: string }) {
   return (
     <div className="flex flex-col items-center gap-3 py-12 text-center">
-      <Icon size={24} color="#A9AAA5" />
+      <Icon size={24} color="var(--hubia-bg-base-700)" />
       <p className="text-[13px] text-base-700 max-w-[240px] leading-relaxed">{text}</p>
     </div>
   );

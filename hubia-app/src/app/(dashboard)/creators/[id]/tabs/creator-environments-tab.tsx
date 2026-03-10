@@ -161,7 +161,7 @@ export default function CreatorEnvironmentsTab({
             type="button"
             onClick={() => { resetForm(); setShowForm(true); }}
             className="rounded-full font-bold transition-opacity hover:opacity-90"
-            style={{ background: "#D7FF00", color: "#0E0F10", fontSize: "13px", padding: "9px 22px" }}
+            style={{ background: "var(--hubia-limao-500)", color: "var(--hubia-ink-500)", fontSize: "13px", padding: "9px 22px" }}
           >
             Adicionar ambiente
           </button>
@@ -178,7 +178,7 @@ export default function CreatorEnvironmentsTab({
               style={{ background: "#FFFFFF" }}
             >
               {/* Nome */}
-              <p className="font-bold" style={{ fontSize: "15px", color: "#0E0F10" }}>
+              <p className="font-bold" style={{ fontSize: "15px", color: "var(--hubia-ink-500)" }}>
                 {env.name}
               </p>
 
@@ -298,7 +298,7 @@ export default function CreatorEnvironmentsTab({
               type="submit"
               disabled={loading}
               className="rounded-full font-bold transition-opacity hover:opacity-90 disabled:opacity-50"
-              style={{ background: "#D7FF00", color: "#0E0F10", fontSize: "13px", padding: "9px 22px" }}
+              style={{ background: "var(--hubia-limao-500)", color: "var(--hubia-ink-500)", fontSize: "13px", padding: "9px 22px" }}
             >
               {loading ? "Salvando…" : editingId ? "Salvar" : "Criar"}
             </button>

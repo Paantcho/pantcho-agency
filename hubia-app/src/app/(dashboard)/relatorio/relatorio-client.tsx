@@ -973,7 +973,7 @@ function OrquestradorMonitor() {
             {/* LIVE log */}
             <div className="rounded-[16px] bg-ink-500 p-4">
               <div className="flex items-center gap-2 mb-4">
-                <LivePulseDot color="#D7FF00" sizePx={7} />
+                <LivePulseDot color="var(--hubia-limao-500)" sizePx={7} />
                 <span className="text-[10px] font-bold tracking-[0.12em] uppercase" style={{ color: "var(--hubia-limao-500)" }}>Live</span>
                 <span className="text-[10px] font-semibold ml-auto" style={{ color: "#333435" }}>Tempo real</span>
               </div>
@@ -1071,7 +1071,7 @@ function ActivityFeed() {
       >
         <div className="flex items-center gap-2.5 flex-1">
           <div className="flex h-8 w-8 items-center justify-center rounded-[12px]" style={{ backgroundColor: "var(--hubia-ink-500)" }}>
-            <Activity size={14} color="#D7FF00" />
+            <Activity size={14} color="var(--hubia-limao-500)" />
           </div>
           <div>
             <h2 className="text-[15px] font-bold text-ink-500">Atividade</h2>
@@ -1286,7 +1286,7 @@ function SquadPerformance() {
                 <span className="text-[11px] font-semibold" style={{ color: "var(--hubia-bg-base-700)" }}>{squad.volume} pedidos</span>
               </div>
             </div>
-            <AnimatedBar value={squad.conclusao} max={100} color="#D7FF00" delay={0.62 + i * 0.09} height={10} />
+            <AnimatedBar value={squad.conclusao} max={100} color="var(--hubia-limao-500)" delay={0.62 + i * 0.09} height={10} />
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-1.5">
                 <Clock size={11} color="#D0D1CC" />
@@ -1458,7 +1458,7 @@ export default function RelatorioClient() {
               {/* Card escuro: sparkline de base */}
               {isDark && (
                 <div className="mt-6 -mx-6 -mb-6">
-                  <MiniSparkline data={SPARKLINE_HERO} color="#D7FF00" height={80} />
+                  <MiniSparkline data={SPARKLINE_HERO} color="var(--hubia-limao-500)" height={80} />
                 </div>
               )}
 

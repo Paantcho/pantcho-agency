@@ -29,7 +29,7 @@ import {
 
 // ─── Cores e ícones por squad slug ───────────────────────────────
 const SQUAD_COLOR: Record<string, string> = {
-  "dev-squad": "#D7FF00",
+  "dev-squad": "var(--hubia-limao-500)",
   "audiovisual-squad": "#C8B4FA",
   "marketing-squad": "#93E0FF",
   "crm-squad": "#FFB347",

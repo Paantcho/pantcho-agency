@@ -874,7 +874,7 @@ function Sidebar({
           </p>
           <div className="flex flex-wrap gap-1.5">
             {stack.map((tech) => (
-              <span key={tech} className="rounded-[7px] bg-[#0E0F10] px-2.5 py-1 text-[11px] font-bold text-limao-500">{tech}</span>
+              <span key={tech} className="rounded-[7px] bg-ink-500 px-2.5 py-1 text-[11px] font-bold text-limao-500">{tech}</span>
             ))}
           </div>
         </div>
@@ -988,7 +988,7 @@ function TabConteudo({
             <SectionLabel>Stack</SectionLabel>
             <div className="flex flex-wrap gap-1.5">
               {stack.map((tech) => (
-                <span key={tech} className="rounded-[8px] bg-[#0E0F10] px-3 py-1.5 text-[12px] font-bold text-limao-500">{tech}</span>
+                <span key={tech} className="rounded-[8px] bg-ink-500 px-3 py-1.5 text-[12px] font-bold text-limao-500">{tech}</span>
               ))}
             </div>
           </div>
@@ -1356,7 +1356,7 @@ function SubprojetosTab({ subprojetos, onSave }: {
               <motion.button
                 onClick={adicionar}
                 disabled={!novoNome.trim() || saving}
-                className="h-9 rounded-[12px] bg-[#0E0F10] px-4 text-[13px] font-semibold text-white disabled:opacity-40"
+                className="h-9 rounded-[12px] bg-ink-500 px-4 text-[13px] font-semibold text-white disabled:opacity-40"
                 whileHover={{ backgroundColor: "#2A2B2C" }} whileTap={{ scale: 0.97 }}
               >
                 {saving ? "Salvando..." : "Adicionar"}
@@ -1504,7 +1504,7 @@ function ModulosTab({ modulosData, tipoConfig, onSave }: {
                 <div className="flex items-center gap-2">
                   <p className="text-[13px] font-semibold text-ink-500">{m.nome}</p>
                   {m.obrigatorio && (
-                    <span className="text-[8px] font-bold text-white bg-[#0E0F10] px-1.5 py-0.5 rounded-[4px] uppercase">req</span>
+                    <span className="text-[8px] font-bold text-white bg-ink-500 px-1.5 py-0.5 rounded-[4px] uppercase">req</span>
                   )}
                 </div>
               </div>
@@ -1551,7 +1551,7 @@ function AdicionarModulo({ onAdd }: { onAdd: (nome: string) => Promise<void> }) 
         className="flex-1 h-9 rounded-[12px] border border-transparent bg-base-500 px-3 text-[13px] text-ink-500 outline-none placeholder:text-base-700 focus:border-ink-500 focus:ring-2 focus:ring-ink-500/10 transition-[border-color] duration-150"
       />
       <motion.button onClick={() => { if (novo.trim()) { onAdd(novo.trim()); setNovo(""); } }} disabled={!novo.trim()}
-        className="h-9 w-9 rounded-[12px] bg-[#0E0F10] flex items-center justify-center disabled:opacity-40"
+        className="h-9 w-9 rounded-[12px] bg-ink-500 flex items-center justify-center disabled:opacity-40"
         whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
         <Plus size={14} color="#D7FF00" />
       </motion.button>
@@ -1636,7 +1636,7 @@ function MemoriaTab({ memoria, onSave }: {
             className="flex-1 h-9 rounded-[12px] border border-transparent bg-base-500 px-3 text-[13px] text-ink-500 outline-none placeholder:text-base-700 focus:border-ink-500 focus:ring-2 focus:ring-ink-500/10 transition-[border-color] duration-150"
           />
           <motion.button onClick={adicionar} disabled={!novo.trim() || saving}
-            className="h-9 px-4 rounded-[12px] bg-[#0E0F10] text-[12px] font-semibold text-limao-500 disabled:opacity-40"
+            className="h-9 px-4 rounded-[12px] bg-ink-500 text-[12px] font-semibold text-limao-500 disabled:opacity-40"
             whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.96 }}>
             {saving ? "…" : <Plus size={13} />}
           </motion.button>
@@ -1769,7 +1769,7 @@ function RulesTab({ rules, onSave }: {
         <div className="flex items-center gap-2">
           {saving && <span className="text-[11px] text-base-700">Salvando...</span>}
           <motion.button onClick={() => setAdicionando(v => !v)}
-            className="flex items-center gap-1.5 rounded-[12px] bg-[#0E0F10] px-3 py-1.5 text-[12px] font-semibold text-limao-500"
+            className="flex items-center gap-1.5 rounded-[12px] bg-ink-500 px-3 py-1.5 text-[12px] font-semibold text-limao-500"
             whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.96 }}>
             <Plus size={12} /> Nova Rule
           </motion.button>
@@ -1828,7 +1828,7 @@ function RulesTab({ rules, onSave }: {
                   className="flex-1 rounded-[12px] bg-white py-2 text-[13px] font-semibold text-ink-400"
                   whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.97 }}>Cancelar</motion.button>
                 <motion.button onClick={adicionar} disabled={!novaTitulo.trim()}
-                  className="flex-1 rounded-[12px] bg-[#0E0F10] py-2 text-[13px] font-semibold text-limao-500 disabled:opacity-40"
+                  className="flex-1 rounded-[12px] bg-ink-500 py-2 text-[13px] font-semibold text-limao-500 disabled:opacity-40"
                   whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.96 }}>Salvar Rule</motion.button>
               </div>
             </div>
@@ -2240,7 +2240,7 @@ function TarefasTab({ tarefas, tarefasConcluidas, onSave }: {
           className="flex-1 h-9 rounded-[12px] border border-transparent bg-base-500 px-3 text-[13px] text-ink-500 outline-none placeholder:text-base-700 focus:border-ink-500 focus:ring-2 focus:ring-ink-500/10 transition-[border-color] duration-150"
         />
         <motion.button onClick={adicionarTarefa} disabled={!novaTarefa.trim()}
-          className="h-9 w-9 rounded-[12px] bg-[#0E0F10] flex items-center justify-center disabled:opacity-40"
+          className="h-9 w-9 rounded-[12px] bg-ink-500 flex items-center justify-center disabled:opacity-40"
           whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
           <Plus size={14} color="#D7FF00" />
         </motion.button>
@@ -2286,7 +2286,7 @@ function EditableTextSection({ title, fieldKey, value, placeholder, onSave }: {
               <X size={10} /> Cancelar
             </motion.button>
             <motion.button onClick={handleSave} disabled={saving}
-              className="flex items-center gap-1 rounded-[8px] bg-[#0E0F10] px-2.5 py-1 text-[11px] font-semibold text-white"
+              className="flex items-center gap-1 rounded-[8px] bg-ink-500 px-2.5 py-1 text-[11px] font-semibold text-white"
               whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.97 }}>
               <Save size={10} /> {saving ? "Salvando..." : "Salvar"}
             </motion.button>
