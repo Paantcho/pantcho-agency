@@ -174,8 +174,8 @@ export default function DadosClient() {
                   transition={{ delay: Math.min(i * 0.06, 0.3) }}
                   className="flex items-start gap-3 rounded-[14px] p-4 text-left"
                   style={{
-                    backgroundColor: isAtivo ? "#0E0F10" : "#EEEFE9",
-                    border: isAtivo ? "2px solid #0E0F10" : "2px solid transparent",
+                    backgroundColor: isAtivo ? "var(--hubia-ink-500)" : "var(--hubia-bg-base-500)",
+                    border: isAtivo ? "2px solid var(--hubia-ink-500)" : "2px solid transparent",
                   }}
                   whileHover={!isAtivo ? { backgroundColor: "rgba(213,210,201,0.6)" } : undefined}
                   whileTap={{ scale: 0.98 }}
@@ -183,21 +183,21 @@ export default function DadosClient() {
                   <div
                     className="flex h-8 w-8 shrink-0 items-center justify-center rounded-[8px]"
                     style={{
-                      backgroundColor: isAtivo ? "#D7FF00" : "#0E0F10",
+                      backgroundColor: isAtivo ? "var(--hubia-limao-500)" : "var(--hubia-ink-500)",
                     }}
                   >
-                    <Icon size={15} color={isAtivo ? "#0E0F10" : "#D7FF00"} />
+                    <Icon size={15} color={isAtivo ? "var(--hubia-ink-500)" : "var(--hubia-limao-500)"} />
                   </div>
                   <div>
                     <p
                       className="text-[13px] font-bold"
-                      style={{ color: isAtivo ? "#FFFFFF" : "#0E0F10" }}
+                      style={{ color: isAtivo ? "#FFFFFF" : "var(--hubia-ink-500)" }}
                     >
                       {t.label}
                     </p>
                     <p
                       className="mt-0.5 text-[11px]"
-                      style={{ color: isAtivo ? "rgba(255,255,255,0.5)" : "#A9AAA5" }}
+                      style={{ color: isAtivo ? "rgba(255,255,255,0.5)" : "var(--hubia-bg-base-700)" }}
                     >
                       {t.descricao}
                     </p>

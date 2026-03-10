@@ -202,11 +202,11 @@ export default function CreatorAppearanceTab({
               >
                 <span
                   className="mt-0.5 shrink-0 font-bold"
-                  style={{ color: "#00FCB0", fontSize: "14px" }}
+                  style={{ color: "var(--hubia-green-500)", fontSize: "14px" }}
                 >
                   ✓
                 </span>
-                <span className="font-semibold" style={{ fontSize: "11px", color: "#0E0F10" }}>
+                <span className="font-semibold" style={{ fontSize: "11px", color: "var(--hubia-ink-500)" }}>
                   {item}
                 </span>
               </div>
@@ -219,11 +219,11 @@ export default function CreatorAppearanceTab({
               >
                 <span
                   className="mt-0.5 shrink-0 font-bold"
-                  style={{ color: "#00FCB0", fontSize: "14px" }}
+                  style={{ color: "var(--hubia-green-500)", fontSize: "14px" }}
                 >
                   ✓
                 </span>
-                <span className="font-semibold" style={{ fontSize: "11px", color: "#0E0F10" }}>
+                <span className="font-semibold" style={{ fontSize: "11px", color: "var(--hubia-ink-500)" }}>
                   {item}
                 </span>
               </div>

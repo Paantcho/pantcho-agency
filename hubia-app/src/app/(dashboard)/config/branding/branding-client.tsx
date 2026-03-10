@@ -102,7 +102,7 @@ function InterfacePreview({ cor }: { cor: string }) {
       <div className="flex gap-2 flex-wrap">
         <div
           className="rounded-[18px] px-5 py-2.5 text-[13px] font-bold"
-          style={{ backgroundColor: cor, color: "#0E0F10" }}
+          style={{ backgroundColor: cor, color: "var(--hubia-ink-500)" }}
         >
           Botão primário
         </div>
@@ -132,7 +132,7 @@ function InterfacePreview({ cor }: { cor: string }) {
           <div className="h-4 w-1/2 rounded-[6px] bg-white" />
           <div
             className="mt-1 h-5 w-20 rounded-[6px] text-[10px] font-bold flex items-center justify-center"
-            style={{ backgroundColor: cor, color: "#0E0F10" }}
+            style={{ backgroundColor: cor, color: "var(--hubia-ink-500)" }}
           >
             Limão ativo
           </div>

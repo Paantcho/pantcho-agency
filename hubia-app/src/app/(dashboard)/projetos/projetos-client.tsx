@@ -197,9 +197,9 @@ const TIPO_CONFIG: Record<ProjetoTipo, TipoConfig> = {
     label: "Outro",
     descricao: "Projeto com natureza ainda a definir",
     icone: FolderKanban,
-    cor: "#A9AAA5",         // base-700 — neutro da paleta
-    pillBg: "#EEEFE9",      // bg-base-500 — fundo da app
-    pillText: "#5E5E5F",    // ink-300
+    cor: "var(--hubia-bg-base-700)",         // base-700 — neutro da paleta
+    pillBg: "var(--hubia-bg-base-500)",      // bg-base-500 — fundo da app
+    pillText: "var(--hubia-ink-400)",    // ink-300
     squad: "A definir",
     modulosBase: ["Visão Geral", "Tarefas"],
     conectoresBase: [],
@@ -303,7 +303,7 @@ export default function ProjetosClient({
           onClick={() => setModalOpen(true)}
           className="flex items-center gap-2 rounded-[18px] px-4 py-3 text-[15px] font-semibold text-ink-500"
           initial="rest" animate="rest" whileHover="hovered" whileTap={{ scale: 0.96 }}
-          variants={{ rest: { scale: 1, backgroundColor: "#D7FF00" }, hovered: { scale: 1.03, backgroundColor: "#DFFF33" } }}
+          variants={{ rest: { scale: 1, backgroundColor: "var(--hubia-limao-500)" }, hovered: { scale: 1.03, backgroundColor: "#DFFF33" } }}
           transition={{ duration: 0.15, ease: [0.34, 1.56, 0.64, 1] }}
         >
           <motion.span variants={{ rest: { scale: 1 }, hovered: { scale: 1.2 } }} transition={{ duration: 0.25 }}>
@@ -840,7 +840,7 @@ function NovoProjetoModal({ open, onClose, organizationId, onCreated }: {
                           initial="rest" animate="rest"
                           whileHover={nome.trim() && !loading ? "hovered" : "rest"}
                           whileTap={{ scale: 0.96 }}
-                          variants={{ rest: { scale: 1, backgroundColor: "#D7FF00" }, hovered: { scale: 1.02, backgroundColor: "#DFFF33" } }}>
+                          variants={{ rest: { scale: 1, backgroundColor: "var(--hubia-limao-500)" }, hovered: { scale: 1.02, backgroundColor: "#DFFF33" } }}>
                           <motion.span variants={{ rest: { x: 0 }, hovered: { x: 2 } }}>
                             <ArrowRight size={14} />
                           </motion.span>

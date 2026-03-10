@@ -443,7 +443,7 @@ function ProducaoVolumeChart({ periodo }: { periodo: string }) {
           strokeWidth={2.5}
           fill="url(#gradVolEntregues)"
           dot={false}
-          activeDot={{ r: 5, fill: "#0E0F10", strokeWidth: 2, stroke: "#FFFFFF" }}
+          activeDot={{ r: 5, fill: "var(--hubia-ink-500)", strokeWidth: 2, stroke: "#FFFFFF" }}
           animationDuration={420}
           animationEasing="ease-in-out"
         />
@@ -467,7 +467,7 @@ function ProducaoSquadChart() {
         <YAxis axisLine={false} tickLine={false} tick={{ fontSize: 11, fill: "#B0B1AB", fontFamily: "Urbanist", fontWeight: 600 }} width={40} />
         <Tooltip content={<HubiaTooltip />} cursor={{ fill: "rgba(14,15,16,0.03)" }} />
         <Bar dataKey="audiovisual" name="Audiovisual" fill="#D7FF00" radius={[6, 6, 0, 0]} animationDuration={900} />
-        <Bar dataKey="dev" name="Dev Squad" fill="#0E0F10" radius={[6, 6, 0, 0]} animationDuration={900} />
+        <Bar dataKey="dev" name="Dev Squad" fill="var(--hubia-ink-500)" radius={[6, 6, 0, 0]} animationDuration={900} />
       </BarChart>
     </ResponsiveContainer>
   );

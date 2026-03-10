@@ -123,8 +123,8 @@ export default function AgentDetailClient({
             <span
               className="rounded-full px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-widest"
               style={{
-                background: level === "lead" ? "#0E0F10" : "#EEEFE9",
-                color: level === "lead" ? "#D7FF00" : "#0E0F10",
+                background: level === "lead" ? "var(--hubia-ink-500)" : "var(--hubia-bg-base-500)",
+                color: level === "lead" ? "var(--hubia-limao-500)" : "var(--hubia-ink-500)",
               }}
             >
               {level}
@@ -152,7 +152,7 @@ export default function AgentDetailClient({
               className="flex items-center gap-2 rounded-lg px-4 py-2.5 text-[13px] font-semibold transition-all duration-200"
               style={{
                 background: isActive ? "#FFFFFF" : "transparent",
-                color: isActive ? "#0E0F10" : "#A9AAA5",
+                color: isActive ? "var(--hubia-ink-500)" : "var(--hubia-bg-base-700)",
                 borderBottom: isActive ? "2px solid #0E0F10" : "2px solid transparent",
               }}
             >
