@@ -171,7 +171,7 @@ export default function ConhecimentoItemClient({ item }: { item: KnowledgeCard }
       <motion.button
         className="flex items-center gap-1.5 text-[12px] font-semibold text-base-700 w-fit"
         onClick={() => router.push("/conhecimento")}
-        whileHover={{ color: "#0E0F10", x: -2 }}
+        whileHover={{ color: "var(--hubia-ink-500)", x: -2 }}
         whileTap={{ scale: 0.97 }}
         transition={{ duration: 0.15 }}
       >
@@ -520,13 +520,13 @@ function TabVisaoGeral({
           <p className="text-[10px] font-bold uppercase tracking-widest text-base-700">Vínculos</p>
           {item.projetoVinculado ? (
             <div className="flex items-center gap-2 rounded-[12px] bg-base-500 px-3 py-2">
-              <FolderKanban size={12} color="#5E5E5F" />
+              <FolderKanban size={12} color="var(--hubia-ink-400)" />
               <span className="text-[12px] font-semibold text-ink-500">{item.projetoVinculado}</span>
             </div>
           ) : null}
           {item.creatorVinculado ? (
             <div className="flex items-center gap-2 rounded-[12px] bg-base-500 px-3 py-2">
-              <Users size={12} color="#5E5E5F" />
+              <Users size={12} color="var(--hubia-ink-400)" />
               <span className="text-[12px] font-semibold text-ink-500">{item.creatorVinculado}</span>
             </div>
           ) : null}
@@ -567,7 +567,7 @@ function TabVisaoGeral({
               rel="noreferrer"
               className="flex items-center gap-2 rounded-[12px] bg-base-500 px-3 py-2 hover:bg-[#D9D9D4] transition-colors duration-150"
             >
-              <ExternalLink size={12} color="#5E5E5F" />
+              <ExternalLink size={12} color="var(--hubia-ink-400)" />
               <span className="text-[11px] font-semibold text-ink-500 truncate">{item.sourceUrl}</span>
             </a>
           </motion.div>
@@ -614,7 +614,7 @@ function TabConteudoFonte({ item }: { item: KnowledgeCard }) {
         >
           <p className="text-[10px] font-bold uppercase tracking-widest text-base-700">Arquivo Associado</p>
           <div className="flex items-center gap-3 rounded-[12px] bg-base-500 p-3">
-            <File size={18} color="#5E5E5F" />
+            <File size={18} color="var(--hubia-ink-400)" />
             <div className="flex-1">
               <p className="text-[13px] font-semibold text-ink-500">{item.fileUrl.split("/").pop()}</p>
               <p className="text-[11px] text-base-700">Arquivo anexado</p>
@@ -622,7 +622,7 @@ function TabConteudoFonte({ item }: { item: KnowledgeCard }) {
             <motion.a href={item.fileUrl} target="_blank" rel="noreferrer"
               className="flex h-8 w-8 items-center justify-center rounded-full bg-white"
               whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
-              <ExternalLink size={12} color="#5E5E5F" />
+              <ExternalLink size={12} color="var(--hubia-ink-400)" />
             </motion.a>
           </div>
         </motion.div>
@@ -862,7 +862,7 @@ function TabArquivosLinks({ item }: { item: KnowledgeCard }) {
           <p className="text-[10px] font-bold uppercase tracking-widest text-base-700">Links Externos</p>
           <a href={item.sourceUrl} target="_blank" rel="noreferrer"
             className="flex items-center gap-2 rounded-[12px] bg-base-500 p-3 hover:bg-[#D9D9D4] transition-colors duration-150">
-            <ExternalLink size={14} color="#5E5E5F" />
+            <ExternalLink size={14} color="var(--hubia-ink-400)" />
             <span className="text-[13px] font-semibold text-ink-500 flex-1 truncate">{item.sourceUrl}</span>
           </a>
         </motion.div>
@@ -873,7 +873,7 @@ function TabArquivosLinks({ item }: { item: KnowledgeCard }) {
           transition={{ duration: 0.3, ease: [0, 0, 0.2, 1], delay: 0.05 }}>
           <p className="text-[10px] font-bold uppercase tracking-widest text-base-700">Documentos & Arquivos</p>
           <div className="flex items-center gap-3 rounded-[12px] bg-base-500 p-3">
-            <File size={18} color="#5E5E5F" />
+            <File size={18} color="var(--hubia-ink-400)" />
             <div className="flex-1">
               <p className="text-[13px] font-semibold text-ink-500">{item.fileUrl.split("/").pop()}</p>
               <p className="text-[11px] text-base-700">Arquivo anexado</p>
@@ -881,7 +881,7 @@ function TabArquivosLinks({ item }: { item: KnowledgeCard }) {
             <motion.a href={item.fileUrl} target="_blank" rel="noreferrer"
               className="flex h-8 w-8 items-center justify-center rounded-full bg-white"
               whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
-              <ExternalLink size={12} color="#5E5E5F" />
+              <ExternalLink size={12} color="var(--hubia-ink-400)" />
             </motion.a>
           </div>
         </motion.div>

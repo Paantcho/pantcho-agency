@@ -223,7 +223,7 @@ export default function CreatorDetailClient({
               whileHover={
                 isActive
                   ? {}
-                  : { color: "#0E0F10", backgroundColor: "rgba(213,210,201,0.35)" }
+                  : { color: "var(--hubia-ink-500)", backgroundColor: "rgba(213,210,201,0.35)" }
               }
               whileTap={{ scale: 0.97 }}
               transition={{ duration: 0.15, ease: [0.4, 0, 0.2, 1] }}

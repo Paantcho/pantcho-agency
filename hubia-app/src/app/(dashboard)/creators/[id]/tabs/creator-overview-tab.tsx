@@ -37,7 +37,7 @@ export default function CreatorOverviewTab({
       {/* Hero card escuro */}
       <div
         className="relative flex items-start gap-5 overflow-hidden rounded-[30px] p-6"
-        style={{ background: "#0E0F10" }}
+        style={{ background: "var(--hubia-ink-500)" }}
       >
         {/* Tag Ativa/Inativa — canto superior direito */}
         <span
@@ -91,7 +91,7 @@ export default function CreatorOverviewTab({
           <div
             key={kpi.key}
             className="flex flex-col gap-1 rounded-[30px] p-4"
-            style={{ background: "#0E0F10" }}
+            style={{ background: "var(--hubia-ink-500)" }}
           >
             <p
               className="font-bold uppercase tracking-widest leading-snug"

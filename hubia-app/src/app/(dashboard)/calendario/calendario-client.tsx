@@ -217,7 +217,7 @@ export default function CalendarioClient({
               <div className="flex-1 overflow-y-auto p-5 flex flex-col gap-5">
                 {/* Badges */}
                 <div className="flex flex-wrap gap-2">
-                  <span className="rounded-[6px] bg-base-500 px-2.5 py-1 text-[11px] font-semibold text-[#5E5E5F]">
+                  <span className="rounded-[6px] bg-base-500 px-2.5 py-1 text-[11px] font-semibold text-ink-400">
                     {drawerPedido.tipo.replace("_", " ")}
                   </span>
                   <span
@@ -271,7 +271,7 @@ export default function CalendarioClient({
               <div className="border-t border-base-500 p-5">
                 <motion.button
                   onClick={() => router.push(`/pedidos/${drawerPedido.id}`)}
-                  className="flex w-full items-center justify-center gap-2 rounded-[18px] bg-[#D7FF00] py-3 text-[14px] font-semibold text-ink-500"
+                  className="flex w-full items-center justify-center gap-2 rounded-[18px] bg-limao-500 py-3 text-[14px] font-semibold text-ink-500"
                   initial="rest"
                   animate="rest"
                   whileHover="hovered"

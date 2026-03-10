@@ -71,9 +71,9 @@ export default function SegurancaClient({
     <div className="flex flex-col gap-6">
       {/* Header de contexto */}
       <div className="rounded-[16px] bg-ink-500 p-5 flex items-start gap-3">
-        <Shield size={18} color="#D7FF00" className="mt-0.5 flex-shrink-0" />
+        <Shield size={18} color="var(--hubia-limao-500)" className="mt-0.5 flex-shrink-0" />
         <div>
-          <p className="text-[13px] font-bold text-[#D7FF00]">Visão de segurança</p>
+          <p className="text-[13px] font-bold text-limao-500">Visão de segurança</p>
           <p className="text-[12px] text-white/60 mt-0.5">
             Checklist de configurações críticas para operação segura da plataforma.
           </p>
@@ -139,8 +139,8 @@ export default function SegurancaClient({
         </div>
 
         {providers.length === 0 ? (
-          <div className="rounded-[12px] border-2 border-dashed border-[#D5D2C9] p-8 text-center">
-            <Key size={20} color="#A9AAA5" className="mx-auto mb-2" />
+          <div className="rounded-[12px] border-2 border-dashed border-sand-600 p-8 text-center">
+            <Key size={20} color="var(--hubia-bg-base-700)" className="mx-auto mb-2" />
             <p className="text-[13px] text-base-700">Nenhum provedor de IA configurado.</p>
             <motion.button
               onClick={() => router.push("/organization/provedores")}
@@ -161,7 +161,7 @@ export default function SegurancaClient({
                 transition={{ delay: i * 0.05 }}
               >
                 <div className="flex h-8 w-8 items-center justify-center rounded-[8px] bg-ink-500">
-                  <Key size={13} color="#D7FF00" />
+                  <Key size={13} color="var(--hubia-limao-500)" />
                 </div>
                 <div className="flex-1">
                   <p className="text-[13px] font-semibold text-ink-500">{p.name}</p>
@@ -169,7 +169,7 @@ export default function SegurancaClient({
                 </div>
                 <div className="flex items-center gap-2">
                   {p.isDefault && (
-                    <span className="rounded-[5px] bg-[#D7FF00] px-1.5 py-0.5 text-[9px] font-bold text-ink-500 uppercase">
+                    <span className="rounded-[5px] bg-limao-500 px-1.5 py-0.5 text-[9px] font-bold text-ink-500 uppercase">
                       Default
                     </span>
                   )}

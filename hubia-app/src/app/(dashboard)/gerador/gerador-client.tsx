@@ -132,7 +132,7 @@ function BriefingOutputSection({
       <div className="rounded-[30px] bg-white p-6">
         <h2
           className="mb-5"
-          style={{ fontSize: "20px", fontWeight: 700, color: "#0E0F10" }}
+          style={{ fontSize: "20px", fontWeight: 700, color: "var(--hubia-ink-500)" }}
         >
           Briefing da cena
         </h2>
@@ -315,7 +315,7 @@ function BriefingOutputSection({
         <div className="rounded-[30px] bg-white p-5">
           <h3
             className="mb-4"
-            style={{ fontSize: "16px", fontWeight: 700, color: "#0E0F10" }}
+            style={{ fontSize: "16px", fontWeight: 700, color: "var(--hubia-ink-500)" }}
           >
             Parâmetros Técnicos
           </h3>
@@ -378,7 +378,7 @@ function TabGerador({
           <div className="rounded-[30px] bg-white p-6">
             <h3
               className="mb-4"
-              style={{ fontSize: "16px", fontWeight: 700, color: "#0E0F10" }}
+              style={{ fontSize: "16px", fontWeight: 700, color: "var(--hubia-ink-500)" }}
             >
               Checklist Forense — Validar ANTES de aprovar
             </h3>
@@ -393,7 +393,7 @@ function TabGerador({
           <div className="rounded-[30px] bg-white p-6">
             <h3
               className="mb-4"
-              style={{ fontSize: "16px", fontWeight: 700, color: "#0E0F10" }}
+              style={{ fontSize: "16px", fontWeight: 700, color: "var(--hubia-ink-500)" }}
             >
               Blindagem — Proibido
             </h3>
@@ -412,7 +412,7 @@ function TabGerador({
           <div className="rounded-[30px] bg-white p-6">
             <h3
               className="mb-3"
-              style={{ fontSize: "16px", fontWeight: 700, color: "#0E0F10" }}
+              style={{ fontSize: "16px", fontWeight: 700, color: "var(--hubia-ink-500)" }}
             >
               Checklist Forense — Validar ANTES de aprovar
             </h3>
@@ -423,7 +423,7 @@ function TabGerador({
           <div className="rounded-[30px] bg-white p-6">
             <h3
               className="mb-3"
-              style={{ fontSize: "16px", fontWeight: 700, color: "#0E0F10" }}
+              style={{ fontSize: "16px", fontWeight: 700, color: "var(--hubia-ink-500)" }}
             >
               Blindagem — Proibido
             </h3>
@@ -589,7 +589,7 @@ function TabPhotoCloner({
       {(markers.length > 0 || protectedItems.length > 0) && (
         <div className="grid gap-4" style={{ gridTemplateColumns: "1fr 1fr" }}>
           <div className="rounded-[30px] bg-white p-6">
-            <h3 className="mb-4" style={{ fontSize: "16px", fontWeight: 700, color: "#0E0F10" }}>
+            <h3 className="mb-4" style={{ fontSize: "16px", fontWeight: 700, color: "var(--hubia-ink-500)" }}>
               Checklist Forense — Validar ANTES de aprovar
             </h3>
             <div className="grid grid-cols-2 gap-x-6 gap-y-2">
@@ -599,7 +599,7 @@ function TabPhotoCloner({
             </div>
           </div>
           <div className="rounded-[30px] bg-white p-6">
-            <h3 className="mb-4" style={{ fontSize: "16px", fontWeight: 700, color: "#0E0F10" }}>
+            <h3 className="mb-4" style={{ fontSize: "16px", fontWeight: 700, color: "var(--hubia-ink-500)" }}>
               Blindagem — Proibido
             </h3>
             <div className="flex flex-col gap-2">
@@ -615,12 +615,12 @@ function TabPhotoCloner({
       {markers.length === 0 && protectedItems.length === 0 && (
         <div className="grid gap-4" style={{ gridTemplateColumns: "1fr 1fr" }}>
           <div className="rounded-[30px] bg-white p-6">
-            <h3 className="mb-2" style={{ fontSize: "16px", fontWeight: 700, color: "#0E0F10" }}>
+            <h3 className="mb-2" style={{ fontSize: "16px", fontWeight: 700, color: "var(--hubia-ink-500)" }}>
               Checklist Forense — Validar ANTES de aprovar
             </h3>
           </div>
           <div className="rounded-[30px] bg-white p-6">
-            <h3 className="mb-2" style={{ fontSize: "16px", fontWeight: 700, color: "#0E0F10" }}>
+            <h3 className="mb-2" style={{ fontSize: "16px", fontWeight: 700, color: "var(--hubia-ink-500)" }}>
               Blindagem — Proibido
             </h3>
           </div>
@@ -748,7 +748,7 @@ export function GeradorClient({ creators }: { creators: CreatorOption[] }) {
     <div className="flex flex-col gap-5">
       {/* Header */}
       <div className="flex items-center justify-between">
-        <h1 style={{ fontSize: "28px", fontWeight: 700, color: "#0E0F10" }}>
+        <h1 style={{ fontSize: "28px", fontWeight: 700, color: "var(--hubia-ink-500)" }}>
           Gerador de prompt
         </h1>
         <motion.button
