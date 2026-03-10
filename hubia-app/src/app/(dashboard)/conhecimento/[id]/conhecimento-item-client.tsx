@@ -33,8 +33,8 @@ const STATUS_CONFIG: Record<ItemStatus, { label: string; bg: string; text: strin
   processando:  { label: "Processando",  bg: "#FFF8E1", text: "#F57F17", dot: "#F57F17" },
   processado:   { label: "Processado",   bg: "#E8F5E9", text: "#2E7D32", dot: "#2E7D32" },
   revisado:     { label: "Revisado",     bg: "#E1F4FE", text: "#0277BD", dot: "#0277BD" },
-  aplicado:     { label: "Aplicado",     bg: "#D7FF00", text: "#0E0F10", dot: "#8AB000" },
-  arquivado:    { label: "Arquivado",    bg: "#EEEFE9", text: "#A9AAA5", dot: "#A9AAA5" },
+  aplicado:     { label: "Aplicado",     bg: "var(--hubia-limao-500)", text: "var(--hubia-ink-500)", dot: "#8AB000" },
+  arquivado:    { label: "Arquivado",    bg: "var(--hubia-bg-base-500)", text: "var(--hubia-bg-base-700)", dot: "var(--hubia-bg-base-700)" },
 };
 
 // ─── Tabs ─────────────────────────────────────────────────────────────────────

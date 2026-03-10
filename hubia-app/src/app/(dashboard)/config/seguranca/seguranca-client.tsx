@@ -70,7 +70,7 @@ export default function SegurancaClient({
   return (
     <div className="flex flex-col gap-6">
       {/* Header de contexto */}
-      <div className="rounded-[16px] bg-[#0E0F10] p-5 flex items-start gap-3">
+      <div className="rounded-[16px] bg-ink-500 p-5 flex items-start gap-3">
         <Shield size={18} color="#D7FF00" className="mt-0.5 flex-shrink-0" />
         <div>
           <p className="text-[13px] font-bold text-[#D7FF00]">Visão de segurança</p>
@@ -160,7 +160,7 @@ export default function SegurancaClient({
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: i * 0.05 }}
               >
-                <div className="flex h-8 w-8 items-center justify-center rounded-[8px] bg-[#0E0F10]">
+                <div className="flex h-8 w-8 items-center justify-center rounded-[8px] bg-ink-500">
                   <Key size={13} color="#D7FF00" />
                 </div>
                 <div className="flex-1">

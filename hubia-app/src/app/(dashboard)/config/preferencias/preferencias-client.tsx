@@ -51,7 +51,7 @@ function SelectField({
       <motion.button
         type="button"
         onClick={() => setOpen((v) => !v)}
-        className="flex h-11 w-full items-center justify-between rounded-[12px] border border-transparent bg-base-500 px-3.5 text-[15px] text-ink-500 outline-none transition-[border-color] duration-150 hover:border-[#D4D5D6]"
+        className="flex h-11 w-full items-center justify-between rounded-[12px] border border-transparent bg-base-500 px-3.5 text-[15px] text-ink-500 outline-none transition-[border-color] duration-150 hover:border-base-600"
         whileTap={{ scale: 0.995 }}
       >
         <span>{selected?.label ?? "Selecionar"}</span>
@@ -126,8 +126,8 @@ export default function PreferenciasClient({
       {/* Regional */}
       <div className="rounded-[30px] bg-white p-6">
         <div className="mb-5 flex items-center gap-2.5">
-          <div className="flex h-8 w-8 items-center justify-center rounded-[12px] bg-[#0E0F10]">
-            <Globe size={15} color="#D7FF00" />
+          <div className="flex h-8 w-8 items-center justify-center rounded-[12px] bg-ink-500">
+            <Globe size={15} color="var(--hubia-limao-500)" />
           </div>
           <h2 className="text-[15px] font-bold text-ink-500">Preferências regionais</h2>
         </div>
@@ -140,8 +140,8 @@ export default function PreferenciasClient({
       {/* Modo visual */}
       <div className="rounded-[30px] bg-white p-6">
         <div className="mb-5 flex items-center gap-2.5">
-          <div className="flex h-8 w-8 items-center justify-center rounded-[12px] bg-[#0E0F10]">
-            <Monitor size={15} color="#D7FF00" />
+          <div className="flex h-8 w-8 items-center justify-center rounded-[12px] bg-ink-500">
+            <Monitor size={15} color="var(--hubia-limao-500)" />
           </div>
           <h2 className="text-[15px] font-bold text-ink-500">Modo visual</h2>
         </div>
@@ -196,7 +196,7 @@ export default function PreferenciasClient({
           type="button"
           onClick={handleSave}
           disabled={loading}
-          className="rounded-[18px] bg-[#D7FF00] px-6 py-3 text-[15px] font-semibold text-ink-500 disabled:opacity-50"
+          className="rounded-[18px] bg-limao-500 px-6 py-3 text-[15px] font-semibold text-ink-500 disabled:opacity-50"
           whileHover={{ scale: 1.03, backgroundColor: "#DFFF33" }}
           whileTap={{ scale: 0.96 }}
           transition={{ duration: 0.15, ease: [0.34, 1.56, 0.64, 1] }}

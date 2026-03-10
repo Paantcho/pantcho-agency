@@ -63,7 +63,7 @@ function Toggle({
       whileTap={{ scale: 0.95 }}
     >
       <motion.div
-        className="absolute top-0.5 h-5 w-5 rounded-full bg-[#0E0F10]"
+        className="absolute top-0.5 h-5 w-5 rounded-full bg-ink-500"
         animate={{ left: ativo ? "calc(100% - 22px)" : "2px" }}
         transition={{ type: "spring", stiffness: 500, damping: 30 }}
       />
@@ -104,10 +104,10 @@ export default function NotificacoesClient({
   return (
     <div className="flex flex-col gap-6">
       {/* Header status */}
-      <div className="rounded-[30px] bg-[#0E0F10] p-5 flex items-center justify-between">
+      <div className="rounded-[30px] bg-ink-500 p-5 flex items-center justify-between">
         <div className="flex items-center gap-3">
-          <div className="flex h-8 w-8 items-center justify-center rounded-[12px] bg-[#D7FF00]">
-            <Bell size={15} color="#0E0F10" />
+          <div className="flex h-8 w-8 items-center justify-center rounded-[12px] bg-limao-500">
+            <Bell size={15} color="var(--hubia-ink-500)" />
           </div>
           <div>
             <p className="text-[14px] font-bold text-white">Notificações</p>
@@ -197,7 +197,7 @@ export default function NotificacoesClient({
           type="button"
           onClick={handleSave}
           disabled={loading}
-          className="rounded-[18px] bg-[#D7FF00] px-6 py-3 text-[15px] font-semibold text-ink-500 disabled:opacity-50"
+          className="rounded-[18px] bg-limao-500 px-6 py-3 text-[15px] font-semibold text-ink-500 disabled:opacity-50"
           whileHover={{ scale: 1.03, backgroundColor: "#DFFF33" }}
           whileTap={{ scale: 0.96 }}
           transition={{ duration: 0.15, ease: [0.34, 1.56, 0.64, 1] }}

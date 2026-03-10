@@ -46,7 +46,7 @@ function FieldLabel({ children }: { children: React.ReactNode }) {
         fontSize: "11px",
         fontWeight: 700,
         letterSpacing: "0.3px",
-        color: "#A9AAA5",
+        color: "var(--hubia-bg-base-700)",
         textTransform: "uppercase",
       }}
     >
@@ -64,7 +64,7 @@ function ParamCell({ label, value }: { label: string; value: string }) {
           fontSize: "10px",
           fontWeight: 700,
           letterSpacing: "0.3px",
-          color: "#A9AAA5",
+          color: "var(--hubia-bg-base-700)",
           textTransform: "uppercase",
         }}
       >
@@ -94,7 +94,7 @@ function ChecklistItem({ text, index, type }: { text: string; index: number; typ
           <span style={{ fontSize: "10px", color: "white", fontWeight: 900, lineHeight: 1 }}>×</span>
         )}
       </div>
-      <span className="text-[12px] leading-[1.4]" style={{ color: "#5E5E5F" }}>
+      <span className="text-[12px] leading-[1.4]" style={{ color: "var(--hubia-ink-400)" }}>
         {text}
       </span>
     </motion.div>
@@ -266,7 +266,7 @@ function BriefingOutputSection({
                     type="button"
                     onClick={onCopy}
                     className="flex items-center gap-1 rounded-[9999px] px-3 py-1 text-[11px] font-semibold"
-                    style={{ background: "rgba(255,255,255,0.1)", color: "#A9AAA5" }}
+                    style={{ background: "rgba(255,255,255,0.1)", color: "var(--hubia-bg-base-700)" }}
                     whileHover={{ backgroundColor: "rgba(255,255,255,0.18)", color: "#FFFFFF" }}
                     whileTap={{ scale: 0.95 }}
                     transition={{ duration: 0.15 }}
@@ -283,7 +283,7 @@ function BriefingOutputSection({
                     type="button"
                     onClick={onVerCompleto}
                     className="flex items-center gap-1 rounded-[9999px] px-3 py-1 text-[11px] font-semibold"
-                    style={{ background: "rgba(255,255,255,0.1)", color: "#A9AAA5" }}
+                    style={{ background: "rgba(255,255,255,0.1)", color: "var(--hubia-bg-base-700)" }}
                     whileHover={{ backgroundColor: "rgba(255,255,255,0.18)", color: "#FFFFFF" }}
                     whileTap={{ scale: 0.95 }}
                     transition={{ duration: 0.15 }}
@@ -416,7 +416,7 @@ function TabGerador({
             >
               Checklist Forense — Validar ANTES de aprovar
             </h3>
-            <p className="text-[13px]" style={{ color: "#A9AAA5" }}>
+            <p className="text-[13px]" style={{ color: "var(--hubia-bg-base-700)" }}>
               Configure a aparência da creator para ver o checklist.
             </p>
           </div>
@@ -427,7 +427,7 @@ function TabGerador({
             >
               Blindagem — Proibido
             </h3>
-            <p className="text-[13px]" style={{ color: "#A9AAA5" }}>
+            <p className="text-[13px]" style={{ color: "var(--hubia-bg-base-700)" }}>
               Configure a aparência da creator para ver as restrições.
             </p>
           </div>
@@ -547,7 +547,7 @@ function TabPhotoCloner({
                 <motion.button
                   type="button"
                   className="rounded-[9999px] px-3 py-1 text-[11px] font-semibold"
-                  style={{ background: "rgba(255,255,255,0.1)", color: "#A9AAA5" }}
+                  style={{ background: "rgba(255,255,255,0.1)", color: "var(--hubia-bg-base-700)" }}
                   whileHover={{ backgroundColor: "rgba(255,255,255,0.18)", color: "#FFFFFF" }}
                   whileTap={{ scale: 0.95 }}
                   transition={{ duration: 0.15 }}
@@ -662,7 +662,7 @@ function ModalVerCompleto({
       maxWidth="min(90vw, 580px)"
     >
       {/* Subtítulo */}
-      <p className="mb-4 -mt-4 text-[13px]" style={{ color: "#A9AAA5" }}>
+      <p className="mb-4 -mt-4 text-[13px]" style={{ color: "var(--hubia-bg-base-700)" }}>
         {subtitulo}
       </p>
 

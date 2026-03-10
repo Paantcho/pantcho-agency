@@ -217,7 +217,7 @@ export default function CreatorDetailClient({
                 fontSize: "13px",
                 padding: "8px 18px",
                 background: "transparent",
-                color: isActive ? "#0E0F10" : "#A9AAA5",
+                color: isActive ? "var(--hubia-ink-500)" : "var(--hubia-bg-base-700)",
                 fontWeight: isActive ? 700 : 500,
               }}
               whileHover={

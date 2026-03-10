@@ -119,7 +119,7 @@ export default function CalendarioClient({
         transition={{ duration: 0.2 }}
       >
         {/* Cabeçalho dos dias da semana */}
-        <div className="grid grid-cols-7 border-b border-[#EEEFE9]">
+        <div className="grid grid-cols-7 border-b border-base-500">
           {DIAS_SEMANA.map((d) => (
             <div key={d} className="py-3 text-center text-[11px] font-bold text-base-700 uppercase tracking-wide">
               {d}
@@ -136,7 +136,7 @@ export default function CalendarioClient({
             return (
               <div
                 key={idx}
-                className="min-h-[96px] border-b border-r border-[#EEEFE9] p-2 last:border-r-0"
+                className="min-h-[96px] border-b border-r border-base-500 p-2 last:border-r-0"
                 style={{ borderRight: (idx + 1) % 7 === 0 ? "none" : undefined }}
               >
                 {dia && (
@@ -201,11 +201,11 @@ export default function CalendarioClient({
               exit={{ x: "100%" }}
               transition={{ type: "spring", stiffness: 350, damping: 30 }}
             >
-              <div className="flex items-center justify-between border-b border-[#EEEFE9] p-5">
+              <div className="flex items-center justify-between border-b border-base-500 p-5">
                 <h2 className="text-[16px] font-bold text-ink-500 truncate pr-4">{drawerPedido.titulo}</h2>
                 <motion.button
                   onClick={() => setDrawerPedido(null)}
-                  className="flex h-8 w-8 items-center justify-center rounded-full bg-[#EEEFE9] flex-shrink-0"
+                  className="flex h-8 w-8 items-center justify-center rounded-full bg-base-500 flex-shrink-0"
                   whileHover={{ scale: 1.1, rotate: 90 }}
                   whileTap={{ scale: 0.9 }}
                   transition={{ duration: 0.15 }}
@@ -217,7 +217,7 @@ export default function CalendarioClient({
               <div className="flex-1 overflow-y-auto p-5 flex flex-col gap-5">
                 {/* Badges */}
                 <div className="flex flex-wrap gap-2">
-                  <span className="rounded-[6px] bg-[#EEEFE9] px-2.5 py-1 text-[11px] font-semibold text-[#5E5E5F]">
+                  <span className="rounded-[6px] bg-base-500 px-2.5 py-1 text-[11px] font-semibold text-[#5E5E5F]">
                     {drawerPedido.tipo.replace("_", " ")}
                   </span>
                   <span
@@ -248,7 +248,7 @@ export default function CalendarioClient({
                   <div>
                     <p className="text-[11px] font-bold text-base-700 uppercase tracking-wide mb-1.5">Creator</p>
                     <div className="flex items-center gap-2">
-                      <div className="h-7 w-7 rounded-full bg-[#EEEFE9] overflow-hidden">
+                      <div className="h-7 w-7 rounded-full bg-base-500 overflow-hidden">
                         {drawerPedido.creator.avatarUrl && (
                           <img src={drawerPedido.creator.avatarUrl} alt="" className="h-full w-full object-cover" />
                         )}
@@ -268,7 +268,7 @@ export default function CalendarioClient({
               </div>
 
               {/* Rodapé do drawer */}
-              <div className="border-t border-[#EEEFE9] p-5">
+              <div className="border-t border-base-500 p-5">
                 <motion.button
                   onClick={() => router.push(`/pedidos/${drawerPedido.id}`)}
                   className="flex w-full items-center justify-center gap-2 rounded-[18px] bg-[#D7FF00] py-3 text-[14px] font-semibold text-ink-500"
