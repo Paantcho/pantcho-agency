@@ -20,7 +20,7 @@ function PageTransition({ children }: { children: React.ReactNode }) {
         exit={{ opacity: 0, y: -8 }}
         transition={{ duration: 0.22, ease: [0.0, 0.0, 0.2, 1] }}
         style={{
-          background: "#EEEFE9",
+          background: "var(--hubia-bg-base-500)",
           minHeight: "100%",
           willChange: "transform, opacity",
         }}
@@ -61,7 +61,7 @@ export function AppShell({
           flex: 1,
           marginLeft: "280px",
           padding: "30px",
-          background: "#EEEFE9",
+          background: "var(--hubia-bg-base-500)",
           overflow: "hidden",
         }}
       >

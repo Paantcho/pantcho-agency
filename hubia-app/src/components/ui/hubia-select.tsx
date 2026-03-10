@@ -62,8 +62,8 @@ export function HubiaSelect({
         onClick={() => !disabled && setOpen((v) => !v)}
         className="flex w-full items-center justify-between gap-2 rounded-[12px] border border-transparent py-2.5 pl-3.5 pr-3 text-[14px] font-semibold outline-none transition-[border-color] duration-150 disabled:opacity-50 disabled:cursor-not-allowed"
         style={{
-          background: "#EEEFE9",
-          color: selectedLabel ? "#0E0F10" : "#A9AAA5",
+          background: "var(--hubia-bg-base-500)",
+          color: selectedLabel ? "var(--hubia-ink-500)" : "var(--hubia-bg-base-700)",
         }}
         whileHover={
           !disabled
@@ -72,7 +72,7 @@ export function HubiaSelect({
         }
         animate={
           open
-            ? { borderColor: "#0E0F10" }
+            ? { borderColor: "var(--hubia-ink-500)" }
             : { borderColor: "transparent" }
         }
         transition={{ duration: 0.15 }}
@@ -83,7 +83,7 @@ export function HubiaSelect({
           transition={{ duration: 0.2, ease: [0.4, 0, 0.2, 1] }}
           className="shrink-0"
         >
-          <ChevronDown size={14} color="#A9AAA5" />
+          <ChevronDown size={14} color="var(--hubia-bg-base-700)" />
         </motion.span>
       </motion.button>
 
@@ -97,7 +97,7 @@ export function HubiaSelect({
             transition={{ duration: 0.15, ease: [0, 0, 0.2, 1] }}
             className="absolute left-0 right-0 top-[calc(100%+6px)] z-50 overflow-hidden rounded-[12px] bg-white py-1.5"
             style={{
-              border: "1px solid #EEEFE9",
+              border: "1px solid var(--hubia-bg-base-500)",
             }}
           >
             {options.map((option, idx) => {
@@ -111,7 +111,7 @@ export function HubiaSelect({
                     setOpen(false);
                   }}
                   className="flex w-full items-center justify-between gap-3 px-3.5 py-2.5 text-left text-[13px] font-semibold"
-                  style={{ color: isSelected ? "#0E0F10" : "#5E5E5F" }}
+                  style={{ color: isSelected ? "var(--hubia-ink-500)" : "var(--hubia-ink-400)" }}
                   initial={{ opacity: 0, x: -4 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{
@@ -119,7 +119,7 @@ export function HubiaSelect({
                     delay: idx * 0.025,
                     ease: [0, 0, 0.2, 1],
                   }}
-                  whileHover={{ backgroundColor: "#EEEFE9", color: "#0E0F10" }}
+                  whileHover={{ backgroundColor: "var(--hubia-bg-base-500)", color: "var(--hubia-ink-500)" }}
                   whileTap={{ scale: 0.98 }}
                 >
                   <span className="truncate">{option.label}</span>
@@ -129,7 +129,7 @@ export function HubiaSelect({
                       animate={{ scale: 1 }}
                       transition={{ type: "spring", stiffness: 420, damping: 22 }}
                     >
-                      <Check size={13} strokeWidth={3} color="#D7FF00" />
+                      <Check size={13} strokeWidth={3} color="var(--hubia-limao-500)" />
                     </motion.span>
                   )}
                 </motion.button>

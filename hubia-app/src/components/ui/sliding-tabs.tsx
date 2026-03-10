@@ -49,7 +49,7 @@ export function SlidingTabs({ tabs, activeId, onChange }: SlidingTabsProps) {
     <div
       ref={containerRef}
       className="relative inline-flex items-center rounded-[30px] p-1.5"
-      style={{ background: "#FFFFFF" }}
+      style={{ background: "var(--hubia-surface-default-500)" }}
     >
       {/* Pill deslizante spring */}
       <motion.div
@@ -57,7 +57,7 @@ export function SlidingTabs({ tabs, activeId, onChange }: SlidingTabsProps) {
         className="pointer-events-none absolute rounded-[9999px]"
         animate={{ left: pillLeft, width: pillWidth }}
         transition={{ type: "spring", stiffness: 420, damping: 30, mass: 0.8 }}
-        style={{ top: 6, bottom: 6, background: "#D7FF00" }}
+        style={{ top: 6, bottom: 6, background: "var(--hubia-limao-500)" }}
       />
 
       {tabs.map((tab, idx) => {
@@ -77,13 +77,13 @@ export function SlidingTabs({ tabs, activeId, onChange }: SlidingTabsProps) {
             style={{
               fontSize: "13px",
               padding: "8px 18px",
-              color: isActive ? "#0E0F10" : "#A9AAA5",
-              fontWeight: isActive ? 700 : 500,
+              color: isActive ? "var(--hubia-ink-500)" : "var(--hubia-bg-base-700)",
+              fontWeight: isActive ? 700 : 600,
               background: "transparent",
             }}
             variants={{
-              rest: { color: isActive ? "#0E0F10" : "#A9AAA5", backgroundColor: "rgba(0,0,0,0)" },
-              hovered: { color: "#0E0F10", backgroundColor: "rgba(213,210,201,0.35)" },
+              rest: { color: isActive ? "var(--hubia-ink-500)" : "var(--hubia-bg-base-700)", backgroundColor: "rgba(0,0,0,0)" },
+              hovered: { color: "var(--hubia-ink-500)", backgroundColor: "rgba(213,210,201,0.35)" },
             }}
             transition={{ duration: 0.15, ease: [0.4, 0, 0.2, 1] }}
           >

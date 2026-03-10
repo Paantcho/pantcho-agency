@@ -56,26 +56,26 @@ const TOAST_PALETTE: Record<ToastType, {
   bg: string; text: string; iconBg: string; iconColor: string; closeBg: string; icon: React.ReactNode;
 }> = {
   success: {
-    bg: "#D7FF00", text: "#0E0F10",
-    iconBg: "#0E0F10", iconColor: "#D7FF00",
+    bg: "var(--hubia-limao-500)", text: "var(--hubia-ink-500)",
+    iconBg: "var(--hubia-ink-500)", iconColor: "var(--hubia-limao-500)",
     closeBg: "rgba(14,15,16,0.12)",
     icon: <Check size={13} strokeWidth={3} />,
   },
   info: {
-    bg: "#D7FF00", text: "#0E0F10",
-    iconBg: "#0E0F10", iconColor: "#D7FF00",
+    bg: "var(--hubia-limao-500)", text: "var(--hubia-ink-500)",
+    iconBg: "var(--hubia-ink-500)", iconColor: "var(--hubia-limao-500)",
     closeBg: "rgba(14,15,16,0.12)",
     icon: <Info size={13} strokeWidth={2.5} />,
   },
   error: {
-    bg: "#0E0F10", text: "#FFFFFF",
-    iconBg: "#E53935", iconColor: "#FFFFFF",
+    bg: "var(--hubia-ink-500)", text: "#FFFFFF",
+    iconBg: "var(--hubia-red-500)", iconColor: "#FFFFFF",
     closeBg: "rgba(255,255,255,0.12)",
     icon: <X size={13} strokeWidth={3} />,
   },
   warning: {
-    bg: "#0E0F10", text: "#FFFFFF",
-    iconBg: "#FB8C00", iconColor: "#FFFFFF",
+    bg: "var(--hubia-ink-500)", text: "#FFFFFF",
+    iconBg: "var(--hubia-orange-500)", iconColor: "#FFFFFF",
     closeBg: "rgba(255,255,255,0.12)",
     icon: <AlertTriangle size={13} strokeWidth={2.5} />,
   },

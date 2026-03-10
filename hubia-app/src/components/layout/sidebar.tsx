@@ -263,7 +263,7 @@ export function Sidebar({
                         ? "font-semibold text-ink-500"
                         : "font-semibold text-base-700"
                     }`}
-                    whileHover={{ backgroundColor: "#EEEFE9", color: "#0E0F10" }}
+                    whileHover={{ backgroundColor: "var(--hubia-bg-base-500)", color: "var(--hubia-ink-500)" }}
                     whileTap={{ scale: 0.98 }}
                     transition={{ duration: 0.12 }}
                   >
