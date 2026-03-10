@@ -142,7 +142,7 @@ export default function CreatorAppearanceTab({
         className="flex items-start gap-3 rounded-2xl px-5 py-4"
         style={{ background: "#FFE8EB", border: "1.5px solid #FFB2BC" }}
       >
-        <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0" style={{ color: "#FF576D" }} />
+        <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0" style={{ color: "var(--hubia-red-500)" }} />
         <div>
           <p className="font-bold" style={{ fontSize: "12px", color: "var(--hubia-ink-500)" }}>
             DOCUMENTO FORENSE

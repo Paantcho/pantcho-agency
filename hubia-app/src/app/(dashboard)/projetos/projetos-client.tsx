@@ -344,7 +344,7 @@ export default function ProjetosClient({
             initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
             className="flex flex-col items-center justify-center py-20 gap-3"
           >
-            <FolderKanban size={32} color="#D5D2C9" />
+            <FolderKanban size={32} color="var(--hubia-sand-600)" />
             <p className="text-[13px] text-base-700">
               {busca || viewAtiva !== "todos" ? "Nenhum projeto nesta view." : "Nenhum projeto ainda."}
             </p>

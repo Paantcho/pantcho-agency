@@ -151,9 +151,9 @@ export default function DadosClient() {
       <div className="rounded-[30px] bg-white p-6">
         <div className="mb-5 flex items-center gap-2.5">
           <div className="flex h-8 w-8 items-center justify-center rounded-[12px] bg-ink-500">
-            <Download size={15} color="#D7FF00" />
+            <Download size={15} color="var(--hubia-limao-500)" />
           </div>
-          <h2 className="text-[15px] font-bold text-[#0E0F10]">
+          <h2 className="text-[15px] font-bold text-ink-500">
             Exportar snapshot
           </h2>
         </div>
@@ -209,14 +209,14 @@ export default function DadosClient() {
 
           {/* O que está incluído */}
           <div className="rounded-[12px] bg-base-500 p-4">
-            <p className="mb-2 text-[12px] font-bold text-[#5E5E5F] uppercase tracking-wide">
+            <p className="mb-2 text-[12px] font-bold text-ink-400 uppercase tracking-wide">
               Inclui
             </p>
             <div className="flex flex-wrap gap-x-6 gap-y-1.5">
               {tipoAtual.inclui.map((item) => (
                 <div key={item} className="flex items-center gap-1.5">
                   <CheckCircle2 size={12} color="#43A047" />
-                  <span className="text-[12px] font-semibold text-[#0E0F10]">{item}</span>
+                  <span className="text-[12px] font-semibold text-ink-500">{item}</span>
                 </div>
               ))}
             </div>
@@ -228,7 +228,7 @@ export default function DadosClient() {
               type="button"
               onClick={handleGerar}
               disabled={gerando}
-              className="flex items-center gap-2 rounded-[18px] bg-[#D7FF00] px-6 py-3 text-[15px] font-semibold text-[#0E0F10] disabled:opacity-50"
+              className="flex items-center gap-2 rounded-[18px] bg-limao-500 px-6 py-3 text-[15px] font-semibold text-ink-500 disabled:opacity-50"
               whileHover={{ scale: 1.03, backgroundColor: "#DFFF33" }}
               whileTap={{ scale: 0.96 }}
               transition={{ duration: 0.15, ease: [0.34, 1.56, 0.64, 1] }}
@@ -267,17 +267,17 @@ export default function DadosClient() {
       <div className="rounded-[30px] bg-white p-6">
         <div className="mb-4 flex items-center gap-2.5">
           <div className="flex h-8 w-8 items-center justify-center rounded-[12px] bg-ink-500">
-            <Clock size={15} color="#D7FF00" />
+            <Clock size={15} color="var(--hubia-limao-500)" />
           </div>
-          <h2 className="text-[15px] font-bold text-[#0E0F10]">
+          <h2 className="text-[15px] font-bold text-ink-500">
             Histórico de backups
           </h2>
         </div>
 
         {historico.length === 0 ? (
-          <div className="rounded-[12px] border-2 border-dashed border-[#D5D2C9] p-8 text-center">
+          <div className="rounded-[12px] border-2 border-dashed border-sand-600 p-8 text-center">
             <Database size={20} color="#A9AAA5" className="mx-auto mb-2" />
-            <p className="text-[13px] text-[#A9AAA5]">Nenhum snapshot gerado ainda.</p>
+            <p className="text-[13px] text-base-700">Nenhum snapshot gerado ainda.</p>
           </div>
         ) : (
           <div className="flex flex-col gap-2">
@@ -290,13 +290,13 @@ export default function DadosClient() {
                 className="flex items-center gap-4 rounded-[12px] bg-base-500 px-4 py-3"
               >
                 <div className="flex h-9 w-9 items-center justify-center rounded-[12px] bg-ink-500">
-                  <Database size={14} color="#D7FF00" />
+                  <Database size={14} color="var(--hubia-limao-500)" />
                 </div>
                 <div className="flex-1">
-                  <p className="text-[13px] font-bold text-[#0E0F10]">
+                  <p className="text-[13px] font-bold text-ink-500">
                     {tipoLabel[snap.tipo]}
                   </p>
-                  <p className="text-[11px] text-[#A9AAA5]">
+                  <p className="text-[11px] text-base-700">
                     {snap.criadoEm} · por {snap.usuario} · {snap.tamanho}
                   </p>
                 </div>
@@ -319,9 +319,9 @@ export default function DadosClient() {
       <div className="rounded-[30px] bg-white p-6">
         <div className="mb-4 flex items-center gap-2.5">
           <div className="flex h-8 w-8 items-center justify-center rounded-[12px] bg-ink-500">
-            <Server size={15} color="#D7FF00" />
+            <Server size={15} color="var(--hubia-limao-500)" />
           </div>
-          <h2 className="text-[15px] font-bold text-[#0E0F10]">
+          <h2 className="text-[15px] font-bold text-ink-500">
             Informações do sistema
           </h2>
         </div>
@@ -343,12 +343,12 @@ export default function DadosClient() {
               className="flex items-center justify-between rounded-[12px] bg-base-500 px-4 py-3"
             >
               <div className="flex items-center gap-2">
-                <Info size={13} className="text-[#A9AAA5]" />
-                <span className="text-[13px] font-semibold text-[#0E0F10]">
+                <Info size={13} className="text-base-700" />
+                <span className="text-[13px] font-semibold text-ink-500">
                   {item.label}
                 </span>
               </div>
-              <span className="text-[12px] font-semibold text-[#5E5E5F]">
+              <span className="text-[12px] font-semibold text-ink-400">
                 {item.valor}
               </span>
             </motion.div>
