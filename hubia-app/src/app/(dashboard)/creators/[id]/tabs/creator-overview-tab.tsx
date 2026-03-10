@@ -247,7 +247,7 @@ export default function CreatorOverviewTab({
             style={{ fontSize: "12px", color: "var(--hubia-bg-base-700)" }}
           >
             Interior premium escuro · Preto/grafite com detalhes metálicos ·{" "}
-            <strong style={{ color: "#0E0F10" }}>Cor não muda nunca</strong>
+            <strong style={{ color: "var(--hubia-ink-500)" }}>Cor não muda nunca</strong>
           </p>
         </div>
       </div>

@@ -133,7 +133,7 @@ const statusConfig: Record<
   { label: string; icon: React.ElementType; cor: string; bg: string }
 > = {
   ativo: { label: "Ativo", icon: CheckCircle2, cor: "#43A047", bg: "#E8F5E9" },
-  desconectado: { label: "Desconectado", icon: XCircle, cor: "#A9AAA5", bg: "#EEEFE9" },
+  desconectado: { label: "Desconectado", icon: XCircle, cor: "var(--hubia-bg-base-700)", bg: "var(--hubia-bg-base-500)" },
   erro: { label: "Erro", icon: AlertCircle, cor: "#E53935", bg: "#FFEBEE" },
 };
 
@@ -228,7 +228,7 @@ function IntegracaoCard({ item, idx }: { item: Integracao; idx: number }) {
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex items-center gap-1.5 rounded-[12px] px-4 py-2 text-[12px] font-semibold text-base-700"
-                    whileHover={{ color: "#0E0F10", backgroundColor: "rgba(213,210,201,0.3)", scale: 1.02 }}
+                    whileHover={{ color: "var(--hubia-ink-500)", backgroundColor: "rgba(213,210,201,0.3)", scale: 1.02 }}
                     whileTap={{ scale: 0.97 }}
                     transition={{ duration: 0.15 }}
                   >

@@ -507,7 +507,7 @@ function ProducaoEficienciaChart() {
                 <p className="text-[10px] mb-3 font-bold tracking-[0.12em] uppercase" style={{ color: "#4A4B4C" }}>{label}</p>
                 <div className="flex items-center justify-between gap-5">
                   <div className="flex items-center gap-2">
-                    <span className="h-2 w-2 rounded-full bg-[#D7FF00]" />
+                    <span className="h-2 w-2 rounded-full bg-limao-500" />
                     <span className="text-[11px] font-semibold" style={{ color: "#6A6B6C" }}>Eficiência</span>
                   </div>
                   <span className="text-[18px] font-bold tabular-nums">{payload[0].value}%</span>
@@ -595,7 +595,7 @@ function ProducaoChartContainer({ periodo }: { periodo: string }) {
       <div className="flex items-start justify-between mb-7 gap-4">
         <div>
           <h2 className="text-[20px] font-bold text-ink-500">{titles[view]}</h2>
-          <p className="text-[12px] font-semibold mt-1" style={{ color: "#A9AAA5" }}>{subtitles[view]}</p>
+          <p className="text-[12px] font-semibold mt-1" style={{ color: "var(--hubia-bg-base-700)" }}>{subtitles[view]}</p>
         </div>
         <div className="flex items-center gap-5 flex-shrink-0">
           {legends[view]}
@@ -714,7 +714,7 @@ function StatusPedidos() {
         </div>
         <div>
           <h2 className="text-[16px] font-bold text-ink-500">Status dos pedidos</h2>
-          <p className="text-[11px] font-semibold mt-0.5" style={{ color: "#A9AAA5" }}>Leitura operacional</p>
+          <p className="text-[11px] font-semibold mt-0.5" style={{ color: "var(--hubia-bg-base-700)" }}>Leitura operacional</p>
         </div>
       </div>
 
@@ -752,7 +752,7 @@ function StatusPedidos() {
                 )}
               </div>
               <div className="flex items-center gap-3">
-                <span className="text-[11px] font-semibold" style={{ color: "#A9AAA5" }}>{s.insight}</span>
+                <span className="text-[11px] font-semibold" style={{ color: "var(--hubia-bg-base-700)" }}>{s.insight}</span>
                 <div className="flex items-baseline gap-1">
                   <span className="text-[26px] font-bold text-ink-500 leading-none tabular-nums">{s.value}</span>
                   <span className="text-[11px] font-bold" style={{ color: "#C8C9C4" }}>
@@ -783,7 +783,7 @@ function DistribuicaoTipo() {
     >
       <div className="mb-6">
         <h2 className="text-[16px] font-bold text-ink-500">Por tipo de pedido</h2>
-        <p className="text-[11px] font-semibold mt-0.5" style={{ color: "#A9AAA5" }}>Ranking de volume no período</p>
+        <p className="text-[11px] font-semibold mt-0.5" style={{ color: "var(--hubia-bg-base-700)" }}>Ranking de volume no período</p>
       </div>
 
       <div className="flex flex-col gap-6">
@@ -864,7 +864,7 @@ function UsoIA() {
         </div>
         <div>
           <h2 className="text-[16px] font-bold text-ink-500">Uso de IA</h2>
-          <p className="text-[11px] font-semibold mt-0.5" style={{ color: "#A9AAA5" }}>Consumo inteligente no período</p>
+          <p className="text-[11px] font-semibold mt-0.5" style={{ color: "var(--hubia-bg-base-700)" }}>Consumo inteligente no período</p>
         </div>
       </div>
 
@@ -878,7 +878,7 @@ function UsoIA() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.48 + i * 0.07 }}
           >
-            <p className="text-[10px] font-bold tracking-[0.1em] uppercase leading-tight" style={{ color: "#A9AAA5" }}>{m.label}</p>
+            <p className="text-[10px] font-bold tracking-[0.1em] uppercase leading-tight" style={{ color: "var(--hubia-bg-base-700)" }}>{m.label}</p>
             <p className="text-[28px] font-bold text-ink-500 leading-none tabular-nums">{m.value}</p>
             <div className="flex items-center justify-between mt-auto">
               <p className="text-[11px] font-semibold leading-tight" style={{ color: "#8A8B8C" }}>{m.sub}</p>
@@ -964,7 +964,7 @@ function OrquestradorMonitor() {
                       </span>
                     </div>
                     <AnimatedBar value={ag.load} max={100} color={color} height={5} />
-                    <span className="text-[10px] font-semibold" style={{ color: "#A9AAA5" }}>{label}</span>
+                    <span className="text-[10px] font-semibold" style={{ color: "var(--hubia-bg-base-700)" }}>{label}</span>
                   </motion.div>
                 );
               })}
@@ -1022,7 +1022,7 @@ function OrquestradorMonitor() {
                   </div>
                   <div className="flex-shrink-0 text-right w-14">
                     <p className="text-[16px] font-bold text-ink-500 tabular-nums">{ag.historico[ag.historico.length - 1]}%</p>
-                    <p className="text-[10px] font-semibold" style={{ color: "#A9AAA5" }}>pico {ag.pico}%</p>
+                    <p className="text-[10px] font-semibold" style={{ color: "var(--hubia-bg-base-700)" }}>pico {ag.pico}%</p>
                   </div>
                 </motion.div>
               );
@@ -1077,7 +1077,7 @@ function ActivityFeed() {
             <h2 className="text-[15px] font-bold text-ink-500">Atividade</h2>
             <div className="flex items-center gap-1.5 mt-0.5">
               <LivePulseDot sizePx={6} />
-              <span className="text-[10px] font-bold tracking-[0.1em] uppercase" style={{ color: "#A9AAA5" }}>Tempo real</span>
+              <span className="text-[10px] font-bold tracking-[0.1em] uppercase" style={{ color: "var(--hubia-bg-base-700)" }}>Tempo real</span>
             </div>
           </div>
         </div>
@@ -1182,7 +1182,7 @@ function PedidosRecentes() {
       <div className="flex items-center justify-between mb-6">
         <div>
           <h2 className="text-[16px] font-bold text-ink-500">Pedidos recentes</h2>
-          <p className="text-[11px] font-semibold mt-0.5" style={{ color: "#A9AAA5" }}>Últimos 30 dias</p>
+          <p className="text-[11px] font-semibold mt-0.5" style={{ color: "var(--hubia-bg-base-700)" }}>Últimos 30 dias</p>
         </div>
         <div className="flex items-center gap-3">
           <MiniTabBar tabs={PEDIDO_TABS} active={tab} onChange={handleTabChange} />
@@ -1268,7 +1268,7 @@ function SquadPerformance() {
         </div>
         <div>
           <h2 className="text-[16px] font-bold text-ink-500">Performance por squad</h2>
-          <p className="text-[11px] font-semibold mt-0.5" style={{ color: "#A9AAA5" }}>Taxa de conclusão e volume</p>
+          <p className="text-[11px] font-semibold mt-0.5" style={{ color: "var(--hubia-bg-base-700)" }}>Taxa de conclusão e volume</p>
         </div>
       </div>
 
@@ -1281,9 +1281,9 @@ function SquadPerformance() {
               <div className="text-right">
                 <div className="flex items-baseline gap-1">
                   <span className="text-[34px] font-bold text-ink-500 leading-none tabular-nums">{squad.conclusao}</span>
-                  <span className="text-[14px] font-bold" style={{ color: "#A9AAA5" }}>%</span>
+                  <span className="text-[14px] font-bold" style={{ color: "var(--hubia-bg-base-700)" }}>%</span>
                 </div>
-                <span className="text-[11px] font-semibold" style={{ color: "#A9AAA5" }}>{squad.volume} pedidos</span>
+                <span className="text-[11px] font-semibold" style={{ color: "var(--hubia-bg-base-700)" }}>{squad.volume} pedidos</span>
               </div>
             </div>
             <AnimatedBar value={squad.conclusao} max={100} color="#D7FF00" delay={0.62 + i * 0.09} height={10} />
@@ -1323,7 +1323,7 @@ function Tendencias() {
         </div>
         <div>
           <h2 className="text-[15px] font-bold text-ink-500">Tendências</h2>
-          <p className="text-[10px] font-semibold mt-0.5" style={{ color: "#A9AAA5" }}>Destaques do período</p>
+          <p className="text-[10px] font-semibold mt-0.5" style={{ color: "var(--hubia-bg-base-700)" }}>Destaques do período</p>
         </div>
       </div>
 
@@ -1369,7 +1369,7 @@ export default function RelatorioClient() {
       <div className="flex items-start justify-between">
         <div>
           <h1 className="text-[28px] font-bold text-ink-500 leading-tight">Relatório</h1>
-          <p className="text-[13px] font-semibold mt-0.5 flex items-center gap-1.5" style={{ color: "#A9AAA5" }}>
+          <p className="text-[13px] font-semibold mt-0.5 flex items-center gap-1.5" style={{ color: "var(--hubia-bg-base-700)" }}>
             <LivePulseDot sizePx={7} />
             Dados em tempo real
           </p>
@@ -1508,7 +1508,7 @@ export default function RelatorioClient() {
             </div>
             <div>
               <h2 className="text-[16px] font-bold text-ink-500">Orquestração</h2>
-              <p className="text-[11px] font-semibold mt-0.5" style={{ color: "#A9AAA5" }}>Carga e status em tempo real</p>
+              <p className="text-[11px] font-semibold mt-0.5" style={{ color: "var(--hubia-bg-base-700)" }}>Carga e status em tempo real</p>
             </div>
           </div>
           <OrquestradorMonitor />

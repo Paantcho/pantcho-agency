@@ -90,9 +90,9 @@ export default function PlanoClient({
   return (
     <div className="flex flex-col gap-6">
       {/* Banner do plano ativo */}
-      <div className="rounded-[30px] bg-[#0E0F10] p-6 flex items-center justify-between">
+      <div className="rounded-[30px] bg-ink-500 p-6 flex items-center justify-between">
         <div className="flex items-start gap-4">
-          <div className="flex h-10 w-10 items-center justify-center rounded-[12px] bg-[#D7FF00]">
+          <div className="flex h-10 w-10 items-center justify-center rounded-[12px] bg-limao-500">
             <Crown size={18} color="#0E0F10" />
           </div>
           <div>
@@ -134,7 +134,7 @@ export default function PlanoClient({
                 initial={{ opacity: 0, y: 8 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: Math.min(i * 0.06, 0.3) }}
-                className="flex items-center gap-2 rounded-[9999px] bg-[#EEEFE9] px-4 py-2"
+                className="flex items-center gap-2 rounded-[9999px] bg-base-500 px-4 py-2"
               >
                 <Icon size={14} className="text-[#0E0F10]" />
                 <span className="text-[13px] font-semibold text-[#0E0F10]">
@@ -166,7 +166,7 @@ export default function PlanoClient({
                 }}
               >
                 {isAtual && (
-                  <div className="absolute right-3 top-3 rounded-[6px] bg-[#D7FF00] px-2 py-0.5 text-[10px] font-bold text-[#0E0F10] uppercase">
+                  <div className="absolute right-3 top-3 rounded-[6px] bg-limao-500 px-2 py-0.5 text-[10px] font-bold text-[#0E0F10] uppercase">
                     Atual
                   </div>
                 )}
@@ -235,7 +235,7 @@ export default function PlanoClient({
 
                 {!isAtual && p.nivel > planoAtual && (
                   <motion.button
-                    className="mt-1 rounded-[12px] bg-[#0E0F10] px-4 py-2.5 text-[12px] font-bold text-white"
+                    className="mt-1 rounded-[12px] bg-ink-500 px-4 py-2.5 text-[12px] font-bold text-white"
                     whileHover={{ backgroundColor: "#2a2b2c", scale: 1.02 }}
                     whileTap={{ scale: 0.97 }}
                     transition={{ duration: 0.15 }}
