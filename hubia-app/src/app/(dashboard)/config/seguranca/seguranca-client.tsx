@@ -103,7 +103,7 @@ export default function SegurancaClient({
                 )}
                 <div>
                   <p className="text-[13px] font-semibold text-ink-500">{item.label}</p>
-                  <p className="text-[11px] text-[#A9AAA5] mt-0.5">{item.desc}</p>
+                  <p className="text-[11px] text-base-700 mt-0.5">{item.desc}</p>
                 </div>
               </div>
               <span
@@ -129,7 +129,7 @@ export default function SegurancaClient({
           </h2>
           <motion.button
             onClick={() => router.push("/organization/provedores")}
-            className="flex items-center gap-1.5 text-[12px] font-semibold text-[#A9AAA5]"
+            className="flex items-center gap-1.5 text-[12px] font-semibold text-base-700"
             whileHover={{ color: "#0E0F10" }}
             whileTap={{ scale: 0.97 }}
           >
@@ -141,7 +141,7 @@ export default function SegurancaClient({
         {providers.length === 0 ? (
           <div className="rounded-[12px] border-2 border-dashed border-[#D5D2C9] p-8 text-center">
             <Key size={20} color="#A9AAA5" className="mx-auto mb-2" />
-            <p className="text-[13px] text-[#A9AAA5]">Nenhum provedor de IA configurado.</p>
+            <p className="text-[13px] text-base-700">Nenhum provedor de IA configurado.</p>
             <motion.button
               onClick={() => router.push("/organization/provedores")}
               className="mt-3 text-[12px] font-semibold text-ink-500 underline"
@@ -165,7 +165,7 @@ export default function SegurancaClient({
                 </div>
                 <div className="flex-1">
                   <p className="text-[13px] font-semibold text-ink-500">{p.name}</p>
-                  <p className="text-[11px] text-[#A9AAA5]">{p.type} · atualizado {new Date(p.updatedAt).toLocaleDateString("pt-BR")}</p>
+                  <p className="text-[11px] text-base-700">{p.type} · atualizado {new Date(p.updatedAt).toLocaleDateString("pt-BR")}</p>
                 </div>
                 <div className="flex items-center gap-2">
                   {p.isDefault && (
@@ -191,11 +191,11 @@ export default function SegurancaClient({
             <Users size={14} />
             Membros da organização
           </h2>
-          <span className="text-[13px] font-semibold text-[#A9AAA5]">{totalMembros} ativo{totalMembros !== 1 ? "s" : ""}</span>
+          <span className="text-[13px] font-semibold text-base-700">{totalMembros} ativo{totalMembros !== 1 ? "s" : ""}</span>
         </div>
         <motion.button
           onClick={() => router.push("/config/equipe")}
-          className="flex items-center gap-1.5 text-[12px] font-semibold text-[#A9AAA5]"
+          className="flex items-center gap-1.5 text-[12px] font-semibold text-base-700"
           whileHover={{ color: "#0E0F10" }}
           whileTap={{ scale: 0.97 }}
         >

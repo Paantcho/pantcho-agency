@@ -47,7 +47,7 @@ function SelectField({
 
   return (
     <div className="relative flex flex-col gap-1.5">
-      <label className="text-[13px] font-semibold text-[#5E5E5F]">{label}</label>
+      <label className="text-[13px] font-semibold text-ink-400">{label}</label>
       <motion.button
         type="button"
         onClick={() => setOpen((v) => !v)}
@@ -59,7 +59,7 @@ function SelectField({
           animate={{ rotate: open ? 180 : 0 }}
           transition={{ duration: 0.2 }}
         >
-          <ChevronDown size={16} className="text-[#A9AAA5]" />
+          <ChevronDown size={16} className="text-base-700" />
         </motion.span>
       </motion.button>
 

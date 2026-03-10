@@ -164,7 +164,7 @@ export default function NotificacoesClient({
                   </div>
                   <div>
                     <p className="text-[14px] font-bold text-ink-500">{notif.label}</p>
-                    <p className="text-[12px] text-[#A9AAA5]">{notif.descricao}</p>
+                    <p className="text-[12px] text-base-700">{notif.descricao}</p>
                   </div>
                 </div>
                 <Toggle ativo={isAtivo} onChange={(v) => toggleNotif(notif.id, v)} />

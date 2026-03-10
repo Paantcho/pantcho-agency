@@ -200,7 +200,7 @@ export default function CreatorDetailClient({
             damping: 30,
             mass: 0.8,
           }}
-          style={{ top: 6, bottom: 6, background: "#D7FF00" }}
+          style={{ top: 6, bottom: 6, background: "var(--hubia-limao-500)" }}
         />
 
         {TABS.map((tab, idx) => {

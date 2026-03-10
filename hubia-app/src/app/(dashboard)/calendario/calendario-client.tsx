@@ -86,8 +86,8 @@ export default function CalendarioClient({
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-[28px] font-bold text-[#0E0F10]">Calendário</h1>
-          <p className="text-[14px] text-[#A9AAA5] mt-0.5">
+          <h1 className="text-[28px] font-bold text-ink-500">Calendário</h1>
+          <p className="text-[14px] text-base-700 mt-0.5">
             {pedidos.length} pedido{pedidos.length !== 1 ? "s" : ""} com prazo em {MESES[mes - 1]}
           </p>
         </div>
@@ -99,7 +99,7 @@ export default function CalendarioClient({
             transition={{ duration: 0.15 }}>
             <ChevronLeft size={16} color="#0E0F10" />
           </motion.button>
-          <span className="min-w-[160px] text-center text-[16px] font-bold text-[#0E0F10]">
+          <span className="min-w-[160px] text-center text-[16px] font-bold text-ink-500">
             {MESES[mes - 1]} {ano}
           </span>
           <motion.button onClick={handleProximo}
@@ -121,7 +121,7 @@ export default function CalendarioClient({
         {/* Cabeçalho dos dias da semana */}
         <div className="grid grid-cols-7 border-b border-[#EEEFE9]">
           {DIAS_SEMANA.map((d) => (
-            <div key={d} className="py-3 text-center text-[11px] font-bold text-[#A9AAA5] uppercase tracking-wide">
+            <div key={d} className="py-3 text-center text-[11px] font-bold text-base-700 uppercase tracking-wide">
               {d}
             </div>
           ))}
@@ -170,7 +170,7 @@ export default function CalendarioClient({
                         </motion.button>
                       ))}
                       {eventos.length > 3 && (
-                        <span className="text-[10px] text-[#A9AAA5] pl-1">+{eventos.length - 3} mais</span>
+                        <span className="text-[10px] text-base-700 pl-1">+{eventos.length - 3} mais</span>
                       )}
                     </div>
                   </>
@@ -202,7 +202,7 @@ export default function CalendarioClient({
               transition={{ type: "spring", stiffness: 350, damping: 30 }}
             >
               <div className="flex items-center justify-between border-b border-[#EEEFE9] p-5">
-                <h2 className="text-[16px] font-bold text-[#0E0F10] truncate pr-4">{drawerPedido.titulo}</h2>
+                <h2 className="text-[16px] font-bold text-ink-500 truncate pr-4">{drawerPedido.titulo}</h2>
                 <motion.button
                   onClick={() => setDrawerPedido(null)}
                   className="flex h-8 w-8 items-center justify-center rounded-full bg-[#EEEFE9] flex-shrink-0"
@@ -237,8 +237,8 @@ export default function CalendarioClient({
 
                 {/* Prazo */}
                 <div>
-                  <p className="text-[11px] font-bold text-[#A9AAA5] uppercase tracking-wide mb-1">Prazo</p>
-                  <p className="text-[14px] font-semibold text-[#0E0F10]">
+                  <p className="text-[11px] font-bold text-base-700 uppercase tracking-wide mb-1">Prazo</p>
+                  <p className="text-[14px] font-semibold text-ink-500">
                     {new Date(drawerPedido.dueAt).toLocaleDateString("pt-BR", { weekday: "long", day: "numeric", month: "long" })}
                   </p>
                 </div>
@@ -246,14 +246,14 @@ export default function CalendarioClient({
                 {/* Creator */}
                 {drawerPedido.creator && (
                   <div>
-                    <p className="text-[11px] font-bold text-[#A9AAA5] uppercase tracking-wide mb-1.5">Creator</p>
+                    <p className="text-[11px] font-bold text-base-700 uppercase tracking-wide mb-1.5">Creator</p>
                     <div className="flex items-center gap-2">
                       <div className="h-7 w-7 rounded-full bg-[#EEEFE9] overflow-hidden">
                         {drawerPedido.creator.avatarUrl && (
                           <img src={drawerPedido.creator.avatarUrl} alt="" className="h-full w-full object-cover" />
                         )}
                       </div>
-                      <span className="text-[13px] font-semibold text-[#0E0F10]">{drawerPedido.creator.name}</span>
+                      <span className="text-[13px] font-semibold text-ink-500">{drawerPedido.creator.name}</span>
                     </div>
                   </div>
                 )}
@@ -261,8 +261,8 @@ export default function CalendarioClient({
                 {/* Projeto */}
                 {drawerPedido.projeto && (
                   <div>
-                    <p className="text-[11px] font-bold text-[#A9AAA5] uppercase tracking-wide mb-1">Projeto</p>
-                    <p className="text-[13px] font-semibold text-[#0E0F10]">{drawerPedido.projeto.nome}</p>
+                    <p className="text-[11px] font-bold text-base-700 uppercase tracking-wide mb-1">Projeto</p>
+                    <p className="text-[13px] font-semibold text-ink-500">{drawerPedido.projeto.nome}</p>
                   </div>
                 )}
               </div>
@@ -271,7 +271,7 @@ export default function CalendarioClient({
               <div className="border-t border-[#EEEFE9] p-5">
                 <motion.button
                   onClick={() => router.push(`/pedidos/${drawerPedido.id}`)}
-                  className="flex w-full items-center justify-center gap-2 rounded-[18px] bg-[#D7FF00] py-3 text-[14px] font-semibold text-[#0E0F10]"
+                  className="flex w-full items-center justify-center gap-2 rounded-[18px] bg-[#D7FF00] py-3 text-[14px] font-semibold text-ink-500"
                   initial="rest"
                   animate="rest"
                   whileHover="hovered"
