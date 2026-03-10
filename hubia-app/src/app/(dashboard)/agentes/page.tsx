@@ -1,13 +1,8 @@
-import { getSquadsWithAgents, getSkillsBySquad } from "./actions";
-import { AgentesClient } from "./agentes-client";
-
-export const metadata = { title: "Agentes — Hubia" };
+import { getAgents } from "./actions";
+import AgentesListClient from "./agentes-list-client";
 
 export default async function AgentesPage() {
-  const [squads, skillsBySquad] = await Promise.all([
-    getSquadsWithAgents(),
-    getSkillsBySquad(),
-  ]);
+  const agents = await getAgents();
 
-  return <AgentesClient squads={squads} skillsBySquad={skillsBySquad} />;
+  return <AgentesListClient agents={agents} />;
 }
