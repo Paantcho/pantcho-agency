@@ -306,7 +306,7 @@ export default function CreatorEnvironmentsTab({
               type="button"
               onClick={resetForm}
               className="rounded-full border font-semibold transition-colors hover:bg-base-500"
-              style={{ borderColor: "#D9D9D4", color: "#0E0F10", fontSize: "13px", padding: "9px 22px" }}
+              style={{ borderColor: "var(--hubia-sand-600)", color: "var(--hubia-ink-500)", fontSize: "13px", padding: "9px 22px" }}
             >
               Cancelar
             </button>

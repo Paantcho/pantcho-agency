@@ -898,7 +898,7 @@ function UsoIA() {
 
 function agentStatusConfig(load: number) {
   if (load > 80) return { color: "#FB8C00", label: "Sobrecarregado", bg: "#FB8C0012" };
-  if (load > 30) return { color: "var(--hubia-limao-500)", label: "Ativo", bg: "#D7FF0012" };
+  if (load > 30) return { color: "var(--hubia-limao-500)", label: "Ativo", bg: "color-mix(in srgb, var(--hubia-limao-500) 7%, transparent)" };
   return { color: "#8A8B8C", label: "Livre", bg: "#8A8B8C12" };
 }
 
@@ -1443,7 +1443,7 @@ export default function RelatorioClient() {
                 )}
                 {isDark && kpi.trend !== undefined && (
                   <div className="flex items-center gap-0.5 font-bold text-[10px] px-1.5 py-0.5 rounded-full"
-                    style={{ color: "var(--hubia-limao-500)", backgroundColor: "#D7FF0015" }}>
+                    style={{ color: "var(--hubia-limao-500)", backgroundColor: "color-mix(in srgb, var(--hubia-limao-500) 8%, transparent)" }}>
                     <TrendingUp size={9} />
                     +{kpi.trend}
                   </div>

@@ -349,8 +349,8 @@ export default function PedidoDetailClient({
                       onClick={() => !savingStatus && handleStatusChange(s)}
                       className="flex items-center gap-1.5 rounded-[9999px] px-3 py-1.5 text-[11px] font-bold whitespace-nowrap"
                       animate={{
-                        backgroundColor: isCurrent ? p.dot : isPast ? `${p.dot}20` : "#EEEFE9",
-                        color: isCurrent ? (s === "em_andamento" ? "#5A6600" : ["rascunho","aguardando"].includes(s) ? p.text : "#FFFFFF") : isPast ? p.text : "#A9AAA5",
+                        backgroundColor: isCurrent ? p.dot : isPast ? `${p.dot}20` : "var(--hubia-bg-base-500)",
+                        color: isCurrent ? (s === "em_andamento" ? "#5A6600" : ["rascunho","aguardando"].includes(s) ? p.text : "#FFFFFF") : isPast ? p.text : "var(--hubia-bg-base-700)",
                         scale: isCurrent ? 1.05 : 1,
                       }}
                       initial={false}
@@ -387,9 +387,9 @@ export default function PedidoDetailClient({
                   ref={(el) => { tabRefs.current[i] = el; }}
                   onClick={() => setActiveTab(tab.id)}
                   className="relative flex-shrink-0 px-5 py-3.5 text-[13px] font-semibold whitespace-nowrap"
-                  animate={{ color: activeTab === tab.id ? "#0E0F10" : "#A9AAA5" }}
+                  animate={{ color: activeTab === tab.id ? "var(--hubia-ink-500)" : "var(--hubia-bg-base-700)" }}
                   initial={false}
-                  whileHover={activeTab !== tab.id ? { backgroundColor: "#EEEFE9/50" } : {}}
+                  whileHover={activeTab !== tab.id ? { backgroundColor: "var(--hubia-bg-base-500)" } : {}}
                   whileTap={{ scale: 0.97 }}
                 >
                   {tab.label}

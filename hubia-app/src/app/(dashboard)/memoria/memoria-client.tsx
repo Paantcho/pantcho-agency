@@ -23,7 +23,7 @@ const FILE_ICONS: Record<string, LucideIcon> = {
 };
 
 const FILE_COLORS: Record<string, string> = {
-  working: "#D7FF00",
+  working: "var(--hubia-limao-500)",
   memory: "#3B82F6",
   status: "#14B8A6",
   lessons: "#F59E0B",
@@ -86,7 +86,7 @@ export default function MemoriaClient({
         {files.map((file) => {
           const isExpanded = expandedId === file.id;
           const Icon = FILE_ICONS[file.id] || FileText;
-          const color = FILE_COLORS[file.id] || "#A9AAA5";
+          const color = FILE_COLORS[file.id] || "var(--hubia-bg-base-700)";
 
           return (
             <div
