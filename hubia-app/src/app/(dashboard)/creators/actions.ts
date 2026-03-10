@@ -1,7 +1,8 @@
 "use server";
 
 import { prisma } from "@/lib/prisma";
-import type { Prisma } from "@prisma/client";
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type JsonValue = any;
 import { getCurrentOrganizationId } from "@/lib/auth-organization";
 import { createClient } from "@/lib/supabase/server";
 import { revalidatePath } from "next/cache";
@@ -19,6 +20,7 @@ export type CreatorRow = {
     age?: number;
     birthdate?: string;
     platforms?: string[];
+    isDraft?: boolean;
   };
 };
 
@@ -38,7 +40,7 @@ export async function getCreators(
       metadata: true,
     },
   });
-  return list.map((c) => ({
+  return list.map((c: { id: string; name: string; slug: string; avatarUrl: string | null; bio: string | null; isActive: boolean; metadata: unknown }) => ({
     ...c,
     metadata: (c.metadata ?? {}) as CreatorRow["metadata"],
   }));
@@ -110,7 +112,7 @@ export async function getCreatorById(
           protected: (creator.appearance.protected as unknown[]) ?? [],
         }
       : null,
-    environments: creator.environments.map((e) => ({
+    environments: creator.environments.map((e: { id: string; name: string; description: string | null; prompt: string; thumbnailUrl: string | null; isActive: boolean }) => ({
       id: e.id,
       name: e.name,
       description: e.description,
@@ -118,7 +120,7 @@ export async function getCreatorById(
       thumbnailUrl: e.thumbnailUrl,
       isActive: e.isActive,
     })),
-    looks: creator.looks.map((l) => ({
+    looks: creator.looks.map((l: { id: string; name: string; description: string | null; prompt: string; thumbnailUrl: string | null; isActive: boolean }) => ({
       id: l.id,
       name: l.name,
       description: l.description,
@@ -155,6 +157,8 @@ export async function createCreator(
     bio?: string | null;
     avatarUrl?: string | null;
     isActive?: boolean;
+    isDraft?: boolean;
+    metadata?: Record<string, unknown>;
   }
 ): Promise<{ ok: true; id: string } | { ok: false; error: string }> {
   const supabase = await createClient();
@@ -183,6 +187,11 @@ export async function createCreator(
   });
   if (existing) return { ok: false, error: "Já existe um creator com esse slug nesta organização." };
 
+  const metadata = {
+    ...(data.metadata ?? {}),
+    ...(data.isDraft ? { isDraft: true } : {}),
+  };
+
   try {
     const created = await prisma.creator.create({
       data: {
@@ -191,7 +200,8 @@ export async function createCreator(
         slug,
         bio: data.bio?.trim() || null,
         avatarUrl: data.avatarUrl?.trim() || null,
-        isActive: data.isActive ?? true,
+        isActive: data.isDraft ? false : (data.isActive ?? true),
+        metadata: metadata as JsonValue,
       },
     });
     revalidatePath("/creators");
@@ -201,6 +211,164 @@ export async function createCreator(
     console.error(e);
     return { ok: false, error: "Erro ao criar creator." };
   }
+}
+
+/**
+ * Cria um creator completo com dados de auto-fill (aparência, ambientes, looks, voz).
+ * Usado após o processamento do ZIP com IA.
+ */
+export async function createCreatorWithAutoFill(
+  organizationId: string,
+  data: {
+    name: string;
+    slug?: string | null;
+    bio?: string | null;
+    avatarUrl?: string | null;
+    isActive?: boolean;
+    isDraft?: boolean;
+    metadata?: Record<string, unknown>;
+    appearance?: {
+      basePrompt: string;
+      markers?: string[];
+    };
+    environments?: {
+      name: string;
+      description?: string;
+      prompt: string;
+    }[];
+    looks?: {
+      name: string;
+      description?: string;
+      prompt: string;
+    }[];
+    voice?: {
+      tone?: string;
+      style?: string;
+      rules?: string[];
+      examples?: string[];
+    };
+  }
+): Promise<{ ok: true; id: string } | { ok: false; error: string }> {
+  // Primeiro criar o creator básico
+  const result = await createCreator(organizationId, {
+    name: data.name,
+    slug: data.slug,
+    bio: data.bio,
+    avatarUrl: data.avatarUrl,
+    isActive: data.isActive,
+    isDraft: data.isDraft,
+    metadata: data.metadata,
+  });
+
+  if (!result.ok) return result;
+
+  const creatorId = result.id;
+
+  try {
+    // Criar aparência se fornecida
+    if (data.appearance?.basePrompt) {
+      await prisma.creatorAppearance.create({
+        data: {
+          creatorId,
+          basePrompt: data.appearance.basePrompt,
+          markers: (data.appearance.markers ?? []) as JsonValue,
+          protected: [] as JsonValue,
+        },
+      });
+    }
+
+    // Criar ambientes se fornecidos
+    if (data.environments?.length) {
+      await prisma.creatorEnvironment.createMany({
+        data: data.environments.map((env) => ({
+          creatorId,
+          name: env.name,
+          description: env.description || null,
+          prompt: env.prompt,
+        })),
+      });
+    }
+
+    // Criar looks se fornecidos
+    if (data.looks?.length) {
+      await prisma.creatorLook.createMany({
+        data: data.looks.map((look) => ({
+          creatorId,
+          name: look.name,
+          description: look.description || null,
+          prompt: look.prompt,
+        })),
+      });
+    }
+
+    // Criar voz se fornecida
+    if (data.voice && (data.voice.tone || data.voice.style || data.voice.rules?.length || data.voice.examples?.length)) {
+      await prisma.creatorVoice.create({
+        data: {
+          creatorId,
+          tone: data.voice.tone || null,
+          style: data.voice.style || null,
+          rules: (data.voice.rules ?? []) as JsonValue,
+          examples: (data.voice.examples ?? []) as JsonValue,
+        },
+      });
+    }
+
+    revalidatePath(`/creators/${creatorId}`);
+    return { ok: true, id: creatorId };
+  } catch (e) {
+    console.error("Erro ao criar sub-entidades do creator:", e);
+    // Creator foi criado, sub-entidades falharam — não reverter
+    return { ok: true, id: creatorId };
+  }
+}
+
+/**
+ * Remove flag isDraft do metadata quando o creator é finalizado.
+ */
+export async function finalizeDraft(
+  organizationId: string,
+  creatorId: string
+): Promise<{ ok: boolean; error?: string }> {
+  const creator = await prisma.creator.findFirst({
+    where: { id: creatorId, organizationId },
+  });
+  if (!creator) return { ok: false, error: "Creator não encontrado." };
+
+  const metadata = (creator.metadata as Record<string, unknown>) ?? {};
+  delete metadata.isDraft;
+
+  await prisma.creator.update({
+    where: { id: creatorId },
+    data: {
+      isActive: true,
+      metadata: metadata as JsonValue,
+    },
+  });
+
+  revalidatePath("/creators");
+  revalidatePath(`/creators/${creatorId}`);
+  return { ok: true };
+}
+
+/**
+ * Busca creators que são rascunhos (isDraft no metadata).
+ */
+export async function getDraftCreators(
+  organizationId: string
+): Promise<{ id: string; name: string; updatedAt: Date }[]> {
+  const all = await prisma.creator.findMany({
+    where: { organizationId },
+    select: { id: true, name: true, metadata: true, updatedAt: true },
+    orderBy: { updatedAt: "desc" },
+  });
+
+  return all
+    .filter((c: { metadata: unknown }) => {
+      const meta = c.metadata as Record<string, unknown> | null;
+      return meta?.isDraft === true;
+    })
+    .map((c: { id: string; name: string; updatedAt: Date }) => ({ id: c.id, name: c.name, updatedAt: c.updatedAt }));
 }
 
 export async function updateCreator(
@@ -293,8 +461,8 @@ export async function upsertCreatorAppearance(
         where: { id: creator.appearance.id },
         data: {
           basePrompt: data.basePrompt.trim() || " ",
-          markers: (data.markers ?? []) as Prisma.InputJsonValue,
-          protected: (data.protected ?? []) as Prisma.InputJsonValue,
+          markers: (data.markers ?? []) as JsonValue,
+          protected: (data.protected ?? []) as JsonValue,
         },
       });
     } else {
@@ -302,8 +470,8 @@ export async function upsertCreatorAppearance(
         data: {
           creatorId,
           basePrompt: data.basePrompt.trim() || " ",
-          markers: (data.markers ?? []) as Prisma.InputJsonValue,
-          protected: (data.protected ?? []) as Prisma.InputJsonValue,
+          markers: (data.markers ?? []) as JsonValue,
+          protected: (data.protected ?? []) as JsonValue,
         },
       });
     }
@@ -552,8 +720,8 @@ export async function upsertCreatorVoice(
         data: {
           tone: data.tone !== undefined ? (data.tone?.trim() || null) : undefined,
           style: data.style !== undefined ? (data.style?.trim() || null) : undefined,
-          rules: (data.rules ?? undefined) as Prisma.InputJsonValue | undefined,
-          examples: (data.examples ?? undefined) as Prisma.InputJsonValue | undefined,
+          rules: (data.rules ?? undefined) as JsonValue | undefined,
+          examples: (data.examples ?? undefined) as JsonValue | undefined,
         },
       });
     } else {
@@ -562,8 +730,8 @@ export async function upsertCreatorVoice(
           creatorId,
           tone: data.tone?.trim() || null,
           style: data.style?.trim() || null,
-          rules: (data.rules ?? []) as Prisma.InputJsonValue,
-          examples: (data.examples ?? []) as Prisma.InputJsonValue,
+          rules: (data.rules ?? []) as JsonValue,
+          examples: (data.examples ?? []) as JsonValue,
         },
       });
     }

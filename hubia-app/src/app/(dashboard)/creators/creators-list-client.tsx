@@ -17,6 +17,7 @@ const MotionLink = motion.create(Link);
 function CreatorCard({ creator, index }: { creator: CreatorRow; index: number }) {
   const imageUrl = creator.avatarUrl?.trim() || PLACEHOLDER_AVATAR;
   const meta = creator.metadata ?? {};
+  const isDraft = meta.isDraft === true;
 
   const age = meta.age ?? null;
   const city = meta.city ?? null;
@@ -58,10 +59,13 @@ function CreatorCard({ creator, index }: { creator: CreatorRow; index: number })
       {/* Tag Ativa/Inativa */}
       <div className="absolute left-4 top-4 z-10">
         <span
-          className="rounded-full bg-[#0E0F10] px-3 py-1 text-[11px] font-bold uppercase tracking-widest"
-          style={{ color: "#D7FF00" }}
+          className="rounded-full px-3 py-1 text-[11px] font-bold uppercase tracking-widest"
+          style={{
+            background: isDraft ? "#FF8C00" : "#0E0F10",
+            color: isDraft ? "#FFFFFF" : "#D7FF00",
+          }}
         >
-          {creator.isActive ? "Ativa" : "Inativa"}
+          {isDraft ? "Rascunho" : creator.isActive ? "Ativa" : "Inativa"}
         </span>
       </div>
 
