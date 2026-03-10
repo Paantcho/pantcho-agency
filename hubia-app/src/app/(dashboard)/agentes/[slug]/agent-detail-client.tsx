@@ -140,7 +140,7 @@ export default function AgentDetailClient({
       </div>
 
       {/* Tabs */}
-      <div className="flex gap-1 rounded-xl bg-[#EEEFE9] p-1">
+      <div className="flex gap-1 rounded-xl bg-base-500 p-1">
         {tabs.map((tab) => {
           const TabIcon = tab.icon;
           const isActive = activeTab === tab.id;
@@ -392,12 +392,12 @@ function ChatTab({
               }}
             >
               {msg.role === "user" ? (
-                <User size={14} style={{ color: "#D7FF00" }} />
+                <User size={14} style={{ color: "var(--hubia-limao-500)" }} />
               ) : (
                 <Bot
                   size={14}
                   style={{
-                    color: (agent.config.color as string) || "#D7FF00",
+                    color: (agent.config.color as string) || "var(--hubia-limao-500)",
                   }}
                 />
               )}
@@ -407,8 +407,8 @@ function ChatTab({
             <div
               className="max-w-[75%] rounded-2xl px-4 py-3"
               style={{
-                background: msg.role === "user" ? "#0E0F10" : "#F5F5F3",
-                color: msg.role === "user" ? "#FFFFFF" : "#0E0F10",
+                background: msg.role === "user" ? "var(--hubia-ink-500)" : "#F5F5F3",
+                color: msg.role === "user" ? "#FFFFFF" : "var(--hubia-ink-500)",
               }}
             >
               <div
@@ -430,7 +430,7 @@ function ChatTab({
       </div>
 
       {/* Input area */}
-      <div className="border-t border-[#EEEFE9] p-4">
+      <div className="border-t border-base-500 p-4">
         <div className="flex items-end gap-3">
           <textarea
             ref={textareaRef}
@@ -440,7 +440,7 @@ function ChatTab({
             placeholder={`Mensagem para ${agent.name}...`}
             disabled={isStreaming}
             rows={1}
-            className="flex-1 resize-none rounded-xl border border-[#EEEFE9] bg-[#F5F5F3] px-4 py-3 text-[14px] text-[#0E0F10] placeholder-[#A9AAA5] outline-none transition-colors focus:border-[#D7FF00] disabled:opacity-50"
+            className="flex-1 resize-none rounded-xl border border-base-500 bg-sand-200 px-4 py-3 text-[14px] text-ink-500 placeholder:text-base-700 outline-none transition-colors focus:border-limao-500 disabled:opacity-50"
             style={{ maxHeight: "160px" }}
           />
           <button
@@ -449,7 +449,7 @@ function ChatTab({
             disabled={!input.trim() || isStreaming}
             className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl transition-all duration-200 hover:opacity-90 active:scale-95 disabled:opacity-30"
             style={{
-              background: input.trim() && !isStreaming ? "#D7FF00" : "#EEEFE9",
+              background: input.trim() && !isStreaming ? "var(--hubia-limao-500)" : "var(--hubia-bg-base-500)",
               color: "var(--hubia-ink-500)",
             }}
           >

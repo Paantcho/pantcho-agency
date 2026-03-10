@@ -144,7 +144,7 @@ function AddAgentModal({
                 type="button"
                 onClick={handleClose}
                 className="absolute right-5 top-5 flex h-8 w-8 items-center justify-center rounded-full"
-                style={{ background: "#EEEFE9", color: "#5E5E5F" }}
+                style={{ background: "var(--hubia-bg-base-500)", color: "#5E5E5F" }}
                 whileHover={{ rotate: 90, scale: 1.1, backgroundColor: "#D5D2C9" }}
                 whileTap={{ rotate: 90, scale: 0.9 }}
                 transition={{ duration: 0.15, ease: [0.34, 1.56, 0.64, 1] }}
@@ -160,7 +160,7 @@ function AddAgentModal({
               </p>
 
               {/* Search */}
-              <div className="mb-3 flex items-center gap-2 rounded-[12px] px-3 py-2.5" style={{ background: "#EEEFE9" }}>
+              <div className="mb-3 flex items-center gap-2 rounded-[12px] px-3 py-2.5" style={{ background: "var(--hubia-bg-base-500)" }}>
                 <Search size={14} strokeWidth={2} color="#A9AAA5" />
                 <input
                   autoFocus
@@ -175,7 +175,7 @@ function AddAgentModal({
               {/* Grid de cards selecionáveis */}
               <div className="mb-4 max-h-[300px] overflow-y-auto">
                 {available.length === 0 ? (
-                  <div className="rounded-[12px] px-4 py-8 text-center" style={{ background: "#EEEFE9" }}>
+                  <div className="rounded-[12px] px-4 py-8 text-center" style={{ background: "var(--hubia-bg-base-500)" }}>
                     <p className="text-[13px]" style={{ color: "#A9AAA5" }}>
                       {search ? "Nenhum agente encontrado" : "Todos os agentes já estão no squad"}
                     </p>
@@ -219,7 +219,7 @@ function AddAgentModal({
                           {/* Ícone do agente */}
                           <div
                             className="flex h-8 w-8 shrink-0 items-center justify-center rounded-[9px]"
-                            style={{ background: "#0E0F10" }}
+                            style={{ background: "var(--hubia-ink-500)" }}
                           >
                             <Bot size={14} strokeWidth={2} color="#D7FF00" />
                           </div>
@@ -394,7 +394,7 @@ function NovoAgenteModal({
   }
 
   const inputClass = "w-full rounded-[12px] border border-transparent px-3.5 py-2.5 text-[14px] outline-none transition-[border-color] duration-150";
-  const inputStyle = { background: "#EEEFE9", color: "#0E0F10", fontFamily: "Urbanist, sans-serif" };
+  const inputStyle = { background: "var(--hubia-bg-base-500)", color: "#0E0F10", fontFamily: "Urbanist, sans-serif" };
 
   return (
     <HubiaPortal>
@@ -420,7 +420,7 @@ function NovoAgenteModal({
                 type="button"
                 onClick={handleClose}
                 className="absolute right-5 top-5 flex h-8 w-8 items-center justify-center rounded-full"
-                style={{ background: "#EEEFE9", color: "#5E5E5F" }}
+                style={{ background: "var(--hubia-bg-base-500)", color: "#5E5E5F" }}
                 whileHover={{ rotate: 90, scale: 1.1, backgroundColor: "#D5D2C9" }}
                 whileTap={{ rotate: 90, scale: 0.9 }}
                 transition={{ duration: 0.15, ease: [0.34, 1.56, 0.64, 1] }}
@@ -547,7 +547,7 @@ function NovoAgenteModal({
                   type="submit"
                   disabled={loading}
                   className="mt-1 w-full rounded-[14px] py-3 text-[14px] font-bold"
-                  style={{ background: "#D7FF00", color: "#0E0F10" }}
+                  style={{ background: "var(--hubia-limao-500)", color: "#0E0F10" }}
                   whileHover={{ scale: 1.02, backgroundColor: "#DFFF33" }}
                   whileTap={{ scale: 0.97 }}
                   transition={{ duration: 0.12 }}
@@ -632,7 +632,7 @@ export default function SquadDetailClient({
         <div className="flex items-center gap-4">
           <div
             className="flex h-[54px] w-[54px] shrink-0 items-center justify-center rounded-[16px]"
-            style={{ background: "#0E0F10", color: squadColor }}
+            style={{ background: "var(--hubia-ink-500)", color: squadColor }}
           >
             {squadIcon}
           </div>
@@ -644,14 +644,14 @@ export default function SquadDetailClient({
               {isEmBreve ? (
                 <span
                   className="rounded-[9999px] px-3 py-1 text-[11px] font-bold tracking-[0.4px]"
-                  style={{ background: "#EEEFE9", color: "#A9AAA5" }}
+                  style={{ background: "var(--hubia-bg-base-500)", color: "#A9AAA5" }}
                 >
                   Em breve
                 </span>
               ) : (
                 <span
                   className="rounded-[9999px] px-3 py-1 text-[11px] font-bold tracking-[0.4px]"
-                  style={{ background: "#D7FF00", color: "#0E0F10" }}
+                  style={{ background: "var(--hubia-limao-500)", color: "#0E0F10" }}
                 >
                   Ativo
                 </span>
@@ -670,7 +670,7 @@ export default function SquadDetailClient({
             onClick={() => setShowAddAgent(true)}
             className="flex items-center gap-1.5 rounded-[14px] px-4 py-2.5 text-[13px] font-bold"
             style={{ background: "#FFFFFF", color: "#0E0F10" }}
-            whileHover={{ scale: 1.02, backgroundColor: "#EEEFE9" }}
+            whileHover={{ scale: 1.02, backgroundColor: "var(--hubia-bg-base-500)" }}
             whileTap={{ scale: 0.97 }}
             transition={{ duration: 0.15 }}
           >
@@ -681,7 +681,7 @@ export default function SquadDetailClient({
             type="button"
             onClick={() => setShowNovoAgente(true)}
             className="flex items-center gap-1.5 rounded-[14px] px-4 py-2.5 text-[13px] font-bold"
-            style={{ background: "#D7FF00", color: "#0E0F10" }}
+            style={{ background: "var(--hubia-limao-500)", color: "#0E0F10" }}
             whileHover={{ scale: 1.02, backgroundColor: "#DFFF33" }}
             whileTap={{ scale: 0.97 }}
             transition={{ duration: 0.15 }}
@@ -704,13 +704,13 @@ export default function SquadDetailClient({
             </h2>
             <span
               className="rounded-[9999px] px-2 py-0.5 text-[11px] font-bold"
-              style={{ background: "#EEEFE9", color: "#5E5E5F" }}
+              style={{ background: "var(--hubia-bg-base-500)", color: "#5E5E5F" }}
             >
               {agents.length}
             </span>
           </div>
           {isEmBreve && (
-            <div className="flex items-center gap-1.5 rounded-[9999px] px-3 py-1.5" style={{ background: "#EEEFE9" }}>
+            <div className="flex items-center gap-1.5 rounded-[9999px] px-3 py-1.5" style={{ background: "var(--hubia-bg-base-500)" }}>
               <Activity size={12} strokeWidth={2} color="#A9AAA5" />
               <span className="text-[11px] font-semibold" style={{ color: "#A9AAA5" }}>
                 Você já pode montar este squad
@@ -723,7 +723,7 @@ export default function SquadDetailClient({
         {agents.length === 0 ? (
           <motion.div
             className="flex flex-col items-center justify-center rounded-[16px] py-16 text-center"
-            style={{ background: "#EEEFE9", border: "1.5px dashed #D5D2C9" }}
+            style={{ background: "var(--hubia-bg-base-500)", border: "1.5px dashed #D5D2C9" }}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
           >
@@ -756,7 +756,7 @@ export default function SquadDetailClient({
                 type="button"
                 onClick={() => setShowNovoAgente(true)}
                 className="flex items-center gap-1.5 rounded-[12px] px-4 py-2.5 text-[13px] font-bold"
-                style={{ background: "#D7FF00", color: "#0E0F10" }}
+                style={{ background: "var(--hubia-limao-500)", color: "#0E0F10" }}
                 whileHover={{ scale: 1.02, backgroundColor: "#DFFF33" }}
                 whileTap={{ scale: 0.97 }}
                 transition={{ duration: 0.15 }}
@@ -774,7 +774,7 @@ export default function SquadDetailClient({
                   key={agent.id}
                   layout
                   className="flex items-center gap-4 rounded-[14px] px-4 py-3.5"
-                  style={{ background: "#EEEFE9" }}
+                  style={{ background: "var(--hubia-bg-base-500)" }}
                   initial={{ opacity: 0, y: 8 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, x: -16, scale: 0.96 }}
@@ -783,7 +783,7 @@ export default function SquadDetailClient({
                   {/* Ícone do agente */}
                   <div
                     className="flex h-9 w-9 shrink-0 items-center justify-center rounded-[12px]"
-                    style={{ background: "#0E0F10" }}
+                    style={{ background: "var(--hubia-ink-500)" }}
                   >
                     <Bot size={16} strokeWidth={2} color={squadColor} />
                   </div>

@@ -78,7 +78,7 @@ function SelectField({
                 type="button"
                 onClick={() => { onChange(opt.value); setOpen(false); }}
                 className="flex w-full items-center justify-between px-4 py-2.5 text-[14px] text-ink-500"
-                whileHover={{ backgroundColor: "#EEEFE9" }}
+                whileHover={{ backgroundColor: "var(--hubia-bg-base-500)" }}
                 transition={{ duration: 0.1 }}
               >
                 {opt.label}

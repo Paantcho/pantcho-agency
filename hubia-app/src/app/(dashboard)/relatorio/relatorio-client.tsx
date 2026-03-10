@@ -1137,7 +1137,7 @@ function ActivityFeed() {
                 <span
                   className="text-[11px] font-bold px-2.5 py-1.5 rounded-[8px] flex-shrink-0 tabular-nums"
                   style={{
-                    backgroundColor: isLive ? "#0E0F10" : "#F2F3EE",
+                    backgroundColor: isLive ? "var(--hubia-ink-500)" : "#F2F3EE",
                     color: isLive ? "#D7FF00" : "#B0B1AB",
                   }}
                 >
@@ -1189,7 +1189,7 @@ function PedidosRecentes() {
           <motion.button
             className="flex items-center gap-1 text-[11px] font-bold"
             style={{ color: "#C8C9C4" }}
-            whileHover={{ color: "#0E0F10" }}
+            whileHover={{ color: "var(--hubia-ink-500)" }}
             transition={{ duration: 0.15 }}
           >
             Ver todos <ArrowUpRight size={11} />
@@ -1319,7 +1319,7 @@ function Tendencias() {
         style={{ borderBottom: "1px solid #F2F3EE" }}
       >
         <div className="flex h-8 w-8 items-center justify-center rounded-full" style={{ backgroundColor: "#D7FF00" }}>
-          <Flame size={13} color="#0E0F10" />
+          <Flame size={13} color="var(--hubia-ink-500)" />
         </div>
         <div>
           <h2 className="text-[15px] font-bold text-ink-500">Tendências</h2>
@@ -1382,11 +1382,11 @@ export default function RelatorioClient() {
                 onClick={() => setPeriodo(opt.value)}
                 className="rounded-[12px] px-3.5 py-2 text-[12px] font-bold"
                 animate={{
-                  backgroundColor: periodo === opt.value ? "#0E0F10" : "transparent",
+                  backgroundColor: periodo === opt.value ? "var(--hubia-ink-500)" : "transparent",
                   color: periodo === opt.value ? "#D7FF00" : "#A9AAA5",
                 }}
                 initial={false}
-                whileHover={periodo !== opt.value ? { backgroundColor: "rgba(213,210,201,0.3)", color: "#0E0F10" } : {}}
+                whileHover={periodo !== opt.value ? { backgroundColor: "rgba(213,210,201,0.3)", color: "var(--hubia-ink-500)" } : {}}
                 whileTap={{ scale: 0.95 }}
                 transition={{ duration: 0.15 }}
               >
@@ -1397,7 +1397,7 @@ export default function RelatorioClient() {
           <motion.button
             className="flex items-center gap-1.5 rounded-[12px] bg-white px-3.5 py-2.5 text-[12px] font-bold"
             style={{ color: "#8A8B8C" }}
-            whileHover={{ scale: 1.03, color: "#0E0F10" }}
+            whileHover={{ scale: 1.03, color: "var(--hubia-ink-500)" }}
             whileTap={{ scale: 0.96 }}
             transition={{ duration: 0.15, ease: [0.34, 1.56, 0.64, 1] }}
           >
@@ -1412,8 +1412,8 @@ export default function RelatorioClient() {
         {KPIS_HERO.map((kpi, i) => {
           const isDark = !!kpi.dark;
           const isLimao = !!kpi.limao;
-          const bgColor = isDark ? "#0E0F10" : isLimao ? "#D7FF00" : "#FFFFFF";
-          const textMain = isDark ? "#FFFFFF" : "#0E0F10";
+          const bgColor = isDark ? "var(--hubia-ink-500)" : isLimao ? "var(--hubia-limao-500)" : "#FFFFFF";
+          const textMain = isDark ? "#FFFFFF" : "var(--hubia-ink-500)";
           const textSub = isDark ? "#3A3B3C" : isLimao ? "rgba(14,15,16,0.4)" : "#B8B9B3";
           const numSize = isDark ? "80px" : isLimao ? "60px" : "52px";
 
@@ -1433,7 +1433,7 @@ export default function RelatorioClient() {
                 <p className="font-bold tracking-[0.1em] uppercase leading-none text-[10px]" style={{ color: textSub }}>
                   {kpi.label}
                 </p>
-                {isLimao && kpi.live && <LivePulseDot color="#0E0F10" sizePx={8} />}
+                {isLimao && kpi.live && <LivePulseDot color="var(--hubia-ink-500)" sizePx={8} />}
                 {!isLimao && !isDark && kpi.trend !== undefined && (
                   <div className="flex items-center gap-0.5 font-bold text-[10px] px-1.5 py-0.5 rounded-full"
                     style={{ color: "#43A047", backgroundColor: "#43A04712" }}>

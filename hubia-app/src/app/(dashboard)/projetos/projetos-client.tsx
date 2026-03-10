@@ -436,7 +436,7 @@ function ProjetoCardItem({ projeto: p, index: i, onClick }: {
     ? progresso >= 75 ? "#5A6600"
     : progresso >= 40 ? "#4A5C00"
     : "#A05500"
-    : "#5E5E5F";
+    : "var(--hubia-ink-400)";
 
   return (
     <motion.div
@@ -687,7 +687,7 @@ function NovoProjetoModal({ open, onClose, organizationId, onCreated }: {
                         ← Tipos
                       </motion.button>
                     )}
-                    {step === "detalhe" && <span className="text-[#D4D5D6] text-[11px]">/</span>}
+                    {step === "detalhe" && <span className="text-base-600 text-[11px]">/</span>}
                     <span className="text-[11px] font-semibold text-base-700">
                       {step === "tipo" ? "1. Escolha o tipo" : "2. Configure o projeto"}
                     </span>

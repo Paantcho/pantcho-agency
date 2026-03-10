@@ -147,7 +147,7 @@ export default function CreatorVoiceTab({
         </div>
         <div className="rounded-[16px] p-6" style={{ background: "#FFFFFF" }}>
           <h3 className="font-bold text-ink-500" style={{ fontSize: "17px" }}>Exemplos de Legendas</h3>
-          <ul className="mt-4 space-y-2" style={{ fontSize: "13px", color: "#5E5E5F" }}>
+          <ul className="mt-4 space-y-2" style={{ fontSize: "13px", color: "var(--hubia-ink-400)" }}>
             {exemplosLegendas.map((ex) => (
               <li key={ex}>{ex}</li>
             ))}

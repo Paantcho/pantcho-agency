@@ -147,7 +147,7 @@ export default function CreatorAppearanceTab({
           <p className="font-bold" style={{ fontSize: "12px", color: "var(--hubia-ink-500)" }}>
             DOCUMENTO FORENSE
           </p>
-          <p className="font-semibold" style={{ fontSize: "12px", color: "#A9AAA5", marginTop: "2px" }}>
+          <p className="font-semibold" style={{ fontSize: "12px", color: "var(--hubia-bg-base-700)", marginTop: "2px" }}>
             Fonte da verdade absoluta — nenhum detalhe pode ser alterado sem aprovação explícita de Pantcho..
           </p>
         </div>
@@ -282,23 +282,23 @@ export default function CreatorAppearanceTab({
               type="submit"
               disabled={loading}
               className="rounded-full font-bold transition-opacity hover:opacity-90 disabled:opacity-50"
-              style={{ background: "#D7FF00", color: "#0E0F10", fontSize: "13px", padding: "8px 20px" }}
+              style={{ background: "var(--hubia-limao-500)", color: "var(--hubia-ink-500)", fontSize: "13px", padding: "8px 20px" }}
             >
               {loading ? "Salvando…" : "Salvar"}
             </button>
             <button
               type="button"
               onClick={() => setShowEdit(false)}
-              className="rounded-full border font-semibold transition-colors hover:bg-[#EEEFE9]"
-              style={{ borderColor: "#D9D9D4", color: "#0E0F10", fontSize: "13px", padding: "8px 20px" }}
+              className="rounded-full border font-semibold transition-colors hover:bg-base-500"
+              style={{ borderColor: "var(--hubia-sand-600)", color: "var(--hubia-ink-500)", fontSize: "13px", padding: "8px 20px" }}
             >
               Cancelar
             </button>
             {message === "ok" && (
-              <span className="font-semibold" style={{ fontSize: "12px", color: "#00FCB0" }}>Salvo.</span>
+              <span className="font-semibold" style={{ fontSize: "12px", color: "var(--hubia-green-500)" }}>Salvo.</span>
             )}
             {message === "error" && errorText && (
-              <span className="font-semibold" style={{ fontSize: "12px", color: "#FF576D" }}>{errorText}</span>
+              <span className="font-semibold" style={{ fontSize: "12px", color: "var(--hubia-red-500)" }}>{errorText}</span>
             )}
           </div>
         </form>
@@ -306,8 +306,8 @@ export default function CreatorAppearanceTab({
         <button
           type="button"
           onClick={() => setShowEdit(true)}
-          className="w-fit rounded-full border font-semibold transition-colors hover:bg-[#EEEFE9]"
-          style={{ borderColor: "#D9D9D4", color: "#0E0F10", fontSize: "13px", padding: "8px 20px" }}
+          className="w-fit rounded-full border font-semibold transition-colors hover:bg-base-500"
+          style={{ borderColor: "var(--hubia-sand-600)", color: "var(--hubia-ink-500)", fontSize: "13px", padding: "8px 20px" }}
         >
           Editar prompt base
         </button>
