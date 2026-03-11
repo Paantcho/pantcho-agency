@@ -29,12 +29,12 @@ const STATUS_LABELS: Record<PedidoStatus, string> = {
 };
 
 const STATUS_PALETTE: Record<PedidoStatus, { bg: string; text: string; dot: string }> = {
-  rascunho:     { bg: "#F0F0EE", text: "#6B6C68", dot: "#A9AAA5" },
+  rascunho:     { bg: "#F0F0EE", text: "#6B6C68", dot: "var(--hubia-bg-base-700)" },
   aguardando:   { bg: "#F0EFFF", text: "#5B52C7", dot: "#7C6AF7" },
   em_andamento: { bg: "#F0FF80", text: "#5A6600", dot: "#A8C800" },
   revisao:      { bg: "#FFF0E0", text: "#A05500", dot: "#FB8C00" },
   aprovado:     { bg: "#E6F4EA", text: "#2E7D32", dot: "#43A047" },
-  entregue:     { bg: "#E8E8E8", text: "#0E0F10", dot: "#0E0F10" },
+  entregue:     { bg: "#E8E8E8", text: "var(--hubia-ink-500)", dot: "var(--hubia-ink-500)" },
   cancelado:    { bg: "#FDECEA", text: "#C62828", dot: "#E53935" },
 };
 
@@ -46,11 +46,11 @@ const TIPO_BADGES: Record<PedidoTipo, string> = {
   landing_page: "#0288D1",
   app: "#43A047",
   site: "#0288D1",
-  sistema: "#5E5E5F",
+  sistema: "var(--hubia-ink-400)",
   creator: "#E91E63",
   skill: "#FF8F00",
-  agente: "#0E0F10",
-  outro: "#A9AAA5",
+  agente: "var(--hubia-ink-500)",
+  outro: "var(--hubia-bg-base-700)",
 };
 
 const TIPO_SQUAD: Record<PedidoTipo, string> = {
@@ -61,7 +61,7 @@ const TIPO_SQUAD: Record<PedidoTipo, string> = {
 const TIPOS_COM_CREATOR: PedidoTipo[] = ["imagem", "video", "creator"];
 
 const URGENCIA_COLORS: Record<PedidoUrgencia, string> = {
-  baixa: "#A9AAA5", media: "#5E5E5F", alta: "#FB8C00", critica: "#E53935",
+  baixa: "var(--hubia-bg-base-700)", media: "var(--hubia-ink-400)", alta: "#FB8C00", critica: "#E53935",
 };
 
 // ─── Cadeia de produção por tipo ──────────────────────────────────────────────
@@ -272,16 +272,16 @@ export default function PedidoDetailClient({
       <div className="flex items-center gap-2">
         <motion.button
           onClick={() => router.push("/pedidos")}
-          className="flex items-center gap-1.5 text-[13px] font-semibold text-[#A9AAA5]"
-          whileHover={{ color: "#0E0F10", x: -2 }}
+          className="flex items-center gap-1.5 text-[13px] font-semibold text-base-700"
+          whileHover={{ color: "var(--hubia-ink-500)", x: -2 }}
           whileTap={{ scale: 0.97 }}
           transition={{ duration: 0.15 }}
         >
           <ArrowLeft size={14} />
           Pedidos
         </motion.button>
-        <span className="text-[#D4D5D6]">/</span>
-        <span className="text-[13px] text-[#0E0F10] font-semibold truncate max-w-[300px]">Pedido #{numPedido.toString().padStart(2, "0")}</span>
+        <span className="text-base-600">/</span>
+        <span className="text-[13px] text-ink-500 font-semibold truncate max-w-[300px]">Pedido #{numPedido.toString().padStart(2, "0")}</span>
       </div>
 
       {/* Layout 2 colunas */}
@@ -290,7 +290,7 @@ export default function PedidoDetailClient({
         <div className="flex flex-col gap-4">
 
           {/* Header card */}
-          <div className="rounded-[20px] bg-white p-6">
+          <div className="rounded-[30px] bg-white p-6">
             <div className="flex items-start gap-3 mb-5">
               {/* Avatar colorido baseado no tipo */}
               <div
@@ -300,10 +300,10 @@ export default function PedidoDetailClient({
                 {pedido.titulo.charAt(0).toUpperCase()}
               </div>
               <div className="flex-1 min-w-0">
-                <p className="text-[11px] text-[#A9AAA5] mb-0.5">
+                <p className="text-[11px] text-base-700 mb-0.5">
                   {pedido.creator?.name ?? TIPO_SQUAD[pedido.tipo]} · {pedido.dueAt ? new Date(pedido.dueAt).toLocaleDateString("pt-BR") : "Sem data"} · v1
                 </p>
-                <h1 className="text-[22px] font-bold text-[#0E0F10] leading-tight">
+                <h1 className="text-[22px] font-bold text-ink-500 leading-tight">
                   Pedido #{numPedido.toString().padStart(2, "0")} — {pedido.titulo}
                 </h1>
               </div>
@@ -325,7 +325,7 @@ export default function PedidoDetailClient({
                     <kpi.icon size={12} style={{ color: kpi.color }} />
                     <span className="text-[9px] font-bold uppercase tracking-wide" style={{ color: kpi.color }}>{kpi.label}</span>
                   </div>
-                  <span className="text-[26px] font-bold text-[#0E0F10]">{kpi.value}</span>
+                  <span className="text-[26px] font-bold text-ink-500">{kpi.value}</span>
                   {kpi.label === "Progresso" && (
                     <div className="mt-2 h-1.5 rounded-full bg-white/60 overflow-hidden">
                       <motion.div className="h-full rounded-full bg-[#A8C800]"
@@ -349,8 +349,8 @@ export default function PedidoDetailClient({
                       onClick={() => !savingStatus && handleStatusChange(s)}
                       className="flex items-center gap-1.5 rounded-[9999px] px-3 py-1.5 text-[11px] font-bold whitespace-nowrap"
                       animate={{
-                        backgroundColor: isCurrent ? p.dot : isPast ? `${p.dot}20` : "#EEEFE9",
-                        color: isCurrent ? (s === "em_andamento" ? "#5A6600" : ["rascunho","aguardando"].includes(s) ? p.text : "#FFFFFF") : isPast ? p.text : "#A9AAA5",
+                        backgroundColor: isCurrent ? p.dot : isPast ? `${p.dot}20` : "var(--hubia-bg-base-500)",
+                        color: isCurrent ? (s === "em_andamento" ? "#5A6600" : ["rascunho","aguardando"].includes(s) ? p.text : "#FFFFFF") : isPast ? p.text : "var(--hubia-bg-base-700)",
                         scale: isCurrent ? 1.05 : 1,
                       }}
                       initial={false}
@@ -362,7 +362,7 @@ export default function PedidoDetailClient({
                       {STATUS_LABELS[s]}
                     </motion.button>
                     {i < STATUS_FLOW.length - 1 && (
-                      <span className="text-[#D4D5D6] text-[10px] flex-shrink-0">›</span>
+                      <span className="text-base-600 text-[10px] flex-shrink-0">›</span>
                     )}
                   </div>
                 );
@@ -374,10 +374,10 @@ export default function PedidoDetailClient({
           <CadeiaProducao etapas={cadeia} />
 
           {/* Tabs + conteúdo */}
-          <div className="rounded-[20px] bg-white overflow-hidden">
-            <div ref={tabContainerRef} className="relative flex overflow-x-auto border-b border-[#EEEFE9]">
+          <div className="rounded-[30px] bg-white overflow-hidden">
+            <div ref={tabContainerRef} className="relative flex overflow-x-auto border-b border-base-500">
               <motion.div aria-hidden
-                className="pointer-events-none absolute bottom-0 h-[2px] rounded-t-[2px] bg-[#0E0F10]"
+                className="pointer-events-none absolute bottom-0 h-[2px] rounded-t-[2px] bg-ink-500"
                 animate={{ left: tabPillLeft, width: tabPillWidth }}
                 transition={{ type: "spring", stiffness: 420, damping: 30, mass: 0.8 }}
               />
@@ -387,9 +387,9 @@ export default function PedidoDetailClient({
                   ref={(el) => { tabRefs.current[i] = el; }}
                   onClick={() => setActiveTab(tab.id)}
                   className="relative flex-shrink-0 px-5 py-3.5 text-[13px] font-semibold whitespace-nowrap"
-                  animate={{ color: activeTab === tab.id ? "#0E0F10" : "#A9AAA5" }}
+                  animate={{ color: activeTab === tab.id ? "var(--hubia-ink-500)" : "var(--hubia-bg-base-700)" }}
                   initial={false}
-                  whileHover={activeTab !== tab.id ? { backgroundColor: "#EEEFE9/50" } : {}}
+                  whileHover={activeTab !== tab.id ? { backgroundColor: "var(--hubia-bg-base-500)" } : {}}
                   whileTap={{ scale: 0.97 }}
                 >
                   {tab.label}
@@ -435,7 +435,7 @@ export default function PedidoDetailClient({
 
           {/* Detalhes */}
           <div className="rounded-[16px] bg-white p-5 flex flex-col gap-3.5">
-            <p className="text-[11px] font-bold text-[#A9AAA5] uppercase tracking-wide">Detalhes</p>
+            <p className="text-[11px] font-bold text-base-700 uppercase tracking-wide">Detalhes</p>
             <MetaRow label="Tipo" value={pedido.tipo.replace("_", " ")} />
             <MetaRow label="Urgência"
               value={
@@ -449,7 +449,7 @@ export default function PedidoDetailClient({
             <MetaRow label="Criado em" value={new Date(pedido.createdAt).toLocaleDateString("pt-BR")} />
             {pedido.sourceType !== "manual" && (
               <MetaRow label="Fonte" value={
-                <span className="flex items-center gap-1 text-[12px] text-[#5E5E5F]"><Zap size={11} />{pedido.sourceType}</span>
+                <span className="flex items-center gap-1 text-[12px] text-ink-400"><Zap size={11} />{pedido.sourceType}</span>
               } />
             )}
           </div>
@@ -457,15 +457,15 @@ export default function PedidoDetailClient({
           {/* Creator — só exibe para tipos audiovisual */}
           {mostraCreator && (
             <div className="rounded-[16px] bg-white p-5 flex flex-col gap-3">
-              <p className="text-[11px] font-bold text-[#A9AAA5] uppercase tracking-wide flex items-center gap-1.5">
+              <p className="text-[11px] font-bold text-base-700 uppercase tracking-wide flex items-center gap-1.5">
                 <User size={11} /> Creator
               </p>
               {pedido.creator && (
                 <div className="flex items-center gap-2 mb-1">
-                  <div className="h-7 w-7 rounded-full bg-[#EEEFE9] overflow-hidden flex-shrink-0">
+                  <div className="h-7 w-7 rounded-full bg-base-500 overflow-hidden flex-shrink-0">
                     {pedido.creator.avatarUrl && <img src={pedido.creator.avatarUrl} alt="" className="h-full w-full object-cover" />}
                   </div>
-                  <span className="text-[13px] font-semibold text-[#0E0F10]">{pedido.creator.name}</span>
+                  <span className="text-[13px] font-semibold text-ink-500">{pedido.creator.name}</span>
                 </div>
               )}
               <HubiaSelect
@@ -479,11 +479,11 @@ export default function PedidoDetailClient({
 
           {/* Projeto */}
           <div className="rounded-[16px] bg-white p-5 flex flex-col gap-3">
-            <p className="text-[11px] font-bold text-[#A9AAA5] uppercase tracking-wide flex items-center gap-1.5">
+            <p className="text-[11px] font-bold text-base-700 uppercase tracking-wide flex items-center gap-1.5">
               <FolderKanban size={11} /> Projeto
             </p>
             {pedido.projeto && (
-              <p className="text-[13px] font-semibold text-[#0E0F10] mb-1">{pedido.projeto.nome}</p>
+              <p className="text-[13px] font-semibold text-ink-500 mb-1">{pedido.projeto.nome}</p>
             )}
             <HubiaSelect
               value={pedido.projeto?.id ?? ""}
@@ -511,10 +511,10 @@ export default function PedidoDetailClient({
 function CadeiaProducao({ etapas }: { etapas: EtapaProducao[] }) {
   const concluidas = etapas.filter(e => e.concluido).length;
   return (
-    <div className="rounded-[20px] bg-white p-6">
+    <div className="rounded-[30px] bg-white p-6">
       <div className="flex items-center justify-between mb-4">
-        <p className="text-[11px] font-bold uppercase tracking-wide text-[#A9AAA5]">Cadeia de Produção</p>
-        <span className="text-[11px] font-semibold text-[#5E5E5F]">{concluidas}/{etapas.length} concluídas</span>
+        <p className="text-[11px] font-bold uppercase tracking-wide text-base-700">Cadeia de Produção</p>
+        <span className="text-[11px] font-semibold text-ink-400">{concluidas}/{etapas.length} concluídas</span>
       </div>
       <div className="flex flex-col gap-0">
         {etapas.map((etapa, i) => {
@@ -535,15 +535,15 @@ function CadeiaProducao({ etapas }: { etapas: EtapaProducao[] }) {
                     <CheckCircle2 size={16} color="#43A047" />
                   </div>
                 ) : (
-                  <div className="h-7 w-7 rounded-full bg-[#EEEFE9] flex items-center justify-center">
-                    <Icon size={14} color="#A9AAA5" />
+                  <div className="h-7 w-7 rounded-full bg-base-500 flex items-center justify-center">
+                    <Icon size={14} color="var(--hubia-bg-base-700)" />
                   </div>
                 )}
               </div>
               {/* Role + descrição */}
               <div className="flex-1 min-w-0">
-                <p className="text-[13px] font-bold text-[#0E0F10]">{etapa.role}</p>
-                <p className="text-[12px] text-[#5E5E5F] mt-0.5 leading-relaxed">{etapa.descricao}</p>
+                <p className="text-[13px] font-bold text-ink-500">{etapa.role}</p>
+                <p className="text-[12px] text-ink-400 mt-0.5 leading-relaxed">{etapa.descricao}</p>
               </div>
               {/* Status pill */}
               <span
@@ -579,14 +579,14 @@ function PromptFinalCard({ briefing }: { briefing: Record<string, unknown> }) {
   };
 
   return (
-    <div className="rounded-[20px] bg-[#0E0F10] p-6">
+    <div className="rounded-[30px] bg-ink-500 p-6">
       <div className="flex items-center justify-between mb-4">
-        <p className="text-[11px] font-bold uppercase tracking-wide text-[#A9AAA5]">Prompt Final</p>
+        <p className="text-[11px] font-bold uppercase tracking-wide text-base-700">Prompt Final</p>
         <div className="flex items-center gap-2">
           {temPrompt && (
             <motion.button
               onClick={handleCopy}
-              className="flex items-center gap-1.5 rounded-[10px] bg-[#D7FF00] px-3 py-1.5 text-[11px] font-bold text-[#0E0F10]"
+              className="flex items-center gap-1.5 rounded-[12px] bg-limao-500 px-3 py-1.5 text-[11px] font-bold text-ink-500"
               whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.96 }}
             >
               {copied ? <Check size={12} /> : <Copy size={12} />}
@@ -626,16 +626,16 @@ function ContextoAutomatico({
 
   return (
     <div className="rounded-[16px] bg-white p-5 flex flex-col gap-3">
-      <p className="text-[11px] font-bold text-[#A9AAA5] uppercase tracking-wide">Contexto Automático</p>
+      <p className="text-[11px] font-bold text-base-700 uppercase tracking-wide">Contexto Automático</p>
       {itens.length === 0 ? (
-        <p className="text-[12px] text-[#A9AAA5]">Contexto será gerado automaticamente.</p>
+        <p className="text-[12px] text-base-700">Contexto será gerado automaticamente.</p>
       ) : (
         <div className="flex flex-col gap-2">
           {itens.map((item) => (
             <div key={item.label} className="flex items-center justify-between">
-              <span className="text-[12px] text-[#A9AAA5]">{item.label}</span>
+              <span className="text-[12px] text-base-700">{item.label}</span>
               <div className="flex items-center gap-1.5">
-                <span className="text-[12px] font-semibold text-[#0E0F10]">{item.value}</span>
+                <span className="text-[12px] font-semibold text-ink-500">{item.value}</span>
                 {item.badge && (
                   <span
                     className="rounded-[4px] px-1.5 py-0.5 text-[8px] font-bold uppercase"
@@ -662,10 +662,10 @@ function NotasCard({ pedidoId, organizationId }: { pedidoId: string; organizatio
   return (
     <div className="rounded-[16px] bg-white p-5 flex flex-col gap-3">
       <div className="flex items-center justify-between">
-        <p className="text-[11px] font-bold text-[#A9AAA5] uppercase tracking-wide">Notas</p>
+        <p className="text-[11px] font-bold text-base-700 uppercase tracking-wide">Notas</p>
         {!editing && (
           <motion.button onClick={() => setEditing(true)} whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
-            <Plus size={14} color="#A9AAA5" />
+            <Plus size={14} color="var(--hubia-bg-base-700)" />
           </motion.button>
         )}
       </div>
@@ -675,23 +675,23 @@ function NotasCard({ pedidoId, organizationId }: { pedidoId: string; organizatio
             autoFocus value={nota} onChange={(e) => setNota(e.target.value)}
             placeholder="Adicionar nota..."
             rows={3}
-            className="w-full rounded-[10px] border border-transparent bg-[#EEEFE9] px-3 py-2 text-[13px] text-[#0E0F10] outline-none placeholder:text-[#A9AAA5] resize-none focus:border-[#0E0F10] focus:shadow-[0_0_0_3px_rgba(14,15,16,0.08)] transition-[border-color,box-shadow] duration-150"
+            className="w-full rounded-[12px] border border-transparent bg-base-500 px-3 py-2 text-[13px] text-ink-500 outline-none placeholder:text-base-700 resize-none focus:border-ink-500 focus:ring-2 focus:ring-ink-500/10 transition-[border-color] duration-150"
           />
           <div className="flex gap-2">
             <motion.button onClick={() => setEditing(false)}
-              className="flex-1 rounded-[10px] bg-[#EEEFE9] py-2 text-[12px] font-semibold text-[#5E5E5F]"
+              className="flex-1 rounded-[12px] bg-base-500 py-2 text-[12px] font-semibold text-ink-400"
               whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.97 }}>
               Cancelar
             </motion.button>
             <motion.button onClick={() => { setEditing(false); if (nota.trim()) toast.success("Nota salva!"); }}
-              className="flex-1 rounded-[10px] bg-[#0E0F10] py-2 text-[12px] font-semibold text-white"
+              className="flex-1 rounded-[12px] bg-ink-500 py-2 text-[12px] font-semibold text-white"
               whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.97 }}>
               Salvar
             </motion.button>
           </div>
         </div>
       ) : (
-        <p className="text-[12px] text-[#A9AAA5]">{nota || "Nenhuma nota ainda"}</p>
+        <p className="text-[12px] text-base-700">{nota || "Nenhuma nota ainda"}</p>
       )}
     </div>
   );
@@ -736,14 +736,14 @@ function TabConteudo({
         {/* Briefing editável */}
         <div>
           <div className="flex items-center justify-between mb-2">
-            <p className="text-[11px] font-bold uppercase tracking-wide text-[#A9AAA5]">Briefing</p>
+            <p className="text-[11px] font-bold uppercase tracking-wide text-base-700">Briefing</p>
             <motion.button
               onClick={() => {
                 if (!editMode) { setEditValue(JSON.stringify(briefing, null, 2)); }
                 setEditMode(e => !e);
               }}
-              className="flex items-center gap-1 text-[11px] font-semibold text-[#A9AAA5]"
-              whileHover={{ color: "#0E0F10" }} whileTap={{ scale: 0.97 }}
+              className="flex items-center gap-1 text-[11px] font-semibold text-base-700"
+              whileHover={{ color: "var(--hubia-ink-500)" }} whileTap={{ scale: 0.97 }}
             >
               {editMode ? <X size={12} /> : <Edit3 size={12} />}
               {editMode ? "Cancelar" : "Editar"}
@@ -755,17 +755,17 @@ function TabConteudo({
                 value={editValue}
                 onChange={(e) => setEditValue(e.target.value)}
                 rows={10}
-                className="w-full rounded-[12px] border border-[#EEEFE9] bg-[#EEEFE9] px-4 py-3 text-[12px] text-[#0E0F10] font-mono outline-none resize-vertical focus:border-[#0E0F10] focus:shadow-[0_0_0_3px_rgba(14,15,16,0.08)] transition-[border-color,box-shadow] duration-150"
+                className="w-full rounded-[12px] border border-base-500 bg-base-500 px-4 py-3 text-[12px] text-ink-500 font-mono outline-none resize-vertical focus:border-ink-500 focus:ring-2 focus:ring-ink-500/10 transition-[border-color] duration-150"
                 placeholder='{"squad": "AUDIOVISUAL", "mood": "elegante"}'
               />
               <div className="flex gap-2">
                 <motion.button onClick={() => setEditMode(false)}
-                  className="flex-1 rounded-[12px] bg-[#EEEFE9] py-2.5 text-[13px] font-semibold text-[#5E5E5F]"
+                  className="flex-1 rounded-[12px] bg-base-500 py-2.5 text-[13px] font-semibold text-ink-400"
                   whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.97 }}>
                   Cancelar
                 </motion.button>
                 <motion.button onClick={handleSaveBriefing} disabled={saving}
-                  className="flex-1 rounded-[12px] bg-[#0E0F10] py-2.5 text-[13px] font-semibold text-white flex items-center justify-center gap-2 disabled:opacity-50"
+                  className="flex-1 rounded-[12px] bg-ink-500 py-2.5 text-[13px] font-semibold text-white flex items-center justify-center gap-2 disabled:opacity-50"
                   whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.97 }}>
                   <Save size={14} />
                   {saving ? "Salvando..." : "Salvar Briefing"}
@@ -773,11 +773,11 @@ function TabConteudo({
               </div>
             </div>
           ) : briefingLimpo.length > 0 ? (
-            <div className="rounded-[12px] bg-[#EEEFE9] p-4 space-y-2">
+            <div className="rounded-[12px] bg-base-500 p-4 space-y-2">
               {briefingLimpo.map(([k, v]) => (
                 <div key={k} className="flex gap-2 text-[13px]">
-                  <span className="font-semibold text-[#0E0F10] capitalize min-w-[100px] flex-shrink-0">{k}:</span>
-                  <span className="text-[#5E5E5F]">{Array.isArray(v) ? v.join(", ") : String(v)}</span>
+                  <span className="font-semibold text-ink-500 capitalize min-w-[100px] flex-shrink-0">{k}:</span>
+                  <span className="text-ink-400">{Array.isArray(v) ? v.join(", ") : String(v)}</span>
                 </div>
               ))}
             </div>
@@ -788,7 +788,7 @@ function TabConteudo({
 
         {decisoes.length > 0 && (
           <div>
-            <p className="text-[11px] font-bold uppercase tracking-wide text-[#A9AAA5] mb-2">Decisões recentes</p>
+            <p className="text-[11px] font-bold uppercase tracking-wide text-base-700 mb-2">Decisões recentes</p>
             <div className="flex flex-col gap-2">
               {decisoes.slice(0, 3).map((dec, i) => (
                 <motion.div key={i} className="rounded-[12px] bg-[#FFFDE7] p-3.5"
@@ -797,8 +797,8 @@ function TabConteudo({
                   <div className="flex items-start gap-2">
                     <Lightbulb size={13} color="#FB8C00" className="mt-0.5 flex-shrink-0" />
                     <div>
-                      <p className="text-[13px] font-semibold text-[#0E0F10]">{dec.titulo}</p>
-                      {dec.desc && <p className="text-[12px] text-[#5E5E5F] mt-0.5">{dec.desc}</p>}
+                      <p className="text-[13px] font-semibold text-ink-500">{dec.titulo}</p>
+                      {dec.desc && <p className="text-[12px] text-ink-400 mt-0.5">{dec.desc}</p>}
                     </div>
                   </div>
                 </motion.div>
@@ -813,7 +813,7 @@ function TabConteudo({
   if (["tarefas","planejamento","posts"].includes(tab)) {
     return (
       <div>
-        <p className="text-[11px] font-bold uppercase tracking-wide text-[#A9AAA5] mb-3">
+        <p className="text-[11px] font-bold uppercase tracking-wide text-base-700 mb-3">
           {tarefas.length > 0 ? `${tarefasConcluidas} de ${tarefas.length} concluídas` : "Sem tarefas definidas"}
         </p>
         {tarefas.length > 0 ? (
@@ -821,12 +821,12 @@ function TabConteudo({
             {tarefas.map((t, i) => (
               <motion.div
                 key={i}
-                className="flex items-center gap-3 rounded-[10px] px-3 py-2.5"
+                className="flex items-center gap-3 rounded-[12px] px-3 py-2.5"
                 style={{ backgroundColor: t.concluido ? "#E6F4EA" : "#FAFAFA" }}
                 initial={{ opacity: 0, x: -8 }} animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: i * 0.04 }}
               >
-                {t.concluido ? <CheckCircle2 size={16} color="#43A047" /> : <Square size={16} color="#A9AAA5" />}
+                {t.concluido ? <CheckCircle2 size={16} color="#43A047" /> : <Square size={16} color="var(--hubia-bg-base-700)" />}
                 <span className="text-[13px] font-semibold" style={{ color: t.concluido ? "#2E7D32" : "#0E0F10" }}>{t.titulo}</span>
               </motion.div>
             ))}
@@ -848,9 +848,9 @@ function TabConteudo({
             <div className="flex items-start gap-2.5">
               <Lightbulb size={15} color="#FB8C00" className="mt-0.5 flex-shrink-0" />
               <div>
-                <p className="text-[14px] font-semibold text-[#0E0F10]">{dec.titulo}</p>
-                {dec.desc && <p className="text-[13px] text-[#5E5E5F] mt-0.5">{dec.desc}</p>}
-                {dec.data && <p className="text-[11px] text-[#A9AAA5] mt-1">{dec.data}</p>}
+                <p className="text-[14px] font-semibold text-ink-500">{dec.titulo}</p>
+                {dec.desc && <p className="text-[13px] text-ink-400 mt-0.5">{dec.desc}</p>}
+                {dec.data && <p className="text-[11px] text-base-700 mt-1">{dec.data}</p>}
               </div>
             </div>
           </motion.div>
@@ -865,20 +865,20 @@ function TabConteudo({
     return (
       <div className="flex flex-col gap-4">
         <div className="flex items-center justify-between">
-          <p className="text-[11px] font-bold uppercase tracking-wide text-[#A9AAA5]">Referências</p>
+          <p className="text-[11px] font-bold uppercase tracking-wide text-base-700">Referências</p>
         </div>
         <motion.div
           className="rounded-[12px] border-2 border-dashed border-[#D9D9D4] p-8 flex flex-col items-center gap-3 cursor-pointer text-center"
-          whileHover={{ borderColor: "#0E0F10", backgroundColor: "#EEEFE9" }}
+          whileHover={{ borderColor: "#0E0F10", backgroundColor: "var(--hubia-bg-base-500)" }}
           whileTap={{ scale: 0.99 }}
         >
-          <Upload size={24} color="#A9AAA5" />
+          <Upload size={24} color="var(--hubia-bg-base-700)" />
           <div>
-            <p className="text-[14px] font-semibold text-[#5E5E5F]">Subir referências</p>
-            <p className="text-[12px] text-[#A9AAA5] mt-0.5">Imagens, links, PDFs, screenshots</p>
+            <p className="text-[14px] font-semibold text-ink-400">Subir referências</p>
+            <p className="text-[12px] text-base-700 mt-0.5">Imagens, links, PDFs, screenshots</p>
           </div>
           <motion.div
-            className="mt-1 rounded-[12px] bg-[#0E0F10] px-4 py-2 text-[12px] font-semibold text-white"
+            className="mt-1 rounded-[12px] bg-ink-500 px-4 py-2 text-[12px] font-semibold text-white"
             whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}
           >
             Escolher arquivos
@@ -887,7 +887,7 @@ function TabConteudo({
         {!!briefing.referencias && (
           <div className="flex flex-wrap gap-2">
             {(Array.isArray(briefing.referencias) ? briefing.referencias : [briefing.referencias]).map((ref, i) => (
-              <span key={i} className="rounded-[8px] bg-[#EEEFE9] px-3 py-1.5 text-[12px] font-semibold text-[#0E0F10]">
+              <span key={i} className="rounded-[8px] bg-base-500 px-3 py-1.5 text-[12px] font-semibold text-ink-500">
                 {String(ref)}
               </span>
             ))}
@@ -908,16 +908,16 @@ function TabConteudo({
               <motion.div key={h.id} className="flex items-start gap-3"
                 initial={{ opacity: 0, x: -8 }} animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: i * 0.04 }}>
-                <div className="mt-1.5 h-2 w-2 rounded-full bg-[#D7FF00] flex-shrink-0" />
+                <div className="mt-1.5 h-2 w-2 rounded-full bg-limao-500 flex-shrink-0" />
                 <div className="flex-1">
-                  <p className="text-[13px] font-semibold text-[#0E0F10]">{h.action}</p>
+                  <p className="text-[13px] font-semibold text-ink-500">{h.action}</p>
                   {Object.keys(h.metadata).length > 0 && (
-                    <p className="text-[11px] text-[#A9AAA5] mt-0.5">
+                    <p className="text-[11px] text-base-700 mt-0.5">
                       {Object.entries(h.metadata).map(([k, v]) => `${k}: ${v}`).join(" · ")}
                     </p>
                   )}
                 </div>
-                <span className="text-[11px] text-[#A9AAA5] flex-shrink-0">
+                <span className="text-[11px] text-base-700 flex-shrink-0">
                   {new Date(h.createdAt).toLocaleDateString("pt-BR")}
                 </span>
               </motion.div>
@@ -965,32 +965,32 @@ function UploadResultado({ tipo }: { tipo: PedidoTipo }) {
 
   return (
     <div className="rounded-[16px] bg-white p-5 flex flex-col gap-3">
-      <p className="text-[11px] font-bold text-[#A9AAA5] uppercase tracking-wide">
-        Resultado {arquivos.length > 0 && <span className="text-[#0E0F10]">({arquivos.length})</span>}
+      <p className="text-[11px] font-bold text-base-700 uppercase tracking-wide">
+        Resultado {arquivos.length > 0 && <span className="text-ink-500">({arquivos.length})</span>}
       </p>
 
       {/* Previews */}
       {arquivos.length > 0 && (
         <div className="grid grid-cols-2 gap-2">
           {arquivos.map((arq, i) => (
-            <motion.div key={i} className="relative rounded-[10px] overflow-hidden group"
+            <motion.div key={i} className="relative rounded-[12px] overflow-hidden group"
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.2 }}>
               {arq.file.type.startsWith("image/") ? (
-                <img src={arq.url} alt="" className="w-full h-[80px] object-cover rounded-[10px]" />
+                <img src={arq.url} alt="" className="w-full h-[80px] object-cover rounded-[12px]" />
               ) : (
-                <div className="w-full h-[80px] rounded-[10px] bg-[#0E0F10] flex items-center justify-center">
-                  <span className="text-[10px] font-bold text-[#D7FF00]">VÍDEO</span>
+                <div className="w-full h-[80px] rounded-[12px] bg-ink-500 flex items-center justify-center">
+                  <span className="text-[10px] font-bold text-limao-500">VÍDEO</span>
                 </div>
               )}
               <motion.button
                 onClick={() => handleRemover(i)}
-                className="absolute top-1 right-1 h-5 w-5 rounded-full bg-[#0E0F10]/70 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
+                className="absolute top-1 right-1 h-5 w-5 rounded-full bg-ink-500/70 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
                 whileHover={{ scale: 1.15 }} whileTap={{ scale: 0.9 }}>
                 <X size={10} color="white" />
               </motion.button>
-              <div className="mt-1 text-[9px] text-[#A9AAA5] truncate px-0.5">{arq.file.name}</div>
+              <div className="mt-1 text-[9px] text-base-700 truncate px-0.5">{arq.file.name}</div>
             </motion.div>
           ))}
         </div>
@@ -1006,14 +1006,14 @@ function UploadResultado({ tipo }: { tipo: PedidoTipo }) {
         onDragLeave={handleDragLeave}
         onDrop={handleDrop}
         onClick={() => inputRef.current?.click()}
-        whileHover={{ borderColor: "#0E0F10", backgroundColor: "#EEEFE9" }}
+        whileHover={{ borderColor: "#0E0F10", backgroundColor: "var(--hubia-bg-base-500)" }}
         whileTap={{ scale: 0.99 }}
       >
         <Upload size={18} color={isDragOver ? "#0E0F10" : "#A9AAA5"} />
-        <p className="text-[11px] font-semibold text-[#5E5E5F]">
+        <p className="text-[11px] font-semibold text-ink-400">
           {isDragOver ? "Solte para adicionar" : "Upload ou arraste"}
         </p>
-        <p className="text-[9px] text-[#A9AAA5]">Imagens, vídeos · múltiplos arquivos</p>
+        <p className="text-[9px] text-base-700">Imagens, vídeos · múltiplos arquivos</p>
         <input
           ref={inputRef}
           type="file"
@@ -1030,9 +1030,9 @@ function UploadResultado({ tipo }: { tipo: PedidoTipo }) {
 function MetaRow({ label, value }: { label: string; value: React.ReactNode }) {
   return (
     <div className="flex items-center justify-between gap-2">
-      <span className="text-[12px] text-[#A9AAA5] flex-shrink-0">{label}</span>
+      <span className="text-[12px] text-base-700 flex-shrink-0">{label}</span>
       {typeof value === "string" ? (
-        <span className="text-[13px] font-semibold text-[#0E0F10] capitalize text-right">{value}</span>
+        <span className="text-[13px] font-semibold text-ink-500 capitalize text-right">{value}</span>
       ) : value}
     </div>
   );
@@ -1041,8 +1041,8 @@ function MetaRow({ label, value }: { label: string; value: React.ReactNode }) {
 function EmptyState({ icon: Icon, text }: { icon: React.ElementType; text: string }) {
   return (
     <div className="flex flex-col items-center gap-3 py-12 text-center">
-      <Icon size={24} color="#A9AAA5" />
-      <p className="text-[13px] text-[#A9AAA5] max-w-[240px] leading-relaxed">{text}</p>
+      <Icon size={24} color="var(--hubia-bg-base-700)" />
+      <p className="text-[13px] text-base-700 max-w-[240px] leading-relaxed">{text}</p>
     </div>
   );
 }

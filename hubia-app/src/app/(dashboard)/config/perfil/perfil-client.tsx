@@ -3,9 +3,10 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { User, Mail, Camera, Check } from "lucide-react";
+import { HubiaPageAction } from "@/components/ui/hubia-page-action";
 
 const inputClass =
-  "h-11 w-full rounded-[10px] border border-transparent bg-[#EEEFE9] px-3.5 text-[15px] text-[#0E0F10] outline-none placeholder:text-[#A9AAA5] transition-[border-color,box-shadow] duration-150 hover:border-[#D4D5D6] focus:border-[#0E0F10] focus:shadow-[0_0_0_3px_rgba(14,15,16,0.08)]";
+  "h-11 w-full rounded-[12px] border border-transparent bg-base-500 px-3.5 text-[15px] text-ink-500 outline-none placeholder:text-base-700 transition-[border-color] duration-150 hover:border-base-600 focus:border-ink-500 focus:ring-2 focus:ring-ink-500/10";
 
 export default function PerfilClient({
   nome: initialNome,
@@ -36,42 +37,42 @@ export default function PerfilClient({
   return (
     <div className="flex flex-col gap-6">
       {/* Avatar */}
-      <div className="rounded-[20px] bg-white p-6">
+      <div className="rounded-[30px] bg-white p-6">
         <div className="mb-5 flex items-center gap-2.5">
-          <div className="flex h-8 w-8 items-center justify-center rounded-[10px] bg-[#0E0F10]">
-            <User size={15} color="#D7FF00" />
+          <div className="flex h-8 w-8 items-center justify-center rounded-[12px] bg-ink-500">
+            <User size={15} color="var(--hubia-limao-500)" />
           </div>
-          <h2 className="text-[15px] font-bold text-[#0E0F10]">Perfil</h2>
+          <h2 className="text-[15px] font-bold text-ink-500">Perfil</h2>
         </div>
 
         <div className="flex items-center gap-6">
           <div className="relative">
-            <div className="flex h-16 w-16 items-center justify-center rounded-full bg-[#0E0F10] text-[18px] font-bold text-[#D7FF00]">
+            <div className="flex h-16 w-16 items-center justify-center rounded-full bg-ink-500 text-[18px] font-bold text-limao-500">
               {initials || "HU"}
             </div>
             <motion.button
-              className="absolute -bottom-1 -right-1 flex h-7 w-7 items-center justify-center rounded-full bg-[#D7FF00]"
+              className="absolute -bottom-1 -right-1 flex h-7 w-7 items-center justify-center rounded-full bg-limao-500"
               whileHover={{ scale: 1.12 }}
               whileTap={{ scale: 0.90 }}
               transition={{ duration: 0.15, ease: [0.34, 1.56, 0.64, 1] }}
               title="Alterar foto"
             >
-              <Camera size={13} color="#0E0F10" />
+              <Camera size={13} color="var(--hubia-ink-500)" />
             </motion.button>
           </div>
 
           <div>
-            <p className="text-[15px] font-bold text-[#0E0F10]">{nome || "Usuário"}</p>
-            <p className="text-[13px] text-[#A9AAA5]">{initialEmail}</p>
+            <p className="text-[15px] font-bold text-ink-500">{nome || "Usuário"}</p>
+            <p className="text-[13px] text-base-700">{initialEmail}</p>
           </div>
         </div>
       </div>
 
       {/* Campos */}
-      <div className="rounded-[20px] bg-white p-6">
+      <div className="rounded-[30px] bg-white p-6">
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
           <div className="flex flex-col gap-1.5">
-            <label className="text-[13px] font-semibold text-[#5E5E5F]">
+            <label className="text-[13px] font-semibold text-ink-400">
               Nome completo
             </label>
             <input
@@ -84,7 +85,7 @@ export default function PerfilClient({
           </div>
 
           <div className="flex flex-col gap-1.5">
-            <label className="text-[13px] font-semibold text-[#5E5E5F] flex items-center gap-1.5">
+            <label className="text-[13px] font-semibold text-ink-400 flex items-center gap-1.5">
               <Mail size={13} />
               E-mail
             </label>
@@ -92,9 +93,9 @@ export default function PerfilClient({
               type="email"
               value={initialEmail}
               readOnly
-              className="h-11 w-full rounded-[10px] border border-transparent bg-[#EEEFE9] px-3.5 text-[15px] text-[#A9AAA5] outline-none cursor-not-allowed"
+              className="h-11 w-full rounded-[12px] border border-transparent bg-base-500 px-3.5 text-[15px] text-base-700 outline-none cursor-not-allowed"
             />
-            <p className="text-[11px] text-[#A9AAA5]">
+            <p className="text-[11px] text-base-700">
               Gerenciado pelo provedor de autenticação
             </p>
           </div>
@@ -117,17 +118,16 @@ export default function PerfilClient({
           )}
         </AnimatePresence>
 
-        <motion.button
-          type="button"
+        <HubiaPageAction
+          icon={Check}
+          iconRotate={false}
           onClick={handleSave}
           disabled={loading}
-          className="rounded-[18px] bg-[#D7FF00] px-6 py-3 text-[15px] font-semibold text-[#0E0F10] disabled:opacity-50"
-          whileHover={{ scale: 1.03, backgroundColor: "#DFFF33" }}
-          whileTap={{ scale: 0.96 }}
-          transition={{ duration: 0.15, ease: [0.34, 1.56, 0.64, 1] }}
+          loading={loading}
+          loadingText="Salvando…"
         >
-          {loading ? "Salvando…" : "Salvar perfil"}
-        </motion.button>
+          Salvar perfil
+        </HubiaPageAction>
       </div>
     </div>
   );

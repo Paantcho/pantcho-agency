@@ -8,7 +8,7 @@ import type { CreatorDetail } from "../../actions";
 import { upsertCreatorVoice } from "../../actions";
 
 const inputClass =
-  "w-full rounded-input border-0 bg-[var(--hubia-bg-base-500)] px-4 py-3 text-body-md font-medium text-ink-500 outline-none focus:ring-2 focus:ring-limao-500/30";
+  "w-full rounded-input border-0 bg-[var(--hubia-bg-base-500)] px-4 py-3 text-body-md font-semibold text-ink-500 outline-none focus:ring-2 focus:ring-limao-500/30";
 
 export default function CreatorVoiceTab({
   creator,
@@ -77,7 +77,7 @@ export default function CreatorVoiceTab({
         <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-ink-400 text-limao-500">
           <Heart className="h-5 w-5" />
         </div>
-        <p className="text-body-md font-medium text-white">
+        <p className="text-body-md font-semibold text-white">
           CRIAR UM TEXTO DE INTRODUÇÃO DIZENDO COMO É O MOOD DE VOZ DA CREATOR… E COLOCAR COMO REGRA SUPREMA PARA NÃO MUDAR E SEMPRE PASSAR PELO REVISOR.
         </p>
       </div>
@@ -147,7 +147,7 @@ export default function CreatorVoiceTab({
         </div>
         <div className="rounded-[16px] p-6" style={{ background: "#FFFFFF" }}>
           <h3 className="font-bold text-ink-500" style={{ fontSize: "17px" }}>Exemplos de Legendas</h3>
-          <ul className="mt-4 space-y-2" style={{ fontSize: "13px", color: "#5E5E5F" }}>
+          <ul className="mt-4 space-y-2" style={{ fontSize: "13px", color: "var(--hubia-ink-400)" }}>
             {exemplosLegendas.map((ex) => (
               <li key={ex}>{ex}</li>
             ))}
@@ -163,7 +163,7 @@ export default function CreatorVoiceTab({
       >
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
           {errorText && (
-            <div className="rounded-card border border-red-500/30 bg-red-500/10 px-4 py-3 text-body-sm font-medium text-red-600">
+            <div className="rounded-card border border-red-500/30 bg-red-500/10 px-4 py-3 text-body-sm font-semibold text-red-600">
               {errorText}
             </div>
           )}

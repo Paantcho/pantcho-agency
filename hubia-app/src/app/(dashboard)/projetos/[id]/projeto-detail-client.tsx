@@ -579,13 +579,13 @@ export default function ProjetoDetailClient({
       {/* Breadcrumb */}
       <div className="flex items-center gap-2">
         <motion.button onClick={() => router.push("/projetos")}
-          className="flex items-center gap-1.5 text-[13px] font-semibold text-[#A9AAA5]"
+          className="flex items-center gap-1.5 text-[13px] font-semibold text-base-700"
           whileHover={{ color: "#0E0F10", x: -2 }} whileTap={{ scale: 0.97 }}
           transition={{ duration: 0.15 }}>
           <ArrowLeft size={14} /> Projetos
         </motion.button>
         <span className="text-[#D4D5D6]">/</span>
-        <span className="text-[13px] font-semibold text-[#0E0F10] truncate max-w-[280px]">{projeto.nome}</span>
+        <span className="text-[13px] font-semibold text-ink-500 truncate max-w-[280px]">{projeto.nome}</span>
       </div>
 
       <div className="grid grid-cols-1 gap-4 lg:grid-cols-[1fr_280px]">
@@ -593,7 +593,7 @@ export default function ProjetoDetailClient({
         <div className="flex flex-col gap-4">
 
           {/* Header card */}
-          <div className="rounded-[20px] bg-white p-6">
+          <div className="rounded-[30px] bg-white p-6">
             <div className="flex items-start gap-4 mb-5">
               <div
                 className="flex-shrink-0 h-12 w-12 rounded-[16px] flex items-center justify-center"
@@ -608,9 +608,9 @@ export default function ProjetoDetailClient({
                     <tipoConfig.icone size={10} />
                     {tipoConfig.label}
                   </span>
-                  <span className="text-[11px] text-[#A9AAA5]">· {tipoConfig.squad}</span>
+                  <span className="text-[11px] text-base-700">· {tipoConfig.squad}</span>
                   {!!meta.prazo && (
-                    <span className="text-[11px] text-[#A9AAA5] flex items-center gap-1">
+                    <span className="text-[11px] text-base-700 flex items-center gap-1">
                       · <CalendarDays size={10} /> {String(meta.prazo)}
                     </span>
                   )}
@@ -620,9 +620,9 @@ export default function ProjetoDetailClient({
                     </span>
                   )}
                 </div>
-                <h1 className="text-[24px] font-bold text-[#0E0F10] leading-tight">{projeto.nome}</h1>
+                <h1 className="text-[24px] font-bold text-ink-500 leading-tight">{projeto.nome}</h1>
                 {projeto.descricao && (
-                  <p className="mt-0.5 text-[13px] text-[#5E5E5F] leading-relaxed">{projeto.descricao}</p>
+                  <p className="mt-0.5 text-[13px] text-ink-400 leading-relaxed">{projeto.descricao}</p>
                 )}
               </div>
               <div className="flex flex-col items-end gap-2 flex-shrink-0">
@@ -643,7 +643,7 @@ export default function ProjetoDetailClient({
                     <kpi.icon size={13} style={{ color: kpi.cor }} />
                     <span className="text-[10px] font-bold uppercase tracking-wider" style={{ color: kpi.cor }}>{kpi.label}</span>
                   </div>
-                  <span className="text-[28px] font-bold leading-none text-[#0E0F10]">{kpi.value}</span>
+                  <span className="text-[28px] font-bold leading-none text-ink-500">{kpi.value}</span>
                   {kpi.label === "Progresso" && (
                     <div className="mt-2.5 h-1.5 rounded-full bg-white/60 overflow-hidden">
                       <motion.div className="h-full rounded-full"
@@ -658,7 +658,7 @@ export default function ProjetoDetailClient({
           </div>
 
           {/* Tabs — usando SlidingTabs padrão do sistema */}
-          <div className="rounded-[20px] bg-white overflow-hidden">
+          <div className="rounded-[30px] bg-white overflow-hidden">
             <div className="px-4 pt-4 pb-0 overflow-x-auto scrollbar-none">
               <SlidingTabs
                 tabs={tabs.map(t => ({ id: t.id, label: t.label, icon: t.icon }))}
@@ -743,7 +743,7 @@ function Sidebar({
     <div className="flex flex-col gap-3">
       {/* Status */}
       <div className="rounded-[16px] bg-white p-5 flex flex-col gap-3">
-        <p className="text-[11px] font-bold text-[#A9AAA5] uppercase tracking-wide">Status</p>
+        <p className="text-[11px] font-bold text-base-700 uppercase tracking-wide">Status</p>
         <HubiaSelect
           value={projeto.status}
           onChange={(v) => onStatusChange(v as ProjetoStatus)}
@@ -753,7 +753,7 @@ function Sidebar({
 
       {/* Resumo executivo */}
       <div className="rounded-[16px] bg-white p-5 flex flex-col gap-3.5">
-        <p className="text-[11px] font-bold text-[#A9AAA5] uppercase tracking-wide">Resumo Executivo</p>
+        <p className="text-[11px] font-bold text-base-700 uppercase tracking-wide">Resumo Executivo</p>
 
         <MetaRow label="Tipo" value={
           <span className="inline-flex items-center gap-1 text-[11px] font-bold px-2.5 py-0.5 rounded-full"
@@ -762,13 +762,13 @@ function Sidebar({
             {tipoConfig.label}
           </span>
         } />
-        <MetaRow label="Squad" value={<span className="text-[13px] font-semibold text-[#0E0F10]">{tipoConfig.squad}</span>} />
+        <MetaRow label="Squad" value={<span className="text-[13px] font-semibold text-ink-500">{tipoConfig.squad}</span>} />
         <MetaRow label="Health" value={<HealthBadge health={healthStatus} size="sm" />} />
         {!!meta.prazo && <MetaRow label="Prazo" value={String(meta.prazo)} />}
         {!!meta.objetivo && (
           <div>
-            <p className="text-[11px] text-[#A9AAA5] mb-1">Objetivo</p>
-            <p className="text-[12px] text-[#0E0F10] leading-relaxed">{String(meta.objetivo)}</p>
+            <p className="text-[11px] text-base-700 mb-1">Objetivo</p>
+            <p className="text-[12px] text-ink-500 leading-relaxed">{String(meta.objetivo)}</p>
           </div>
         )}
         {!!meta.cliente && <MetaRow label="Cliente" value={String(meta.cliente)} />}
@@ -776,7 +776,7 @@ function Sidebar({
         <MetaRow label="Criado em" value={new Date(projeto.createdAt).toLocaleDateString("pt-BR")} />
         {ultimoLog && (
           <MetaRow label="Última ação" value={
-            <span className="text-[11px] text-right text-[#A9AAA5] max-w-[140px] truncate">{ultimoLog.acao}</span>
+            <span className="text-[11px] text-right text-base-700 max-w-[140px] truncate">{ultimoLog.acao}</span>
           } />
         )}
       </div>
@@ -784,12 +784,12 @@ function Sidebar({
       {/* Progresso */}
       <div className="rounded-[16px] bg-white p-5 flex flex-col gap-3">
         <div className="flex items-center justify-between">
-          <p className="text-[11px] font-bold text-[#A9AAA5] uppercase tracking-wide flex items-center gap-1.5">
+          <p className="text-[11px] font-bold text-base-700 uppercase tracking-wide flex items-center gap-1.5">
             <BarChart3 size={11} /> Progresso
           </p>
-          <span className="text-[13px] font-bold text-[#0E0F10]">{progresso}%</span>
+          <span className="text-[13px] font-bold text-ink-500">{progresso}%</span>
         </div>
-        <div className="h-2 rounded-full bg-[#EEEFE9] overflow-hidden">
+        <div className="h-2 rounded-full bg-base-500 overflow-hidden">
           <motion.div className="h-full rounded-full"
             style={{ backgroundColor: progresso >= 80 ? "#43A047" : progresso >= 40 ? "#A8C800" : "#FB8C00" }}
             initial={{ width: 0 }} animate={{ width: `${progresso}%` }}
@@ -797,9 +797,9 @@ function Sidebar({
         </div>
         <div className="flex items-center justify-between">
           {tarefas.length > 0 ? (
-            <p className="text-[11px] text-[#A9AAA5]">{tarefasConcluidas}/{tarefas.length} tarefas</p>
+            <p className="text-[11px] text-base-700">{tarefasConcluidas}/{tarefas.length} tarefas</p>
           ) : <span />}
-          <p className="text-[11px] text-[#A9AAA5]">{modulosData.filter(m => m.status === "completo").length}/{modulosData.length} módulos</p>
+          <p className="text-[11px] text-base-700">{modulosData.filter(m => m.status === "completo").length}/{modulosData.length} módulos</p>
         </div>
       </div>
 
@@ -818,13 +818,13 @@ function Sidebar({
       {/* Próximas ações */}
       {proxAcoes.length > 0 && (
         <div className="rounded-[16px] bg-white p-5 flex flex-col gap-2.5">
-          <p className="text-[11px] font-bold text-[#A9AAA5] uppercase tracking-wide flex items-center gap-1.5">
+          <p className="text-[11px] font-bold text-base-700 uppercase tracking-wide flex items-center gap-1.5">
             <Target size={11} /> Próximas Ações
           </p>
           {proxAcoes.map((a, i) => (
             <div key={i} className="flex items-start gap-2">
-              <span className="mt-1 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-[#D7FF00]" />
-              <p className="text-[12px] text-[#0E0F10]">{a}</p>
+              <span className="mt-1 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-limao-500" />
+              <p className="text-[12px] text-ink-500">{a}</p>
             </div>
           ))}
         </div>
@@ -834,25 +834,25 @@ function Sidebar({
       {conectores.length > 0 && (
         <div className="rounded-[16px] bg-white p-5 flex flex-col gap-3">
           <div className="flex items-center justify-between">
-            <p className="text-[11px] font-bold text-[#A9AAA5] uppercase tracking-wide flex items-center gap-1.5">
+            <p className="text-[11px] font-bold text-base-700 uppercase tracking-wide flex items-center gap-1.5">
               <Link2 size={11} /> Conectores
             </p>
-            <span className="text-[10px] font-bold text-[#5E5E5F]">{conectorAtivos} ativo{conectorAtivos !== 1 ? "s" : ""}</span>
+            <span className="text-[10px] font-bold text-ink-400">{conectorAtivos} ativo{conectorAtivos !== 1 ? "s" : ""}</span>
           </div>
           <div className="flex flex-col gap-1.5">
             {conectores.map((c, i) => {
               const Icon = CONECTOR_ICONS[c.tipo] ?? CONECTOR_ICONS.default;
               const statusCor = c.status === "ativo" ? "#43A047" : c.status === "inativo" ? "#C62828" : "#FB8C00";
               return (
-                <div key={i} className="flex items-center justify-between rounded-[10px] bg-[#FAFAFA] px-3 py-2">
+                <div key={i} className="flex items-center justify-between rounded-[12px] bg-[#FAFAFA] px-3 py-2">
                   <div className="flex items-center gap-2">
                     <Icon size={13} color="#5E5E5F" />
-                    <span className="text-[12px] font-semibold text-[#0E0F10]">{c.nome}</span>
+                    <span className="text-[12px] font-semibold text-ink-500">{c.nome}</span>
                   </div>
                   <div className="flex items-center gap-1.5">
                     {c.url && (
                       <motion.a href={c.url} target="_blank" rel="noopener noreferrer"
-                        className="text-[#A9AAA5]"
+                        className="text-base-700"
                         whileHover={{ color: "#0E0F10", scale: 1.1 }} whileTap={{ scale: 0.9 }}>
                         <ExternalLink size={10} />
                       </motion.a>
@@ -869,12 +869,12 @@ function Sidebar({
       {/* Stack (se dev) */}
       {stack.length > 0 && (
         <div className="rounded-[16px] bg-white p-5 flex flex-col gap-3">
-          <p className="text-[11px] font-bold text-[#A9AAA5] uppercase tracking-wide flex items-center gap-1.5">
+          <p className="text-[11px] font-bold text-base-700 uppercase tracking-wide flex items-center gap-1.5">
             <Code2 size={11} /> Stack
           </p>
           <div className="flex flex-wrap gap-1.5">
             {stack.map((tech) => (
-              <span key={tech} className="rounded-[7px] bg-[#0E0F10] px-2.5 py-1 text-[11px] font-bold text-[#D7FF00]">{tech}</span>
+              <span key={tech} className="rounded-[7px] bg-ink-500 px-2.5 py-1 text-[11px] font-bold text-limao-500">{tech}</span>
             ))}
           </div>
         </div>
@@ -882,7 +882,7 @@ function Sidebar({
 
       {/* Módulos resumo */}
       <div className="rounded-[16px] bg-white p-5 flex flex-col gap-3">
-        <p className="text-[11px] font-bold text-[#A9AAA5] uppercase tracking-wide flex items-center gap-1.5">
+        <p className="text-[11px] font-bold text-base-700 uppercase tracking-wide flex items-center gap-1.5">
           <Puzzle size={11} /> Módulos
         </p>
         <div className="flex flex-col gap-1.5">
@@ -898,10 +898,10 @@ function Sidebar({
                 <div className="flex items-center gap-2 min-w-0">
                   <span className="text-[12px] font-bold w-4 text-center flex-shrink-0"
                     style={{ color: statusInfo.cor }}>{statusInfo.label}</span>
-                  <span className="text-[12px] font-semibold text-[#0E0F10] truncate">{m.nome}</span>
+                  <span className="text-[12px] font-semibold text-ink-500 truncate">{m.nome}</span>
                 </div>
                 {m.obrigatorio && (
-                  <span className="text-[8px] font-bold text-[#A9AAA5] uppercase flex-shrink-0">req</span>
+                  <span className="text-[8px] font-bold text-base-700 uppercase flex-shrink-0">req</span>
                 )}
               </div>
             );
@@ -914,12 +914,12 @@ function Sidebar({
         <motion.a href={String(meta.figmaUrl)} target="_blank" rel="noopener noreferrer"
           className="rounded-[16px] bg-white p-4 flex items-center gap-3"
           whileHover={{ backgroundColor: "#EEEFE9" }} whileTap={{ scale: 0.99 }}>
-          <div className="h-8 w-8 rounded-[10px] bg-[#1E1E1E] flex items-center justify-center flex-shrink-0">
+          <div className="h-8 w-8 rounded-[12px] bg-[#1E1E1E] flex items-center justify-center flex-shrink-0">
             <Globe size={15} color="#FFFFFF" />
           </div>
           <div className="flex-1 min-w-0">
-            <p className="text-[12px] font-bold text-[#0E0F10]">Figma</p>
-            <p className="text-[10px] text-[#A9AAA5] truncate">Abrir design</p>
+            <p className="text-[12px] font-bold text-ink-500">Figma</p>
+            <p className="text-[10px] text-base-700 truncate">Abrir design</p>
           </div>
           <ExternalLink size={12} color="#A9AAA5" />
         </motion.a>
@@ -954,7 +954,7 @@ function TabConteudo({
         {!!meta.objetivo && (
           <div>
             <SectionLabel>Objetivo Principal</SectionLabel>
-            <p className="text-[14px] text-[#0E0F10] leading-relaxed">{String(meta.objetivo)}</p>
+            <p className="text-[14px] text-ink-500 leading-relaxed">{String(meta.objetivo)}</p>
           </div>
         )}
 
@@ -988,7 +988,7 @@ function TabConteudo({
             <SectionLabel>Stack</SectionLabel>
             <div className="flex flex-wrap gap-1.5">
               {stack.map((tech) => (
-                <span key={tech} className="rounded-[8px] bg-[#0E0F10] px-3 py-1.5 text-[12px] font-bold text-[#D7FF00]">{tech}</span>
+                <span key={tech} className="rounded-[8px] bg-ink-500 px-3 py-1.5 text-[12px] font-bold text-limao-500">{tech}</span>
               ))}
             </div>
           </div>
@@ -1004,7 +1004,7 @@ function TabConteudo({
                   initial={{ opacity: 0, x: -8 }} animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: i * 0.06 }}>
                   <Lightbulb size={13} color="#FB8C00" className="mt-0.5 flex-shrink-0" />
-                  <p className="text-[13px] text-[#0E0F10] leading-relaxed">{dec.texto}</p>
+                  <p className="text-[13px] text-ink-500 leading-relaxed">{dec.texto}</p>
                 </motion.div>
               ))}
             </div>
@@ -1090,7 +1090,7 @@ function TabConteudo({
       <div className="flex flex-col gap-1.5">
         <div className="flex items-center justify-between mb-3">
           <SectionLabel>Pedidos vinculados</SectionLabel>
-          <span className="text-[11px] text-[#A9AAA5]">{projeto.pedidos.length} no total</span>
+          <span className="text-[11px] text-base-700">{projeto.pedidos.length} no total</span>
         </div>
         {projeto.pedidos.map((p, i) => {
           const palette = PEDIDO_STATUS_PALETTE[p.status] ?? { bg: "#EEEFE9", text: "#5E5E5F", dot: "#A9AAA5" };
@@ -1103,11 +1103,11 @@ function TabConteudo({
               whileTap={{ scale: 0.99 }}
               onClick={() => onNavigatePedido(p.id)}>
               <div className="flex-1 min-w-0">
-                <p className="text-[14px] font-semibold text-[#0E0F10] truncate">{p.titulo}</p>
+                <p className="text-[14px] font-semibold text-ink-500 truncate">{p.titulo}</p>
                 <div className="flex items-center gap-2 mt-0.5">
-                  <span className="text-[11px] text-[#A9AAA5]">{p.tipo.replace("_", " ")}</span>
-                  {p.creator && <span className="text-[11px] text-[#A9AAA5]">· {p.creator.name}</span>}
-                  {p.dueAt && <span className="text-[11px] text-[#A9AAA5]">· {new Date(p.dueAt).toLocaleDateString("pt-BR")}</span>}
+                  <span className="text-[11px] text-base-700">{p.tipo.replace("_", " ")}</span>
+                  {p.creator && <span className="text-[11px] text-base-700">· {p.creator.name}</span>}
+                  {p.dueAt && <span className="text-[11px] text-base-700">· {new Date(p.dueAt).toLocaleDateString("pt-BR")}</span>}
                 </div>
               </div>
               <span className="inline-flex items-center gap-1 rounded-[6px] px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide flex-shrink-0"
@@ -1286,14 +1286,14 @@ function SubprojetosTab({ subprojetos, onSave }: {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h3 className="text-[16px] font-bold text-[#0E0F10]">Subprojetos</h3>
-          <p className="text-[12px] text-[#A9AAA5] mt-0.5">
+          <h3 className="text-[16px] font-bold text-ink-500">Subprojetos</h3>
+          <p className="text-[12px] text-base-700 mt-0.5">
             Projetos filhos contidos dentro deste projeto principal.
           </p>
         </div>
         <motion.button
           onClick={() => setCriando(true)}
-          className="flex items-center gap-1.5 rounded-[14px] px-3.5 py-2 text-[13px] font-semibold text-[#0E0F10]"
+          className="flex items-center gap-1.5 rounded-[14px] px-3.5 py-2 text-[13px] font-semibold text-ink-500"
           initial="rest" animate="rest" whileHover="hovered" whileTap={{ scale: 0.96 }}
           variants={{ rest: { backgroundColor: "#D7FF00" }, hovered: { backgroundColor: "#DFFF33" } }}
           transition={{ duration: 0.15 }}
@@ -1307,7 +1307,7 @@ function SubprojetosTab({ subprojetos, onSave }: {
       <AnimatePresence>
         {criando && (
           <motion.div
-            className="rounded-[16px] border border-[#D7FF00] bg-[#FAFFF0] p-4 flex flex-col gap-3"
+            className="rounded-[16px] border border-limao-500 bg-[#FAFFF0] p-4 flex flex-col gap-3"
             initial={{ opacity: 0, y: -8 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -8 }}
@@ -1315,20 +1315,20 @@ function SubprojetosTab({ subprojetos, onSave }: {
           >
             <div className="grid grid-cols-2 gap-3">
               <div className="col-span-2">
-                <label className="block text-[11px] font-semibold text-[#5E5E5F] mb-1 uppercase tracking-wide">Nome</label>
+                <label className="block text-[11px] font-semibold text-ink-400 mb-1 uppercase tracking-wide">Nome</label>
                 <input
                   value={novoNome}
                   onChange={e => setNovoNome(e.target.value)}
                   placeholder="Ex: Módulo de Pagamentos"
-                  className="w-full h-10 rounded-[10px] bg-white border border-transparent px-3 text-[14px] text-[#0E0F10] outline-none focus:border-[#0E0F10] focus:shadow-[0_0_0_3px_rgba(14,15,16,0.08)] transition-[border-color,box-shadow] duration-150"
+                  className="w-full h-10 rounded-[12px] bg-white border border-transparent px-3 text-[14px] text-ink-500 outline-none focus:border-ink-500 focus:ring-2 focus:ring-ink-500/10 transition-[border-color] duration-150"
                 />
               </div>
               <div>
-                <label className="block text-[11px] font-semibold text-[#5E5E5F] mb-1 uppercase tracking-wide">Tipo</label>
+                <label className="block text-[11px] font-semibold text-ink-400 mb-1 uppercase tracking-wide">Tipo</label>
                 <select
                   value={novoTipo}
                   onChange={e => setNovoTipo(e.target.value as ProjetoTipo)}
-                  className="w-full h-10 rounded-[10px] bg-white border border-transparent px-3 text-[13px] text-[#0E0F10] outline-none focus:border-[#0E0F10] transition-[border-color] duration-150"
+                  className="w-full h-10 rounded-[12px] bg-white border border-transparent px-3 text-[13px] text-ink-500 outline-none focus:border-ink-500 transition-[border-color] duration-150"
                 >
                   {Object.entries(TIPO_CONFIG).map(([k, v]) => (
                     <option key={k} value={k}>{v.label}</option>
@@ -1336,19 +1336,19 @@ function SubprojetosTab({ subprojetos, onSave }: {
                 </select>
               </div>
               <div>
-                <label className="block text-[11px] font-semibold text-[#5E5E5F] mb-1 uppercase tracking-wide">Descrição curta</label>
+                <label className="block text-[11px] font-semibold text-ink-400 mb-1 uppercase tracking-wide">Descrição curta</label>
                 <input
                   value={novaDesc}
                   onChange={e => setNovaDesc(e.target.value)}
                   placeholder="Opcional"
-                  className="w-full h-10 rounded-[10px] bg-white border border-transparent px-3 text-[13px] text-[#0E0F10] outline-none focus:border-[#0E0F10] transition-[border-color] duration-150"
+                  className="w-full h-10 rounded-[12px] bg-white border border-transparent px-3 text-[13px] text-ink-500 outline-none focus:border-ink-500 transition-[border-color] duration-150"
                 />
               </div>
             </div>
             <div className="flex items-center gap-2 justify-end">
               <motion.button
                 onClick={() => setCriando(false)}
-                className="h-9 rounded-[10px] bg-[#F0F0EE] px-4 text-[13px] font-semibold text-[#5E5E5F]"
+                className="h-9 rounded-[12px] bg-[#F0F0EE] px-4 text-[13px] font-semibold text-ink-400"
                 whileHover={{ backgroundColor: "#E5E5E2" }} whileTap={{ scale: 0.97 }}
               >
                 Cancelar
@@ -1356,7 +1356,7 @@ function SubprojetosTab({ subprojetos, onSave }: {
               <motion.button
                 onClick={adicionar}
                 disabled={!novoNome.trim() || saving}
-                className="h-9 rounded-[10px] bg-[#0E0F10] px-4 text-[13px] font-semibold text-white disabled:opacity-40"
+                className="h-9 rounded-[12px] bg-ink-500 px-4 text-[13px] font-semibold text-white disabled:opacity-40"
                 whileHover={{ backgroundColor: "#2A2B2C" }} whileTap={{ scale: 0.97 }}
               >
                 {saving ? "Salvando..." : "Adicionar"}
@@ -1396,10 +1396,10 @@ function SubprojetosTab({ subprojetos, onSave }: {
                   {/* Nome + tipo */}
                   <div className="flex items-center gap-2 mb-1">
                     <FolderOpen size={14} color="#A9AAA5" />
-                    <h4 className="text-[15px] font-bold text-[#0E0F10] truncate">{s.nome}</h4>
+                    <h4 className="text-[15px] font-bold text-ink-500 truncate">{s.nome}</h4>
                   </div>
                   {s.descricao && (
-                    <p className="text-[12px] text-[#A9AAA5] mb-2 line-clamp-1">{s.descricao}</p>
+                    <p className="text-[12px] text-base-700 mb-2 line-clamp-1">{s.descricao}</p>
                   )}
                   {/* Meta */}
                   <div className="flex items-center gap-2 flex-wrap">
@@ -1421,7 +1421,7 @@ function SubprojetosTab({ subprojetos, onSave }: {
                   {/* Barra de progresso */}
                   {progresso > 0 && (
                     <div className="mt-2.5">
-                      <div className="h-1 w-full rounded-full bg-[#EEEFE9] overflow-hidden">
+                      <div className="h-1 w-full rounded-full bg-base-500 overflow-hidden">
                         <motion.div
                           className="h-full rounded-full"
                           style={{ backgroundColor: corBarra }}
@@ -1436,7 +1436,7 @@ function SubprojetosTab({ subprojetos, onSave }: {
                 {/* Ações */}
                 <motion.button
                   onClick={() => remover(s.id)}
-                  className="flex-shrink-0 rounded-[8px] p-1.5 text-[#A9AAA5]"
+                  className="flex-shrink-0 rounded-[8px] p-1.5 text-base-700"
                   whileHover={{ backgroundColor: "#FDECEA", color: "#C62828", scale: 1.1 }}
                   whileTap={{ scale: 0.9 }}
                   transition={{ duration: 0.15 }}
@@ -1481,14 +1481,14 @@ function ModulosTab({ modulosData, tipoConfig, onSave }: {
       <div className="flex items-center justify-between">
         <SectionLabel>Módulos do Projeto</SectionLabel>
         <div className="flex items-center gap-3">
-          {saving && <span className="text-[11px] text-[#A9AAA5]">Salvando...</span>}
-          <span className="text-[12px] text-[#A9AAA5]">
+          {saving && <span className="text-[11px] text-base-700">Salvando...</span>}
+          <span className="text-[12px] text-base-700">
             {lista.filter(m => m.status === "completo").length}/{lista.length} completos
           </span>
         </div>
       </div>
 
-      <p className="text-[12px] text-[#A9AAA5] leading-relaxed">
+      <p className="text-[12px] text-base-700 leading-relaxed">
         Estes são os módulos estruturais deste projeto. Módulos marcados como <strong>req</strong> são obrigatórios pelo tipo.
       </p>
 
@@ -1497,14 +1497,14 @@ function ModulosTab({ modulosData, tipoConfig, onSave }: {
           const sCfg = statusConfig[m.status];
           return (
             <motion.div key={i}
-              className="flex items-center gap-3 rounded-[14px] border border-[#EEEFE9] bg-white px-4 py-3"
+              className="flex items-center gap-3 rounded-[14px] border border-base-500 bg-white px-4 py-3"
               initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }}
               transition={{ delay: i * 0.03 }}>
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-2">
-                  <p className="text-[13px] font-semibold text-[#0E0F10]">{m.nome}</p>
+                  <p className="text-[13px] font-semibold text-ink-500">{m.nome}</p>
                   {m.obrigatorio && (
-                    <span className="text-[8px] font-bold text-white bg-[#0E0F10] px-1.5 py-0.5 rounded-[4px] uppercase">req</span>
+                    <span className="text-[8px] font-bold text-white bg-ink-500 px-1.5 py-0.5 rounded-[4px] uppercase">req</span>
                   )}
                 </div>
               </div>
@@ -1543,15 +1543,15 @@ function ModulosTab({ modulosData, tipoConfig, onSave }: {
 function AdicionarModulo({ onAdd }: { onAdd: (nome: string) => Promise<void> }) {
   const [novo, setNovo] = useState("");
   return (
-    <div className="flex gap-2 pt-2 border-t border-[#EEEFE9]">
+    <div className="flex gap-2 pt-2 border-t border-base-500">
       <input
         value={novo} onChange={(e) => setNovo(e.target.value)}
         onKeyDown={(e) => { if (e.key === "Enter" && novo.trim()) { onAdd(novo.trim()); setNovo(""); } }}
         placeholder="Adicionar módulo extra..."
-        className="flex-1 h-9 rounded-[10px] border border-transparent bg-[#EEEFE9] px-3 text-[13px] text-[#0E0F10] outline-none placeholder:text-[#A9AAA5] focus:border-[#0E0F10] focus:shadow-[0_0_0_3px_rgba(14,15,16,0.08)] transition-[border-color,box-shadow] duration-150"
+        className="flex-1 h-9 rounded-[12px] border border-transparent bg-base-500 px-3 text-[13px] text-ink-500 outline-none placeholder:text-base-700 focus:border-ink-500 focus:ring-2 focus:ring-ink-500/10 transition-[border-color] duration-150"
       />
       <motion.button onClick={() => { if (novo.trim()) { onAdd(novo.trim()); setNovo(""); } }} disabled={!novo.trim()}
-        className="h-9 w-9 rounded-[10px] bg-[#0E0F10] flex items-center justify-center disabled:opacity-40"
+        className="h-9 w-9 rounded-[12px] bg-ink-500 flex items-center justify-center disabled:opacity-40"
         whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
         <Plus size={14} color="#D7FF00" />
       </motion.button>
@@ -1616,7 +1616,7 @@ function MemoriaTab({ memoria, onSave }: {
             return (
               <motion.button key={t}
                 onClick={() => setNovoTipo(t)}
-                className="flex-1 rounded-[10px] py-1.5 text-[11px] font-bold"
+                className="flex-1 rounded-[12px] py-1.5 text-[11px] font-bold"
                 animate={{
                   backgroundColor: novoTipo === t ? cfg.bg : "#FAFAFA",
                   color: novoTipo === t ? cfg.cor : "#A9AAA5",
@@ -1633,10 +1633,10 @@ function MemoriaTab({ memoria, onSave }: {
             value={novo} onChange={(e) => setNovo(e.target.value)}
             onKeyDown={(e) => e.key === "Enter" && adicionar()}
             placeholder={`Adicionar à ${MEMORIA_TIPOS[novoTipo].label}...`}
-            className="flex-1 h-9 rounded-[10px] border border-transparent bg-[#EEEFE9] px-3 text-[13px] text-[#0E0F10] outline-none placeholder:text-[#A9AAA5] focus:border-[#0E0F10] focus:shadow-[0_0_0_3px_rgba(14,15,16,0.08)] transition-[border-color,box-shadow] duration-150"
+            className="flex-1 h-9 rounded-[12px] border border-transparent bg-base-500 px-3 text-[13px] text-ink-500 outline-none placeholder:text-base-700 focus:border-ink-500 focus:ring-2 focus:ring-ink-500/10 transition-[border-color] duration-150"
           />
           <motion.button onClick={adicionar} disabled={!novo.trim() || saving}
-            className="h-9 px-4 rounded-[10px] bg-[#0E0F10] text-[12px] font-semibold text-[#D7FF00] disabled:opacity-40"
+            className="h-9 px-4 rounded-[12px] bg-ink-500 text-[12px] font-semibold text-limao-500 disabled:opacity-40"
             whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.96 }}>
             {saving ? "…" : <Plus size={13} />}
           </motion.button>
@@ -1679,9 +1679,9 @@ function MemoriaTab({ memoria, onSave }: {
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-2 mb-0.5">
                   <span className="text-[9px] font-bold uppercase tracking-wide" style={{ color: cfg.cor }}>{cfg.label}</span>
-                  {m.data && <span className="text-[10px] text-[#A9AAA5]">{m.data}</span>}
+                  {m.data && <span className="text-[10px] text-base-700">{m.data}</span>}
                 </div>
-                <p className="text-[13px] text-[#0E0F10] leading-relaxed">{m.texto}</p>
+                <p className="text-[13px] text-ink-500 leading-relaxed">{m.texto}</p>
               </div>
               <motion.button onClick={() => remover(m.id)}
                 className="flex-shrink-0 h-5 w-5 rounded-full flex items-center justify-center"
@@ -1762,14 +1762,14 @@ function RulesTab({ rules, onSave }: {
       <div className="flex items-center justify-between">
         <div>
           <SectionLabel>Rules do Projeto</SectionLabel>
-          <p className="text-[12px] text-[#A9AAA5] mt-0.5">
+          <p className="text-[12px] text-base-700 mt-0.5">
             Restrições e diretrizes invioláveis. {lista.filter(r => r.bloqueante).length} bloqueante{lista.filter(r => r.bloqueante).length !== 1 ? "s" : ""}.
           </p>
         </div>
         <div className="flex items-center gap-2">
-          {saving && <span className="text-[11px] text-[#A9AAA5]">Salvando...</span>}
+          {saving && <span className="text-[11px] text-base-700">Salvando...</span>}
           <motion.button onClick={() => setAdicionando(v => !v)}
-            className="flex items-center gap-1.5 rounded-[10px] bg-[#0E0F10] px-3 py-1.5 text-[12px] font-semibold text-[#D7FF00]"
+            className="flex items-center gap-1.5 rounded-[12px] bg-ink-500 px-3 py-1.5 text-[12px] font-semibold text-limao-500"
             whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.96 }}>
             <Plus size={12} /> Nova Rule
           </motion.button>
@@ -1783,35 +1783,35 @@ function RulesTab({ rules, onSave }: {
             initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: "auto" }} exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.25, ease: [0, 0, 0.2, 1] }}
             className="overflow-hidden">
-            <div className="rounded-[16px] border-2 border-[#D7FF00] bg-[#FFFDE7] p-5 flex flex-col gap-3">
+            <div className="rounded-[16px] border-2 border-limao-500 bg-[#FFFDE7] p-5 flex flex-col gap-3">
               <p className="text-[11px] font-bold text-[#5A6600] uppercase tracking-wide">Nova Rule</p>
               <input
                 autoFocus value={novaTitulo} onChange={(e) => setNovaTitulo(e.target.value)}
                 placeholder="Título da rule *"
-                className="h-10 w-full rounded-[10px] border border-transparent bg-white px-3 text-[13px] text-[#0E0F10] outline-none placeholder:text-[#A9AAA5] focus:border-[#0E0F10] focus:shadow-[0_0_0_3px_rgba(14,15,16,0.08)] transition-[border-color,box-shadow] duration-150"
+                className="h-10 w-full rounded-[12px] border border-transparent bg-white px-3 text-[13px] text-ink-500 outline-none placeholder:text-base-700 focus:border-ink-500 focus:ring-2 focus:ring-ink-500/10 transition-[border-color] duration-150"
               />
               <textarea
                 value={novaDesc} onChange={(e) => setNovaDesc(e.target.value)}
                 placeholder="Descrição (opcional)"
                 rows={2}
-                className="w-full rounded-[10px] border border-transparent bg-white px-3 py-2 text-[13px] text-[#0E0F10] outline-none placeholder:text-[#A9AAA5] resize-none focus:border-[#0E0F10] focus:shadow-[0_0_0_3px_rgba(14,15,16,0.08)] transition-[border-color,box-shadow] duration-150"
+                className="w-full rounded-[12px] border border-transparent bg-white px-3 py-2 text-[13px] text-ink-500 outline-none placeholder:text-base-700 resize-none focus:border-ink-500 focus:ring-2 focus:ring-ink-500/10 transition-[border-color] duration-150"
               />
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="mb-1 block text-[10px] font-bold uppercase text-[#A9AAA5]">Categoria</label>
+                  <label className="mb-1 block text-[10px] font-bold uppercase text-base-700">Categoria</label>
                   <select
                     value={novaCateg} onChange={(e) => setNovaCateg(e.target.value as Rule["categoria"])}
-                    className="h-9 w-full rounded-[10px] border border-transparent bg-white px-2 text-[12px] text-[#0E0F10] outline-none focus:border-[#0E0F10] transition-[border-color] duration-150">
+                    className="h-9 w-full rounded-[12px] border border-transparent bg-white px-2 text-[12px] text-ink-500 outline-none focus:border-ink-500 transition-[border-color] duration-150">
                     {Object.entries(RULE_CATEGORIAS).map(([k, v]) => (
                       <option key={k} value={k}>{v.label}</option>
                     ))}
                   </select>
                 </div>
                 <div>
-                  <label className="mb-1 block text-[10px] font-bold uppercase text-[#A9AAA5]">Prioridade</label>
+                  <label className="mb-1 block text-[10px] font-bold uppercase text-base-700">Prioridade</label>
                   <select
                     value={novaPrio} onChange={(e) => setNovaPrio(e.target.value as Rule["prioridade"])}
-                    className="h-9 w-full rounded-[10px] border border-transparent bg-white px-2 text-[12px] text-[#0E0F10] outline-none focus:border-[#0E0F10] transition-[border-color] duration-150">
+                    className="h-9 w-full rounded-[12px] border border-transparent bg-white px-2 text-[12px] text-ink-500 outline-none focus:border-ink-500 transition-[border-color] duration-150">
                     {Object.entries(prioConfig).map(([k, v]) => (
                       <option key={k} value={k}>{v.label}</option>
                     ))}
@@ -1825,10 +1825,10 @@ function RulesTab({ rules, onSave }: {
               </label>
               <div className="flex gap-2">
                 <motion.button onClick={() => setAdicionando(false)}
-                  className="flex-1 rounded-[10px] bg-white py-2 text-[13px] font-semibold text-[#5E5E5F]"
+                  className="flex-1 rounded-[12px] bg-white py-2 text-[13px] font-semibold text-ink-400"
                   whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.97 }}>Cancelar</motion.button>
                 <motion.button onClick={adicionar} disabled={!novaTitulo.trim()}
-                  className="flex-1 rounded-[10px] bg-[#0E0F10] py-2 text-[13px] font-semibold text-[#D7FF00] disabled:opacity-40"
+                  className="flex-1 rounded-[12px] bg-ink-500 py-2 text-[13px] font-semibold text-limao-500 disabled:opacity-40"
                   whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.96 }}>Salvar Rule</motion.button>
               </div>
             </div>
@@ -1850,7 +1850,7 @@ function RulesTab({ rules, onSave }: {
                 <div className="flex items-center gap-2 mb-2">
                   <span className="text-[9px] font-bold uppercase tracking-wide px-2 py-0.5 rounded-[5px]"
                     style={{ backgroundColor: catCfg.bg, color: catCfg.cor }}>{catCfg.label}</span>
-                  <span className="text-[11px] text-[#A9AAA5]">{catRules.length} rule{catRules.length !== 1 ? "s" : ""}</span>
+                  <span className="text-[11px] text-base-700">{catRules.length} rule{catRules.length !== 1 ? "s" : ""}</span>
                 </div>
                 <div className="flex flex-col gap-1.5">
                   {catRules.map((r) => {
@@ -1869,10 +1869,10 @@ function RulesTab({ rules, onSave }: {
                                   <Lock size={7} /> BLOQUEANTE
                                 </span>
                               )}
-                              <span className="text-[13px] font-semibold text-[#0E0F10]">{r.titulo}</span>
+                              <span className="text-[13px] font-semibold text-ink-500">{r.titulo}</span>
                             </div>
                             {r.descricao && expandido !== r.id && (
-                              <p className="text-[12px] text-[#A9AAA5] mt-0.5 truncate">{r.descricao}</p>
+                              <p className="text-[12px] text-base-700 mt-0.5 truncate">{r.descricao}</p>
                             )}
                           </div>
                           <div className="flex items-center gap-2 flex-shrink-0">
@@ -1892,12 +1892,12 @@ function RulesTab({ rules, onSave }: {
                               className="overflow-hidden">
                               <div className="px-4 pb-3 flex flex-col gap-2 border-t border-[#F0F0EE] pt-3">
                                 {r.descricao && (
-                                  <p className="text-[13px] text-[#5E5E5F] leading-relaxed">{r.descricao}</p>
+                                  <p className="text-[13px] text-ink-400 leading-relaxed">{r.descricao}</p>
                                 )}
                                 <div className="flex items-center justify-between">
                                   <div className="flex items-center gap-3">
-                                    {r.data && <span className="text-[11px] text-[#A9AAA5]">{r.data}</span>}
-                                    {r.origem && <span className="text-[11px] text-[#A9AAA5]">· {r.origem}</span>}
+                                    {r.data && <span className="text-[11px] text-base-700">{r.data}</span>}
+                                    {r.origem && <span className="text-[11px] text-base-700">· {r.origem}</span>}
                                   </div>
                                   <motion.button onClick={() => remover(r.id)}
                                     className="flex items-center gap-1 rounded-[8px] bg-[#FDECEA] px-2.5 py-1 text-[11px] font-semibold text-[#C62828]"
@@ -1951,7 +1951,7 @@ function LogTab({ log }: { log: LogEntry[] }) {
               Só agentes
             </motion.button>
           )}
-          <span className="text-[11px] text-[#A9AAA5]">{listaFiltrada.length} evento{listaFiltrada.length !== 1 ? "s" : ""}</span>
+          <span className="text-[11px] text-base-700">{listaFiltrada.length} evento{listaFiltrada.length !== 1 ? "s" : ""}</span>
         </div>
       </div>
 
@@ -1966,7 +1966,7 @@ function LogTab({ log }: { log: LogEntry[] }) {
               {entry.agente ? <Bot size={12} color="#7C6AF7" /> : <History size={12} color="#A9AAA5" />}
             </div>
             <div className="flex-1 min-w-0">
-              <p className="text-[13px] font-semibold text-[#0E0F10]">{entry.acao}</p>
+              <p className="text-[13px] font-semibold text-ink-500">{entry.acao}</p>
               <div className="flex items-center gap-2 mt-0.5 flex-wrap">
                 {entry.agente && (
                   <span className="text-[10px] font-bold text-[#7C6AF7] bg-[#F0EFFF] px-1.5 py-0.5 rounded-[4px]">
@@ -1974,22 +1974,22 @@ function LogTab({ log }: { log: LogEntry[] }) {
                   </span>
                 )}
                 {entry.squad && (
-                  <span className="text-[10px] text-[#A9AAA5]">{entry.squad}</span>
+                  <span className="text-[10px] text-base-700">{entry.squad}</span>
                 )}
                 {entry.modulo && (
-                  <span className="text-[10px] text-[#A9AAA5]">· {entry.modulo}</span>
+                  <span className="text-[10px] text-base-700">· {entry.modulo}</span>
                 )}
                 {entry.versao && (
-                  <span className="text-[10px] font-bold text-[#5E5E5F] bg-[#EEEFE9] px-1.5 py-0.5 rounded-[4px]">
+                  <span className="text-[10px] font-bold text-ink-400 bg-base-500 px-1.5 py-0.5 rounded-[4px]">
                     v{entry.versao}
                   </span>
                 )}
                 {entry.data && (
-                  <span className="text-[10px] text-[#A9AAA5]">{entry.data}</span>
+                  <span className="text-[10px] text-base-700">{entry.data}</span>
                 )}
               </div>
               {entry.impacto && (
-                <p className="text-[11px] text-[#5E5E5F] mt-1 italic">{entry.impacto}</p>
+                <p className="text-[11px] text-ink-400 mt-1 italic">{entry.impacto}</p>
               )}
             </div>
           </motion.div>
@@ -2051,15 +2051,15 @@ function ConectoresTab({ conectores, tipoConfig, meta, onSave }: {
             const val = (meta[key] as string) ?? "";
             return (
               <div key={key} className="flex items-center gap-3 rounded-[12px] bg-[#FAFAFA] px-4 py-2.5">
-                <span className="text-[12px] text-[#A9AAA5] w-[120px] flex-shrink-0">{label}</span>
+                <span className="text-[12px] text-base-700 w-[120px] flex-shrink-0">{label}</span>
                 {val ? (
                   <div className="flex items-center gap-2 flex-1 min-w-0">
                     <a href={val.startsWith("http") ? val : `https://${val}`} target="_blank" rel="noopener noreferrer"
-                      className="text-[12px] font-semibold text-[#0E0F10] hover:underline truncate">{val}</a>
+                      className="text-[12px] font-semibold text-ink-500 hover:underline truncate">{val}</a>
                     <ExternalLink size={11} color="#A9AAA5" className="flex-shrink-0" />
                   </div>
                 ) : (
-                  <span className="text-[12px] text-[#D5D2C9] italic">{placeholder}</span>
+                  <span className="text-[12px] text-sand-600 italic">{placeholder}</span>
                 )}
               </div>
             );
@@ -2071,7 +2071,7 @@ function ConectoresTab({ conectores, tipoConfig, meta, onSave }: {
       <div>
         <div className="flex items-center justify-between mb-3">
           <SectionLabel>Conectores ativos</SectionLabel>
-          {saving && <span className="text-[11px] text-[#A9AAA5]">Salvando...</span>}
+          {saving && <span className="text-[11px] text-base-700">Salvando...</span>}
         </div>
         <div className="flex flex-col gap-2">
           {lista.map((c, i) => {
@@ -2083,12 +2083,12 @@ function ConectoresTab({ conectores, tipoConfig, meta, onSave }: {
                 initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: i * 0.04 }}>
                 <div className="flex items-center gap-3 mb-3">
-                  <div className="h-8 w-8 rounded-[10px] bg-[#EEEFE9] flex items-center justify-center flex-shrink-0">
+                  <div className="h-8 w-8 rounded-[12px] bg-base-500 flex items-center justify-center flex-shrink-0">
                     <Icon size={15} color="#5E5E5F" />
                   </div>
                   <div className="flex-1 min-w-0">
-                    <p className="text-[13px] font-bold text-[#0E0F10]">{c.nome}</p>
-                    <span className="text-[10px] text-[#A9AAA5] uppercase">{c.tipo}</span>
+                    <p className="text-[13px] font-bold text-ink-500">{c.nome}</p>
+                    <span className="text-[10px] text-base-700 uppercase">{c.tipo}</span>
                   </div>
                   <div className="flex gap-1">
                     {(["ativo", "pendente", "inativo"] as const).map((s) => (
@@ -2110,7 +2110,7 @@ function ConectoresTab({ conectores, tipoConfig, meta, onSave }: {
                   value={c.url ?? ""}
                   onChange={(e) => updateUrl(i, e.target.value)}
                   placeholder="URL ou identificador..."
-                  className="h-8 w-full rounded-[8px] border border-transparent bg-[#FAFAFA] px-3 text-[12px] text-[#0E0F10] outline-none placeholder:text-[#D5D2C9] focus:border-[#D9D9D4] transition-[border-color] duration-150"
+                  className="h-8 w-full rounded-[8px] border border-transparent bg-[#FAFAFA] px-3 text-[12px] text-ink-500 outline-none placeholder:text-sand-600 focus:border-[#D9D9D4] transition-[border-color] duration-150"
                 />
               </motion.div>
             );
@@ -2166,10 +2166,10 @@ function TarefasTab({ tarefas, tarefasConcluidas, onSave }: {
         <div>
           <SectionLabel>Tarefas</SectionLabel>
           {lista.length > 0 && (
-            <p className="text-[12px] text-[#A9AAA5] mt-0.5">{tarefasConcluidas} de {lista.length} concluídas</p>
+            <p className="text-[12px] text-base-700 mt-0.5">{tarefasConcluidas} de {lista.length} concluídas</p>
           )}
         </div>
-        {saving && <span className="text-[11px] text-[#A9AAA5]">Salvando...</span>}
+        {saving && <span className="text-[11px] text-base-700">Salvando...</span>}
       </div>
 
       {/* Pendentes */}
@@ -2179,14 +2179,14 @@ function TarefasTab({ tarefas, tarefasConcluidas, onSave }: {
             const pCfg = t.prioridade ? prioConfig[t.prioridade] : null;
             return (
               <motion.div key={t.id}
-                className="flex items-center gap-3 rounded-[10px] bg-[#FAFAFA] px-3 py-2.5 cursor-pointer"
+                className="flex items-center gap-3 rounded-[12px] bg-[#FAFAFA] px-3 py-2.5 cursor-pointer"
                 initial={{ opacity: 0, x: -8 }} animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: i * 0.04 }}
                 whileHover={{ backgroundColor: "#F3F3F1" }}
                 whileTap={{ scale: 0.99 }}
                 onClick={() => toggleTarefa(t.id)}>
                 <Square size={16} color="#A9AAA5" className="flex-shrink-0" />
-                <span className="text-[13px] font-semibold text-[#0E0F10] flex-1">{t.titulo}</span>
+                <span className="text-[13px] font-semibold text-ink-500 flex-1">{t.titulo}</span>
                 {pCfg && (
                   <span className="text-[9px] font-bold" style={{ color: pCfg.cor }}>{pCfg.label}</span>
                 )}
@@ -2199,10 +2199,10 @@ function TarefasTab({ tarefas, tarefasConcluidas, onSave }: {
       {/* Concluídas */}
       {concluidas.length > 0 && (
         <div className="flex flex-col gap-1.5 mb-4">
-          <p className="text-[10px] font-bold uppercase text-[#A9AAA5] mb-1">Concluídas</p>
+          <p className="text-[10px] font-bold uppercase text-base-700 mb-1">Concluídas</p>
           {concluidas.map((t, i) => (
             <motion.div key={t.id}
-              className="flex items-center gap-3 rounded-[10px] bg-[#E6F4EA] px-3 py-2.5 cursor-pointer"
+              className="flex items-center gap-3 rounded-[12px] bg-[#E6F4EA] px-3 py-2.5 cursor-pointer"
               initial={{ opacity: 0, x: -8 }} animate={{ opacity: 1, x: 0 }}
               transition={{ delay: i * 0.04 }}
               whileHover={{ backgroundColor: "#DDF0E0" }}
@@ -2237,10 +2237,10 @@ function TarefasTab({ tarefas, tarefasConcluidas, onSave }: {
           onChange={(e) => setNovaTarefa(e.target.value)}
           onKeyDown={(e) => e.key === "Enter" && adicionarTarefa()}
           placeholder="Nova tarefa..."
-          className="flex-1 h-9 rounded-[10px] border border-transparent bg-[#EEEFE9] px-3 text-[13px] text-[#0E0F10] outline-none placeholder:text-[#A9AAA5] focus:border-[#0E0F10] focus:shadow-[0_0_0_3px_rgba(14,15,16,0.08)] transition-[border-color,box-shadow] duration-150"
+          className="flex-1 h-9 rounded-[12px] border border-transparent bg-base-500 px-3 text-[13px] text-ink-500 outline-none placeholder:text-base-700 focus:border-ink-500 focus:ring-2 focus:ring-ink-500/10 transition-[border-color] duration-150"
         />
         <motion.button onClick={adicionarTarefa} disabled={!novaTarefa.trim()}
-          className="h-9 w-9 rounded-[10px] bg-[#0E0F10] flex items-center justify-center disabled:opacity-40"
+          className="h-9 w-9 rounded-[12px] bg-ink-500 flex items-center justify-center disabled:opacity-40"
           whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
           <Plus size={14} color="#D7FF00" />
         </motion.button>
@@ -2273,7 +2273,7 @@ function EditableTextSection({ title, fieldKey, value, placeholder, onSave }: {
         <SectionLabel>{title}</SectionLabel>
         {!editing ? (
           <motion.button onClick={() => setEditing(true)}
-            className="flex items-center gap-1 rounded-[8px] bg-[#EEEFE9] px-2.5 py-1 text-[11px] font-semibold text-[#5E5E5F]"
+            className="flex items-center gap-1 rounded-[8px] bg-base-500 px-2.5 py-1 text-[11px] font-semibold text-ink-400"
             whileHover={{ backgroundColor: "#D9D9D4", color: "#0E0F10", scale: 1.02 }}
             whileTap={{ scale: 0.97 }}>
             <Edit3 size={10} /> Editar
@@ -2281,12 +2281,12 @@ function EditableTextSection({ title, fieldKey, value, placeholder, onSave }: {
         ) : (
           <div className="flex items-center gap-2">
             <motion.button onClick={() => { setEditing(false); setDraft(value); }}
-              className="flex items-center gap-1 rounded-[8px] bg-[#EEEFE9] px-2.5 py-1 text-[11px] font-semibold text-[#5E5E5F]"
+              className="flex items-center gap-1 rounded-[8px] bg-base-500 px-2.5 py-1 text-[11px] font-semibold text-ink-400"
               whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.97 }}>
               <X size={10} /> Cancelar
             </motion.button>
             <motion.button onClick={handleSave} disabled={saving}
-              className="flex items-center gap-1 rounded-[8px] bg-[#0E0F10] px-2.5 py-1 text-[11px] font-semibold text-white"
+              className="flex items-center gap-1 rounded-[8px] bg-ink-500 px-2.5 py-1 text-[11px] font-semibold text-white"
               whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.97 }}>
               <Save size={10} /> {saving ? "Salvando..." : "Salvar"}
             </motion.button>
@@ -2298,9 +2298,9 @@ function EditableTextSection({ title, fieldKey, value, placeholder, onSave }: {
           <motion.div key="view" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
             transition={{ duration: 0.15 }}>
             {draft ? (
-              <p className="text-[14px] text-[#0E0F10] leading-relaxed whitespace-pre-wrap">{draft}</p>
+              <p className="text-[14px] text-ink-500 leading-relaxed whitespace-pre-wrap">{draft}</p>
             ) : (
-              <p className="text-[13px] text-[#A9AAA5] italic">{placeholder}</p>
+              <p className="text-[13px] text-base-700 italic">{placeholder}</p>
             )}
           </motion.div>
         ) : (
@@ -2312,7 +2312,7 @@ function EditableTextSection({ title, fieldKey, value, placeholder, onSave }: {
             onChange={(e) => setDraft(e.target.value)}
             placeholder={placeholder}
             rows={8}
-            className="w-full rounded-[12px] border border-transparent bg-[#EEEFE9] px-4 py-3 text-[14px] text-[#0E0F10] outline-none placeholder:text-[#A9AAA5] resize-none focus:border-[#0E0F10] focus:shadow-[0_0_0_3px_rgba(14,15,16,0.08)] transition-[border-color,box-shadow] duration-150"
+            className="w-full rounded-[12px] border border-transparent bg-base-500 px-4 py-3 text-[14px] text-ink-500 outline-none placeholder:text-base-700 resize-none focus:border-ink-500 focus:ring-2 focus:ring-ink-500/10 transition-[border-color] duration-150"
           />
         )}
       </AnimatePresence>
@@ -2323,7 +2323,7 @@ function EditableTextSection({ title, fieldKey, value, placeholder, onSave }: {
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 
 function SectionLabel({ children }: { children: React.ReactNode }) {
-  return <p className="text-[11px] font-bold uppercase tracking-wide text-[#A9AAA5]">{children}</p>;
+  return <p className="text-[11px] font-bold uppercase tracking-wide text-base-700">{children}</p>;
 }
 
 function StatusBadge({ status }: { status: ProjetoStatus }) {
@@ -2364,9 +2364,9 @@ function HealthBadge({ health, size = "default" }: {
 function MetaRow({ label, value }: { label: string; value: React.ReactNode }) {
   return (
     <div className="flex items-center justify-between gap-2">
-      <span className="text-[12px] text-[#A9AAA5] flex-shrink-0">{label}</span>
+      <span className="text-[12px] text-base-700 flex-shrink-0">{label}</span>
       {typeof value === "string"
-        ? <span className="text-[13px] font-semibold text-[#0E0F10] capitalize text-right">{value}</span>
+        ? <span className="text-[13px] font-semibold text-ink-500 capitalize text-right">{value}</span>
         : value
       }
     </div>
@@ -2377,7 +2377,7 @@ function EmptyState({ icon: Icon, text }: { icon: React.ElementType; text: strin
   return (
     <div className="flex flex-col items-center gap-3 py-12 text-center">
       <Icon size={24} color="#A9AAA5" />
-      <p className="text-[13px] text-[#A9AAA5] max-w-[280px] leading-relaxed">{text}</p>
+      <p className="text-[13px] text-base-700 max-w-[280px] leading-relaxed">{text}</p>
     </div>
   );
 }

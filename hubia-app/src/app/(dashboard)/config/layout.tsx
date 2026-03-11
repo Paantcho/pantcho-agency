@@ -62,7 +62,7 @@ export default function ConfigLayout({
       {/* Tab navigation — pill deslizante horizontal */}
       <div
         ref={containerRef}
-        className="relative inline-flex w-fit items-center rounded-[20px] p-1.5"
+        className="relative inline-flex w-fit items-center rounded-[30px] p-1.5"
         style={{ background: "#FFFFFF" }}
       >
         {/* Pill */}

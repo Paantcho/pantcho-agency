@@ -70,10 +70,10 @@ export default function SegurancaClient({
   return (
     <div className="flex flex-col gap-6">
       {/* Header de contexto */}
-      <div className="rounded-[16px] bg-[#0E0F10] p-5 flex items-start gap-3">
-        <Shield size={18} color="#D7FF00" className="mt-0.5 flex-shrink-0" />
+      <div className="rounded-[16px] bg-ink-500 p-5 flex items-start gap-3">
+        <Shield size={18} color="var(--hubia-limao-500)" className="mt-0.5 flex-shrink-0" />
         <div>
-          <p className="text-[13px] font-bold text-[#D7FF00]">Visão de segurança</p>
+          <p className="text-[13px] font-bold text-limao-500">Visão de segurança</p>
           <p className="text-[12px] text-white/60 mt-0.5">
             Checklist de configurações críticas para operação segura da plataforma.
           </p>
@@ -81,8 +81,8 @@ export default function SegurancaClient({
       </div>
 
       {/* Checklist de segurança */}
-      <div className="rounded-[20px] bg-white p-6">
-        <h2 className="text-[15px] font-bold text-[#0E0F10] mb-4 flex items-center gap-2">
+      <div className="rounded-[30px] bg-white p-6">
+        <h2 className="text-[15px] font-bold text-ink-500 mb-4 flex items-center gap-2">
           <Lock size={14} />
           Checklist de segurança
         </h2>
@@ -90,7 +90,7 @@ export default function SegurancaClient({
           {checklistItems.map((item, i) => (
             <motion.div
               key={item.id}
-              className="flex items-center justify-between rounded-[12px] bg-[#EEEFE9] px-4 py-3"
+              className="flex items-center justify-between rounded-[12px] bg-base-500 px-4 py-3"
               initial={{ opacity: 0, x: -8 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: i * 0.06 }}
@@ -102,8 +102,8 @@ export default function SegurancaClient({
                   <AlertCircle size={16} color="#FB8C00" className="mt-0.5 flex-shrink-0" />
                 )}
                 <div>
-                  <p className="text-[13px] font-semibold text-[#0E0F10]">{item.label}</p>
-                  <p className="text-[11px] text-[#A9AAA5] mt-0.5">{item.desc}</p>
+                  <p className="text-[13px] font-semibold text-ink-500">{item.label}</p>
+                  <p className="text-[11px] text-base-700 mt-0.5">{item.desc}</p>
                 </div>
               </div>
               <span
@@ -121,16 +121,16 @@ export default function SegurancaClient({
       </div>
 
       {/* Provedores de IA */}
-      <div className="rounded-[20px] bg-white p-6">
+      <div className="rounded-[30px] bg-white p-6">
         <div className="flex items-center justify-between mb-4">
-          <h2 className="text-[15px] font-bold text-[#0E0F10] flex items-center gap-2">
+          <h2 className="text-[15px] font-bold text-ink-500 flex items-center gap-2">
             <Key size={14} />
             API Keys ativas
           </h2>
           <motion.button
-            onClick={() => router.push("/config/provedores")}
-            className="flex items-center gap-1.5 text-[12px] font-semibold text-[#A9AAA5]"
-            whileHover={{ color: "#0E0F10" }}
+            onClick={() => router.push("/organization/provedores")}
+            className="flex items-center gap-1.5 text-[12px] font-semibold text-base-700"
+            whileHover={{ color: "var(--hubia-ink-500)" }}
             whileTap={{ scale: 0.97 }}
           >
             <ExternalLink size={12} />
@@ -139,12 +139,12 @@ export default function SegurancaClient({
         </div>
 
         {providers.length === 0 ? (
-          <div className="rounded-[12px] border-2 border-dashed border-[#D5D2C9] p-8 text-center">
-            <Key size={20} color="#A9AAA5" className="mx-auto mb-2" />
-            <p className="text-[13px] text-[#A9AAA5]">Nenhum provedor de IA configurado.</p>
+          <div className="rounded-[12px] border-2 border-dashed border-sand-600 p-8 text-center">
+            <Key size={20} color="var(--hubia-bg-base-700)" className="mx-auto mb-2" />
+            <p className="text-[13px] text-base-700">Nenhum provedor de IA configurado.</p>
             <motion.button
-              onClick={() => router.push("/config/provedores")}
-              className="mt-3 text-[12px] font-semibold text-[#0E0F10] underline"
+              onClick={() => router.push("/organization/provedores")}
+              className="mt-3 text-[12px] font-semibold text-ink-500 underline"
               whileHover={{ opacity: 0.7 }}
             >
               Configurar agora
@@ -155,21 +155,21 @@ export default function SegurancaClient({
             {providers.map((p, i) => (
               <motion.div
                 key={p.id}
-                className="flex items-center gap-3 rounded-[12px] bg-[#EEEFE9] px-4 py-3"
+                className="flex items-center gap-3 rounded-[12px] bg-base-500 px-4 py-3"
                 initial={{ opacity: 0, y: 6 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: i * 0.05 }}
               >
-                <div className="flex h-8 w-8 items-center justify-center rounded-[8px] bg-[#0E0F10]">
-                  <Key size={13} color="#D7FF00" />
+                <div className="flex h-8 w-8 items-center justify-center rounded-[8px] bg-ink-500">
+                  <Key size={13} color="var(--hubia-limao-500)" />
                 </div>
                 <div className="flex-1">
-                  <p className="text-[13px] font-semibold text-[#0E0F10]">{p.name}</p>
-                  <p className="text-[11px] text-[#A9AAA5]">{p.type} · atualizado {new Date(p.updatedAt).toLocaleDateString("pt-BR")}</p>
+                  <p className="text-[13px] font-semibold text-ink-500">{p.name}</p>
+                  <p className="text-[11px] text-base-700">{p.type} · atualizado {new Date(p.updatedAt).toLocaleDateString("pt-BR")}</p>
                 </div>
                 <div className="flex items-center gap-2">
                   {p.isDefault && (
-                    <span className="rounded-[5px] bg-[#D7FF00] px-1.5 py-0.5 text-[9px] font-bold text-[#0E0F10] uppercase">
+                    <span className="rounded-[5px] bg-limao-500 px-1.5 py-0.5 text-[9px] font-bold text-ink-500 uppercase">
                       Default
                     </span>
                   )}
@@ -185,18 +185,18 @@ export default function SegurancaClient({
       </div>
 
       {/* Membros */}
-      <div className="rounded-[20px] bg-white p-6">
+      <div className="rounded-[30px] bg-white p-6">
         <div className="flex items-center justify-between mb-3">
-          <h2 className="text-[15px] font-bold text-[#0E0F10] flex items-center gap-2">
+          <h2 className="text-[15px] font-bold text-ink-500 flex items-center gap-2">
             <Users size={14} />
             Membros da organização
           </h2>
-          <span className="text-[13px] font-semibold text-[#A9AAA5]">{totalMembros} ativo{totalMembros !== 1 ? "s" : ""}</span>
+          <span className="text-[13px] font-semibold text-base-700">{totalMembros} ativo{totalMembros !== 1 ? "s" : ""}</span>
         </div>
         <motion.button
           onClick={() => router.push("/config/equipe")}
-          className="flex items-center gap-1.5 text-[12px] font-semibold text-[#A9AAA5]"
-          whileHover={{ color: "#0E0F10" }}
+          className="flex items-center gap-1.5 text-[12px] font-semibold text-base-700"
+          whileHover={{ color: "var(--hubia-ink-500)" }}
           whileTap={{ scale: 0.97 }}
         >
           <ExternalLink size={12} />

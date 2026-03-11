@@ -46,7 +46,7 @@ export function HubiaModal({
           {/* Camada 2 — container com scale + y */}
           <motion.div
             key="container"
-            className="w-full max-h-[min(90vh,720px)] overflow-y-auto rounded-[20px] bg-white p-7"
+            className="w-full max-h-[min(90vh,720px)] overflow-y-auto rounded-[30px] bg-white p-7"
             style={{ maxWidth }}
             initial={{ scale: 0.88, y: 20, opacity: 0 }}
             animate={{ scale: 1, y: 0, opacity: 1 }}

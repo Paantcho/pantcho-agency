@@ -2,51 +2,47 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Bell, BellOff, Check, Mail, Zap, FolderKanban, Users } from "lucide-react";
+import { Bell, Check, Mail, Zap, FolderKanban, Users } from "lucide-react";
+import { HubiaPageAction } from "@/components/ui/hubia-page-action";
+import { saveNotificationSettings, type NotificationSettings } from "./actions";
 
 type NotifItem = {
   id: string;
   label: string;
   descricao: string;
   icon: React.ElementType;
-  ativo: boolean;
 };
 
-const initialNotifs: NotifItem[] = [
+const notifChannels: NotifItem[] = [
   {
     id: "pedidos",
     label: "Pedidos",
     descricao: "Novos pedidos, mudanças de status e aprovações",
     icon: Zap,
-    ativo: true,
   },
   {
     id: "projetos",
     label: "Projetos",
     descricao: "Atualizações de progresso e marcos importantes",
     icon: FolderKanban,
-    ativo: true,
   },
   {
     id: "equipe",
     label: "Equipe",
     descricao: "Novos membros, mudanças de role",
     icon: Users,
-    ativo: false,
   },
   {
     id: "sistema",
     label: "Sistema",
     descricao: "Atualizações da plataforma e alertas técnicos",
     icon: Bell,
-    ativo: true,
   },
   {
     id: "email",
     label: "E-mail digest",
     descricao: "Resumo semanal das atividades por e-mail",
     icon: Mail,
-    ativo: false,
   },
 ];
 
@@ -63,12 +59,12 @@ function Toggle({
       onClick={() => onChange(!ativo)}
       className="relative h-6 w-11 rounded-full flex-shrink-0"
       initial={false}
-      animate={{ backgroundColor: ativo ? "#D7FF00" : "#D9D9D4" }}
+      animate={{ backgroundColor: ativo ? "var(--hubia-limao-500)" : "#D9D9D4" }}
       transition={{ duration: 0.2 }}
       whileTap={{ scale: 0.95 }}
     >
       <motion.div
-        className="absolute top-0.5 h-5 w-5 rounded-full bg-[#0E0F10]"
+        className="absolute top-0.5 h-5 w-5 rounded-full bg-ink-500"
         animate={{ left: ativo ? "calc(100% - 22px)" : "2px" }}
         transition={{ type: "spring", stiffness: 500, damping: 30 }}
       />
@@ -76,88 +72,103 @@ function Toggle({
   );
 }
 
-export default function NotificacoesClient() {
-  const [notifs, setNotifs] = useState<NotifItem[]>(initialNotifs);
+export default function NotificacoesClient({
+  initialSettings,
+}: {
+  initialSettings: NotificationSettings;
+}) {
+  const [settings, setSettings] = useState<NotificationSettings>(initialSettings);
   const [loading, setLoading] = useState(false);
   const [saved, setSaved] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   function toggleNotif(id: string, valor: boolean) {
-    setNotifs((prev) =>
-      prev.map((n) => (n.id === id ? { ...n, ativo: valor } : n))
-    );
+    setSettings((prev) => ({ ...prev, [id]: valor }));
   }
 
-  const ativos = notifs.filter((n) => n.ativo).length;
+  const ativos = Object.values(settings).filter(Boolean).length;
+  const total = notifChannels.length;
 
   async function handleSave() {
     setLoading(true);
-    await new Promise((r) => setTimeout(r, 600));
+    setError(null);
+    const result = await saveNotificationSettings(settings);
     setLoading(false);
-    setSaved(true);
-    setTimeout(() => setSaved(false), 2500);
+    if (result.ok) {
+      setSaved(true);
+      setTimeout(() => setSaved(false), 2500);
+    } else {
+      setError(result.error ?? "Erro ao salvar");
+    }
   }
 
   return (
     <div className="flex flex-col gap-6">
       {/* Header status */}
-      <div className="rounded-[20px] bg-[#0E0F10] p-5 flex items-center justify-between">
+      <div className="rounded-[30px] bg-ink-500 p-5 flex items-center justify-between">
         <div className="flex items-center gap-3">
-          <div className="flex h-8 w-8 items-center justify-center rounded-[10px] bg-[#D7FF00]">
-            <Bell size={15} color="#0E0F10" />
+          <div className="flex h-8 w-8 items-center justify-center rounded-[12px] bg-limao-500">
+            <Bell size={15} color="var(--hubia-ink-500)" />
           </div>
           <div>
             <p className="text-[14px] font-bold text-white">Notificações</p>
             <p className="text-[12px] text-white/50">
-              {ativos} de {notifs.length} canais ativos
+              {ativos} de {total} canais ativos
             </p>
           </div>
         </div>
 
         <motion.button
           type="button"
-          onClick={() => setNotifs((prev) => prev.map((n) => ({ ...n, ativo: ativos < notifs.length })))}
-          className="rounded-[10px] px-4 py-2 text-[12px] font-bold"
+          onClick={() => {
+            const allOn = ativos < total;
+            const updated: NotificationSettings = {};
+            notifChannels.forEach((n) => { updated[n.id] = allOn; });
+            setSettings(updated);
+          }}
+          className="rounded-[12px] px-4 py-2 text-[12px] font-bold"
           initial={false}
           animate={{
-            backgroundColor: ativos < notifs.length ? "#D7FF00" : "rgba(255,255,255,0.1)",
-            color: ativos < notifs.length ? "#0E0F10" : "#FFFFFF",
+            backgroundColor: ativos < total ? "var(--hubia-limao-500)" : "rgba(255,255,255,0.1)",
+            color: ativos < total ? "var(--hubia-ink-500)" : "#FFFFFF",
           }}
           whileHover={{ scale: 1.03 }}
           whileTap={{ scale: 0.97 }}
           transition={{ duration: 0.15 }}
         >
-          {ativos < notifs.length ? "Ativar todas" : "Desativar todas"}
+          {ativos < total ? "Ativar todas" : "Desativar todas"}
         </motion.button>
       </div>
 
       {/* Lista de notificações */}
-      <div className="rounded-[20px] bg-white p-6">
+      <div className="rounded-[30px] bg-white p-6">
         <div className="flex flex-col gap-3">
-          {notifs.map((notif, i) => {
+          {notifChannels.map((notif, i) => {
             const Icon = notif.icon;
+            const isAtivo = settings[notif.id] ?? false;
             return (
               <motion.div
                 key={notif.id}
                 initial={{ opacity: 0, y: 8 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: Math.min(i * 0.06, 0.3) }}
-                className="flex items-center justify-between rounded-[12px] bg-[#EEEFE9] px-5 py-4"
+                className="flex items-center justify-between rounded-[12px] bg-base-500 px-5 py-4"
               >
                 <div className="flex items-center gap-3">
                   <div
-                    className="flex h-9 w-9 shrink-0 items-center justify-center rounded-[10px]"
+                    className="flex h-9 w-9 shrink-0 items-center justify-center rounded-[12px]"
                     style={{
-                      backgroundColor: notif.ativo ? "#0E0F10" : "#D9D9D4",
+                      backgroundColor: isAtivo ? "var(--hubia-ink-500)" : "#D9D9D4",
                     }}
                   >
-                    <Icon size={15} color={notif.ativo ? "#D7FF00" : "#FFFFFF"} />
+                    <Icon size={15} color={isAtivo ? "var(--hubia-limao-500)" : "#FFFFFF"} />
                   </div>
                   <div>
-                    <p className="text-[14px] font-bold text-[#0E0F10]">{notif.label}</p>
-                    <p className="text-[12px] text-[#A9AAA5]">{notif.descricao}</p>
+                    <p className="text-[14px] font-bold text-ink-500">{notif.label}</p>
+                    <p className="text-[12px] text-base-700">{notif.descricao}</p>
                   </div>
                 </div>
-                <Toggle ativo={notif.ativo} onChange={(v) => toggleNotif(notif.id, v)} />
+                <Toggle ativo={isAtivo} onChange={(v) => toggleNotif(notif.id, v)} />
               </motion.div>
             );
           })}
@@ -166,6 +177,9 @@ export default function NotificacoesClient() {
 
       {/* Salvar */}
       <div className="flex items-center justify-end gap-3">
+        {error && (
+          <p className="text-[13px] font-semibold text-red-600">{error}</p>
+        )}
         <AnimatePresence>
           {saved && (
             <motion.div
@@ -180,17 +194,16 @@ export default function NotificacoesClient() {
           )}
         </AnimatePresence>
 
-        <motion.button
-          type="button"
+        <HubiaPageAction
+          icon={Check}
+          iconRotate={false}
           onClick={handleSave}
           disabled={loading}
-          className="rounded-[18px] bg-[#D7FF00] px-6 py-3 text-[15px] font-semibold text-[#0E0F10] disabled:opacity-50"
-          whileHover={{ scale: 1.03, backgroundColor: "#DFFF33" }}
-          whileTap={{ scale: 0.96 }}
-          transition={{ duration: 0.15, ease: [0.34, 1.56, 0.64, 1] }}
+          loading={loading}
+          loadingText="Salvando…"
         >
-          {loading ? "Salvando…" : "Salvar notificações"}
-        </motion.button>
+          Salvar notificações
+        </HubiaPageAction>
       </div>
     </div>
   );

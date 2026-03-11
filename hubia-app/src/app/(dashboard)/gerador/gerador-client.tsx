@@ -4,6 +4,7 @@ import { useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Sparkles, Copy, Check, Upload, History, Wand2, ImageIcon, Plus } from "lucide-react";
 import { SlidingTabs } from "@/components/ui/sliding-tabs";
+import { HubiaPageAction } from "@/components/ui/hubia-page-action";
 import { HubiaModal } from "@/components/ui/hubia-modal";
 import { HubiaSelect } from "@/components/ui/hubia-select";
 import type { CreatorOption, GeradorFormData, GeradorResult } from "./actions";
@@ -46,7 +47,7 @@ function FieldLabel({ children }: { children: React.ReactNode }) {
         fontSize: "11px",
         fontWeight: 700,
         letterSpacing: "0.3px",
-        color: "#A9AAA5",
+        color: "var(--hubia-bg-base-700)",
         textTransform: "uppercase",
       }}
     >
@@ -64,7 +65,7 @@ function ParamCell({ label, value }: { label: string; value: string }) {
           fontSize: "10px",
           fontWeight: 700,
           letterSpacing: "0.3px",
-          color: "#A9AAA5",
+          color: "var(--hubia-bg-base-700)",
           textTransform: "uppercase",
         }}
       >
@@ -94,7 +95,7 @@ function ChecklistItem({ text, index, type }: { text: string; index: number; typ
           <span style={{ fontSize: "10px", color: "white", fontWeight: 900, lineHeight: 1 }}>×</span>
         )}
       </div>
-      <span className="text-[12px] leading-[1.4]" style={{ color: "#5E5E5F" }}>
+      <span className="text-[12px] leading-[1.4]" style={{ color: "var(--hubia-ink-400)" }}>
         {text}
       </span>
     </motion.div>
@@ -129,10 +130,10 @@ function BriefingOutputSection({
   return (
     <div className="grid gap-4" style={{ gridTemplateColumns: "1fr 1fr" }}>
       {/* Coluna esquerda — Briefing */}
-      <div className="rounded-[20px] bg-white p-6">
+      <div className="rounded-[30px] bg-white p-6">
         <h2
           className="mb-5"
-          style={{ fontSize: "20px", fontWeight: 700, color: "#0E0F10" }}
+          style={{ fontSize: "20px", fontWeight: 700, color: "var(--hubia-ink-500)" }}
         >
           Briefing da cena
         </h2>
@@ -214,8 +215,8 @@ function BriefingOutputSection({
             onChange={(e) => setForm((f) => ({ ...f, descricao: e.target.value }))}
             placeholder="Ex: Ninaah está no beiro da piscina, sentada na espreguiçadeira..."
             rows={4}
-            className="w-full resize-none rounded-[10px] border border-transparent px-3.5 py-2.5 text-[14px] text-ink-500 outline-none placeholder:text-[#A9AAA5] transition-[border-color,box-shadow] duration-150 focus:border-ink-500 focus:shadow-[0_0_0_3px_rgba(14,15,16,0.08)]"
-            style={{ background: "#EEEFE9" }}
+            className="w-full resize-none rounded-[12px] border border-transparent px-3.5 py-2.5 text-[14px] text-ink-500 outline-none placeholder:text-base-700 transition-[border-color] duration-150 focus:border-ink-500 focus:ring-2 focus:ring-ink-500/10"
+            style={{ background: "var(--hubia-bg-base-500)" }}
           />
         </div>
 
@@ -225,7 +226,7 @@ function BriefingOutputSection({
           onClick={onGenerate}
           disabled={isGenerating || !form.creatorId}
           className="mt-5 flex w-full items-center justify-center gap-2 rounded-[18px] py-3 text-[16px] font-bold tracking-[0.3px] text-ink-500 disabled:opacity-50"
-          style={{ background: "#D7FF00" }}
+          style={{ background: "var(--hubia-limao-500)" }}
           whileHover={!isGenerating && form.creatorId ? { scale: 1.02, backgroundColor: "#DFFF33" } : {}}
           whileTap={!isGenerating && form.creatorId ? { scale: 0.97 } : {}}
           transition={{ duration: 0.15, ease: [0.34, 1.56, 0.64, 1] }}
@@ -247,15 +248,15 @@ function BriefingOutputSection({
         <AnimatePresence mode="wait">
           <motion.div
             key={output ? "with-output" : "empty"}
-            className="rounded-[20px] p-6"
-            style={{ background: "#0E0F10", minHeight: "200px" }}
+            className="rounded-[30px] p-6"
+            style={{ background: "var(--hubia-ink-500)", minHeight: "200px" }}
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3, ease: [0, 0, 0.2, 1] }}
           >
             <div className="mb-3 flex items-center justify-between gap-3">
               <span
-                style={{ fontSize: "18px", fontWeight: 700, color: "#D7FF00" }}
+                style={{ fontSize: "18px", fontWeight: 700, color: "var(--hubia-limao-500)" }}
               >
                 Output — Prompt Final
               </span>
@@ -266,7 +267,7 @@ function BriefingOutputSection({
                     type="button"
                     onClick={onCopy}
                     className="flex items-center gap-1 rounded-[9999px] px-3 py-1 text-[11px] font-semibold"
-                    style={{ background: "rgba(255,255,255,0.1)", color: "#A9AAA5" }}
+                    style={{ background: "rgba(255,255,255,0.1)", color: "var(--hubia-bg-base-700)" }}
                     whileHover={{ backgroundColor: "rgba(255,255,255,0.18)", color: "#FFFFFF" }}
                     whileTap={{ scale: 0.95 }}
                     transition={{ duration: 0.15 }}
@@ -283,7 +284,7 @@ function BriefingOutputSection({
                     type="button"
                     onClick={onVerCompleto}
                     className="flex items-center gap-1 rounded-[9999px] px-3 py-1 text-[11px] font-semibold"
-                    style={{ background: "rgba(255,255,255,0.1)", color: "#A9AAA5" }}
+                    style={{ background: "rgba(255,255,255,0.1)", color: "var(--hubia-bg-base-700)" }}
                     whileHover={{ backgroundColor: "rgba(255,255,255,0.18)", color: "#FFFFFF" }}
                     whileTap={{ scale: 0.95 }}
                     transition={{ duration: 0.15 }}
@@ -312,14 +313,14 @@ function BriefingOutputSection({
         </AnimatePresence>
 
         {/* Card Parâmetros Técnicos */}
-        <div className="rounded-[20px] bg-white p-5">
+        <div className="rounded-[30px] bg-white p-5">
           <h3
             className="mb-4"
-            style={{ fontSize: "16px", fontWeight: 700, color: "#0E0F10" }}
+            style={{ fontSize: "16px", fontWeight: 700, color: "var(--hubia-ink-500)" }}
           >
             Parâmetros Técnicos
           </h3>
-          <div className="grid grid-cols-4 gap-3 rounded-[10px] p-3" style={{ background: "#EEEFE9" }}>
+          <div className="grid grid-cols-4 gap-3 rounded-[12px] p-3" style={{ background: "var(--hubia-bg-base-500)" }}>
             <ParamCell label="Câmera" value={output?.parametros.camera ?? form.camera} />
             <ParamCell label="Lente" value={output?.parametros.lente ?? (form.lente ? `${form.lente} f/1.4` : "")} />
             <ParamCell label="Abertura" value={output?.parametros.abertura ?? ""} />
@@ -375,10 +376,10 @@ function TabGerador({
       {(markers.length > 0 || protectedItems.length > 0) && (
         <div className="grid gap-4" style={{ gridTemplateColumns: "1fr 1fr" }}>
           {/* Checklist Forense */}
-          <div className="rounded-[20px] bg-white p-6">
+          <div className="rounded-[30px] bg-white p-6">
             <h3
               className="mb-4"
-              style={{ fontSize: "16px", fontWeight: 700, color: "#0E0F10" }}
+              style={{ fontSize: "16px", fontWeight: 700, color: "var(--hubia-ink-500)" }}
             >
               Checklist Forense — Validar ANTES de aprovar
             </h3>
@@ -390,10 +391,10 @@ function TabGerador({
           </div>
 
           {/* Blindagem */}
-          <div className="rounded-[20px] bg-white p-6">
+          <div className="rounded-[30px] bg-white p-6">
             <h3
               className="mb-4"
-              style={{ fontSize: "16px", fontWeight: 700, color: "#0E0F10" }}
+              style={{ fontSize: "16px", fontWeight: 700, color: "var(--hubia-ink-500)" }}
             >
               Blindagem — Proibido
             </h3>
@@ -409,25 +410,25 @@ function TabGerador({
       {/* Estado: creator selecionada mas sem dados ainda */}
       {selectedCreator && markers.length === 0 && protectedItems.length === 0 && (
         <div className="grid gap-4" style={{ gridTemplateColumns: "1fr 1fr" }}>
-          <div className="rounded-[20px] bg-white p-6">
+          <div className="rounded-[30px] bg-white p-6">
             <h3
               className="mb-3"
-              style={{ fontSize: "16px", fontWeight: 700, color: "#0E0F10" }}
+              style={{ fontSize: "16px", fontWeight: 700, color: "var(--hubia-ink-500)" }}
             >
               Checklist Forense — Validar ANTES de aprovar
             </h3>
-            <p className="text-[13px]" style={{ color: "#A9AAA5" }}>
+            <p className="text-[13px]" style={{ color: "var(--hubia-bg-base-700)" }}>
               Configure a aparência da creator para ver o checklist.
             </p>
           </div>
-          <div className="rounded-[20px] bg-white p-6">
+          <div className="rounded-[30px] bg-white p-6">
             <h3
               className="mb-3"
-              style={{ fontSize: "16px", fontWeight: 700, color: "#0E0F10" }}
+              style={{ fontSize: "16px", fontWeight: 700, color: "var(--hubia-ink-500)" }}
             >
               Blindagem — Proibido
             </h3>
-            <p className="text-[13px]" style={{ color: "#A9AAA5" }}>
+            <p className="text-[13px]" style={{ color: "var(--hubia-bg-base-700)" }}>
               Configure a aparência da creator para ver as restrições.
             </p>
           </div>
@@ -486,7 +487,7 @@ function TabPhotoCloner({
   return (
     <div className="flex flex-col gap-5">
       {/* Bloco preto full-width */}
-      <div className="rounded-[20px] p-6" style={{ background: "#0E0F10" }}>
+      <div className="rounded-[30px] p-6" style={{ background: "var(--hubia-ink-500)" }}>
         <div className="grid gap-5" style={{ gridTemplateColumns: "340px 1fr" }}>
           {/* Área de upload */}
           <div className="flex flex-col gap-3">
@@ -511,7 +512,7 @@ function TabPhotoCloner({
                 <img
                   src={imagePreview}
                   alt="Imagem para clonar"
-                  className="max-h-[150px] rounded-[10px] object-contain"
+                  className="max-h-[150px] rounded-[12px] object-contain"
                 />
               ) : (
                 <>
@@ -527,7 +528,7 @@ function TabPhotoCloner({
             <motion.button
               type="button"
               disabled={!clonePrompt}
-              className="w-full rounded-[10px] py-3 text-[13px] font-bold tracking-[0.5px] text-white disabled:opacity-40"
+              className="w-full rounded-[12px] py-3 text-[13px] font-bold tracking-[0.5px] text-white disabled:opacity-40"
               style={{ background: "#3E3F40" }}
               whileHover={clonePrompt ? { backgroundColor: "#4A4B4C" } : {}}
               whileTap={clonePrompt ? { scale: 0.98 } : {}}
@@ -540,14 +541,14 @@ function TabPhotoCloner({
           {/* Output do clone */}
           <div>
             <div className="mb-3 flex items-center justify-between">
-              <span style={{ fontSize: "16px", fontWeight: 700, color: "#D7FF00" }}>
+              <span style={{ fontSize: "16px", fontWeight: 700, color: "var(--hubia-limao-500)" }}>
                 Image Prompt — descrição
               </span>
               {clonePrompt && (
                 <motion.button
                   type="button"
                   className="rounded-[9999px] px-3 py-1 text-[11px] font-semibold"
-                  style={{ background: "rgba(255,255,255,0.1)", color: "#A9AAA5" }}
+                  style={{ background: "rgba(255,255,255,0.1)", color: "var(--hubia-bg-base-700)" }}
                   whileHover={{ backgroundColor: "rgba(255,255,255,0.18)", color: "#FFFFFF" }}
                   whileTap={{ scale: 0.95 }}
                   transition={{ duration: 0.15 }}
@@ -588,8 +589,8 @@ function TabPhotoCloner({
       {/* Checklist + Blindagem */}
       {(markers.length > 0 || protectedItems.length > 0) && (
         <div className="grid gap-4" style={{ gridTemplateColumns: "1fr 1fr" }}>
-          <div className="rounded-[20px] bg-white p-6">
-            <h3 className="mb-4" style={{ fontSize: "16px", fontWeight: 700, color: "#0E0F10" }}>
+          <div className="rounded-[30px] bg-white p-6">
+            <h3 className="mb-4" style={{ fontSize: "16px", fontWeight: 700, color: "var(--hubia-ink-500)" }}>
               Checklist Forense — Validar ANTES de aprovar
             </h3>
             <div className="grid grid-cols-2 gap-x-6 gap-y-2">
@@ -598,8 +599,8 @@ function TabPhotoCloner({
               ))}
             </div>
           </div>
-          <div className="rounded-[20px] bg-white p-6">
-            <h3 className="mb-4" style={{ fontSize: "16px", fontWeight: 700, color: "#0E0F10" }}>
+          <div className="rounded-[30px] bg-white p-6">
+            <h3 className="mb-4" style={{ fontSize: "16px", fontWeight: 700, color: "var(--hubia-ink-500)" }}>
               Blindagem — Proibido
             </h3>
             <div className="flex flex-col gap-2">
@@ -614,13 +615,13 @@ function TabPhotoCloner({
       {/* Empty state checklist */}
       {markers.length === 0 && protectedItems.length === 0 && (
         <div className="grid gap-4" style={{ gridTemplateColumns: "1fr 1fr" }}>
-          <div className="rounded-[20px] bg-white p-6">
-            <h3 className="mb-2" style={{ fontSize: "16px", fontWeight: 700, color: "#0E0F10" }}>
+          <div className="rounded-[30px] bg-white p-6">
+            <h3 className="mb-2" style={{ fontSize: "16px", fontWeight: 700, color: "var(--hubia-ink-500)" }}>
               Checklist Forense — Validar ANTES de aprovar
             </h3>
           </div>
-          <div className="rounded-[20px] bg-white p-6">
-            <h3 className="mb-2" style={{ fontSize: "16px", fontWeight: 700, color: "#0E0F10" }}>
+          <div className="rounded-[30px] bg-white p-6">
+            <h3 className="mb-2" style={{ fontSize: "16px", fontWeight: 700, color: "var(--hubia-ink-500)" }}>
               Blindagem — Proibido
             </h3>
           </div>
@@ -662,14 +663,14 @@ function ModalVerCompleto({
       maxWidth="min(90vw, 580px)"
     >
       {/* Subtítulo */}
-      <p className="mb-4 -mt-4 text-[13px]" style={{ color: "#A9AAA5" }}>
+      <p className="mb-4 -mt-4 text-[13px]" style={{ color: "var(--hubia-bg-base-700)" }}>
         {subtitulo}
       </p>
 
       {/* Caixa preta com prompt */}
       <div
         className="rounded-[16px] p-5 overflow-y-auto"
-        style={{ background: "#0E0F10", maxHeight: "360px" }}
+        style={{ background: "var(--hubia-ink-500)", maxHeight: "360px" }}
       >
         <p
           className="whitespace-pre-wrap text-[13px] leading-relaxed"
@@ -685,7 +686,7 @@ function ModalVerCompleto({
           type="button"
           onClick={onCopy}
           className="flex items-center gap-2 rounded-[18px] px-6 py-3 text-[14px] font-bold text-ink-500"
-          style={{ background: "#D7FF00" }}
+          style={{ background: "var(--hubia-limao-500)" }}
           whileHover={{ scale: 1.03, backgroundColor: "#DFFF33" }}
           whileTap={{ scale: 0.96 }}
           transition={{ duration: 0.15, ease: [0.34, 1.56, 0.64, 1] }}
@@ -748,32 +749,12 @@ export function GeradorClient({ creators }: { creators: CreatorOption[] }) {
     <div className="flex flex-col gap-5">
       {/* Header */}
       <div className="flex items-center justify-between">
-        <h1 style={{ fontSize: "28px", fontWeight: 700, color: "#0E0F10" }}>
+        <h1 style={{ fontSize: "28px", fontWeight: 700, color: "var(--hubia-ink-500)" }}>
           Gerador de prompt
         </h1>
-        <motion.button
-          type="button"
-          className="flex items-center gap-2 rounded-[18px] px-4 py-3 text-[14px] font-bold text-ink-500"
-          style={{ background: "#D7FF00" }}
-          initial="rest"
-          whileHover="hovered"
-          whileTap={{ scale: 0.96 }}
-          animate="rest"
-          variants={{
-            rest: { scale: 1, backgroundColor: "#D7FF00" },
-            hovered: { scale: 1.03, backgroundColor: "#DFFF33" },
-          }}
-          transition={{ duration: 0.15, ease: [0.34, 1.56, 0.64, 1] }}
-        >
-          <motion.span
-            className="flex items-center"
-            variants={{ rest: { scale: 1, rotate: 0 }, hovered: { scale: 1.2, rotate: 90 } }}
-            transition={{ duration: 0.2, ease: [0.34, 1.56, 0.64, 1] }}
-          >
-            <Plus size={16} strokeWidth={2.5} />
-          </motion.span>
+        <HubiaPageAction>
           Novo pedido
-        </motion.button>
+        </HubiaPageAction>
       </div>
 
       {/* Tabs */}

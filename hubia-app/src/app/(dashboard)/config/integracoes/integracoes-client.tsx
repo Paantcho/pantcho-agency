@@ -133,7 +133,7 @@ const statusConfig: Record<
   { label: string; icon: React.ElementType; cor: string; bg: string }
 > = {
   ativo: { label: "Ativo", icon: CheckCircle2, cor: "#43A047", bg: "#E8F5E9" },
-  desconectado: { label: "Desconectado", icon: XCircle, cor: "#A9AAA5", bg: "#EEEFE9" },
+  desconectado: { label: "Desconectado", icon: XCircle, cor: "var(--hubia-bg-base-700)", bg: "var(--hubia-bg-base-500)" },
   erro: { label: "Erro", icon: AlertCircle, cor: "#E53935", bg: "#FFEBEE" },
 };
 
@@ -147,7 +147,7 @@ function IntegracaoCard({ item, idx }: { item: Integracao; idx: number }) {
       initial={{ opacity: 0, y: 12 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: Math.min(idx * 0.05, 0.3) }}
-      className="rounded-[16px] bg-[#EEEFE9] overflow-hidden"
+      className="rounded-[16px] bg-base-500 overflow-hidden"
     >
       <motion.button
         type="button"
@@ -158,13 +158,13 @@ function IntegracaoCard({ item, idx }: { item: Integracao; idx: number }) {
         transition={{ duration: 0.15 }}
       >
         {/* Logo */}
-        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-[12px] bg-[#0E0F10] text-[13px] font-bold text-white">
+        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-[12px] bg-ink-500 text-[13px] font-bold text-white">
           {item.logo}
         </div>
 
         <div className="flex flex-1 flex-col gap-0.5">
-          <p className="text-[14px] font-bold text-[#0E0F10]">{item.nome}</p>
-          <p className="text-[12px] text-[#A9AAA5]">{item.descricao}</p>
+          <p className="text-[14px] font-bold text-ink-500">{item.nome}</p>
+          <p className="text-[12px] text-base-700">{item.descricao}</p>
         </div>
 
         <div className="flex items-center gap-2">
@@ -180,7 +180,7 @@ function IntegracaoCard({ item, idx }: { item: Integracao; idx: number }) {
             animate={{ rotate: expanded ? 90 : 0 }}
             transition={{ duration: 0.2 }}
           >
-            <ChevronRight size={16} className="text-[#A9AAA5]" />
+            <ChevronRight size={16} className="text-base-700" />
           </motion.div>
         </div>
       </motion.button>
@@ -194,15 +194,15 @@ function IntegracaoCard({ item, idx }: { item: Integracao; idx: number }) {
             transition={{ duration: 0.25, ease: [0, 0, 0.2, 1] }}
             style={{ overflow: "hidden" }}
           >
-            <div className="border-t border-[#D5D2C9] px-5 py-4 flex flex-col gap-3">
+            <div className="border-t border-sand-600 px-5 py-4 flex flex-col gap-3">
               {item.detalhe && (
-                <p className="text-[12px] text-[#5E5E5F]">{item.detalhe}</p>
+                <p className="text-[12px] text-ink-400">{item.detalhe}</p>
               )}
 
               <div className="flex gap-2 flex-wrap">
                 {item.status === "desconectado" && (
                   <motion.button
-                    className="flex items-center gap-1.5 rounded-[10px] bg-[#0E0F10] px-4 py-2 text-[12px] font-bold text-white"
+                    className="flex items-center gap-1.5 rounded-[12px] bg-ink-500 px-4 py-2 text-[12px] font-bold text-white"
                     whileHover={{ backgroundColor: "#2a2b2c", scale: 1.03 }}
                     whileTap={{ scale: 0.96 }}
                     transition={{ duration: 0.15 }}
@@ -213,7 +213,7 @@ function IntegracaoCard({ item, idx }: { item: Integracao; idx: number }) {
                 )}
                 {item.status === "ativo" && (
                   <motion.button
-                    className="flex items-center gap-1.5 rounded-[10px] border border-[#D5D2C9] px-4 py-2 text-[12px] font-semibold text-[#5E5E5F]"
+                    className="flex items-center gap-1.5 rounded-[12px] border border-sand-600 px-4 py-2 text-[12px] font-semibold text-ink-400"
                     whileHover={{ backgroundColor: "rgba(213,210,201,0.5)", scale: 1.02 }}
                     whileTap={{ scale: 0.97 }}
                     transition={{ duration: 0.15 }}
@@ -227,8 +227,8 @@ function IntegracaoCard({ item, idx }: { item: Integracao; idx: number }) {
                     href={item.docs}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center gap-1.5 rounded-[10px] px-4 py-2 text-[12px] font-semibold text-[#A9AAA5]"
-                    whileHover={{ color: "#0E0F10", backgroundColor: "rgba(213,210,201,0.3)", scale: 1.02 }}
+                    className="flex items-center gap-1.5 rounded-[12px] px-4 py-2 text-[12px] font-semibold text-base-700"
+                    whileHover={{ color: "var(--hubia-ink-500)", backgroundColor: "rgba(213,210,201,0.3)", scale: 1.02 }}
                     whileTap={{ scale: 0.97 }}
                     transition={{ duration: 0.15 }}
                   >
@@ -249,9 +249,9 @@ export default function IntegracoesClient() {
   return (
     <div className="flex flex-col gap-6">
       {/* Header info */}
-      <div className="rounded-[20px] bg-[#0E0F10] p-6 flex items-start gap-3">
-        <div className="flex h-8 w-8 items-center justify-center rounded-[10px] bg-[#D7FF00] shrink-0">
-          <Plug size={15} color="#0E0F10" />
+      <div className="rounded-[30px] bg-ink-500 p-6 flex items-start gap-3">
+        <div className="flex h-8 w-8 items-center justify-center rounded-[12px] bg-limao-500 shrink-0">
+          <Plug size={15} color="var(--hubia-ink-500)" />
         </div>
         <div>
           <p className="text-[14px] font-bold text-white">Ecossistema de integrações</p>
@@ -269,12 +269,12 @@ export default function IntegracoesClient() {
         let globalIdx = integracoes.findIndex((i) => i.categoria === cat.id);
 
         return (
-          <div key={cat.id} className="rounded-[20px] bg-white p-6">
+          <div key={cat.id} className="rounded-[30px] bg-white p-6">
             <div className="mb-4 flex items-center justify-between">
-              <h2 className="text-[15px] font-bold text-[#0E0F10]">
+              <h2 className="text-[15px] font-bold text-ink-500">
                 {cat.label}
               </h2>
-              <span className="rounded-[6px] bg-[#EEEFE9] px-2.5 py-1 text-[11px] font-bold text-[#A9AAA5]">
+              <span className="rounded-[6px] bg-base-500 px-2.5 py-1 text-[11px] font-bold text-base-700">
                 {ativos}/{itens.length} ativos
               </span>
             </div>

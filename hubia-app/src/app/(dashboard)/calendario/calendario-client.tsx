@@ -12,11 +12,11 @@ const MESES = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho",
 const DIAS_SEMANA = ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb"];
 
 const URGENCIA_COLORS: Record<string, string> = {
-  baixa: "#A9AAA5", media: "#5E5E5F", alta: "#FB8C00", critica: "#E53935",
+  baixa: "var(--hubia-bg-base-700)", media: "var(--hubia-ink-400)", alta: "#FB8C00", critica: "#E53935",
 };
 const STATUS_COLORS: Record<string, string> = {
-  rascunho: "#A9AAA5", aguardando: "#5E5E5F", em_andamento: "#D7FF00",
-  revisao: "#FB8C00", aprovado: "#43A047", entregue: "#0E0F10",
+  rascunho: "var(--hubia-bg-base-700)", aguardando: "var(--hubia-ink-400)", em_andamento: "var(--hubia-limao-500)",
+  revisao: "#FB8C00", aprovado: "#43A047", entregue: "var(--hubia-ink-500)",
 };
 
 function agruparPorDia(pedidos: CalendarioPedido[]): Record<number, CalendarioPedido[]> {
@@ -86,42 +86,42 @@ export default function CalendarioClient({
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-[28px] font-bold text-[#0E0F10]">Calendário</h1>
-          <p className="text-[14px] text-[#A9AAA5] mt-0.5">
+          <h1 className="text-[28px] font-bold text-ink-500">Calendário</h1>
+          <p className="text-[14px] text-base-700 mt-0.5">
             {pedidos.length} pedido{pedidos.length !== 1 ? "s" : ""} com prazo em {MESES[mes - 1]}
           </p>
         </div>
         <div className="flex items-center gap-2">
           <motion.button onClick={handleAnterior}
-            className="flex h-9 w-9 items-center justify-center rounded-[10px] bg-white"
-            whileHover={{ scale: 1.08, backgroundColor: "#EEEFE9" }}
+            className="flex h-9 w-9 items-center justify-center rounded-[12px] bg-white"
+            whileHover={{ scale: 1.08, backgroundColor: "var(--hubia-bg-base-500)" }}
             whileTap={{ scale: 0.92 }}
             transition={{ duration: 0.15 }}>
-            <ChevronLeft size={16} color="#0E0F10" />
+            <ChevronLeft size={16} color="var(--hubia-ink-500)" />
           </motion.button>
-          <span className="min-w-[160px] text-center text-[16px] font-bold text-[#0E0F10]">
+          <span className="min-w-[160px] text-center text-[16px] font-bold text-ink-500">
             {MESES[mes - 1]} {ano}
           </span>
           <motion.button onClick={handleProximo}
-            className="flex h-9 w-9 items-center justify-center rounded-[10px] bg-white"
-            whileHover={{ scale: 1.08, backgroundColor: "#EEEFE9" }}
+            className="flex h-9 w-9 items-center justify-center rounded-[12px] bg-white"
+            whileHover={{ scale: 1.08, backgroundColor: "var(--hubia-bg-base-500)" }}
             whileTap={{ scale: 0.92 }}
             transition={{ duration: 0.15 }}>
-            <ChevronRight size={16} color="#0E0F10" />
+            <ChevronRight size={16} color="var(--hubia-ink-500)" />
           </motion.button>
         </div>
       </div>
 
       {/* Grade */}
       <motion.div
-        className="rounded-[20px] bg-white overflow-hidden"
+        className="rounded-[30px] bg-white overflow-hidden"
         animate={{ opacity: loading ? 0.5 : 1 }}
         transition={{ duration: 0.2 }}
       >
         {/* Cabeçalho dos dias da semana */}
-        <div className="grid grid-cols-7 border-b border-[#EEEFE9]">
+        <div className="grid grid-cols-7 border-b border-base-500">
           {DIAS_SEMANA.map((d) => (
-            <div key={d} className="py-3 text-center text-[11px] font-bold text-[#A9AAA5] uppercase tracking-wide">
+            <div key={d} className="py-3 text-center text-[11px] font-bold text-base-700 uppercase tracking-wide">
               {d}
             </div>
           ))}
@@ -136,7 +136,7 @@ export default function CalendarioClient({
             return (
               <div
                 key={idx}
-                className="min-h-[96px] border-b border-r border-[#EEEFE9] p-2 last:border-r-0"
+                className="min-h-[96px] border-b border-r border-base-500 p-2 last:border-r-0"
                 style={{ borderRight: (idx + 1) % 7 === 0 ? "none" : undefined }}
               >
                 {dia && (
@@ -145,8 +145,8 @@ export default function CalendarioClient({
                       <span
                         className="flex h-6 w-6 items-center justify-center rounded-full text-[12px] font-semibold"
                         style={{
-                          backgroundColor: isHoje ? "#D7FF00" : "transparent",
-                          color: isHoje ? "#0E0F10" : "#5E5E5F",
+                          backgroundColor: isHoje ? "var(--hubia-limao-500)" : "transparent",
+                          color: isHoje ? "var(--hubia-ink-500)" : "var(--hubia-ink-400)",
                         }}
                       >
                         {dia}
@@ -159,8 +159,8 @@ export default function CalendarioClient({
                           onClick={() => setDrawerPedido(e)}
                           className="w-full rounded-[4px] px-1.5 py-0.5 text-left text-[10px] font-semibold truncate"
                           style={{
-                            backgroundColor: `${STATUS_COLORS[e.status] ?? "#A9AAA5"}22`,
-                            color: STATUS_COLORS[e.status] ?? "#A9AAA5",
+                            backgroundColor: `${STATUS_COLORS[e.status] ?? "var(--hubia-bg-base-700)"}22`,
+                            color: STATUS_COLORS[e.status] ?? "var(--hubia-bg-base-700)",
                           }}
                           whileHover={{ scale: 1.02 }}
                           whileTap={{ scale: 0.97 }}
@@ -170,7 +170,7 @@ export default function CalendarioClient({
                         </motion.button>
                       ))}
                       {eventos.length > 3 && (
-                        <span className="text-[10px] text-[#A9AAA5] pl-1">+{eventos.length - 3} mais</span>
+                        <span className="text-[10px] text-base-700 pl-1">+{eventos.length - 3} mais</span>
                       )}
                     </div>
                   </>
@@ -190,7 +190,7 @@ export default function CalendarioClient({
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              style={{ backgroundColor: "rgba(14,15,16,0.25)" }}
+              style={{ backgroundColor: "rgba(14,15,16,0.70)", backdropFilter: "blur(12px)", WebkitBackdropFilter: "blur(12px)" }}
               onClick={() => setDrawerPedido(null)}
             />
             <motion.div
@@ -201,23 +201,23 @@ export default function CalendarioClient({
               exit={{ x: "100%" }}
               transition={{ type: "spring", stiffness: 350, damping: 30 }}
             >
-              <div className="flex items-center justify-between border-b border-[#EEEFE9] p-5">
-                <h2 className="text-[16px] font-bold text-[#0E0F10] truncate pr-4">{drawerPedido.titulo}</h2>
+              <div className="flex items-center justify-between border-b border-base-500 p-5">
+                <h2 className="text-[16px] font-bold text-ink-500 truncate pr-4">{drawerPedido.titulo}</h2>
                 <motion.button
                   onClick={() => setDrawerPedido(null)}
-                  className="flex h-8 w-8 items-center justify-center rounded-full bg-[#EEEFE9] flex-shrink-0"
+                  className="flex h-8 w-8 items-center justify-center rounded-full bg-base-500 flex-shrink-0"
                   whileHover={{ scale: 1.1, rotate: 90 }}
                   whileTap={{ scale: 0.9 }}
                   transition={{ duration: 0.15 }}
                 >
-                  <X size={14} color="#0E0F10" />
+                  <X size={14} color="var(--hubia-ink-500)" />
                 </motion.button>
               </div>
 
               <div className="flex-1 overflow-y-auto p-5 flex flex-col gap-5">
                 {/* Badges */}
                 <div className="flex flex-wrap gap-2">
-                  <span className="rounded-[6px] bg-[#EEEFE9] px-2.5 py-1 text-[11px] font-semibold text-[#5E5E5F]">
+                  <span className="rounded-[6px] bg-base-500 px-2.5 py-1 text-[11px] font-semibold text-ink-400">
                     {drawerPedido.tipo.replace("_", " ")}
                   </span>
                   <span
@@ -237,8 +237,8 @@ export default function CalendarioClient({
 
                 {/* Prazo */}
                 <div>
-                  <p className="text-[11px] font-bold text-[#A9AAA5] uppercase tracking-wide mb-1">Prazo</p>
-                  <p className="text-[14px] font-semibold text-[#0E0F10]">
+                  <p className="text-[11px] font-bold text-base-700 uppercase tracking-wide mb-1">Prazo</p>
+                  <p className="text-[14px] font-semibold text-ink-500">
                     {new Date(drawerPedido.dueAt).toLocaleDateString("pt-BR", { weekday: "long", day: "numeric", month: "long" })}
                   </p>
                 </div>
@@ -246,14 +246,14 @@ export default function CalendarioClient({
                 {/* Creator */}
                 {drawerPedido.creator && (
                   <div>
-                    <p className="text-[11px] font-bold text-[#A9AAA5] uppercase tracking-wide mb-1.5">Creator</p>
+                    <p className="text-[11px] font-bold text-base-700 uppercase tracking-wide mb-1.5">Creator</p>
                     <div className="flex items-center gap-2">
-                      <div className="h-7 w-7 rounded-full bg-[#EEEFE9] overflow-hidden">
+                      <div className="h-7 w-7 rounded-full bg-base-500 overflow-hidden">
                         {drawerPedido.creator.avatarUrl && (
                           <img src={drawerPedido.creator.avatarUrl} alt="" className="h-full w-full object-cover" />
                         )}
                       </div>
-                      <span className="text-[13px] font-semibold text-[#0E0F10]">{drawerPedido.creator.name}</span>
+                      <span className="text-[13px] font-semibold text-ink-500">{drawerPedido.creator.name}</span>
                     </div>
                   </div>
                 )}
@@ -261,22 +261,22 @@ export default function CalendarioClient({
                 {/* Projeto */}
                 {drawerPedido.projeto && (
                   <div>
-                    <p className="text-[11px] font-bold text-[#A9AAA5] uppercase tracking-wide mb-1">Projeto</p>
-                    <p className="text-[13px] font-semibold text-[#0E0F10]">{drawerPedido.projeto.nome}</p>
+                    <p className="text-[11px] font-bold text-base-700 uppercase tracking-wide mb-1">Projeto</p>
+                    <p className="text-[13px] font-semibold text-ink-500">{drawerPedido.projeto.nome}</p>
                   </div>
                 )}
               </div>
 
               {/* Rodapé do drawer */}
-              <div className="border-t border-[#EEEFE9] p-5">
+              <div className="border-t border-base-500 p-5">
                 <motion.button
                   onClick={() => router.push(`/pedidos/${drawerPedido.id}`)}
-                  className="flex w-full items-center justify-center gap-2 rounded-[18px] bg-[#D7FF00] py-3 text-[14px] font-semibold text-[#0E0F10]"
+                  className="flex w-full items-center justify-center gap-2 rounded-[18px] bg-limao-500 py-3 text-[14px] font-semibold text-ink-500"
                   initial="rest"
                   animate="rest"
                   whileHover="hovered"
                   whileTap={{ scale: 0.96 }}
-                  variants={{ rest: { scale: 1, backgroundColor: "#D7FF00" }, hovered: { scale: 1.02, backgroundColor: "#DFFF33" } }}
+                  variants={{ rest: { scale: 1, backgroundColor: "var(--hubia-limao-500)" }, hovered: { scale: 1.02, backgroundColor: "#DFFF33" } }}
                   transition={{ duration: 0.15 }}
                 >
                   <motion.span variants={{ rest: { x: 0 }, hovered: { x: 2 } }}>

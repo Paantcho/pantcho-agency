@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { Home } from "lucide-react";
+import { HubiaPageAction } from "@/components/ui/hubia-page-action";
 import { HubiaModal } from "@/components/ui/hubia-modal";
 import { HubiaConfirmModal } from "@/components/ui/hubia-confirm-modal";
 import type { CreatorDetail } from "../../actions";
@@ -38,7 +39,7 @@ function CategoryTag({
 const CATEGORY_COLORS = {
   fixos: { bg: "#DCFFF6", text: "#00A87A" },
   flexiveis: { bg: "#FFF4E5", text: "#D97706" },
-  proibido: { bg: "#FFE8EB", text: "#FF576D" },
+  proibido: { bg: "#FFE8EB", text: "var(--hubia-red-500)" },
 };
 
 export default function CreatorEnvironmentsTab({
@@ -124,7 +125,7 @@ export default function CreatorEnvironmentsTab({
       {/* Banner de localização — fundo ink escuro */}
       <div
         className="flex items-start gap-4 rounded-2xl px-6 py-5"
-        style={{ background: "#0E0F10" }}
+        style={{ background: "var(--hubia-ink-500)" }}
       >
         <div
           className="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-xl"
@@ -136,14 +137,14 @@ export default function CreatorEnvironmentsTab({
           <p className="font-bold leading-snug" style={{ fontSize: "12px", color: "#FFFFFF" }}>
             {BANNER_TEXT}
           </p>
-          <p className="mt-1.5 font-medium" style={{ fontSize: "11px", color: "rgba(255,255,255,0.45)" }}>
+          <p className="mt-1.5 font-semibold" style={{ fontSize: "11px", color: "rgba(255,255,255,0.45)" }}>
             {BANNER_SUB}
           </p>
         </div>
       </div>
 
       {/* Título com contagem */}
-      <h2 className="font-bold" style={{ fontSize: "17px", color: "#0E0F10" }}>
+      <h2 className="font-bold" style={{ fontSize: "17px", color: "var(--hubia-ink-500)" }}>
         {environments.length}{" "}
         {environments.length === 1 ? "Ambiente Aprovado" : "Ambientes Aprovados"}
       </h2>
@@ -151,20 +152,15 @@ export default function CreatorEnvironmentsTab({
       {/* Estado vazio */}
       {environments.length === 0 && !showForm && (
         <div
-          className="flex flex-col items-center justify-center gap-4 rounded-[24px] border-2 border-dashed py-16"
-          style={{ borderColor: "#D9D9D4" }}
+          className="flex flex-col items-center justify-center gap-4 rounded-[30px] border-2 border-dashed py-16"
+          style={{ borderColor: "var(--hubia-sand-600)" }}
         >
-          <p className="font-semibold" style={{ fontSize: "14px", color: "#A9AAA5" }}>
+          <p className="font-semibold" style={{ fontSize: "14px", color: "var(--hubia-bg-base-700)" }}>
             Nenhum ambiente cadastrado.
           </p>
-          <button
-            type="button"
-            onClick={() => { resetForm(); setShowForm(true); }}
-            className="rounded-full font-bold transition-opacity hover:opacity-90"
-            style={{ background: "#D7FF00", color: "#0E0F10", fontSize: "13px", padding: "9px 22px" }}
-          >
+          <HubiaPageAction onClick={() => { resetForm(); setShowForm(true); }} icon={Home}>
             Adicionar ambiente
-          </button>
+          </HubiaPageAction>
         </div>
       )}
 
@@ -174,18 +170,18 @@ export default function CreatorEnvironmentsTab({
           {environments.map((env) => (
             <div
               key={env.id}
-              className="flex flex-col gap-4 rounded-[24px] p-5 transition-shadow hover:shadow-md"
+              className="flex flex-col gap-4 rounded-[30px] p-5"
               style={{ background: "#FFFFFF" }}
             >
               {/* Nome */}
-              <p className="font-bold" style={{ fontSize: "15px", color: "#0E0F10" }}>
+              <p className="font-bold" style={{ fontSize: "15px", color: "var(--hubia-ink-500)" }}>
                 {env.name}
               </p>
 
               {/* Seção FIXOS */}
               <div className="flex flex-col gap-1.5">
                 <CategoryTag label="FIXOS" color={CATEGORY_COLORS.fixos} />
-                <p className="font-medium leading-snug" style={{ fontSize: "12px", color: "#A9AAA5" }}>
+                <p className="font-semibold leading-snug" style={{ fontSize: "12px", color: "var(--hubia-bg-base-700)" }}>
                   {env.prompt ||
                     "Cinza contemporâneo, volumes retos, detalhes madeira/pedra clara. Jardim impecável. Porta grande madeira nobre. Espaço SUV."}
                 </p>
@@ -194,7 +190,7 @@ export default function CreatorEnvironmentsTab({
               {/* Seção FLEXÍVEIS */}
               <div className="flex flex-col gap-1.5">
                 <CategoryTag label="FLEXÍVEIS" color={CATEGORY_COLORS.flexiveis} />
-                <p className="font-medium leading-snug" style={{ fontSize: "12px", color: "#A9AAA5" }}>
+                <p className="font-semibold leading-snug" style={{ fontSize: "12px", color: "var(--hubia-bg-base-700)" }}>
                   {env.description ||
                     "Detalhar aqui o que pode ser variável sem que descaracterize algo mais complexo de ser mudado. Ex.: se houver uma fonte a mesma não pode ser retirada... mas pode estar desligada."}
                 </p>
@@ -203,18 +199,18 @@ export default function CreatorEnvironmentsTab({
               {/* Seção PROIBIDO */}
               <div className="flex flex-col gap-1.5">
                 <CategoryTag label="PROIBIDO" color={CATEGORY_COLORS.proibido} />
-                <p className="font-medium leading-snug" style={{ fontSize: "12px", color: "#A9AAA5" }}>
+                <p className="font-semibold leading-snug" style={{ fontSize: "12px", color: "var(--hubia-bg-base-700)" }}>
                   Cor da casa ou arquitetura. Qualquer vegetação que não seja compatível com a localização. Tipo do piso / acabamento.
                 </p>
               </div>
 
               {/* Ações */}
-              <div className="mt-auto flex gap-2 border-t pt-3" style={{ borderColor: "#EEEFE9" }}>
+              <div className="mt-auto flex gap-2 border-t pt-3" style={{ borderColor: "var(--hubia-bg-base-500)" }}>
                 <button
                   type="button"
                   onClick={() => startEdit(env)}
-                  className="rounded-full border px-3 py-1.5 text-[11px] font-semibold transition-colors hover:bg-[#EEEFE9]"
-                  style={{ borderColor: "#D9D9D4", color: "#0E0F10" }}
+                  className="rounded-full border px-3 py-1.5 text-[11px] font-semibold transition-colors hover:bg-base-500"
+                  style={{ borderColor: "var(--hubia-sand-600)", color: "var(--hubia-ink-500)" }}
                 >
                   Editar
                 </button>
@@ -222,7 +218,7 @@ export default function CreatorEnvironmentsTab({
                   type="button"
                   onClick={() => setDeleteModalEnvId(env.id)}
                   className="rounded-full border px-3 py-1.5 text-[11px] font-semibold transition-colors hover:bg-[#FFF0F2]"
-                  style={{ borderColor: "#FFB2BC", color: "#FF576D" }}
+                  style={{ borderColor: "#FFB2BC", color: "var(--hubia-red-500)" }}
                 >
                   Excluir
                 </button>
@@ -242,8 +238,8 @@ export default function CreatorEnvironmentsTab({
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
           {formError && (
             <div
-              className="rounded-xl px-4 py-3 text-[12px] font-medium"
-              style={{ background: "#FFE8EB", color: "#FF576D" }}
+              className="rounded-xl px-4 py-3 text-[12px] font-semibold"
+              style={{ background: "#FFE8EB", color: "var(--hubia-red-500)" }}
             >
               {formError}
             </div>
@@ -253,7 +249,7 @@ export default function CreatorEnvironmentsTab({
             { id: "env-desc", label: "Flexíveis (descrição)", value: description, onChange: setDescription, required: false, type: "text", rows: undefined },
           ].map((field) => (
             <div key={field.id} className="flex flex-col gap-1.5">
-              <label htmlFor={field.id} className="font-semibold" style={{ fontSize: "12px", color: "#0E0F10" }}>
+              <label htmlFor={field.id} className="font-semibold" style={{ fontSize: "12px", color: "var(--hubia-ink-500)" }}>
                 {field.label}
               </label>
               <input
@@ -262,13 +258,13 @@ export default function CreatorEnvironmentsTab({
                 required={field.required}
                 value={field.value}
                 onChange={(e) => field.onChange(e.target.value)}
-                className="w-full rounded-xl border-0 px-4 py-3 font-medium outline-none transition-colors focus:ring-2 focus:ring-[#D7FF00]/30"
-                style={{ background: "#EEEFE9", fontSize: "13px", color: "#0E0F10" }}
+                className="w-full rounded-xl border-0 px-4 py-3 font-semibold outline-none transition-colors focus:ring-2 focus:ring-limao-500/30"
+                style={{ background: "var(--hubia-bg-base-500)", fontSize: "13px", color: "var(--hubia-ink-500)" }}
               />
             </div>
           ))}
           <div className="flex flex-col gap-1.5">
-            <label htmlFor="env-prompt" className="font-semibold" style={{ fontSize: "12px", color: "#0E0F10" }}>
+            <label htmlFor="env-prompt" className="font-semibold" style={{ fontSize: "12px", color: "var(--hubia-ink-500)" }}>
               Fixos (prompt)
             </label>
             <textarea
@@ -276,12 +272,12 @@ export default function CreatorEnvironmentsTab({
               rows={3}
               value={prompt}
               onChange={(e) => setPrompt(e.target.value)}
-              className="w-full rounded-xl border-0 px-4 py-3 font-medium outline-none transition-colors focus:ring-2 focus:ring-[#D7FF00]/30"
-              style={{ background: "#EEEFE9", fontSize: "13px", color: "#0E0F10" }}
+              className="w-full rounded-xl border-0 px-4 py-3 font-semibold outline-none transition-colors focus:ring-2 focus:ring-limao-500/30"
+              style={{ background: "var(--hubia-bg-base-500)", fontSize: "13px", color: "var(--hubia-ink-500)" }}
             />
           </div>
           <div className="flex flex-col gap-1.5">
-            <label htmlFor="env-thumb" className="font-semibold" style={{ fontSize: "12px", color: "#0E0F10" }}>
+            <label htmlFor="env-thumb" className="font-semibold" style={{ fontSize: "12px", color: "var(--hubia-ink-500)" }}>
               URL thumbnail
             </label>
             <input
@@ -289,24 +285,24 @@ export default function CreatorEnvironmentsTab({
               type="url"
               value={thumbnailUrl}
               onChange={(e) => setThumbnailUrl(e.target.value)}
-              className="w-full rounded-xl border-0 px-4 py-3 font-medium outline-none transition-colors focus:ring-2 focus:ring-[#D7FF00]/30"
-              style={{ background: "#EEEFE9", fontSize: "13px", color: "#0E0F10" }}
+              className="w-full rounded-xl border-0 px-4 py-3 font-semibold outline-none transition-colors focus:ring-2 focus:ring-limao-500/30"
+              style={{ background: "var(--hubia-bg-base-500)", fontSize: "13px", color: "var(--hubia-ink-500)" }}
             />
           </div>
           <div className="flex gap-2 pt-1">
-            <button
+            <HubiaPageAction
               type="submit"
               disabled={loading}
-              className="rounded-full font-bold transition-opacity hover:opacity-90 disabled:opacity-50"
-              style={{ background: "#D7FF00", color: "#0E0F10", fontSize: "13px", padding: "9px 22px" }}
+              loading={loading}
+              loadingText="Salvando…"
             >
-              {loading ? "Salvando…" : editingId ? "Salvar" : "Criar"}
-            </button>
+              {editingId ? "Salvar" : "Criar"}
+            </HubiaPageAction>
             <button
               type="button"
               onClick={resetForm}
-              className="rounded-full border font-semibold transition-colors hover:bg-[#EEEFE9]"
-              style={{ borderColor: "#D9D9D4", color: "#0E0F10", fontSize: "13px", padding: "9px 22px" }}
+              className="rounded-full border font-semibold transition-colors hover:bg-base-500"
+              style={{ borderColor: "var(--hubia-sand-600)", color: "var(--hubia-ink-500)", fontSize: "13px", padding: "9px 22px" }}
             >
               Cancelar
             </button>

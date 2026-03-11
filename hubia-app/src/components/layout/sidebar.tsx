@@ -229,7 +229,7 @@ export function Sidebar({
             <motion.button
               type="button"
               onClick={() => setOrgOpen((v) => !v)}
-              className="mt-1 flex w-full items-center justify-between gap-2 rounded-[10px] px-2 py-1.5 text-left text-label-sm text-ink-500"
+              className="mt-1 flex w-full items-center justify-between gap-2 rounded-[12px] px-2 py-1.5 text-left text-label-sm text-ink-500"
               whileHover={{ backgroundColor: "rgba(213,210,201,0.35)" }}
               whileTap={{ scale: 0.97 }}
               transition={{ duration: 0.15, ease: [0.4, 0, 0.2, 1] }}
@@ -251,7 +251,7 @@ export function Sidebar({
                 exit={{ opacity: 0, y: -6, scale: 0.97 }}
                 transition={{ duration: 0.15, ease: [0, 0, 0.2, 1] }}
                 className="mt-1 overflow-hidden rounded-[12px] bg-white py-1.5"
-                style={{ boxShadow: "0 8px 24px rgba(14,15,16,0.12)" }}
+                style={{}}
               >
                 {organizations.map((org) => (
                   <motion.button
@@ -261,9 +261,9 @@ export function Sidebar({
                     className={`w-full px-3 py-2 text-left text-[13px] ${
                       org.id === currentOrganizationId
                         ? "font-semibold text-ink-500"
-                        : "font-medium text-base-700"
+                        : "font-semibold text-base-700"
                     }`}
-                    whileHover={{ backgroundColor: "#EEEFE9", color: "#0E0F10" }}
+                    whileHover={{ backgroundColor: "var(--hubia-bg-base-500)", color: "var(--hubia-ink-500)" }}
                     whileTap={{ scale: 0.98 }}
                     transition={{ duration: 0.12 }}
                   >

@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { AnimatedLink } from "@/components/ui/animated-link";
-import { Plus, Globe, Code2, Clapperboard } from "lucide-react";
+import { HubiaPageAction } from "@/components/ui/hubia-page-action";
+import { Globe, Code2, Clapperboard } from "lucide-react";
 import { getCurrentOrganizationId } from "@/lib/auth-organization";
 import { getDashboardData } from "./dashboard-data";
 import { KpiCards, PedidosPrioritariosCards } from "./dashboard-motion";
@@ -93,22 +94,14 @@ export default async function DashboardPage() {
       {/* Header: data, saudação, botão Novo pedido */}
       <div className="flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <p className="text-label-sm font-medium text-base-700">{dataStr}</p>
+          <p className="text-label-sm font-semibold text-base-700">{dataStr}</p>
           <h1 className="text-heading-md font-bold text-ink-500 mt-0.5">
             {greeting}, Pantcho 👋
           </h1>
         </div>
-        <Button
-          variant="default"
-          size="lg"
-          asChild
-          className="mt-2 sm:mt-0 shrink-0 h-11 min-h-11 px-6 rounded-full"
-        >
-          <AnimatedLink href="/pedidos" className="gap-2">
-            <Plus className="size-5" />
-            Novo pedido
-          </AnimatedLink>
-        </Button>
+        <HubiaPageAction href="/pedidos" className="mt-2 sm:mt-0 shrink-0">
+          Novo pedido
+        </HubiaPageAction>
       </div>
 
       {/* 4 KPI cards — Client Component com stagger */}
@@ -135,7 +128,7 @@ export default async function DashboardPage() {
                       <p className="text-label-md font-semibold text-ink-500 truncate">
                         {squad.name}
                       </p>
-                      <p className="text-body-sm font-medium text-base-700">
+                      <p className="text-body-sm font-semibold text-base-700">
                         {squad.agents}
                       </p>
                     </div>
@@ -162,7 +155,7 @@ export default async function DashboardPage() {
                       }}
                     />
                   </div>
-                  <p className="mt-1 text-body-sm font-medium text-base-700">
+                  <p className="mt-1 text-body-sm font-semibold text-base-700">
                     {squad.pct}% contexto livre
                   </p>
                 </div>
@@ -189,7 +182,7 @@ export default async function DashboardPage() {
                 ) : (
                   data.emAndamento.map((item) => (
                     <li key={item.titulo} className="flex flex-col gap-0.5">
-                      <span className="text-body-md font-medium text-ink-500">
+                      <span className="text-body-md font-semibold text-ink-500">
                         {item.titulo}
                       </span>
                       {item.subtitulo !== "—" && (
@@ -220,7 +213,7 @@ export default async function DashboardPage() {
                       aria-hidden
                     />
                     <div>
-                      <p className="text-body-sm font-medium text-white">
+                      <p className="text-body-sm font-semibold text-white">
                         {a.title}
                       </p>
                       <p className="text-body-sm text-white/60">{a.meta}</p>

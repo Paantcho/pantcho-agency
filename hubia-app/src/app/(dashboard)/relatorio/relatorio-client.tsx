@@ -84,7 +84,7 @@ const AGENTES_HISTORICO = [
 const SPARKLINE_HERO = [8, 14, 11, 18, 22, 19, 26, 30, 27, 35, 38, 32, 41, 44, 38, 47, 52, 56, 61, 58, 67, 72, 68, 77, 82, 79, 88, 95];
 
 const DADOS_STATUS = [
-  { status: "entregue", label: "Entregue", value: 47, cor: "#D7FF00", insight: "Alta tendência", critico: false },
+  { status: "entregue", label: "Entregue", value: 47, cor: "var(--hubia-limao-500)", insight: "Alta tendência", critico: false },
   { status: "em_andamento", label: "Em andamento", value: 23, cor: "#2A2B2C", insight: "Normal", critico: false },
   { status: "revisao", label: "Em revisão", value: 12, cor: "#FB8C00", insight: "Acima da média", critico: true },
   { status: "aguardando", label: "Aguardando", value: 9, cor: "#8A8B8C", insight: "Dentro do esperado", critico: false },
@@ -137,12 +137,12 @@ const LOG_POOL = [
 
 const ACTIVITIES_POOL: Array<{ Icon: LucideIcon; text: string; color: string; tipo: string }> = [
   { Icon: CheckCircle2, text: "Pedido #047 entregue com sucesso", color: "#43A047", tipo: "Entrega" },
-  { Icon: Zap, text: "Planner iniciou briefing #048", color: "#D7FF00", tipo: "Briefing" },
+  { Icon: Zap, text: "Planner iniciou briefing #048", color: "var(--hubia-limao-500)", tipo: "Briefing" },
   { Icon: Palette, text: "Dir. de Arte solicitou revisão", color: "#FB8C00", tipo: "Revisão" },
-  { Icon: Bot, text: "Agente QA detectou inconsistência", color: "#5E5E5F", tipo: "QA" },
-  { Icon: FileVideo, text: "Novo pedido criado: Campanha Q2", color: "#0E0F10", tipo: "Pedido" },
+  { Icon: Bot, text: "Agente QA detectou inconsistência", color: "var(--hubia-ink-400)", tipo: "QA" },
+  { Icon: FileVideo, text: "Novo pedido criado: Campanha Q2", color: "var(--hubia-ink-500)", tipo: "Pedido" },
   { Icon: Sparkles, text: "Prompt gerado para pedido #046", color: "#8AB000", tipo: "IA" },
-  { Icon: Users, text: "Creator confirmada para pedido #045", color: "#5E5E5F", tipo: "Creator" },
+  { Icon: Users, text: "Creator confirmada para pedido #045", color: "var(--hubia-ink-400)", tipo: "Creator" },
   { Icon: ArrowUpRight, text: "Deploy automático concluído", color: "#43A047", tipo: "Deploy" },
 ];
 
@@ -159,7 +159,7 @@ const STATUS_MAP: Record<string, { cor: string; label: string }> = {
   em_andamento: { cor: "#2A74DC", label: "Em andamento" },
   revisao: { cor: "#FB8C00", label: "Revisão" },
   entregue: { cor: "#43A047", label: "Entregue" },
-  aprovado: { cor: "#D7FF00", label: "Aprovado" },
+  aprovado: { cor: "var(--hubia-limao-500)", label: "Aprovado" },
 };
 
 const KPIS_HERO: KpiHero[] = [
@@ -234,7 +234,7 @@ function AnimatedCount({ target, delay = 0, suffix = "" }: {
   return <>{display.toLocaleString("pt-BR")}{suffix}</>;
 }
 
-function LivePulseDot({ color = "#D7FF00", sizePx = 9 }: { color?: string; sizePx?: number }) {
+function LivePulseDot({ color = "var(--hubia-limao-500)", sizePx = 9 }: { color?: string; sizePx?: number }) {
   return (
     <span className="relative flex flex-shrink-0" style={{ width: sizePx, height: sizePx }}>
       <motion.span
@@ -299,7 +299,7 @@ function MiniTabBar({ tabs, active, onChange }: {
   onChange: (id: string) => void;
 }) {
   return (
-    <div className="flex items-center rounded-[12px] p-1 gap-0.5" style={{ backgroundColor: "#EEEFE9" }}>
+    <div className="flex items-center rounded-[12px] p-1 gap-0.5" style={{ backgroundColor: "var(--hubia-bg-base-500)" }}>
       {tabs.map((t) => (
         <motion.button
           key={t.id}
@@ -307,10 +307,10 @@ function MiniTabBar({ tabs, active, onChange }: {
           className="flex items-center gap-1.5 rounded-[8px] px-3 py-1.5 text-[12px] font-semibold"
           animate={{
             backgroundColor: active === t.id ? "#FFFFFF" : "transparent",
-            color: active === t.id ? "#0E0F10" : "#A9AAA5",
+            color: active === t.id ? "var(--hubia-ink-500)" : "var(--hubia-bg-base-700)",
           }}
           initial={false}
-          whileHover={active !== t.id ? { backgroundColor: "rgba(255,255,255,0.55)", color: "#0E0F10" } : {}}
+          whileHover={active !== t.id ? { backgroundColor: "rgba(255,255,255,0.55)", color: "var(--hubia-ink-500)" } : {}}
           whileTap={{ scale: 0.96 }}
           transition={{ duration: 0.15, ease: [0.4, 0, 0.2, 1] }}
         >
@@ -319,8 +319,8 @@ function MiniTabBar({ tabs, active, onChange }: {
             <motion.span
               className="text-[10px] font-bold px-1.5 py-0.5 rounded-full"
               animate={{
-                backgroundColor: active === t.id ? "#EEEFE9" : "rgba(169,170,165,0.15)",
-                color: active === t.id ? "#0E0F10" : "#A9AAA5",
+                backgroundColor: active === t.id ? "var(--hubia-bg-base-500)" : "rgba(169,170,165,0.15)",
+                color: active === t.id ? "var(--hubia-ink-500)" : "var(--hubia-bg-base-700)",
               }}
               initial={false}
               transition={{ duration: 0.15 }}
@@ -341,7 +341,7 @@ function HubiaTooltip({ active, payload, label }: {
 }) {
   if (!active || !payload?.length) return null;
   return (
-    <div className="rounded-[16px] bg-[#0E0F10] px-4 py-4 text-white min-w-[150px]">
+    <div className="rounded-[16px] bg-ink-500 px-4 py-4 text-white min-w-[150px]">
       <p className="text-[10px] mb-3 font-bold tracking-[0.12em] uppercase" style={{ color: "#4A4B4C" }}>{label}</p>
       {payload.map((item) => (
         <div key={item.name} className="flex items-center justify-between gap-6 mb-2.5 last:mb-0">
@@ -398,14 +398,14 @@ function ProducaoVolumeChart({ periodo }: { periodo: string }) {
       <AreaChart data={dados} margin={{ top: 16, right: 8, left: 0, bottom: 4 }}>
         <defs>
           <linearGradient id="gradVolPedidos" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stopColor="#D7FF00" stopOpacity={0.6} />
-            <stop offset="30%" stopColor="#D7FF00" stopOpacity={0.28} />
-            <stop offset="70%" stopColor="#D7FF00" stopOpacity={0.06} />
-            <stop offset="100%" stopColor="#D7FF00" stopOpacity={0} />
+            <stop offset="0%" stopColor="var(--hubia-limao-500)" stopOpacity={0.6} />
+            <stop offset="30%" stopColor="var(--hubia-limao-500)" stopOpacity={0.28} />
+            <stop offset="70%" stopColor="var(--hubia-limao-500)" stopOpacity={0.06} />
+            <stop offset="100%" stopColor="var(--hubia-limao-500)" stopOpacity={0} />
           </linearGradient>
           <linearGradient id="gradVolEntregues" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stopColor="#0E0F10" stopOpacity={0.14} />
-            <stop offset="100%" stopColor="#0E0F10" stopOpacity={0} />
+            <stop offset="0%" stopColor="var(--hubia-ink-500)" stopOpacity={0.14} />
+            <stop offset="100%" stopColor="var(--hubia-ink-500)" stopOpacity={0} />
           </linearGradient>
         </defs>
         <CartesianGrid strokeDasharray="0" stroke="rgba(14,15,16,0.04)" horizontal={true} vertical={false} />
@@ -427,11 +427,11 @@ function ProducaoVolumeChart({ periodo }: { periodo: string }) {
           type="monotone"
           dataKey="pedidos"
           name="Pedidos"
-          stroke="#D7FF00"
+          stroke="var(--hubia-limao-500)"
           strokeWidth={4}
           fill="url(#gradVolPedidos)"
           dot={false}
-          activeDot={{ r: 7, fill: "#D7FF00", strokeWidth: 3, stroke: "#FFFFFF" }}
+          activeDot={{ r: 7, fill: "var(--hubia-limao-500)", strokeWidth: 3, stroke: "#FFFFFF" }}
           animationDuration={420}
           animationEasing="ease-in-out"
         />
@@ -439,11 +439,11 @@ function ProducaoVolumeChart({ periodo }: { periodo: string }) {
           type="monotone"
           dataKey="entregues"
           name="Entregues"
-          stroke="#0E0F10"
+          stroke="var(--hubia-ink-500)"
           strokeWidth={2.5}
           fill="url(#gradVolEntregues)"
           dot={false}
-          activeDot={{ r: 5, fill: "#0E0F10", strokeWidth: 2, stroke: "#FFFFFF" }}
+          activeDot={{ r: 5, fill: "var(--hubia-ink-500)", strokeWidth: 2, stroke: "#FFFFFF" }}
           animationDuration={420}
           animationEasing="ease-in-out"
         />
@@ -466,8 +466,8 @@ function ProducaoSquadChart() {
         />
         <YAxis axisLine={false} tickLine={false} tick={{ fontSize: 11, fill: "#B0B1AB", fontFamily: "Urbanist", fontWeight: 600 }} width={40} />
         <Tooltip content={<HubiaTooltip />} cursor={{ fill: "rgba(14,15,16,0.03)" }} />
-        <Bar dataKey="audiovisual" name="Audiovisual" fill="#D7FF00" radius={[6, 6, 0, 0]} animationDuration={900} />
-        <Bar dataKey="dev" name="Dev Squad" fill="#0E0F10" radius={[6, 6, 0, 0]} animationDuration={900} />
+        <Bar dataKey="audiovisual" name="Audiovisual" fill="var(--hubia-limao-500)" radius={[6, 6, 0, 0]} animationDuration={900} />
+        <Bar dataKey="dev" name="Dev Squad" fill="var(--hubia-ink-500)" radius={[6, 6, 0, 0]} animationDuration={900} />
       </BarChart>
     </ResponsiveContainer>
   );
@@ -479,8 +479,8 @@ function ProducaoEficienciaChart() {
       <LineChart data={SERIE_EFICIENCIA_BASE} margin={{ top: 16, right: 8, left: 0, bottom: 4 }}>
         <defs>
           <linearGradient id="gradEfic" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stopColor="#D7FF00" stopOpacity={0.3} />
-            <stop offset="100%" stopColor="#D7FF00" stopOpacity={0} />
+            <stop offset="0%" stopColor="var(--hubia-limao-500)" stopOpacity={0.3} />
+            <stop offset="100%" stopColor="var(--hubia-limao-500)" stopOpacity={0} />
           </linearGradient>
         </defs>
         <CartesianGrid strokeDasharray="0" stroke="rgba(14,15,16,0.04)" horizontal={true} vertical={false} />
@@ -503,11 +503,11 @@ function ProducaoEficienciaChart() {
           content={({ active, payload, label }) => {
             if (!active || !payload?.length) return null;
             return (
-              <div className="rounded-[16px] bg-[#0E0F10] px-4 py-4 text-white min-w-[140px]">
+              <div className="rounded-[16px] bg-ink-500 px-4 py-4 text-white min-w-[140px]">
                 <p className="text-[10px] mb-3 font-bold tracking-[0.12em] uppercase" style={{ color: "#4A4B4C" }}>{label}</p>
                 <div className="flex items-center justify-between gap-5">
                   <div className="flex items-center gap-2">
-                    <span className="h-2 w-2 rounded-full bg-[#D7FF00]" />
+                    <span className="h-2 w-2 rounded-full bg-limao-500" />
                     <span className="text-[11px] font-semibold" style={{ color: "#6A6B6C" }}>Eficiência</span>
                   </div>
                   <span className="text-[18px] font-bold tabular-nums">{payload[0].value}%</span>
@@ -521,10 +521,10 @@ function ProducaoEficienciaChart() {
           type="monotone"
           dataKey="eficiencia"
           name="Eficiência"
-          stroke="#D7FF00"
+          stroke="var(--hubia-limao-500)"
           strokeWidth={4}
-          dot={{ r: 5, fill: "#D7FF00", strokeWidth: 0 }}
-          activeDot={{ r: 8, fill: "#D7FF00", strokeWidth: 3, stroke: "#FFFFFF" }}
+          dot={{ r: 5, fill: "var(--hubia-limao-500)", strokeWidth: 0 }}
+          activeDot={{ r: 8, fill: "var(--hubia-limao-500)", strokeWidth: 3, stroke: "#FFFFFF" }}
           animationDuration={420}
           animationEasing="ease-in-out"
         />
@@ -549,11 +549,11 @@ function ProducaoChartContainer({ periodo }: { periodo: string }) {
     volume: (
       <div className="flex items-center gap-5">
         <div className="flex items-center gap-2">
-          <span className="h-[3px] w-7 rounded-full" style={{ backgroundColor: "#D7FF00" }} />
+          <span className="h-[3px] w-7 rounded-full" style={{ backgroundColor: "var(--hubia-limao-500)" }} />
           <span className="text-[12px] font-bold text-[#8A8B8C]">Pedidos</span>
         </div>
         <div className="flex items-center gap-2">
-          <span className="h-[3px] w-7 rounded-full bg-[#0E0F10]" />
+          <span className="h-[3px] w-7 rounded-full bg-ink-500" />
           <span className="text-[12px] font-bold text-[#8A8B8C]">Entregues</span>
         </div>
       </div>
@@ -561,18 +561,18 @@ function ProducaoChartContainer({ periodo }: { periodo: string }) {
     squad: (
       <div className="flex items-center gap-5">
         <div className="flex items-center gap-2">
-          <span className="h-3.5 w-3.5 rounded-[4px]" style={{ backgroundColor: "#D7FF00" }} />
+          <span className="h-3.5 w-3.5 rounded-[4px]" style={{ backgroundColor: "var(--hubia-limao-500)" }} />
           <span className="text-[12px] font-bold text-[#8A8B8C]">Audiovisual</span>
         </div>
         <div className="flex items-center gap-2">
-          <span className="h-3.5 w-3.5 rounded-[4px] bg-[#0E0F10]" />
+          <span className="h-3.5 w-3.5 rounded-[4px] bg-ink-500" />
           <span className="text-[12px] font-bold text-[#8A8B8C]">Dev Squad</span>
         </div>
       </div>
     ),
     eficiencia: (
       <div className="flex items-center gap-2">
-        <span className="h-[3px] w-7 rounded-full" style={{ backgroundColor: "#D7FF00" }} />
+        <span className="h-[3px] w-7 rounded-full" style={{ backgroundColor: "var(--hubia-limao-500)" }} />
         <span className="text-[12px] font-bold text-[#8A8B8C]">Taxa de entrega (%) por mês</span>
       </div>
     ),
@@ -594,8 +594,8 @@ function ProducaoChartContainer({ periodo }: { periodo: string }) {
     <>
       <div className="flex items-start justify-between mb-7 gap-4">
         <div>
-          <h2 className="text-[20px] font-bold text-[#0E0F10]">{titles[view]}</h2>
-          <p className="text-[12px] font-semibold mt-1" style={{ color: "#A9AAA5" }}>{subtitles[view]}</p>
+          <h2 className="text-[20px] font-bold text-ink-500">{titles[view]}</h2>
+          <p className="text-[12px] font-semibold mt-1" style={{ color: "var(--hubia-bg-base-700)" }}>{subtitles[view]}</p>
         </div>
         <div className="flex items-center gap-5 flex-shrink-0">
           {legends[view]}
@@ -627,7 +627,7 @@ function SaudeOperacional() {
 
   return (
     <motion.div
-      className="rounded-[20px] bg-[#0E0F10] p-6 flex flex-col"
+      className="rounded-[30px] bg-ink-500 p-6 flex flex-col"
       initial={{ opacity: 0, y: 16 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.35, ease: [0, 0, 0.2, 1], delay: 0.18 }}
@@ -703,18 +703,18 @@ function StatusPedidos() {
 
   return (
     <motion.div
-      className="rounded-[20px] bg-white p-6"
+      className="rounded-[30px] bg-white p-6"
       initial={{ opacity: 0, y: 16 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.35, ease: [0, 0, 0.2, 1], delay: 0.35 }}
     >
       <div className="flex items-center gap-2.5 mb-6">
         <div className="flex h-9 w-9 items-center justify-center rounded-[12px]" style={{ backgroundColor: "#F6F7F2" }}>
-          <BarChart3 size={15} color="#5E5E5F" />
+          <BarChart3 size={15} color="var(--hubia-ink-400)" />
         </div>
         <div>
-          <h2 className="text-[16px] font-bold text-[#0E0F10]">Status dos pedidos</h2>
-          <p className="text-[11px] font-semibold mt-0.5" style={{ color: "#A9AAA5" }}>Leitura operacional</p>
+          <h2 className="text-[16px] font-bold text-ink-500">Status dos pedidos</h2>
+          <p className="text-[11px] font-semibold mt-0.5" style={{ color: "var(--hubia-bg-base-700)" }}>Leitura operacional</p>
         </div>
       </div>
 
@@ -744,7 +744,7 @@ function StatusPedidos() {
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2.5">
                 <span className="h-2.5 w-2.5 rounded-full flex-shrink-0" style={{ backgroundColor: s.cor }} />
-                <span className="text-[14px] font-bold text-[#0E0F10]">{s.label}</span>
+                <span className="text-[14px] font-bold text-ink-500">{s.label}</span>
                 {s.critico && (
                   <span className="text-[9px] font-bold px-1.5 py-0.5 rounded-full" style={{ backgroundColor: "#FB8C0018", color: "#FB8C00" }}>
                     atenção
@@ -752,9 +752,9 @@ function StatusPedidos() {
                 )}
               </div>
               <div className="flex items-center gap-3">
-                <span className="text-[11px] font-semibold" style={{ color: "#A9AAA5" }}>{s.insight}</span>
+                <span className="text-[11px] font-semibold" style={{ color: "var(--hubia-bg-base-700)" }}>{s.insight}</span>
                 <div className="flex items-baseline gap-1">
-                  <span className="text-[26px] font-bold text-[#0E0F10] leading-none tabular-nums">{s.value}</span>
+                  <span className="text-[26px] font-bold text-ink-500 leading-none tabular-nums">{s.value}</span>
                   <span className="text-[11px] font-bold" style={{ color: "#C8C9C4" }}>
                     {Math.round((s.value / total) * 100)}%
                   </span>
@@ -776,14 +776,14 @@ function DistribuicaoTipo() {
 
   return (
     <motion.div
-      className="rounded-[20px] bg-white p-6"
+      className="rounded-[30px] bg-white p-6"
       initial={{ opacity: 0, y: 16 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.35, ease: [0, 0, 0.2, 1], delay: 0.38 }}
     >
       <div className="mb-6">
-        <h2 className="text-[16px] font-bold text-[#0E0F10]">Por tipo de pedido</h2>
-        <p className="text-[11px] font-semibold mt-0.5" style={{ color: "#A9AAA5" }}>Ranking de volume no período</p>
+        <h2 className="text-[16px] font-bold text-ink-500">Por tipo de pedido</h2>
+        <p className="text-[11px] font-semibold mt-0.5" style={{ color: "var(--hubia-bg-base-700)" }}>Ranking de volume no período</p>
       </div>
 
       <div className="flex flex-col gap-6">
@@ -791,7 +791,7 @@ function DistribuicaoTipo() {
           const isFirst = i === 0;
           const isSecond = i === 1;
           const IconComp = d.Icon;
-          const barColor = isFirst ? "#D7FF00" : isSecond ? "#2A2B2C" : "#D9D9D4";
+          const barColor = isFirst ? "var(--hubia-limao-500)" : isSecond ? "#2A2B2C" : "#D9D9D4";
           const barH = isFirst ? 12 : isSecond ? 8 : 6;
           const numSize = isFirst ? "26px" : isSecond ? "22px" : "18px";
           return (
@@ -807,8 +807,8 @@ function DistribuicaoTipo() {
                   <span
                     className="text-[10px] font-bold flex-shrink-0 flex items-center justify-center rounded-full"
                     style={{
-                      color: isFirst ? "#0E0F10" : "#A9AAA5",
-                      backgroundColor: isFirst ? "#D7FF00" : "transparent",
+                      color: isFirst ? "var(--hubia-ink-500)" : "var(--hubia-bg-base-700)",
+                      backgroundColor: isFirst ? "var(--hubia-limao-500)" : "transparent",
                       width: 20,
                       height: 20,
                       border: isFirst ? "none" : "1.5px solid #E4E5E0",
@@ -816,17 +816,17 @@ function DistribuicaoTipo() {
                   >
                     {i + 1}
                   </span>
-                  <div className="flex h-8 w-8 items-center justify-center rounded-[10px]" style={{ backgroundColor: isFirst ? "#D7FF0020" : "#EEEFE9" }}>
-                    <IconComp size={14} color={isFirst ? "#8AB000" : "#A9AAA5"} />
+                  <div className="flex h-8 w-8 items-center justify-center rounded-[12px]" style={{ backgroundColor: isFirst ? "color-mix(in srgb, var(--hubia-limao-500) 12%, transparent)" : "var(--hubia-bg-base-500)" }}>
+                    <IconComp size={14} color={isFirst ? "#8AB000" : "var(--hubia-bg-base-700)"} />
                   </div>
-                  <span className="text-[14px] font-bold text-[#0E0F10]">{d.tipo}</span>
+                  <span className="text-[14px] font-bold text-ink-500">{d.tipo}</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <span className="font-bold tabular-nums" style={{ fontSize: numSize, color: isFirst ? "#0E0F10" : "#5E5E5F" }}>
+                  <span className="font-bold tabular-nums" style={{ fontSize: numSize, color: isFirst ? "var(--hubia-ink-500)" : "var(--hubia-ink-400)" }}>
                     {d.value}%
                   </span>
                   {isFirst && (
-                    <span className="text-[9px] font-bold px-1.5 py-0.5 rounded-full" style={{ backgroundColor: "#D7FF00", color: "#0E0F10" }}>
+                    <span className="text-[9px] font-bold px-1.5 py-0.5 rounded-full" style={{ backgroundColor: "var(--hubia-limao-500)", color: "var(--hubia-ink-500)" }}>
                       #1
                     </span>
                   )}
@@ -853,18 +853,18 @@ function UsoIA() {
 
   return (
     <motion.div
-      className="rounded-[20px] bg-white p-6"
+      className="rounded-[30px] bg-white p-6"
       initial={{ opacity: 0, y: 16 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.35, ease: [0, 0, 0.2, 1], delay: 0.42 }}
     >
       <div className="flex items-center gap-3 mb-6">
-        <div className="flex h-10 w-10 items-center justify-center rounded-[12px]" style={{ backgroundColor: "#D7FF0020" }}>
+        <div className="flex h-10 w-10 items-center justify-center rounded-[12px]" style={{ backgroundColor: "color-mix(in srgb, var(--hubia-limao-500) 12%, transparent)" }}>
           <Sparkles size={16} color="#8AB000" />
         </div>
         <div>
-          <h2 className="text-[16px] font-bold text-[#0E0F10]">Uso de IA</h2>
-          <p className="text-[11px] font-semibold mt-0.5" style={{ color: "#A9AAA5" }}>Consumo inteligente no período</p>
+          <h2 className="text-[16px] font-bold text-ink-500">Uso de IA</h2>
+          <p className="text-[11px] font-semibold mt-0.5" style={{ color: "var(--hubia-bg-base-700)" }}>Consumo inteligente no período</p>
         </div>
       </div>
 
@@ -878,8 +878,8 @@ function UsoIA() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.48 + i * 0.07 }}
           >
-            <p className="text-[10px] font-bold tracking-[0.1em] uppercase leading-tight" style={{ color: "#A9AAA5" }}>{m.label}</p>
-            <p className="text-[28px] font-bold text-[#0E0F10] leading-none tabular-nums">{m.value}</p>
+            <p className="text-[10px] font-bold tracking-[0.1em] uppercase leading-tight" style={{ color: "var(--hubia-bg-base-700)" }}>{m.label}</p>
+            <p className="text-[28px] font-bold text-ink-500 leading-none tabular-nums">{m.value}</p>
             <div className="flex items-center justify-between mt-auto">
               <p className="text-[11px] font-semibold leading-tight" style={{ color: "#8A8B8C" }}>{m.sub}</p>
               <div className="flex items-center gap-1 px-1.5 py-0.5 rounded-full" style={{ backgroundColor: m.pos ? "#43A04714" : "#8A8B8C12" }}>
@@ -898,7 +898,7 @@ function UsoIA() {
 
 function agentStatusConfig(load: number) {
   if (load > 80) return { color: "#FB8C00", label: "Sobrecarregado", bg: "#FB8C0012" };
-  if (load > 30) return { color: "#D7FF00", label: "Ativo", bg: "#D7FF0012" };
+  if (load > 30) return { color: "var(--hubia-limao-500)", label: "Ativo", bg: "color-mix(in srgb, var(--hubia-limao-500) 7%, transparent)" };
   return { color: "#8A8B8C", label: "Livre", bg: "#8A8B8C12" };
 }
 
@@ -957,24 +957,24 @@ function OrquestradorMonitor() {
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-1.5">
                         <LivePulseDot color={color} sizePx={7} />
-                        <span className="text-[11px] font-bold text-[#0E0F10] truncate">{ag.label}</span>
+                        <span className="text-[11px] font-bold text-ink-500 truncate">{ag.label}</span>
                       </div>
                       <span className="text-[10px] font-bold px-1.5 py-0.5 rounded-full flex-shrink-0" style={{ color, backgroundColor: bg }}>
                         {ag.load}%
                       </span>
                     </div>
                     <AnimatedBar value={ag.load} max={100} color={color} height={5} />
-                    <span className="text-[10px] font-semibold" style={{ color: "#A9AAA5" }}>{label}</span>
+                    <span className="text-[10px] font-semibold" style={{ color: "var(--hubia-bg-base-700)" }}>{label}</span>
                   </motion.div>
                 );
               })}
             </div>
 
             {/* LIVE log */}
-            <div className="rounded-[16px] bg-[#0E0F10] p-4">
+            <div className="rounded-[16px] bg-ink-500 p-4">
               <div className="flex items-center gap-2 mb-4">
-                <LivePulseDot color="#D7FF00" sizePx={7} />
-                <span className="text-[10px] font-bold tracking-[0.12em] uppercase" style={{ color: "#D7FF00" }}>Live</span>
+                <LivePulseDot color="var(--hubia-limao-500)" sizePx={7} />
+                <span className="text-[10px] font-bold tracking-[0.12em] uppercase" style={{ color: "var(--hubia-limao-500)" }}>Live</span>
                 <span className="text-[10px] font-semibold ml-auto" style={{ color: "#333435" }}>Tempo real</span>
               </div>
               <div style={{ height: LOG_H * MAX_LOGS, overflow: "hidden", position: "relative" }}>
@@ -990,7 +990,7 @@ function OrquestradorMonitor() {
                       exit={{ opacity: 0 }}
                       transition={{ duration: 0.28, ease: [0, 0, 0.2, 1] }}
                     >
-                      <span className="text-[12px] flex-shrink-0 font-bold leading-tight" style={{ color: i === 0 ? "#D7FF00" : "rgba(255,255,255,0.18)" }}>›</span>
+                      <span className="text-[12px] flex-shrink-0 font-bold leading-tight" style={{ color: i === 0 ? "var(--hubia-limao-500)" : "rgba(255,255,255,0.18)" }}>›</span>
                       <p className="text-[11px] font-semibold leading-tight truncate" style={{ color: i === 0 ? "#FFFFFF" : `rgba(255,255,255,${Math.max(0.14, 0.45 - i * 0.1)})` }}>
                         {entry.text}
                       </p>
@@ -1015,19 +1015,19 @@ function OrquestradorMonitor() {
                 >
                   <div className="flex items-center gap-1.5 w-28 flex-shrink-0">
                     <LivePulseDot color={statusCfg.color} sizePx={6} />
-                    <span className="text-[12px] font-bold text-[#0E0F10] truncate">{ag.label}</span>
+                    <span className="text-[12px] font-bold text-ink-500 truncate">{ag.label}</span>
                   </div>
                   <div className="flex-1 min-w-0">
                     <MiniSparkline data={ag.historico} color={statusCfg.color} height={34} />
                   </div>
                   <div className="flex-shrink-0 text-right w-14">
-                    <p className="text-[16px] font-bold text-[#0E0F10] tabular-nums">{ag.historico[ag.historico.length - 1]}%</p>
-                    <p className="text-[10px] font-semibold" style={{ color: "#A9AAA5" }}>pico {ag.pico}%</p>
+                    <p className="text-[16px] font-bold text-ink-500 tabular-nums">{ag.historico[ag.historico.length - 1]}%</p>
+                    <p className="text-[10px] font-semibold" style={{ color: "var(--hubia-bg-base-700)" }}>pico {ag.pico}%</p>
                   </div>
                 </motion.div>
               );
             })}
-            <p className="text-[10px] text-[#A9AAA5] text-center pt-1 font-semibold">Últimos 8 períodos de monitoramento</p>
+            <p className="text-[10px] text-base-700 text-center pt-1 font-semibold">Últimos 8 períodos de monitoramento</p>
           </div>
         )}
       </TabContent>
@@ -1059,7 +1059,7 @@ function ActivityFeed() {
 
   return (
     <motion.div
-      className="rounded-[20px] bg-white overflow-hidden"
+      className="rounded-[30px] bg-white overflow-hidden"
       initial={{ opacity: 0, y: 16 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.35, ease: [0, 0, 0.2, 1], delay: 0.22 }}
@@ -1070,14 +1070,14 @@ function ActivityFeed() {
         style={{ borderBottom: "1px solid #F2F3EE" }}
       >
         <div className="flex items-center gap-2.5 flex-1">
-          <div className="flex h-8 w-8 items-center justify-center rounded-[10px]" style={{ backgroundColor: "#0E0F10" }}>
-            <Activity size={14} color="#D7FF00" />
+          <div className="flex h-8 w-8 items-center justify-center rounded-[12px]" style={{ backgroundColor: "var(--hubia-ink-500)" }}>
+            <Activity size={14} color="var(--hubia-limao-500)" />
           </div>
           <div>
-            <h2 className="text-[15px] font-bold text-[#0E0F10]">Atividade</h2>
+            <h2 className="text-[15px] font-bold text-ink-500">Atividade</h2>
             <div className="flex items-center gap-1.5 mt-0.5">
               <LivePulseDot sizePx={6} />
-              <span className="text-[10px] font-bold tracking-[0.1em] uppercase" style={{ color: "#A9AAA5" }}>Tempo real</span>
+              <span className="text-[10px] font-bold tracking-[0.1em] uppercase" style={{ color: "var(--hubia-bg-base-700)" }}>Tempo real</span>
             </div>
           </div>
         </div>
@@ -1122,7 +1122,7 @@ function ActivityFeed() {
                     className="leading-tight truncate font-bold"
                     style={{
                       fontSize: isLive ? "14px" : "13px",
-                      color: isLive ? "#0E0F10" : "#7A7B7C",
+                      color: isLive ? "var(--hubia-ink-500)" : "#7A7B7C",
                       fontWeight: isLive ? 700 : 500,
                     }}
                   >
@@ -1137,8 +1137,8 @@ function ActivityFeed() {
                 <span
                   className="text-[11px] font-bold px-2.5 py-1.5 rounded-[8px] flex-shrink-0 tabular-nums"
                   style={{
-                    backgroundColor: isLive ? "#0E0F10" : "#F2F3EE",
-                    color: isLive ? "#D7FF00" : "#B0B1AB",
+                    backgroundColor: isLive ? "var(--hubia-ink-500)" : "#F2F3EE",
+                    color: isLive ? "var(--hubia-limao-500)" : "#B0B1AB",
                   }}
                 >
                   {a.time}
@@ -1174,22 +1174,22 @@ function PedidosRecentes() {
 
   return (
     <motion.div
-      className="rounded-[20px] bg-white p-6"
+      className="rounded-[30px] bg-white p-6"
       initial={{ opacity: 0, y: 16 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.35, ease: [0, 0, 0.2, 1], delay: 0.45 }}
     >
       <div className="flex items-center justify-between mb-6">
         <div>
-          <h2 className="text-[16px] font-bold text-[#0E0F10]">Pedidos recentes</h2>
-          <p className="text-[11px] font-semibold mt-0.5" style={{ color: "#A9AAA5" }}>Últimos 30 dias</p>
+          <h2 className="text-[16px] font-bold text-ink-500">Pedidos recentes</h2>
+          <p className="text-[11px] font-semibold mt-0.5" style={{ color: "var(--hubia-bg-base-700)" }}>Últimos 30 dias</p>
         </div>
         <div className="flex items-center gap-3">
           <MiniTabBar tabs={PEDIDO_TABS} active={tab} onChange={handleTabChange} />
           <motion.button
             className="flex items-center gap-1 text-[11px] font-bold"
             style={{ color: "#C8C9C4" }}
-            whileHover={{ color: "#0E0F10" }}
+            whileHover={{ color: "var(--hubia-ink-500)" }}
             transition={{ duration: 0.15 }}
           >
             Ver todos <ArrowUpRight size={11} />
@@ -1207,10 +1207,10 @@ function PedidosRecentes() {
       <TabContent tabKey={tab} direction={dir}>
         <div className="flex flex-col gap-0.5">
           {filtered.length === 0 ? (
-            <p className="text-[13px] text-[#A9AAA5] text-center py-8 font-semibold">Nenhum pedido nesta categoria</p>
+            <p className="text-[13px] text-base-700 text-center py-8 font-semibold">Nenhum pedido nesta categoria</p>
           ) : (
             filtered.map((pedido, i) => {
-              const sm = STATUS_MAP[pedido.status] ?? { cor: "#A9AAA5", label: pedido.status };
+              const sm = STATUS_MAP[pedido.status] ?? { cor: "var(--hubia-bg-base-700)", label: pedido.status };
               const IconComp = pedido.Icon;
               const isAtrasado = pedido.dias > 7;
               return (
@@ -1224,9 +1224,9 @@ function PedidosRecentes() {
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: i * 0.05 }}
                 >
-                  <p className="text-[14px] font-bold text-[#0E0F10] truncate">{pedido.titulo}</p>
+                  <p className="text-[14px] font-bold text-ink-500 truncate">{pedido.titulo}</p>
                   <div className="flex items-center gap-1.5 min-w-0">
-                    <div className="flex h-5 w-5 items-center justify-center rounded-[5px]" style={{ backgroundColor: "#EEEFE9" }}>
+                    <div className="flex h-5 w-5 items-center justify-center rounded-[5px]" style={{ backgroundColor: "var(--hubia-bg-base-500)" }}>
                       <IconComp size={10} color="#8A8B8C" />
                     </div>
                     <span className="text-[12px] font-semibold truncate" style={{ color: "#8A8B8C" }}>{pedido.tipo}</span>
@@ -1257,18 +1257,18 @@ function PedidosRecentes() {
 function SquadPerformance() {
   return (
     <motion.div
-      className="rounded-[20px] bg-white p-6"
+      className="rounded-[30px] bg-white p-6"
       initial={{ opacity: 0, y: 16 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.35, ease: [0, 0, 0.2, 1], delay: 0.52 }}
     >
       <div className="flex items-center gap-3 mb-7">
         <div className="flex h-10 w-10 items-center justify-center rounded-[12px]" style={{ backgroundColor: "#F6F7F2" }}>
-          <Layers size={16} color="#5E5E5F" />
+          <Layers size={16} color="var(--hubia-ink-400)" />
         </div>
         <div>
-          <h2 className="text-[16px] font-bold text-[#0E0F10]">Performance por squad</h2>
-          <p className="text-[11px] font-semibold mt-0.5" style={{ color: "#A9AAA5" }}>Taxa de conclusão e volume</p>
+          <h2 className="text-[16px] font-bold text-ink-500">Performance por squad</h2>
+          <p className="text-[11px] font-semibold mt-0.5" style={{ color: "var(--hubia-bg-base-700)" }}>Taxa de conclusão e volume</p>
         </div>
       </div>
 
@@ -1277,16 +1277,16 @@ function SquadPerformance() {
           <motion.div key={squad.id} className="flex flex-col gap-3"
             initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.57 + i * 0.09 }}>
             <div className="flex items-start justify-between">
-              <span className="text-[15px] font-bold text-[#0E0F10]">{squad.label}</span>
+              <span className="text-[15px] font-bold text-ink-500">{squad.label}</span>
               <div className="text-right">
                 <div className="flex items-baseline gap-1">
-                  <span className="text-[34px] font-bold text-[#0E0F10] leading-none tabular-nums">{squad.conclusao}</span>
-                  <span className="text-[14px] font-bold" style={{ color: "#A9AAA5" }}>%</span>
+                  <span className="text-[34px] font-bold text-ink-500 leading-none tabular-nums">{squad.conclusao}</span>
+                  <span className="text-[14px] font-bold" style={{ color: "var(--hubia-bg-base-700)" }}>%</span>
                 </div>
-                <span className="text-[11px] font-semibold" style={{ color: "#A9AAA5" }}>{squad.volume} pedidos</span>
+                <span className="text-[11px] font-semibold" style={{ color: "var(--hubia-bg-base-700)" }}>{squad.volume} pedidos</span>
               </div>
             </div>
-            <AnimatedBar value={squad.conclusao} max={100} color="#D7FF00" delay={0.62 + i * 0.09} height={10} />
+            <AnimatedBar value={squad.conclusao} max={100} color="var(--hubia-limao-500)" delay={0.62 + i * 0.09} height={10} />
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-1.5">
                 <Clock size={11} color="#D0D1CC" />
@@ -1309,7 +1309,7 @@ function SquadPerformance() {
 function Tendencias() {
   return (
     <motion.div
-      className="rounded-[20px] bg-white overflow-hidden"
+      className="rounded-[30px] bg-white overflow-hidden"
       initial={{ opacity: 0, y: 16 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.35, ease: [0, 0, 0.2, 1], delay: 0.58 }}
@@ -1318,12 +1318,12 @@ function Tendencias() {
         className="px-6 pt-5 pb-4 flex items-center gap-3"
         style={{ borderBottom: "1px solid #F2F3EE" }}
       >
-        <div className="flex h-8 w-8 items-center justify-center rounded-full" style={{ backgroundColor: "#D7FF00" }}>
-          <Flame size={13} color="#0E0F10" />
+        <div className="flex h-8 w-8 items-center justify-center rounded-full" style={{ backgroundColor: "var(--hubia-limao-500)" }}>
+          <Flame size={13} color="var(--hubia-ink-500)" />
         </div>
         <div>
-          <h2 className="text-[15px] font-bold text-[#0E0F10]">Tendências</h2>
-          <p className="text-[10px] font-semibold mt-0.5" style={{ color: "#A9AAA5" }}>Destaques do período</p>
+          <h2 className="text-[15px] font-bold text-ink-500">Tendências</h2>
+          <p className="text-[10px] font-semibold mt-0.5" style={{ color: "var(--hubia-bg-base-700)" }}>Destaques do período</p>
         </div>
       </div>
 
@@ -1345,7 +1345,7 @@ function Tendencias() {
             >
               <insight.Icon size={13} color={insight.tipo === "positivo" ? "#43A047" : "#8A8B8C"} />
             </div>
-            <p className="text-[13px] font-semibold text-[#0E0F10] leading-snug">{insight.text}</p>
+            <p className="text-[13px] font-semibold text-ink-500 leading-snug">{insight.text}</p>
           </motion.div>
         ))}
       </div>
@@ -1368,8 +1368,8 @@ export default function RelatorioClient() {
       {/* ── Header ──────────────────────────────────────────────────────── */}
       <div className="flex items-start justify-between">
         <div>
-          <h1 className="text-[28px] font-bold text-[#0E0F10] leading-tight">Relatório</h1>
-          <p className="text-[13px] font-semibold mt-0.5 flex items-center gap-1.5" style={{ color: "#A9AAA5" }}>
+          <h1 className="text-[28px] font-bold text-ink-500 leading-tight">Relatório</h1>
+          <p className="text-[13px] font-semibold mt-0.5 flex items-center gap-1.5" style={{ color: "var(--hubia-bg-base-700)" }}>
             <LivePulseDot sizePx={7} />
             Dados em tempo real
           </p>
@@ -1380,13 +1380,13 @@ export default function RelatorioClient() {
               <motion.button
                 key={opt.value}
                 onClick={() => setPeriodo(opt.value)}
-                className="rounded-[10px] px-3.5 py-2 text-[12px] font-bold"
+                className="rounded-[12px] px-3.5 py-2 text-[12px] font-bold"
                 animate={{
-                  backgroundColor: periodo === opt.value ? "#0E0F10" : "transparent",
-                  color: periodo === opt.value ? "#D7FF00" : "#A9AAA5",
+                  backgroundColor: periodo === opt.value ? "var(--hubia-ink-500)" : "transparent",
+                  color: periodo === opt.value ? "var(--hubia-limao-500)" : "var(--hubia-bg-base-700)",
                 }}
                 initial={false}
-                whileHover={periodo !== opt.value ? { backgroundColor: "rgba(213,210,201,0.3)", color: "#0E0F10" } : {}}
+                whileHover={periodo !== opt.value ? { backgroundColor: "rgba(213,210,201,0.3)", color: "var(--hubia-ink-500)" } : {}}
                 whileTap={{ scale: 0.95 }}
                 transition={{ duration: 0.15 }}
               >
@@ -1397,7 +1397,7 @@ export default function RelatorioClient() {
           <motion.button
             className="flex items-center gap-1.5 rounded-[12px] bg-white px-3.5 py-2.5 text-[12px] font-bold"
             style={{ color: "#8A8B8C" }}
-            whileHover={{ scale: 1.03, color: "#0E0F10" }}
+            whileHover={{ scale: 1.03, color: "var(--hubia-ink-500)" }}
             whileTap={{ scale: 0.96 }}
             transition={{ duration: 0.15, ease: [0.34, 1.56, 0.64, 1] }}
           >
@@ -1412,15 +1412,15 @@ export default function RelatorioClient() {
         {KPIS_HERO.map((kpi, i) => {
           const isDark = !!kpi.dark;
           const isLimao = !!kpi.limao;
-          const bgColor = isDark ? "#0E0F10" : isLimao ? "#D7FF00" : "#FFFFFF";
-          const textMain = isDark ? "#FFFFFF" : "#0E0F10";
+          const bgColor = isDark ? "var(--hubia-ink-500)" : isLimao ? "var(--hubia-limao-500)" : "#FFFFFF";
+          const textMain = isDark ? "#FFFFFF" : "var(--hubia-ink-500)";
           const textSub = isDark ? "#3A3B3C" : isLimao ? "rgba(14,15,16,0.4)" : "#B8B9B3";
           const numSize = isDark ? "80px" : isLimao ? "60px" : "52px";
 
           return (
             <motion.div
               key={kpi.label}
-              className="rounded-[20px] p-6 flex flex-col cursor-default overflow-hidden"
+              className="rounded-[30px] p-6 flex flex-col cursor-default overflow-hidden"
               style={{ backgroundColor: bgColor }}
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
@@ -1433,7 +1433,7 @@ export default function RelatorioClient() {
                 <p className="font-bold tracking-[0.1em] uppercase leading-none text-[10px]" style={{ color: textSub }}>
                   {kpi.label}
                 </p>
-                {isLimao && kpi.live && <LivePulseDot color="#0E0F10" sizePx={8} />}
+                {isLimao && kpi.live && <LivePulseDot color="var(--hubia-ink-500)" sizePx={8} />}
                 {!isLimao && !isDark && kpi.trend !== undefined && (
                   <div className="flex items-center gap-0.5 font-bold text-[10px] px-1.5 py-0.5 rounded-full"
                     style={{ color: "#43A047", backgroundColor: "#43A04712" }}>
@@ -1443,7 +1443,7 @@ export default function RelatorioClient() {
                 )}
                 {isDark && kpi.trend !== undefined && (
                   <div className="flex items-center gap-0.5 font-bold text-[10px] px-1.5 py-0.5 rounded-full"
-                    style={{ color: "#D7FF00", backgroundColor: "#D7FF0015" }}>
+                    style={{ color: "var(--hubia-limao-500)", backgroundColor: "color-mix(in srgb, var(--hubia-limao-500) 8%, transparent)" }}>
                     <TrendingUp size={9} />
                     +{kpi.trend}
                   </div>
@@ -1458,7 +1458,7 @@ export default function RelatorioClient() {
               {/* Card escuro: sparkline de base */}
               {isDark && (
                 <div className="mt-6 -mx-6 -mb-6">
-                  <MiniSparkline data={SPARKLINE_HERO} color="#D7FF00" height={80} />
+                  <MiniSparkline data={SPARKLINE_HERO} color="var(--hubia-limao-500)" height={80} />
                 </div>
               )}
 
@@ -1484,7 +1484,7 @@ export default function RelatorioClient() {
 
       {/* ── Row 3: Gráfico hero ───────────────────────────────────────────── */}
       <motion.div
-        className="rounded-[20px] bg-white px-6 pt-7 pb-4"
+        className="rounded-[30px] bg-white px-6 pt-7 pb-4"
         initial={{ opacity: 0, y: 16 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.35, ease: [0, 0, 0.2, 1], delay: 0.28 }}
@@ -1497,18 +1497,18 @@ export default function RelatorioClient() {
         <StatusPedidos />
         <DistribuicaoTipo />
         <motion.div
-          className="rounded-[20px] bg-white p-6"
+          className="rounded-[30px] bg-white p-6"
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.35, ease: [0, 0, 0.2, 1], delay: 0.4 }}
         >
           <div className="flex items-center gap-3 mb-6">
             <div className="flex h-10 w-10 items-center justify-center rounded-[12px]" style={{ backgroundColor: "#F6F7F2" }}>
-              <Cpu size={15} color="#5E5E5F" />
+              <Cpu size={15} color="var(--hubia-ink-400)" />
             </div>
             <div>
-              <h2 className="text-[16px] font-bold text-[#0E0F10]">Orquestração</h2>
-              <p className="text-[11px] font-semibold mt-0.5" style={{ color: "#A9AAA5" }}>Carga e status em tempo real</p>
+              <h2 className="text-[16px] font-bold text-ink-500">Orquestração</h2>
+              <p className="text-[11px] font-semibold mt-0.5" style={{ color: "var(--hubia-bg-base-700)" }}>Carga e status em tempo real</p>
             </div>
           </div>
           <OrquestradorMonitor />

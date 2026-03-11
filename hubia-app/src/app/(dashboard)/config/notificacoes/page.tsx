@@ -1,5 +1,8 @@
+import { getNotificationSettings } from "./actions";
 import NotificacoesClient from "./notificacoes-client";
 
-export default function NotificacoesPage() {
-  return <NotificacoesClient />;
+export default async function NotificacoesPage() {
+  const settings = await getNotificationSettings();
+
+  return <NotificacoesClient initialSettings={settings} />;
 }

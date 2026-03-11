@@ -9,6 +9,7 @@ import { usePathname } from "next/navigation";
 const orgTabs = [
   { label: "Overview", href: "/organization/overview" },
   { label: "Plano", href: "/organization/plano" },
+  { label: "Provedores IA", href: "/organization/provedores" },
   { label: "Branding", href: "/organization/branding" },
   { label: "Domínio", href: "/organization/domain" },
   { label: "Equipe", href: "/organization/team" },
@@ -60,7 +61,7 @@ export default function OrganizationLayout({
 
       <div
         ref={containerRef}
-        className="relative inline-flex w-fit items-center rounded-[20px] p-1.5"
+        className="relative inline-flex w-fit items-center rounded-[30px] p-1.5"
         style={{ background: "#FFFFFF" }}
       >
         <motion.div

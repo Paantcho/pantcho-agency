@@ -36,13 +36,13 @@ export default function CreatorOverviewTab({
     <div className="flex flex-col gap-5">
       {/* Hero card escuro */}
       <div
-        className="relative flex items-start gap-5 overflow-hidden rounded-[24px] p-6"
-        style={{ background: "#0E0F10" }}
+        className="relative flex items-start gap-5 overflow-hidden rounded-[30px] p-6"
+        style={{ background: "var(--hubia-ink-500)" }}
       >
         {/* Tag Ativa/Inativa — canto superior direito */}
         <span
           className="absolute right-5 top-5 rounded-full px-3 py-1 text-[11px] font-bold uppercase tracking-widest"
-          style={{ background: "rgba(255,255,255,0.08)", color: "#D7FF00" }}
+          style={{ background: "rgba(255,255,255,0.08)", color: "var(--hubia-limao-500)" }}
         >
           {creator.isActive ? "Ativa" : "Inativa"}
         </span>
@@ -63,7 +63,7 @@ export default function CreatorOverviewTab({
         <div className="min-w-0 flex-1 pr-24">
           <h2
             className="font-bold leading-tight"
-            style={{ fontSize: "28px", color: "#D7FF00" }}
+            style={{ fontSize: "28px", color: "var(--hubia-limao-500)" }}
           >
             {creator.name}
           </h2>
@@ -76,7 +76,7 @@ export default function CreatorOverviewTab({
           {bioLines.slice(1).map((line, i) => (
             <p
               key={i}
-              className="mt-0.5 font-medium"
+              className="mt-0.5 font-semibold"
               style={{ fontSize: "13px", color: "rgba(255,255,255,0.55)" }}
             >
               {line}
@@ -90,8 +90,8 @@ export default function CreatorOverviewTab({
         {KPI_LABELS.map((kpi) => (
           <div
             key={kpi.key}
-            className="flex flex-col gap-1 rounded-[20px] p-4"
-            style={{ background: "#0E0F10" }}
+            className="flex flex-col gap-1 rounded-[30px] p-4"
+            style={{ background: "var(--hubia-ink-500)" }}
           >
             <p
               className="font-bold uppercase tracking-widest leading-snug"
@@ -101,7 +101,7 @@ export default function CreatorOverviewTab({
             </p>
             <p
               className="font-bold leading-none mt-1"
-              style={{ fontSize: "32px", color: "#D7FF00" }}
+              style={{ fontSize: "32px", color: "var(--hubia-limao-500)" }}
             >
               {kpi.value}
             </p>
@@ -121,12 +121,12 @@ export default function CreatorOverviewTab({
       <div className="grid gap-4 lg:grid-cols-2">
         {/* Marcadores */}
         <div
-          className="rounded-[24px] p-6"
+          className="rounded-[30px] p-6"
           style={{ background: "#FFFFFF" }}
         >
           <h3
             className="font-bold"
-            style={{ fontSize: "17px", color: "#0E0F10" }}
+            style={{ fontSize: "17px", color: "var(--hubia-ink-500)" }}
           >
             Marcadores de Identidade
           </h3>
@@ -136,11 +136,11 @@ export default function CreatorOverviewTab({
               {(markers as { label?: string; description?: string; icon?: string }[]).map(
                 (m, i) => (
                   <li key={i} className="flex gap-2">
-                    <span style={{ color: "#A9AAA5", fontSize: "14px" }}>●</span>
+                    <span style={{ color: "var(--hubia-bg-base-700)", fontSize: "14px" }}>●</span>
                     <div>
                       <span
                         className="font-bold"
-                        style={{ fontSize: "13px", color: "#0E0F10" }}
+                        style={{ fontSize: "13px", color: "var(--hubia-ink-500)" }}
                       >
                         {typeof m === "object" && m !== null && "label" in m
                           ? (m as { label: string }).label
@@ -148,8 +148,8 @@ export default function CreatorOverviewTab({
                       </span>
                       {typeof m === "object" && m !== null && "description" in m && (
                         <p
-                          className="font-medium"
-                          style={{ fontSize: "12px", color: "#A9AAA5", marginTop: "1px" }}
+                          className="font-semibold"
+                          style={{ fontSize: "12px", color: "var(--hubia-bg-base-700)", marginTop: "1px" }}
                         >
                           {(m as { description?: string }).description}
                         </p>
@@ -181,20 +181,20 @@ export default function CreatorOverviewTab({
                 <li key={item.label} className="flex items-start gap-2.5">
                   <span
                     className="mt-0.5 shrink-0 font-bold"
-                    style={{ fontSize: "14px", color: "#A9AAA5" }}
+                    style={{ fontSize: "14px", color: "var(--hubia-bg-base-700)" }}
                   >
                     {item.icon}
                   </span>
                   <div>
                     <p
                       className="font-bold"
-                      style={{ fontSize: "13px", color: "#0E0F10" }}
+                      style={{ fontSize: "13px", color: "var(--hubia-ink-500)" }}
                     >
                       {item.label}
                     </p>
                     <p
-                      className="font-medium"
-                      style={{ fontSize: "12px", color: "#A9AAA5", marginTop: "2px" }}
+                      className="font-semibold"
+                      style={{ fontSize: "12px", color: "var(--hubia-bg-base-700)", marginTop: "2px" }}
                     >
                       {item.desc}
                     </p>
@@ -207,12 +207,12 @@ export default function CreatorOverviewTab({
 
         {/* Veículo Fixo */}
         <div
-          className="rounded-[24px] p-6"
+          className="rounded-[30px] p-6"
           style={{ background: "#FFFFFF" }}
         >
           <h3
             className="font-bold"
-            style={{ fontSize: "17px", color: "#0E0F10" }}
+            style={{ fontSize: "17px", color: "var(--hubia-ink-500)" }}
           >
             Veículo Fixo
           </h3>
@@ -220,11 +220,11 @@ export default function CreatorOverviewTab({
           {/* Área da imagem — placeholder cinza */}
           <div
             className="mt-4 flex h-28 items-center justify-center rounded-2xl"
-            style={{ background: "#EEEFE9" }}
+            style={{ background: "var(--hubia-bg-base-500)" }}
           >
             <span
               className="font-semibold"
-              style={{ fontSize: "12px", color: "#A9AAA5" }}
+              style={{ fontSize: "12px", color: "var(--hubia-bg-base-700)" }}
             >
               imagem do veículo
             </span>
@@ -232,22 +232,22 @@ export default function CreatorOverviewTab({
 
           <p
             className="mt-4 font-bold"
-            style={{ fontSize: "15px", color: "#0E0F10" }}
+            style={{ fontSize: "15px", color: "var(--hubia-ink-500)" }}
           >
             BMW X2 2025
           </p>
           <p
-            className="font-medium"
-            style={{ fontSize: "13px", color: "#A9AAA5", marginTop: "3px" }}
+            className="font-semibold"
+            style={{ fontSize: "13px", color: "var(--hubia-bg-base-700)", marginTop: "3px" }}
           >
             Cape York Green metall...
           </p>
           <p
-            className="mt-3 font-medium leading-snug"
-            style={{ fontSize: "12px", color: "#A9AAA5" }}
+            className="mt-3 font-semibold leading-snug"
+            style={{ fontSize: "12px", color: "var(--hubia-bg-base-700)" }}
           >
             Interior premium escuro · Preto/grafite com detalhes metálicos ·{" "}
-            <strong style={{ color: "#0E0F10" }}>Cor não muda nunca</strong>
+            <strong style={{ color: "var(--hubia-ink-500)" }}>Cor não muda nunca</strong>
           </p>
         </div>
       </div>

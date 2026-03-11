@@ -1,7 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { motion } from "framer-motion";
+import { Check } from "lucide-react";
+import { HubiaPageAction } from "@/components/ui/hubia-page-action";
 import { updateBranding } from "./actions";
 
 export default function BrandingColorForm({
@@ -35,19 +36,19 @@ export default function BrandingColorForm({
           onChange={(e) => setColor(e.target.value)}
           pattern="^#[0-9A-Fa-f]{6}$"
           placeholder="#D7FF00"
-          className="w-48 rounded-input border border-base-600 bg-sand-300 px-4 py-3 text-body-md text-ink-500 outline-none transition-[border-color,box-shadow] duration-150 focus:border-ink-500 focus:shadow-[0_0_0_3px_rgba(14,15,16,0.08)]"
+          className="w-48 rounded-input border border-base-600 bg-sand-300 px-4 py-3 text-body-md text-ink-500 outline-none transition-[border-color] duration-150 focus:border-ink-500 focus:ring-2 focus:ring-ink-500/10"
         />
       </div>
-      <motion.button
+      <HubiaPageAction
         type="submit"
+        icon={Check}
+        iconRotate={false}
         disabled={loading}
-        className="rounded-button bg-limao-500 px-6 py-3 text-label-md font-semibold text-ink-500 disabled:opacity-50"
-        whileHover={{ scale: 1.03, backgroundColor: "#DFFF33" }}
-        whileTap={{ scale: 0.96 }}
-        transition={{ duration: 0.15, ease: [0.34, 1.56, 0.64, 1] }}
+        loading={loading}
+        loadingText="Salvando…"
       >
-        {loading ? "Salvando…" : "Salvar"}
-      </motion.button>
+        Salvar
+      </HubiaPageAction>
       {message === "ok" && (
         <span className="text-body-sm text-limao-600">Salvo.</span>
       )}

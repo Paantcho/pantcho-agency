@@ -78,12 +78,12 @@ export default function LoginPage() {
       </p>
 
       {error && (
-        <div className="mt-[16px] rounded-card border border-red-500/30 bg-red-500/10 px-[16px] py-[12px] text-body-sm font-medium text-red-600">
+        <div className="mt-[16px] rounded-card border border-red-500/30 bg-red-500/10 px-[16px] py-[12px] text-body-sm font-semibold text-red-600">
           {error}
         </div>
       )}
       {success && (
-        <div className="mt-[16px] rounded-card border border-green-500/30 bg-green-500/10 px-[16px] py-[12px] text-body-sm font-medium text-green-700">
+        <div className="mt-[16px] rounded-card border border-green-500/30 bg-green-500/10 px-[16px] py-[12px] text-body-sm font-semibold text-green-700">
           {success}
         </div>
       )}

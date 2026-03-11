@@ -1,12 +1,6 @@
+import { getAgentBySlug, hasProviderConfigured } from "../actions";
 import { notFound } from "next/navigation";
-import { getAgentBySlug, getSquadsWithAgents } from "../actions";
-import AgentDetailPageClient from "./agent-detail-client";
-
-export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
-  const { slug } = await params;
-  const agent = await getAgentBySlug(slug);
-  return { title: agent ? `${agent.name} — Agentes · Hubia` : "Agente não encontrado" };
-}
+import AgentDetailClient from "./agent-detail-client";
 
 export default async function AgentDetailPage({
   params,
@@ -14,8 +8,29 @@ export default async function AgentDetailPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const [agent, squads] = await Promise.all([getAgentBySlug(slug), getSquadsWithAgents()]);
+  const agent = await getAgentBySlug(slug);
   if (!agent) notFound();
 
-  return <AgentDetailPageClient agent={agent} squads={squads} />;
+  const providerReady = await hasProviderConfigured();
+
+  return (
+    <AgentDetailClient
+      agent={{
+        id: agent.id,
+        name: agent.name,
+        slug: agent.slug,
+        description: agent.description,
+        systemPrompt: agent.systemPrompt,
+        status: agent.status,
+        config: agent.config as Record<string, unknown>,
+        skills: agent.skills.map((as: { skill: { id: string; name: string; slug: string; description: string | null } }) => ({
+          id: as.skill.id,
+          name: as.skill.name,
+          slug: as.skill.slug,
+          description: as.skill.description,
+        })),
+      }}
+      providerReady={providerReady}
+    />
+  );
 }

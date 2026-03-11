@@ -21,14 +21,15 @@ import {
   type PendingInviteRow,
 } from "@/app/(dashboard)/config/equipe/actions";
 import { toast } from "@/components/ui/hubia-toast";
+import { HubiaPageAction } from "@/components/ui/hubia-page-action";
 import InviteModal from "./invite-modal";
 import { useRouter } from "next/navigation";
 
 const roleBadge: Record<MemberRole, { bg: string; text: string; label: string }> = {
-  owner: { bg: "#0E0F10", text: "#D7FF00", label: "Proprietário" },
-  admin: { bg: "#D7FF00", text: "#0E0F10", label: "Admin" },
-  editor: { bg: "#EEEFE9", text: "#0E0F10", label: "Editor" },
-  viewer: { bg: "#EEEFE9", text: "#A9AAA5", label: "Visualizador" },
+  owner: { bg: "var(--hubia-ink-500)", text: "var(--hubia-limao-500)", label: "Proprietário" },
+  admin: { bg: "var(--hubia-limao-500)", text: "var(--hubia-ink-500)", label: "Admin" },
+  editor: { bg: "var(--hubia-bg-base-500)", text: "var(--hubia-ink-500)", label: "Editor" },
+  viewer: { bg: "var(--hubia-bg-base-500)", text: "var(--hubia-bg-base-700)", label: "Visualizador" },
 };
 
 const roleDesc: Record<MemberRole, string> = {
@@ -118,8 +119,8 @@ function MemberActions({
         type="button"
         onClick={() => setOpen((v) => !v)}
         disabled={loading}
-        className="flex h-8 w-8 items-center justify-center rounded-[10px] text-[#A9AAA5] disabled:opacity-40"
-        whileHover={{ scale: 1.12, color: "#0E0F10", backgroundColor: "rgba(14,15,16,0.04)" }}
+        className="flex h-8 w-8 items-center justify-center rounded-[12px] text-base-700 disabled:opacity-40"
+        whileHover={{ scale: 1.12, color: "var(--hubia-ink-500)", backgroundColor: "rgba(14,15,16,0.04)" }}
         whileTap={{ scale: 0.9 }}
         transition={{ duration: 0.15, ease: [0.34, 1.56, 0.64, 1] }}
       >
@@ -129,13 +130,13 @@ function MemberActions({
       <AnimatePresence>
         {open && (
           <motion.div
-            className="absolute right-0 top-full z-20 mt-1 min-w-[190px] overflow-hidden rounded-[12px] border border-[#EEEFE9] bg-white py-1"
+            className="absolute right-0 top-full z-20 mt-1 min-w-[190px] overflow-hidden rounded-[12px] border border-base-500 bg-white py-1"
             initial={{ opacity: 0, y: -6, scale: 0.96 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -6, scale: 0.96 }}
             transition={{ duration: 0.15, ease: [0, 0, 0.2, 1] }}
           >
-            <p className="px-3 py-1.5 text-[10px] font-semibold uppercase tracking-wide text-[#A9AAA5]">
+            <p className="px-3 py-1.5 text-[10px] font-semibold uppercase tracking-wide text-base-700">
               Alterar para
             </p>
             {editableRoles
@@ -145,19 +146,19 @@ function MemberActions({
                   key={r}
                   type="button"
                   onClick={() => handleChangeRole(r)}
-                  className="w-full px-3 py-2 text-left text-[13px] font-medium text-[#0E0F10]"
-                  whileHover={{ backgroundColor: "#EEEFE9" }}
+                  className="w-full px-3 py-2 text-left text-[13px] font-semibold text-ink-500"
+                  whileHover={{ backgroundColor: "var(--hubia-bg-base-500)" }}
                   whileTap={{ scale: 0.98 }}
                   transition={{ duration: 0.1 }}
                 >
                   {roleBadge[r].label}
                 </motion.button>
               ))}
-            <div className="mx-3 my-1 h-px bg-[#EEEFE9]" />
+            <div className="mx-3 my-1 h-px bg-base-500" />
             <motion.button
               type="button"
               onClick={handleRemove}
-              className="w-full px-3 py-2 text-left text-[13px] font-medium text-red-500"
+              className="w-full px-3 py-2 text-left text-[13px] font-semibold text-red-500"
               whileHover={{ backgroundColor: "#FFF0F0" }}
               whileTap={{ scale: 0.98 }}
               transition={{ duration: 0.1 }}
@@ -222,8 +223,8 @@ export default function TeamClient({
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-[16px] font-bold text-[#0E0F10]">Membros da equipe</h2>
-          <p className="mt-0.5 text-[12px] text-[#A9AAA5]">
+          <h2 className="text-[16px] font-bold text-ink-500">Membros da equipe</h2>
+          <p className="mt-0.5 text-[12px] text-base-700">
             {members.length} membro{members.length !== 1 ? "s" : ""} ativo
             {members.length !== 1 ? "s" : ""}
             {pendingInvites.length > 0 &&
@@ -231,24 +232,16 @@ export default function TeamClient({
           </p>
         </div>
         {canEdit && (
-          <motion.button
-            type="button"
-            onClick={() => setShowInviteModal(true)}
-            className="flex items-center gap-2 rounded-[14px] bg-[#D7FF00] px-5 py-2.5 text-[13px] font-bold text-[#0E0F10]"
-            whileHover={{ scale: 1.03, backgroundColor: "#DFFF33" }}
-            whileTap={{ scale: 0.96 }}
-            transition={{ duration: 0.15, ease: [0.34, 1.56, 0.64, 1] }}
-          >
-            <Plus size={15} strokeWidth={2.5} />
+          <HubiaPageAction onClick={() => setShowInviteModal(true)}>
             Convidar membro
-          </motion.button>
+          </HubiaPageAction>
         )}
       </div>
 
       {/* Lista de membros ativos */}
       {members.length === 0 ? (
-        <div className="rounded-[16px] border-2 border-dashed border-[#D5D2C9] p-10 text-center">
-          <p className="text-[14px] text-[#A9AAA5]">
+        <div className="rounded-[16px] border-2 border-dashed border-sand-600 p-10 text-center">
+          <p className="text-[14px] text-base-700">
             {organizationId
               ? "Nenhum membro ainda. Convide alguém para começar."
               : "Você não está vinculado a nenhuma organização."}
@@ -265,7 +258,7 @@ export default function TeamClient({
               transition={{ delay: Math.min(i * 0.05, 0.25), duration: 0.28, ease: [0, 0, 0.2, 1] }}
             >
               {/* Avatar */}
-              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#EEEFE9] text-[12px] font-bold text-[#0E0F10]">
+              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-base-500 text-[12px] font-bold text-ink-500">
                 {member.avatarUrl ? (
                   // eslint-disable-next-line @next/next/no-img-element
                   <img
@@ -280,13 +273,13 @@ export default function TeamClient({
 
               {/* Identidade */}
               <div className="flex min-w-0 flex-1 flex-col gap-0.5">
-                <span className="text-[14px] font-semibold text-[#0E0F10] truncate">
+                <span className="text-[14px] font-semibold text-ink-500 truncate">
                   {member.name ?? member.email ?? `Usuário ${member.userId.slice(0, 8)}`}
                 </span>
                 {member.email && (
-                  <span className="text-[12px] text-[#A9AAA5] truncate">{member.email}</span>
+                  <span className="text-[12px] text-base-700 truncate">{member.email}</span>
                 )}
-                <span className="text-[11px] text-[#A9AAA5]">
+                <span className="text-[11px] text-base-700">
                   Desde {formatDate(member.acceptedAt ?? member.invitedAt)}
                 </span>
               </div>
@@ -319,8 +312,8 @@ export default function TeamClient({
       {pendingInvites.length > 0 && (
         <div className="flex flex-col gap-3">
           <div className="flex items-center gap-2">
-            <Clock size={13} className="text-[#A9AAA5]" />
-            <p className="text-[12px] font-semibold text-[#A9AAA5] uppercase tracking-wide">
+            <Clock size={13} className="text-base-700" />
+            <p className="text-[12px] font-semibold text-base-700 uppercase tracking-wide">
               Convites pendentes
             </p>
           </div>
@@ -328,7 +321,7 @@ export default function TeamClient({
             {pendingInvites.map((inv, i) => (
               <motion.div
                 key={inv.id}
-                className="flex items-center gap-4 rounded-[14px] border border-dashed border-[#D5D2C9] bg-white px-5 py-4"
+                className="flex items-center gap-4 rounded-[14px] border border-dashed border-sand-600 bg-white px-5 py-4"
                 initial={{ opacity: 0, y: 8 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{
@@ -338,16 +331,16 @@ export default function TeamClient({
                 }}
               >
                 {/* Ícone de email */}
-                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#EEEFE9]">
-                  <Mail size={15} className="text-[#A9AAA5]" />
+                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-base-500">
+                  <Mail size={15} className="text-base-700" />
                 </div>
 
                 {/* Info */}
                 <div className="flex min-w-0 flex-1 flex-col gap-0.5">
-                  <span className="text-[14px] font-semibold text-[#0E0F10] truncate">
+                  <span className="text-[14px] font-semibold text-ink-500 truncate">
                     {inv.email}
                   </span>
-                  <span className="text-[11px] text-[#A9AAA5]">
+                  <span className="text-[11px] text-base-700">
                     Convidado por {inv.inviterName ?? "—"} · {formatExpiry(inv.expiresAt)}
                   </span>
                 </div>
@@ -371,8 +364,8 @@ export default function TeamClient({
                       onClick={() => handleResendInvite(inv.id)}
                       disabled={loadingInviteId === inv.id}
                       title="Reenviar convite"
-                      className="flex h-8 w-8 items-center justify-center rounded-[10px] text-[#A9AAA5] disabled:opacity-40"
-                      whileHover={{ scale: 1.12, color: "#0E0F10", backgroundColor: "rgba(14,15,16,0.04)" }}
+                      className="flex h-8 w-8 items-center justify-center rounded-[12px] text-base-700 disabled:opacity-40"
+                      whileHover={{ scale: 1.12, color: "var(--hubia-ink-500)", backgroundColor: "rgba(14,15,16,0.04)" }}
                       whileTap={{ scale: 0.9 }}
                       transition={{ duration: 0.15, ease: [0.34, 1.56, 0.64, 1] }}
                     >
@@ -383,7 +376,7 @@ export default function TeamClient({
                       onClick={() => handleRevokeInvite(inv.id)}
                       disabled={loadingInviteId === inv.id}
                       title="Revogar convite"
-                      className="flex h-8 w-8 items-center justify-center rounded-[10px] text-[#A9AAA5] disabled:opacity-40"
+                      className="flex h-8 w-8 items-center justify-center rounded-[12px] text-base-700 disabled:opacity-40"
                       whileHover={{ scale: 1.12, color: "#EF4444", backgroundColor: "rgba(239,68,68,0.08)" }}
                       whileTap={{ scale: 0.9 }}
                       transition={{ duration: 0.15, ease: [0.34, 1.56, 0.64, 1] }}
@@ -401,14 +394,14 @@ export default function TeamClient({
       {/* Legenda de roles */}
       <div className="rounded-[16px] bg-white p-5">
         <div className="mb-3 flex items-center gap-2">
-          <ShieldCheck size={13} className="text-[#A9AAA5]" />
-          <p className="text-[12px] font-semibold text-[#A9AAA5] uppercase tracking-wide">
+          <ShieldCheck size={13} className="text-base-700" />
+          <p className="text-[12px] font-semibold text-base-700 uppercase tracking-wide">
             Permissões por role
           </p>
         </div>
         <div className="grid grid-cols-2 gap-3 md:grid-cols-4">
           {(["owner", "admin", "editor", "viewer"] as MemberRole[]).map((role) => (
-            <div key={role} className="rounded-[10px] bg-[#EEEFE9] p-3">
+            <div key={role} className="rounded-[12px] bg-base-500 p-3">
               <span
                 className="mb-2 inline-block rounded-[6px] px-2 py-0.5 text-[10px] font-bold"
                 style={{
@@ -418,7 +411,7 @@ export default function TeamClient({
               >
                 {roleBadge[role].label}
               </span>
-              <p className="text-[11px] text-[#5E5E5F] leading-relaxed">{roleDesc[role]}</p>
+              <p className="text-[11px] text-ink-400 leading-relaxed">{roleDesc[role]}</p>
             </div>
           ))}
         </div>

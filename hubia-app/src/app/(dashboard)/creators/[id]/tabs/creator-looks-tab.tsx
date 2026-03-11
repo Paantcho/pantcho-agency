@@ -20,7 +20,7 @@ const MOCK_LOOKS = [
 ];
 
 const inputClass =
-  "w-full rounded-input border-0 bg-[var(--hubia-bg-base-500)] px-4 py-3 text-body-md font-medium text-ink-500 outline-none focus:ring-2 focus:ring-limao-500/30";
+  "w-full rounded-input border-0 bg-[var(--hubia-bg-base-500)] px-4 py-3 text-body-md font-semibold text-ink-500 outline-none focus:ring-2 focus:ring-limao-500/30";
 
 export default function CreatorLooksTab({
   creator,
@@ -145,8 +145,8 @@ export default function CreatorLooksTab({
             onClick={() => setLookFilter(f)}
             style={
               lookFilter === f
-                ? { background: "#D7FF00", color: "#0E0F10", borderColor: "#D7FF00" }
-                : { background: "#FFFFFF", color: "#0E0F10", borderColor: "#D9D9D4" }
+                ? { background: "var(--hubia-limao-500)", color: "var(--hubia-ink-500)", borderColor: "var(--hubia-limao-500)" }
+                : { background: "#FFFFFF", color: "var(--hubia-ink-500)", borderColor: "var(--hubia-sand-600)" }
             }
             className="motion-soft rounded-[18px] border px-4 py-2 text-[13px] font-semibold transition-colors duration-150"
           >
@@ -157,12 +157,12 @@ export default function CreatorLooksTab({
 
       {displayLooks.length === 0 ? (
         <div className="rounded-[16px] border border-dashed border-base-600 bg-base-500/30 py-12 text-center">
-          <p className="font-medium text-base-700" style={{ fontSize: "14px" }}>Nenhum look cadastrado.</p>
+          <p className="font-semibold text-base-700" style={{ fontSize: "14px" }}>Nenhum look cadastrado.</p>
           <button
             type="button"
             onClick={openAddModal}
             className="mt-4 rounded-[18px] px-4 py-2 text-[13px] font-semibold text-ink-500"
-            style={{ background: "#D7FF00" }}
+            style={{ background: "var(--hubia-limao-500)" }}
           >
             Adicionar look
           </button>
@@ -185,7 +185,7 @@ export default function CreatorLooksTab({
                 >
                   <Star
                     size={18}
-                    className={favoriteIds.has(look.id) ? "fill-[#D7FF00] text-[#D7FF00]" : "fill-transparent"}
+                    className={favoriteIds.has(look.id) ? "fill-limao-500 text-limao-500" : "fill-transparent"}
                   />
                 </button>
 
@@ -213,15 +213,15 @@ export default function CreatorLooksTab({
                 </div>
 
                 {/* Gradiente overlay + texto */}
-                <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-[#0E0F10]/95 via-[#0E0F10]/50 to-transparent p-3 pt-12">
+                <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-ink-500/95 via-ink-500/50 to-transparent p-3 pt-12">
                   <p
                     className="font-bold leading-tight"
-                    style={{ fontSize: "15px", color: "#D7FF00" }}
+                    style={{ fontSize: "15px", color: "var(--hubia-limao-500)" }}
                   >
                     {look.name}
                   </p>
                   <p
-                    className="mt-0.5 font-medium"
+                    className="mt-0.5 font-semibold"
                     style={{ fontSize: "11px", color: "rgba(255,255,255,0.75)" }}
                   >
                     {look.date} · Pedido #{look.pedido}
@@ -235,14 +235,14 @@ export default function CreatorLooksTab({
                   <button
                     type="button"
                     onClick={() => startEdit(creator.looks.find((l) => l.id === look.id)!)}
-                    className="rounded-[10px] border border-base-600 px-3 py-1.5 text-[11px] font-semibold text-ink-500 transition-colors hover:bg-base-600/30"
+                    className="rounded-[12px] border border-base-600 px-3 py-1.5 text-[11px] font-semibold text-ink-500 transition-colors hover:bg-base-600/30"
                   >
                     Editar
                   </button>
                   <button
                     type="button"
                     onClick={() => setDeleteModalLookId(look.id)}
-                    className="rounded-[10px] border border-red-400/40 px-3 py-1.5 text-[11px] font-semibold text-red-500 transition-colors hover:bg-red-500/10"
+                    className="rounded-[12px] border border-red-400/40 px-3 py-1.5 text-[11px] font-semibold text-red-500 transition-colors hover:bg-red-500/10"
                   >
                     Excluir
                   </button>
@@ -261,7 +261,7 @@ export default function CreatorLooksTab({
       >
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
           {formError && (
-            <div className="rounded-card border border-red-500/30 bg-red-500/10 px-4 py-3 text-body-sm font-medium text-red-600">
+            <div className="rounded-card border border-red-500/30 bg-red-500/10 px-4 py-3 text-body-sm font-semibold text-red-600">
               {formError}
             </div>
           )}

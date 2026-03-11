@@ -93,9 +93,9 @@ export default function CreatorDetailClient({
       {!creator.isActive && (
         <div
           className="flex flex-wrap items-center justify-between gap-4 rounded-2xl border p-4"
-          style={{ borderColor: "#D9D9D4", background: "#FFFFFF" }}
+          style={{ borderColor: "var(--hubia-sand-600)", background: "#FFFFFF" }}
         >
-          <p className="font-semibold" style={{ fontSize: "14px", color: "#0E0F10" }}>
+          <p className="font-semibold" style={{ fontSize: "14px", color: "var(--hubia-ink-500)" }}>
             Creator inativa
           </p>
           <motion.button
@@ -103,7 +103,7 @@ export default function CreatorDetailClient({
             onClick={handleReativar}
             disabled={reactivating}
             className="rounded-full font-bold disabled:opacity-50"
-            style={{ background: "#D7FF00", color: "#0E0F10", fontSize: "13px", padding: "8px 20px" }}
+            style={{ background: "var(--hubia-limao-500)", color: "var(--hubia-ink-500)", fontSize: "13px", padding: "8px 20px" }}
             whileHover={{ scale: 1.03, backgroundColor: "#DFFF33" }}
             whileTap={{ scale: 0.96 }}
             transition={{ duration: 0.15, ease: [0.34, 1.56, 0.64, 1] }}
@@ -115,12 +115,12 @@ export default function CreatorDetailClient({
 
       {/* Cabeçalho: breadcrumb + botões por aba */}
       <div className="flex flex-wrap items-center justify-between gap-3">
-        <nav className="flex items-center gap-1.5" style={{ fontSize: "14px", color: "#A9AAA5" }}>
-          <AnimatedLink href="/creators" className="transition-colors hover:text-[#0E0F10]" style={{ color: "#A9AAA5" }}>
+        <nav className="flex items-center gap-1.5" style={{ fontSize: "14px", color: "var(--hubia-bg-base-700)" }}>
+          <AnimatedLink href="/creators" className="transition-colors hover:text-ink-500" style={{ color: "var(--hubia-bg-base-700)" }}>
             Creators
           </AnimatedLink>
-          <span aria-hidden style={{ color: "#D9D9D4" }}>›</span>
-          <span className="font-semibold" style={{ color: "#0E0F10" }}>{creator.name}</span>
+          <span aria-hidden style={{ color: "var(--hubia-sand-600)" }}>›</span>
+          <span className="font-semibold" style={{ color: "var(--hubia-ink-500)" }}>{creator.name}</span>
         </nav>
         <div className="flex flex-wrap items-center gap-2">
           {actions?.secondary && (
@@ -129,8 +129,8 @@ export default function CreatorDetailClient({
               onClick={() => activeTab === "voice" && setVoiceEditModalOpen(true)}
               className="flex items-center gap-2 rounded-full border font-semibold"
               style={{
-                borderColor: "#D9D9D4",
-                color: "#0E0F10",
+                borderColor: "var(--hubia-sand-600)",
+                color: "var(--hubia-ink-500)",
                 fontSize: "13px",
                 padding: "9px 18px",
                 background: "transparent",
@@ -141,7 +141,7 @@ export default function CreatorDetailClient({
               animate="rest"
               variants={{
                 rest: { backgroundColor: "transparent" },
-                hovered: { scale: 1.03, backgroundColor: "#EEEFE9" },
+                hovered: { scale: 1.03, backgroundColor: "var(--hubia-bg-base-500)" },
               }}
               transition={{ duration: 0.15, ease: [0.34, 1.56, 0.64, 1] }}
             >
@@ -159,13 +159,13 @@ export default function CreatorDetailClient({
             <motion.button
               type="button"
               className="flex items-center gap-2 rounded-full font-bold"
-              style={{ background: "#D7FF00", color: "#0E0F10", fontSize: "13px", padding: "9px 18px" }}
+              style={{ background: "var(--hubia-limao-500)", color: "var(--hubia-ink-500)", fontSize: "13px", padding: "9px 18px" }}
               initial="rest"
               whileHover="hovered"
               whileTap={{ scale: 0.96 }}
               animate="rest"
               variants={{
-                rest: { scale: 1, backgroundColor: "#D7FF00" },
+                rest: { scale: 1, backgroundColor: "var(--hubia-limao-500)" },
                 hovered: { scale: 1.03, backgroundColor: "#DFFF33" },
               }}
               transition={{ duration: 0.15, ease: [0.34, 1.56, 0.64, 1] }}
@@ -200,7 +200,7 @@ export default function CreatorDetailClient({
             damping: 30,
             mass: 0.8,
           }}
-          style={{ top: 6, bottom: 6, background: "#D7FF00" }}
+          style={{ top: 6, bottom: 6, background: "var(--hubia-limao-500)" }}
         />
 
         {TABS.map((tab, idx) => {
@@ -217,13 +217,13 @@ export default function CreatorDetailClient({
                 fontSize: "13px",
                 padding: "8px 18px",
                 background: "transparent",
-                color: isActive ? "#0E0F10" : "#A9AAA5",
+                color: isActive ? "var(--hubia-ink-500)" : "var(--hubia-bg-base-700)",
                 fontWeight: isActive ? 700 : 500,
               }}
               whileHover={
                 isActive
                   ? {}
-                  : { color: "#0E0F10", backgroundColor: "rgba(213,210,201,0.35)" }
+                  : { color: "var(--hubia-ink-500)", backgroundColor: "rgba(213,210,201,0.35)" }
               }
               whileTap={{ scale: 0.97 }}
               transition={{ duration: 0.15, ease: [0.4, 0, 0.2, 1] }}

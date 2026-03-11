@@ -6,6 +6,7 @@ import { motion } from "framer-motion";
 import { Plus, Users } from "lucide-react";
 import type { CreatorRow } from "./actions";
 import { NovaCreatorModal } from "./nova-creator-modal";
+import { HubiaPageAction } from "@/components/ui/hubia-page-action";
 
 const PLACEHOLDER_AVATAR =
   "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=600&h=800&fit=crop&crop=faces,top";
@@ -17,6 +18,7 @@ const MotionLink = motion.create(Link);
 function CreatorCard({ creator, index }: { creator: CreatorRow; index: number }) {
   const imageUrl = creator.avatarUrl?.trim() || PLACEHOLDER_AVATAR;
   const meta = creator.metadata ?? {};
+  const isDraft = meta.isDraft === true;
 
   const age = meta.age ?? null;
   const city = meta.city ?? null;
@@ -29,7 +31,7 @@ function CreatorCard({ creator, index }: { creator: CreatorRow; index: number })
   return (
     <MotionLink
       href={`/creators/${creator.id}`}
-      className="group relative flex flex-col overflow-hidden rounded-[24px] bg-[#0E0F10]"
+      className="group relative flex flex-col overflow-hidden rounded-[30px] bg-ink-500"
       style={{ aspectRatio: "3/4" }}
       initial={{ opacity: 0, y: 16 }}
       animate={{ opacity: 1, y: 0 }}
@@ -38,7 +40,7 @@ function CreatorCard({ creator, index }: { creator: CreatorRow; index: number })
       whileTap={{ scale: 0.98 }}
     >
       {/* Foto fullbleed — parallax zoom só na imagem */}
-      <div className="absolute inset-0 overflow-hidden rounded-[24px]">
+      <div className="absolute inset-0 overflow-hidden rounded-[30px]">
         <img
           src={imageUrl}
           alt={creator.name}
@@ -58,10 +60,13 @@ function CreatorCard({ creator, index }: { creator: CreatorRow; index: number })
       {/* Tag Ativa/Inativa */}
       <div className="absolute left-4 top-4 z-10">
         <span
-          className="rounded-full bg-[#0E0F10] px-3 py-1 text-[11px] font-bold uppercase tracking-widest"
-          style={{ color: "#D7FF00" }}
+          className="rounded-full px-3 py-1 text-[11px] font-bold uppercase tracking-widest"
+          style={{
+            background: isDraft ? "#FF8C00" : "var(--hubia-ink-500)",
+            color: isDraft ? "#FFFFFF" : "var(--hubia-limao-500)",
+          }}
         >
-          {creator.isActive ? "Ativa" : "Inativa"}
+          {isDraft ? "Rascunho" : creator.isActive ? "Ativa" : "Inativa"}
         </span>
       </div>
 
@@ -71,7 +76,7 @@ function CreatorCard({ creator, index }: { creator: CreatorRow; index: number })
           className="font-bold"
           style={{
             fontSize: "clamp(18px,1.8vw,24px)",
-            color: "#D7FF00",
+            color: "var(--hubia-limao-500)",
             lineHeight: 1.1,
             letterSpacing: "-0.01em",
           }}
@@ -115,7 +120,7 @@ function CreatorCard({ creator, index }: { creator: CreatorRow; index: number })
                 className="rounded-full px-2.5 py-0.5 text-[10px] font-semibold capitalize"
                 style={{
                   background: "rgba(14,15,16,0.65)",
-                  color: "#D7FF00",
+                  color: "var(--hubia-limao-500)",
                   backdropFilter: "blur(6px)",
                   border: "1px solid rgba(215,255,0,0.15)",
                 }}
@@ -155,46 +160,20 @@ export default function CreatorsListClient({
       <div className="flex flex-wrap items-center justify-between gap-4">
         <h1
           className="font-bold"
-          style={{ fontSize: "28px", color: "#0E0F10" }}
+          style={{ fontSize: "28px", color: "var(--hubia-ink-500)" }}
         >
           Creators
         </h1>
         <div className="flex items-center gap-4">
           <span
             className="font-semibold"
-            style={{ fontSize: "14px", color: "#A9AAA5" }}
+            style={{ fontSize: "14px", color: "var(--hubia-bg-base-700)" }}
           >
             {ativasCount} {ativasCount === 1 ? "ativa" : "ativas"}
           </span>
-          <motion.button
-            type="button"
-            onClick={() => setModalOpen(true)}
-            className="flex items-center gap-2 rounded-full font-bold"
-            style={{
-              background: "#D7FF00",
-              color: "#0E0F10",
-              fontSize: "14px",
-              padding: "10px 22px",
-            }}
-            initial="rest"
-            whileHover="hovered"
-            whileTap={{ scale: 0.96 }}
-            animate="rest"
-            variants={{
-              rest: { scale: 1, backgroundColor: "#D7FF00" },
-              hovered: { scale: 1.03, backgroundColor: "#DFFF33" },
-            }}
-            transition={{ duration: 0.15, ease: [0.34, 1.56, 0.64, 1] }}
-          >
-            <motion.span
-              className="flex items-center"
-              variants={{ rest: { scale: 1, rotate: 0 }, hovered: { scale: 1.2, rotate: 90 } }}
-              transition={{ duration: 0.25, ease: [0.34, 1.56, 0.64, 1] }}
-            >
-              <Plus size={16} strokeWidth={2.5} />
-            </motion.span>
+          <HubiaPageAction onClick={() => setModalOpen(true)}>
             Nova creator
-          </motion.button>
+          </HubiaPageAction>
         </div>
       </div>
 
@@ -208,8 +187,8 @@ export default function CreatorsListClient({
         <motion.button
           type="button"
           onClick={() => setModalOpen(true)}
-          className="group flex flex-col items-center justify-center gap-3 rounded-[24px] border-2 border-dashed"
-          style={{ aspectRatio: "3/4", borderColor: "#D9D9D4" }}
+          className="group flex flex-col items-center justify-center gap-3 rounded-[30px] border-2 border-dashed"
+          style={{ aspectRatio: "3/4", borderColor: "var(--hubia-sand-600)" }}
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.3, ease: [0, 0, 0.2, 1], delay: Math.min(creators.length * 0.06, 0.3) }}
@@ -217,14 +196,14 @@ export default function CreatorsListClient({
           whileTap={{ scale: 0.98 }}
         >
           <div
-            className="flex h-12 w-12 items-center justify-center rounded-full transition-colors duration-200 group-hover:bg-[#0E0F10]/10"
-            style={{ background: "#EEEFE9" }}
+            className="flex h-12 w-12 items-center justify-center rounded-full transition-colors duration-200 group-hover:bg-ink-500/10"
+            style={{ background: "var(--hubia-bg-base-500)" }}
           >
-            <Plus size={24} style={{ color: "#A9AAA5" }} />
+            <Plus size={24} style={{ color: "var(--hubia-bg-base-700)" }} />
           </div>
           <span
             className="font-bold uppercase tracking-widest"
-            style={{ fontSize: "11px", color: "#A9AAA5" }}
+            style={{ fontSize: "11px", color: "var(--hubia-bg-base-700)" }}
           >
             Nova creator
           </span>
@@ -239,32 +218,19 @@ export default function CreatorsListClient({
         >
           <div
             className="flex h-14 w-14 items-center justify-center rounded-full"
-            style={{ background: "#EEEFE9" }}
+            style={{ background: "var(--hubia-bg-base-500)" }}
           >
-            <Users size={28} style={{ color: "#A9AAA5" }} />
+            <Users size={28} style={{ color: "var(--hubia-bg-base-700)" }} />
           </div>
           <p
             className="font-semibold"
-            style={{ fontSize: "15px", color: "#A9AAA5" }}
+            style={{ fontSize: "15px", color: "var(--hubia-bg-base-700)" }}
           >
             Nenhum creator cadastrado.
           </p>
-          <motion.button
-            type="button"
-            onClick={() => setModalOpen(true)}
-            className="rounded-full font-bold"
-            style={{
-              background: "#D7FF00",
-              color: "#0E0F10",
-              fontSize: "13px",
-              padding: "10px 22px",
-            }}
-            whileHover={{ scale: 1.03, backgroundColor: "#DFFF33" }}
-            whileTap={{ scale: 0.96 }}
-            transition={{ duration: 0.15, ease: [0.34, 1.56, 0.64, 1] }}
-          >
+          <HubiaPageAction onClick={() => setModalOpen(true)}>
             Adicionar primeiro creator
-          </motion.button>
+          </HubiaPageAction>
         </div>
       )}
 
@@ -276,7 +242,7 @@ export default function CreatorsListClient({
         >
           <p
             className="font-semibold"
-            style={{ fontSize: "15px", color: "#A9AAA5" }}
+            style={{ fontSize: "15px", color: "var(--hubia-bg-base-700)" }}
           >
             Nenhum creator com esse filtro.
           </p>
@@ -284,8 +250,8 @@ export default function CreatorsListClient({
             type="button"
             onClick={() => setFilter("all")}
             className="mt-4 rounded-full border px-5 py-2 text-sm font-semibold"
-            style={{ borderColor: "#D9D9D4", color: "#0E0F10" }}
-            whileHover={{ scale: 1.03, backgroundColor: "#EEEFE9" }}
+            style={{ borderColor: "var(--hubia-sand-600)", color: "var(--hubia-ink-500)" }}
+            whileHover={{ scale: 1.03, backgroundColor: "var(--hubia-bg-base-500)" }}
             whileTap={{ scale: 0.96 }}
             transition={{ duration: 0.15, ease: [0.34, 1.56, 0.64, 1] }}
           >
